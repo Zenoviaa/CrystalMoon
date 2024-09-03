@@ -19,23 +19,23 @@ namespace CrystalMoon.Systems
         public static AssetRepository Assets => CrystalMoon.Instance.Assets;
 
         private static List<IOrderedLoadable> _loadCache;
-        public static MiscShaderData CloudsShader => GameShaders.Misc["LunarVeil:Clouds"];
-        public static MiscShaderData CloudsFrontShader => GameShaders.Misc["LunarVeil:CloudsFront"];
-        public static MiscShaderData NightCloudsShader => GameShaders.Misc["LunarVeil:NightClouds"];
-        public static MiscShaderData CloudsDesertShader => GameShaders.Misc["LunarVeil:CloudsDesert"];
-        public static MiscShaderData CloudsDesertNightShader => GameShaders.Misc["LunarVeil:CloudsDesertNight"];
-        public static Filter WaterFilter => Filters.Scene["LunarVeil:Water"];
-        public static Filter WaterBasicFilter => Filters.Scene["LunarVeil:WaterBasic"];
-        public static Filter LavaFilter => Filters.Scene["LunarVeil:Lava"];
-        public static MiscShaderData GradientShader => GameShaders.Misc["LunarVeil:Gradient"];
-        public static Filter CloudySkyFilter => Filters.Scene["LunarVeil:CloudySky"];
-        public static Filter DesertSkyFilter => Filters.Scene["LunarVeil:DesertSky"];
+        public static MiscShaderData CloudsShader => GameShaders.Misc["CrystalMoon:Clouds"];
+        public static MiscShaderData CloudsFrontShader => GameShaders.Misc["CrystalMoon:CloudsFront"];
+        public static MiscShaderData NightCloudsShader => GameShaders.Misc["CrystalMoon:NightClouds"];
+        public static MiscShaderData CloudsDesertShader => GameShaders.Misc["CrystalMoon:CloudsDesert"];
+        public static MiscShaderData CloudsDesertNightShader => GameShaders.Misc["CrystalMoon:CloudsDesertNight"];
+        public static Filter WaterFilter => Filters.Scene["CrystalMoon:Water"];
+        public static Filter WaterBasicFilter => Filters.Scene["CrystalMoon:WaterBasic"];
+        public static Filter LavaFilter => Filters.Scene["CrystalMoon:Lava"];
+        public static MiscShaderData GradientShader => GameShaders.Misc["CrystalMoon:Gradient"];
+        public static Filter CloudySkyFilter => Filters.Scene["CrystalMoon:CloudySky"];
+        public static Filter DesertSkyFilter => Filters.Scene["CrystalMoon:DesertSky"];
         
 
-        public static string Screen_Black => "LunarVeil:Black";
-        public static string Screen_Tint => "LunarVeil:Tint";
-        public static string Screen_NormalDistortion => "LunarVeil:NormalDistortion";
-        public static string Screen_Vignette => "LunarVeil:Vignette";
+        public static string Screen_Black => "CrystalMoon:Black";
+        public static string Screen_Tint => "CrystalMoon:Tint";
+        public static string Screen_NormalDistortion => "CrystalMoon:NormalDistortion";
+        public static string Screen_Vignette => "CrystalMoon:Vignette";
 
         public static string VampKnives_Basic_Trail => "VampKnives:BasicTrail";
         public static string VampKnives_Lightning_Trail => "VampKnives:LightningTrail";
@@ -43,29 +43,29 @@ namespace CrystalMoon.Systems
         public static string VampKnives_Light_Beam_Vertex_Shader => "VampKnives:LightBeamVertexShader";
         public static string VampKnives_Artemis_Laser_Shader => "VampKnives:ArtemisLaserShader";
         public static string VampKnives_Fire => "VampKnives:Fire";
-        public static string LunarVeilFireWhiteShader => "VampKnives:FireWhite";
+        public static string CrystalMoonFireWhiteShader => "VampKnives:FireWhite";
 
 
-        private static string GlowingDustShader => "LunarVeil:GlowingDust";
+        private static string GlowingDustShader => "CrystalMoon:GlowingDust";
         public static MiscShaderData MiscGlowingDust => GameShaders.Misc[GlowingDustShader];
 
 
 
-        private static string Silhouette_Shader => "LunarVeil:SilhouetteShader";
-        private static string FireWhitePixelShaderName => "LunarVeil:FireWhitePixelShader";
+        private static string Silhouette_Shader => "CrystalMoon:SilhouetteShader";
+        private static string FireWhitePixelShaderName => "CrystalMoon:FireWhitePixelShader";
         public static MiscShaderData MiscFireWhitePixelShader => GameShaders.Misc[FireWhitePixelShaderName];
 
-        private static string TestPixelShaderName => "LunarVeil:TestPixelShader";
+        private static string TestPixelShaderName => "CrystalMoon:TestPixelShader";
         public static MiscShaderData MiscTestPixelShader => GameShaders.Misc[TestPixelShaderName];
 
-        private static string SilShaderName => "LunarVeil:SilShader";
+        private static string SilShaderName => "CrystalMoon:SilShader";
         public static MiscShaderData MiscSilPixelShader => GameShaders.Misc[SilShaderName];
 
-        private static string DistortionShaderName => "LunarVeil:DistortionShader";
+        private static string DistortionShaderName => "CrystalMoon:DistortionShader";
         public static MiscShaderData MiscDistortionShader => GameShaders.Misc[DistortionShaderName];
 
 
-        public static Filter SimpleGradientTrailFilter => Filters.Scene["LunarVeil:SimpleGradientTrail"];
+        public static Filter SimpleGradientTrailFilter => Filters.Scene["CrystalMoon:SimpleGradientTrail"];
 
         private static void RegisterMiscShader(string name, string path, string pass)
         {
@@ -84,60 +84,60 @@ namespace CrystalMoon.Systems
             GameShaders.Misc[CrystalMoonUtils.GlowingDustShader] = new MiscShaderData(glowingDustShader, "GlowingDustPass");
 
             Asset<Effect> miscShader = Assets.Request<Effect>("Assets/Effects/Clouds", AssetRequestMode.ImmediateLoad);
-            GameShaders.Misc["LunarVeil:Clouds"] = new MiscShaderData(miscShader, "ScreenPass");
+            GameShaders.Misc["CrystalMoon:Clouds"] = new MiscShaderData(miscShader, "ScreenPass");
 
             Asset<Effect> miscShader2 = Assets.Request<Effect>("Assets/Effects/CloudsFront", AssetRequestMode.ImmediateLoad);
-            GameShaders.Misc["LunarVeil:CloudsFront"] = new MiscShaderData(miscShader2, "ScreenPass");
+            GameShaders.Misc["CrystalMoon:CloudsFront"] = new MiscShaderData(miscShader2, "ScreenPass");
 
             Asset<Effect> miscShader3 = Assets.Request<Effect>("Assets/Effects/NightClouds", AssetRequestMode.ImmediateLoad);
-            GameShaders.Misc["LunarVeil:NightClouds"] = new MiscShaderData(miscShader3, "ScreenPass");
+            GameShaders.Misc["CrystalMoon:NightClouds"] = new MiscShaderData(miscShader3, "ScreenPass");
 
             Asset<Effect> miscShader4 = Assets.Request<Effect>("Assets/Effects/CloudsDesert", AssetRequestMode.ImmediateLoad);
-            GameShaders.Misc["LunarVeil:CloudsDesert"] = new MiscShaderData(miscShader4, "ScreenPass");
+            GameShaders.Misc["CrystalMoon:CloudsDesert"] = new MiscShaderData(miscShader4, "ScreenPass");
 
             Asset<Effect> miscShader5 = Assets.Request<Effect>("Assets/Effects/CloudsDesertNight", AssetRequestMode.ImmediateLoad);
-            GameShaders.Misc["LunarVeil:CloudsDesertNight"] = new MiscShaderData(miscShader5, "ScreenPass");
+            GameShaders.Misc["CrystalMoon:CloudsDesertNight"] = new MiscShaderData(miscShader5, "ScreenPass");
 
             var miscShader6 = new Ref<Effect>(CrystalMoon.Instance.Assets.Request<Effect>("Assets/Effects/Water", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value);
-            Filters.Scene["LunarVeil:Water"] = new Filter(new ScreenShaderData(miscShader6, "PrimitivesPass"), EffectPriority.VeryHigh);
-            Filters.Scene["LunarVeil:Water"].Load();
+            Filters.Scene["CrystalMoon:Water"] = new Filter(new ScreenShaderData(miscShader6, "PrimitivesPass"), EffectPriority.VeryHigh);
+            Filters.Scene["CrystalMoon:Water"].Load();
 
             var miscShader7 = new Ref<Effect>(CrystalMoon.Instance.Assets.Request<Effect>("Assets/Effects/WaterBasic", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value);
-            Filters.Scene["LunarVeil:WaterBasic"] = new Filter(new ScreenShaderData(miscShader7, "PrimitivesPass"), EffectPriority.VeryHigh);
-            Filters.Scene["LunarVeil:WaterBasic"].Load();
+            Filters.Scene["CrystalMoon:WaterBasic"] = new Filter(new ScreenShaderData(miscShader7, "PrimitivesPass"), EffectPriority.VeryHigh);
+            Filters.Scene["CrystalMoon:WaterBasic"].Load();
 
 
             var miscShader8 = new Ref<Effect>(CrystalMoon.Instance.Assets.Request<Effect>("Assets/Effects/Lava", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value);
-            Filters.Scene["LunarVeil:Lava"] = new Filter(new ScreenShaderData(miscShader8, "PrimitivesPass"), EffectPriority.VeryHigh);
-            Filters.Scene["LunarVeil:Lava"].Load();
+            Filters.Scene["CrystalMoon:Lava"] = new Filter(new ScreenShaderData(miscShader8, "PrimitivesPass"), EffectPriority.VeryHigh);
+            Filters.Scene["CrystalMoon:Lava"].Load();
 
             Asset<Effect> gradient = Assets.Request<Effect>("Assets/Effects/Gradient", AssetRequestMode.ImmediateLoad);
-            GameShaders.Misc["LunarVeil:Gradient"] = new MiscShaderData(gradient, "ScreenPass");
+            GameShaders.Misc["CrystalMoon:Gradient"] = new MiscShaderData(gradient, "ScreenPass");
 
             Asset<Effect> gradientTrail = Assets.Request<Effect>("Assets/Effects/SimpleGradientTrail", AssetRequestMode.ImmediateLoad);
-            Filters.Scene["LunarVeil:SimpleGradientTrail"] = new Filter(new ScreenShaderData(gradientTrail, "PrimitivesPass"), EffectPriority.VeryHigh);
-            Filters.Scene["LunarVeil:SimpleGradientTrail"].Load();
+            Filters.Scene["CrystalMoon:SimpleGradientTrail"] = new Filter(new ScreenShaderData(gradientTrail, "PrimitivesPass"), EffectPriority.VeryHigh);
+            Filters.Scene["CrystalMoon:SimpleGradientTrail"].Load();
 
-            SkyManager.Instance["LunarVeil:CloudySky"] = new CloudySky();
-            SkyManager.Instance["LunarVeil:CloudySky"].Load();
-            Filters.Scene["LunarVeil:CloudySky"] = new Filter((new ScreenShaderData("FilterMiniTower")).UseColor(0f, 0f, 0f).UseOpacity(0f), EffectPriority.VeryHigh);
+            SkyManager.Instance["CrystalMoon:CloudySky"] = new CloudySky();
+            SkyManager.Instance["CrystalMoon:CloudySky"].Load();
+            Filters.Scene["CrystalMoon:CloudySky"] = new Filter((new ScreenShaderData("FilterMiniTower")).UseColor(0f, 0f, 0f).UseOpacity(0f), EffectPriority.VeryHigh);
 
 
-            SkyManager.Instance["LunarVeil:DesertSky"] = new DesertSky();
-            SkyManager.Instance["LunarVeil:DesertSky"].Load();
-            Filters.Scene["LunarVeil:DesertSky"] = new Filter((new ScreenShaderData("FilterMiniTower")).UseColor(0f, 0f, 0f).UseOpacity(0f), EffectPriority.VeryHigh);
+            SkyManager.Instance["CrystalMoon:DesertSky"] = new DesertSky();
+            SkyManager.Instance["CrystalMoon:DesertSky"].Load();
+            Filters.Scene["CrystalMoon:DesertSky"] = new Filter((new ScreenShaderData("FilterMiniTower")).UseColor(0f, 0f, 0f).UseOpacity(0f), EffectPriority.VeryHigh);
 
 
 
             Asset<Effect> CometTrail = Assets.Request<Effect>("Assets/Effects/CometTrail", AssetRequestMode.ImmediateLoad);
-            Filters.Scene["LunarVeil:CometTrail"] = new Filter(new ScreenShaderData(CometTrail, "PrimitivesPass"), EffectPriority.VeryHigh);
-            Filters.Scene["LunarVeil:CometTrail"].Load();
+            Filters.Scene["CrystalMoon:CometTrail"] = new Filter(new ScreenShaderData(CometTrail, "PrimitivesPass"), EffectPriority.VeryHigh);
+            Filters.Scene["CrystalMoon:CometTrail"].Load();
 
 
 
             Asset<Effect> FadingTrail = Assets.Request<Effect>("Assets/Effects/FadingTrail", AssetRequestMode.ImmediateLoad);
-            Filters.Scene["LunarVeil:FadingTrail"] = new Filter(new ScreenShaderData(FadingTrail, "PrimitivesPass"), EffectPriority.VeryHigh);
-            Filters.Scene["LunarVeil:FadingTrail"].Load();
+            Filters.Scene["CrystalMoon:FadingTrail"] = new Filter(new ScreenShaderData(FadingTrail, "PrimitivesPass"), EffectPriority.VeryHigh);
+            Filters.Scene["CrystalMoon:FadingTrail"].Load();
 
 
 
@@ -168,13 +168,13 @@ namespace CrystalMoon.Systems
             GameShaders.Misc[CrystalMoonUtil.VampKnives_Fire] = new MiscShaderData(shadowflameShader, "TrailPass");
 
             Ref<Effect> whiteflameShader = new(Assets.Request<Effect>("Assets/Effects/Whiteflame", AssetRequestMode.ImmediateLoad).Value);
-            GameShaders.Misc[CrystalMoonUtil.LunarVeilFireWhiteShader] = new MiscShaderData(whiteflameShader, "TrailPass");
+            GameShaders.Misc[CrystalMoonUtil.CrystalMoonFireWhiteShader] = new MiscShaderData(whiteflameShader, "TrailPass");
 
 
             Ref<Effect> GenericLaserShader = new(Assets.Request<Effect>("Assets/Effects/LaserShader", AssetRequestMode.ImmediateLoad).Value);
-            GameShaders.Misc["LunarVeil:LaserShader"] = new MiscShaderData(GenericLaserShader, "TrailPass");
+            GameShaders.Misc["CrystalMoon:LaserShader"] = new MiscShaderData(GenericLaserShader, "TrailPass");
 
-            //Filters.Scene["LunarVeil:LaserShader"].Load();
+            //Filters.Scene["CrystalMoon:LaserShader"].Load();
             /*
             Asset<Effect> blackShader = Assets.Request<Effect>("Effects/Black");
             Filters.Scene[CrystalMoonUtils.Screen_Black] = new Filter(new ScreenShaderData(blackShader, "BlackPass"), EffectPriority.Medium);

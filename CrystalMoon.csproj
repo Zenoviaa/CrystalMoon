@@ -16,10 +16,9 @@
 	  <Folder Include="Assets\Textures\UI\" />
 	  <Folder Include="Assets\Textures\TextureRemake\" />
 	  <Folder Include="Structures\" />
+	  <Folder Include="Systems\Foreground\" />
 	  <Folder Include="Systems\Primitives\" />
 	  <Folder Include="Systems\WaterSystsems\" />
-	  <Folder Include="WorldGeneration\" />
-	  <Folder Include="Tiles\" />
 	</ItemGroup>
 
 </Project>

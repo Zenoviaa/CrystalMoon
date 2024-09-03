@@ -6,7 +6,7 @@ namespace CrystalMoon.Registries
 {
     internal static class TextureRegistry
     {
-        public static string EmptyTexturePath => "LunarVeil/Assets/Textures/Empty";
-       // public static Asset<Texture2D> NoiseTextureClouds => ModContent.Request<Texture2D>("LunarVeil/Assets/NoiseTextures/Clouds");
+        public static string EmptyTexturePath => "CrystalMoon/Assets/Textures/Empty";
+       // public static Asset<Texture2D> NoiseTextureClouds => ModContent.Request<Texture2D>("CrystalMoon/Assets/NoiseTextures/Clouds");
     }
 }
