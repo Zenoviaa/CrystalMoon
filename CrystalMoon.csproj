@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<!-- Import tModLoader mod properties -->
 	<Import Project="..\tModLoader.targets" />
@@ -11,10 +11,15 @@
 	<!-- References -->
 	<ItemGroup>
 	  <Folder Include="Assets\Music\" />
+	  <Folder Include="Assets\Menu\" />
 	  <Folder Include="Assets\Sounds\" />
 	  <Folder Include="Assets\Textures\UI\" />
 	  <Folder Include="Assets\Textures\TextureRemake\" />
-	  <Folder Include="Systems\" />
+	  <Folder Include="Structures\" />
+	  <Folder Include="Systems\Primitives\" />
+	  <Folder Include="Systems\WaterSystsems\" />
+	  <Folder Include="WorldGeneration\" />
+	  <Folder Include="Tiles\" />
 	</ItemGroup>
 
 </Project>

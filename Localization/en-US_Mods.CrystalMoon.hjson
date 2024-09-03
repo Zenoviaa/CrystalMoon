@@ -2,12 +2,48 @@
 
 Items: {
 	Fake: {
-		DisplayName: "Fake"
+		DisplayName: Fake
 		Tooltip:
 			'''
 			Template of an item
 			Replacing this tooltip is duty 
 			It's snowing on Mt.Fuji
 			'''
+	}
+}
+
+Configs: {
+	CrystalMoonClientConfig: {
+		DisplayName: Crystal Moon Client Config
+
+		Headers: {
+			Visuals: Visuals Header
+			Screenshake: Screenshake Header
+		}
+
+		SkiesToggle: {
+			Label: Skies Toggle
+			Tooltip: ""
+		}
+
+		WatersToggle: {
+			Label: Waters Toggle
+			Tooltip: ""
+		}
+
+		VanillaRespritesToggle: {
+			Label: Vanilla Resprites Toggle
+			Tooltip: ""
+		}
+
+		VanillaUIRespritesToggle: {
+			Label: Vanilla U I Resprites Toggle
+			Tooltip: ""
+		}
+
+		ShakeToggle: {
+			Label: Shake Toggle
+			Tooltip: ""
+		}
 	}
 }
