@@ -19,6 +19,8 @@ namespace CrystalMoon.Systems
         public static AssetRepository Assets => CrystalMoon.Instance.Assets;
 
         private static List<IOrderedLoadable> _loadCache;
+
+        /*
         public static MiscShaderData CloudsShader => GameShaders.Misc["CrystalMoon:Clouds"];
         public static MiscShaderData CloudsFrontShader => GameShaders.Misc["CrystalMoon:CloudsFront"];
         public static MiscShaderData NightCloudsShader => GameShaders.Misc["CrystalMoon:NightClouds"];
@@ -66,7 +68,7 @@ namespace CrystalMoon.Systems
 
 
         public static Filter SimpleGradientTrailFilter => Filters.Scene["CrystalMoon:SimpleGradientTrail"];
-
+        */
         private static void RegisterMiscShader(string name, string path, string pass)
         {
             Asset<Effect> miscShader = Assets.Request<Effect>(path, AssetRequestMode.ImmediateLoad);

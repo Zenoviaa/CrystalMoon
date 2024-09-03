@@ -19,6 +19,7 @@ using Terraria.UI;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Terraria.GameContent.UI.States;
 using Terraria.GameContent.Creative;
+using CrystalMoon.Systems;
 
 
 namespace CrystalMoon
@@ -80,11 +81,14 @@ namespace CrystalMoon
             /*
             CrystalMoonUtils.LoadShaders();
             CrystalMoonUtils.LoadOrderedLoadables();
-            Instance = this;
+           
             Whiteout = Assets.Request<Effect>("Assets/Effects/Whiteout");
             Ref<Effect> GenericLaserShader = new(Assets.Request<Effect>("Assets/Effects/LaserShader", AssetRequestMode.ImmediateLoad).Value);
             GameShaders.Misc["CrystalMoon:LaserShader"] = new MiscShaderData(GenericLaserShader, "TrailPass");
             */
+            CrystalMoonUtils.LoadShaders();
+            CrystalMoonUtils.LoadOrderedLoadables();
+            Instance = this;
             //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -217,7 +221,7 @@ namespace CrystalMoon
 
             UIElement worldIcon = WorldIcon;
 
-            UIImage element = new UIImage(ModContent.Request<Texture2D>("CrystalMoon/Assets/Textures/Menu/LunarTree"))
+            UIImage element = new UIImage(ModContent.Request<Texture2D>("CrystalMoon/Assets/Textures/UI/Menu/LunarTree"))
             {
                 Top = new StyleDimension(-10f, 0f),
                 Left = new StyleDimension(-6f, 0f),
