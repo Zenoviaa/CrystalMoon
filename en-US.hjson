@@ -4,6 +4,7 @@ Mods: {
 			RainforestTree.MapEntry: Rainforest Tree
 			RainforestTreeBase.MapEntry: Rainforest Tree Base
 			RainforestTreeSapling.MapEntry: Rainforest Tree Sapling
+			MothlightGrass.MapEntry: Mothlight Grass
 		}
 
 		Projectiles: {
