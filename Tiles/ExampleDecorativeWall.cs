@@ -28,8 +28,10 @@ namespace CrystalMoon.Tiles
         public override void SetStaticDefaults()
         {
             StructureColor = Color.Gray;
+            Origin = DrawOrigin.BottomUp;
             base.SetStaticDefaults();
             //If you need other static defaults it go here
         }
     }
+
 }
