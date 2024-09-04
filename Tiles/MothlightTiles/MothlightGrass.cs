@@ -21,7 +21,7 @@ namespace CrystalMoon.Tiles.MothlightTiles
             MineResist = 1f;
             MinPick = 25;
 
-            AddMapEntry(new Color(110, 74, 51));
+            AddMapEntry(new Color(10, 74, 101));
 
             // TODO: implement
             // SetModTree(new Trees.ExampleTree());
