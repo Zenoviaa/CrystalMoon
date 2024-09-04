@@ -10,7 +10,7 @@ namespace CrystalMoon.Systems.Shaders
         private static SimpleGradientTrailShader _instance;
         public SimpleGradientTrailShader()
         {
-            Effect = ShaderRegistry.SimpleGradientTrailEffect.Shader;
+            Data = ShaderRegistry.SimpleGradientTrailEffect;
             PrimaryColor = Color.White;
             SecondaryColor = Color.White;
         }

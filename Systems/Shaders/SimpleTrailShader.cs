@@ -12,7 +12,7 @@ namespace CrystalMoon.Systems.Shaders
         private static SimpleTrailShader _instance;
         public SimpleTrailShader()
         {
-            Effect = ShaderRegistry.SimpleTrailEffect.Shader;
+            Data = ShaderRegistry.SimpleTrailEffect;
             TrailingTexture = TrailRegistry.StarTrail;
             SecondaryTrailingTexture = TrailRegistry.StarTrail;
             TertiaryTrailingTexture = TrailRegistry.StarTrail;
