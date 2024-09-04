@@ -1,0 +1,93 @@
+Fake: {
+	DisplayName: Fake
+	Tooltip:
+		'''
+		Template of an item
+		Replacing this tooltip is duty 
+		It's snowing on Mt.Fuji
+		'''
+}
+
+ModelizingSaver: {
+	Tooltip:
+		'''
+		A modelizing saving structure item that will save a structure from the 
+		bottom left to top right!
+		Will appear in your tmod files and can be placed using the placer!
+		'''
+	DisplayName: Modelizing Saver
+}
+
+ModelizingPlacer: {
+	Tooltip:
+		'''
+		A modelizing placer that will place whatever saved structure you have in
+		your files to your cursor!
+		'''
+	DisplayName: Modelizing Placer
+}
+
+RainforestGrassBlock: {
+	Tooltip: ""
+	DisplayName: Rainforest Grass Block
+}
+
+RainforestTreeAcorn: {
+	DisplayName: Rainforest Tree Acorn
+	Tooltip: ""
+}
+
+RunicIceBlock: {
+	DisplayName: Runic Ice Block
+	Tooltip: ""
+}
+
+ExampleDecorativeTileItem: {
+	Tooltip: ""
+	DisplayName: Example Decorative Tile Item
+}
+
+ExampleDecorativeWallItem: {
+	DisplayName: Example Decorative Wall Item
+	Tooltip: ""
+}
+
+LargeIceyStoneBlock: {
+	DisplayName: Large Icey Stone Block
+	Tooltip: ""
+}
+
+MediumIceyStoneBlock: {
+	DisplayName: Medium Icey Stone Block
+	Tooltip: ""
+}
+
+SmallIceyStoneBlock: {
+	DisplayName: Small Icey Stone Block
+	Tooltip: ""
+}
+
+BorealReinforcementBlock: {
+	DisplayName: Boreal Reinforcement Block
+	Tooltip: ""
+}
+
+IceyAlterBlock: {
+	DisplayName: Icey Alter Block
+	Tooltip: ""
+}
+
+CrystallineSlasher: {
+	DisplayName: Crystalline Slasher
+	Tooltip: ""
+}
+
+FrostFractal: {
+	DisplayName: Frost Fractal
+	Tooltip: ""
+}
+
+CometRideGreatsword: {
+	DisplayName: Comet Ride Greatsword
+	Tooltip: ""
+}

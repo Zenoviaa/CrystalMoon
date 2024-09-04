@@ -7,6 +7,35 @@
 	<PropertyGroup>
 		
 	</PropertyGroup>
+	<ItemGroup>
+	  <None Remove="Assets\Effects\Gradient.fx" />
+	  <None Remove="Assets\Effects\NightClouds.fx" />
+	  <None Remove="Assets\Effects\SimpleGradientTrail.fx" />
+	  <None Remove="Assets\NoiseTextures\BeamTrail.png" />
+	  <None Remove="Assets\NoiseTextures\BulbTrail.png" />
+	  <None Remove="Assets\NoiseTextures\CausticTrail.png" />
+	  <None Remove="Assets\NoiseTextures\CorkscrewTrail.png" />
+	  <None Remove="Assets\NoiseTextures\CrystalTrail.png" />
+	  <None Remove="Assets\NoiseTextures\DNAHelixTrail.png" />
+	  <None Remove="Assets\NoiseTextures\Empty.png" />
+	  <None Remove="Assets\NoiseTextures\ExampleTrailSlash.png" />
+	  <None Remove="Assets\NoiseTextures\FadedStreak.png" />
+	  <None Remove="Assets\NoiseTextures\GlowTrail.png" />
+	  <None Remove="Assets\NoiseTextures\LightningTrail.png" />
+	  <None Remove="Assets\NoiseTextures\MetalTrail.png" />
+	  <None Remove="Assets\NoiseTextures\SmallWhispyTrail.png" />
+	  <None Remove="Assets\NoiseTextures\SpikyTrail.png" />
+	  <None Remove="Assets\NoiseTextures\StarTrail.png" />
+	  <None Remove="Assets\NoiseTextures\StringTrail.png" />
+	  <None Remove="Assets\NoiseTextures\TerraTrail.png" />
+	  <None Remove="Assets\NoiseTextures\TwistingTrail.png" />
+	  <None Remove="Assets\NoiseTextures\VortexTrail.png" />
+	  <None Remove="Assets\NoiseTextures\WaterTrail.png" />
+	  <None Remove="Assets\NoiseTextures\WaveTrail.png" />
+	  <None Remove="Assets\NoiseTextures\WhispyTrail.png" />
+	  <None Remove="Assets\Textures\FX\SwordSlash.png" />
+	  <None Remove="ExampleContent\Items\CrystallineSlasher.png" />
+	</ItemGroup>
 
 	<!-- References -->
 	<ItemGroup>
