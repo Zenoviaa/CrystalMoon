@@ -63,7 +63,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailCacheLength[Type] = 32;
+            ProjectileID.Sets.TrailCacheLength[Type] = 64;
             ProjectileID.Sets.TrailingMode[Type] = 2;
 
         }
@@ -93,15 +93,15 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             {
                 default:
                 case 0:
-                    return 19;
+                    return 24;
                 case 1:
-                    return 19;
+                    return 24;
                 case 2:
-                    return 19;
+                    return 24;
                 case 3:
-                    return 19;
+                    return 24;
                 case 4:
-                    return 19;
+                    return 24;
                 case 5:
                     return 48;
             }
@@ -164,8 +164,20 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             }
         }
 
+        protected override void InitSwingAI()
+        {
+            base.InitSwingAI();
+            switch (ComboAtt)
+            {
+                case 5:
+                    Projectile.localNPCHitCooldown = 2 * ExtraUpdateMult;
+                    break;
+            }
+        }
+
         protected override void SwingAI()
         {
+        
             switch (ComboAtt)
             {
                 case 0:
@@ -196,6 +208,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            base.OnHitNPC(target, hit, damageDone);
             if (!Hit)
             {
                 Main.LocalPlayer.GetModPlayer<EffectsPlayer>().ShakeAtPosition(target.Center, 1024f, 8f);
@@ -216,15 +229,13 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
         protected override Vector2 GetTrailOffset()
         {
             //Moves the trail along the blade, negative goes towards the player, positive goes away the player
-            return Vector2.One * 96;
+            return Vector2.One * 92;
         }
 
         protected override float WidthFunction(float p)
         {
-            float trailWidth = MathHelper.Lerp(0, 256, Easing.OutExpo(p, 3));
-            float scaleMult = _smoothedLerpValue / 0.3f;
-            scaleMult = MathHelper.Clamp(scaleMult, 0, 1);
-            float fadeWidth = MathHelper.Lerp(trailWidth, 0, _smoothedLerpValue) * scaleMult;
+            float trailWidth = MathHelper.Lerp(0, 256, p);
+            float fadeWidth = MathHelper.Lerp(trailWidth, 0, _smoothedLerpValue) * Easing.OutExpo(_smoothedLerpValue, 4);
             return fadeWidth;
         }
 

@@ -17,14 +17,17 @@ namespace LunarVeil.Content.Bases
 
         private bool _init;
         private float _timer;
+        private bool _hashit;
+        private bool _hasMissed;
         protected float _smoothedLerpValue;
         private Vector2[] _trailPoints = new Vector2[0];
         public float hitstopTimer=0;
         public Player Owner => Main.player[Projectile.owner];
 
-        protected int SwingTime => (int)((SwingTimeFunction() * ExtraUpdateMult) / Owner.GetAttackSpeed(Projectile.DamageType));
+        protected int SwingTime => (int)(((SwingTimeFunction() * ExtraUpdateMult) / Owner.GetAttackSpeed(Projectile.DamageType)));
         public float holdOffset = 60f;
         public float trailStartOffset = 0.15f;
+        public float missTimeIncrease = 12;
         
         public override void SetStaticDefaults()
         {
@@ -94,7 +97,7 @@ namespace LunarVeil.Content.Bases
             if (!_init)
             {
                 Projectile.timeLeft = SwingTime;
-                Projectile.localNPCHitCooldown = SwingTime/3;
+                InitSwingAI();
                 _init = true;
             }
 
@@ -105,10 +108,24 @@ namespace LunarVeil.Content.Bases
                 hitstopTimer--;
             }
 
+            if(!_hashit && !_hasMissed && _smoothedLerpValue > 0.9f)
+            {
+                Projectile.timeLeft += (int)(missTimeIncrease * ExtraUpdateMult);
+                _hasMissed = true;
+            }
+            if(_hasMissed)
+            {
+      
+            }
             SwingAI();
         }
 
       
+        protected virtual void InitSwingAI()
+        {
+
+        }
+
         protected virtual float SwingTimeFunction()
         {
             return 16;
@@ -313,11 +330,6 @@ namespace LunarVeil.Content.Bases
         {
             return MathHelper.Lerp(0, 48, Easing.OutExpo(p, 6));
         }
-        /*
-        private float FinalWidthFunction(float p)
-        {
-            return WidthFunction(p) * 
-        }*/
 
         protected virtual BaseShader ReadyShader()
         {
@@ -369,6 +381,12 @@ namespace LunarVeil.Content.Bases
                 sourceRectangle, drawColor, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0); // drawing the sword itself
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            base.OnHitNPC(target, hit, damageDone);
+            _hashit = true;
         }
     }
 }

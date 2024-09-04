@@ -52,9 +52,15 @@ namespace CrystalMoon.Tiles
 
     internal abstract class DecorativeWall : ModWall
     {
+        public enum DrawOrigin
+        {
+            BottomUp,
+            TopDown
+        }
         public Color StructureColor { get; set; }
         public override string Texture => "CrystalMoon/Tiles/InvisibleWall";
         public string StructureTexture { get; set; }
+        public DrawOrigin Origin { get; set; } = DrawOrigin.BottomUp;
         public override void SetStaticDefaults()
         {
             StructureColor = Color.White;
@@ -83,6 +89,15 @@ namespace CrystalMoon.Tiles
 
             Vector2 drawPos = (new Vector2(i, j) + Systems.TileSystems.MultitileHelper.TileAdj) * 16;
             Vector2 drawOrigin = new Vector2(textureWidth / 2, textureHeight);
+            switch (Origin)
+            {
+                case DrawOrigin.BottomUp:
+                    drawOrigin = new Vector2(textureWidth / 2, textureHeight);
+                    break;
+                case DrawOrigin.TopDown:
+                    drawOrigin = new Vector2(textureWidth / 2, 0);
+                    break;
+            }
             spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, color2.MultiplyRGB(StructureColor), 0, drawOrigin, 1, SpriteEffects.None, 0);
         }
     }
