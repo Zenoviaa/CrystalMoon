@@ -98,6 +98,7 @@ namespace CrystalMoon.UI.StaminaSystem
         public bool AllowResizingDimensions = true;
         public Vector2 NormalizedOrigin = Vector2.Zero;
         private static Vector2? _drag = null;
+        private static bool _isDragging;
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             base.DrawSelf(spriteBatch);
@@ -131,26 +132,25 @@ namespace CrystalMoon.UI.StaminaSystem
 
             MouseState ms = Mouse.GetState();
             Vector2 mousePos = Main.MouseScreen;
-
-
-            // Handle mouse dragging
-            if (barRect.Intersects(mouseRect))
+            Vector2 newScreenRatioPosition = ratioPos;
+            if (ms.LeftButton == ButtonState.Pressed && !_isDragging  && barRect.Intersects(mouseRect))
             {
-                Vector2 newScreenRatioPosition = ratioPos;
-                // As long as the mouse button is held down, drag the meter along with an offset.
-                if (ms.LeftButton == ButtonState.Pressed)
-                {
-                    // If the drag offset doesn't exist yet, create it.
-                    if (!_drag.HasValue)
-                        _drag = mousePos - drawPos;
+                _isDragging = true;
+            }
 
-                    // Given the mouse's absolute current position, compute where the corner of the flight bar should be based on the original drag offset.
-                    Vector2 newCorner = mousePos - _drag.GetValueOrDefault(Vector2.Zero);
 
-                    // Convert the new corner position into a screen ratio position.
-                    newScreenRatioPosition.X = (100f * newCorner.X) / Main.screenWidth;
-                    newScreenRatioPosition.Y = (100f * newCorner.Y) / Main.screenHeight;
-                }
+            //Handle dragging
+            if (_isDragging)
+            {
+
+                if (!_drag.HasValue)
+                    _drag = mousePos - drawPos;
+
+                Vector2 newCorner = mousePos - _drag.GetValueOrDefault(Vector2.Zero);
+
+                // Convert the new corner position into a screen ratio position.
+                newScreenRatioPosition.X = (100f * newCorner.X) / Main.screenWidth;
+                newScreenRatioPosition.Y = (100f * newCorner.Y) / Main.screenHeight;
 
                 // Compute the change in position. If it is large enough, actually move the meter
                 Vector2 delta = newScreenRatioPosition - ratioPos;
@@ -160,9 +160,9 @@ namespace CrystalMoon.UI.StaminaSystem
                     config.StaminaMeterY = newScreenRatioPosition.Y;
                 }
 
-                // When the mouse is released, save the config and destroy the drag offset.
                 if (ms.LeftButton == ButtonState.Released)
                 {
+                    _isDragging = false;
                     _drag = null;
                     MethodInfo saveMethodInfo = typeof(ConfigManager).GetMethod("Save", BindingFlags.Static | BindingFlags.NonPublic);
                     if (saveMethodInfo is not null)
