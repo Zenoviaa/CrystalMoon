@@ -91,3 +91,8 @@ CometRideGreatsword: {
 	DisplayName: Comet Ride Greatsword
 	Tooltip: ""
 }
+
+MothlightGrassBlock: {
+	DisplayName: Mothlight Grass Block
+	Tooltip: ""
+}
