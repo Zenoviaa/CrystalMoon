@@ -7,6 +7,13 @@
 	<PropertyGroup>
 		
 	</PropertyGroup>
+	<ItemGroup>
+	  <None Remove="Assets\Effects\Gradient.fx" />
+	  <None Remove="Assets\Effects\NightClouds.fx" />
+	  <None Remove="Assets\Effects\SimpleGradientTrail.fx" />
+	  <None Remove="Assets\Textures\FX\SwordSlash.png" />
+	  <None Remove="ExampleContent\Items\CrystallineSlasher.png" />
+	</ItemGroup>
 
 	<!-- References -->
 	<ItemGroup>

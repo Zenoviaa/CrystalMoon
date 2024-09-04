@@ -1,0 +1,31 @@
+Headers: {
+	Visuals: Visuals
+	Screenshake: Screenshake Header
+}
+
+DisplayName: Crystal Moon Client Config
+
+SkiesToggle: {
+	Label: Beautiful Skies
+	Tooltip: Toggles new sky effects on and off.
+}
+
+WatersToggle: {
+	Label: Pretty Waters
+	Tooltip: Toggles new water effects on and off.
+}
+
+VanillaRespritesToggle: {
+	Label: Vanilla Resprites
+	Tooltip: Makes the vanilla textures look a bit different.
+}
+
+VanillaUIRespritesToggle: {
+	Label: Vanilla UI Resprites
+	Tooltip: Makes the vanilla ui textures look a bit different.
+}
+
+ShakeToggle: {
+	Label: Shake Toggle
+	Tooltip: ""
+}

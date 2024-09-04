@@ -20,6 +20,8 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Terraria.GameContent.UI.States;
 using Terraria.GameContent.Creative;
 using CrystalMoon.Systems;
+using CrystalMoon.Systems.Shaders;
+using CrystalMoon.Registries;
 
 
 namespace CrystalMoon
@@ -86,6 +88,7 @@ namespace CrystalMoon
             Ref<Effect> GenericLaserShader = new(Assets.Request<Effect>("Assets/Effects/LaserShader", AssetRequestMode.ImmediateLoad).Value);
             GameShaders.Misc["CrystalMoon:LaserShader"] = new MiscShaderData(GenericLaserShader, "TrailPass");
             */
+            ShaderRegistry.LoadShaders();
             CrystalMoonUtils.LoadShaders();
             CrystalMoonUtils.LoadOrderedLoadables();
             Instance = this;
