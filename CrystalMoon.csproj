@@ -43,6 +43,7 @@
 	  <Folder Include="Assets\Textures\UI\Menu\" />
 	  <Folder Include="Assets\Sounds\" />
 	  <Folder Include="Assets\Textures\TextureRemake\" />
+	  <Folder Include="Content\Items\Weapons\Melee\Axes\" />
 	  <Folder Include="Structures\" />
 	  <Folder Include="Systems\Foreground\" />
 	  <Folder Include="Systems\Primitives\" />

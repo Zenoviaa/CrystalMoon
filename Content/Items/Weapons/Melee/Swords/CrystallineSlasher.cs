@@ -11,7 +11,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CrystalMoon.ExampleContent.Items
+namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
 {
     // This is a basic item template.
     // Please see tModLoader's ExampleMod for every other example:
@@ -49,7 +49,7 @@ namespace CrystalMoon.ExampleContent.Items
             int dir = comboPlayer.ComboDirection;
             Projectile.NewProjectile(source, position, velocity, type, damage, knockback,
                 player.whoAmI, combo, dir);
-            
+
             comboPlayer.IncreaseCombo(maxCombo: 6);
             return false;
         }
@@ -57,7 +57,7 @@ namespace CrystalMoon.ExampleContent.Items
 
     public class CrystallineSwordSlash : BaseSwingProjectile
     {
-        public override string Texture => "CrystalMoon/ExampleContent/Items/CrystallineSlasher";
+        public override string Texture => "CrystalMoon/Content/Items/Weapons/Melee/Swords/CrystallineSlasher";
         ref float ComboAtt => ref Projectile.ai[0];
         public bool Hit;
 
@@ -107,9 +107,9 @@ namespace CrystalMoon.ExampleContent.Items
             }
         }
 
-        protected override void ModifySimpleSwingAI(float targetRotation, float lerpValue, 
-            ref float startSwingRot, 
-            ref float endSwingRot, 
+        protected override void ModifySimpleSwingAI(float targetRotation, float lerpValue,
+            ref float startSwingRot,
+            ref float endSwingRot,
             ref float swingProgress)
         {
             switch (ComboAtt)
@@ -139,25 +139,25 @@ namespace CrystalMoon.ExampleContent.Items
             }
         }
 
-        protected override void ModifyOvalSwingAI(float targetRotation, float lerpValue, 
-            ref float swingXRadius, 
+        protected override void ModifyOvalSwingAI(float targetRotation, float lerpValue,
+            ref float swingXRadius,
             ref float swingYRadius,
-            ref float swingRange, 
+            ref float swingRange,
             ref float swingProgress)
         {
-  
+
             switch (ComboAtt)
             {
                 case 1:
-                    swingXRadius = 128/1.5f;
-                    swingYRadius = 64/1.5f;
+                    swingXRadius = 128 / 1.5f;
+                    swingYRadius = 64 / 1.5f;
                     swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4;
                     swingProgress = Easing.InOutExpo(lerpValue, 10);
 
                     break;
                 case 2:
-                    swingXRadius = 128/1.5f;
-                    swingYRadius = 64/1.5f;
+                    swingXRadius = 128 / 1.5f;
+                    swingYRadius = 64 / 1.5f;
                     swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4;
                     swingProgress = Easing.InOutExpo(lerpValue, 10);
                     break;
@@ -199,7 +199,7 @@ namespace CrystalMoon.ExampleContent.Items
             if (!Hit)
             {
                 Main.LocalPlayer.GetModPlayer<EffectsPlayer>().ShakeAtPosition(target.Center, 1024f, 8f);
-                Particle.NewParticle<IceStrikeParticle>(target.Center,Vector2.Zero, Color.White);
+                Particle.NewParticle<IceStrikeParticle>(target.Center, Vector2.Zero, Color.White);
 
                 Hit = true;
                 hitstopTimer = 4 * ExtraUpdateMult;
@@ -238,7 +238,7 @@ namespace CrystalMoon.ExampleContent.Items
 
         protected override BaseShader ReadyShader()
         {
-           
+
             var shader = SimpleTrailShader.Instance;
 
             //Main trailing texture
