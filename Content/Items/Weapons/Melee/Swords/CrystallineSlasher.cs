@@ -50,8 +50,6 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             int dir = comboPlayer.ComboDirection;
             Projectile.NewProjectile(source, position, velocity, type, damage, knockback,
                 player.whoAmI, combo, dir);
-            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<ExampleTrailingProjectile>(), damage, knockback,
-                  player.whoAmI);
             comboPlayer.IncreaseCombo(maxCombo: 6);
             return false;
         }
