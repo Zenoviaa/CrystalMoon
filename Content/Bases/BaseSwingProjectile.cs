@@ -16,7 +16,7 @@ namespace CrystalMoon.Content.Bases
         public static int ExtraUpdateMult => 6;
 
         private bool _init;
-        private float _timer;
+        protected float _timer;
         private bool _hashit;
         private bool _hasMissed;
         protected float _smoothedLerpValue;
