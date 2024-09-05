@@ -25,5 +25,11 @@ namespace CrystalMoon
         [Header("Screenshake")]
         [DefaultValue(true)]
         public bool ShakeToggle;
+
+        [Header("UI")]
+        [Range(0f, 100f)]
+        public float StaminaMeterX;
+        [Range(0f, 100f)]
+        public float StaminaMeterY;
     }
 }

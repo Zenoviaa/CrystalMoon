@@ -1,6 +1,6 @@
 ﻿using Terraria.ModLoader;
 
-namespace LunarVeil.Content.Bases
+namespace CrystalMoon.Content.Bases
 {
     internal class ComboPlayer : ModPlayer
     {
@@ -8,6 +8,20 @@ namespace LunarVeil.Content.Bases
         public int ComboCounter;
         public int ComboWaitTime;
         public int ComboDirection = 1;
+        public int Stamina;
+        public int MaxStamina = 3;
+        public override void ResetEffects()
+        {
+            base.ResetEffects();
+            MaxStamina = 3;
+        }
+
+        public override void UpdateDead()
+        {
+            base.UpdateDead();
+            Stamina = MaxStamina;
+        }
+
         public override void PostUpdate()
         {
             base.PostUpdate();
@@ -18,6 +32,17 @@ namespace LunarVeil.Content.Bases
                 _comboWaitTimer = 0;
             }
         }
+
+        public bool CanUseStamina(int amountToUse)
+        {
+            return Stamina >= amountToUse;
+        }
+
+        public void ConsumeStamina(int amountToUse)
+        {
+            Stamina -= amountToUse;
+        }
+
 
         public void IncreaseCombo(int maxCombo)
         {

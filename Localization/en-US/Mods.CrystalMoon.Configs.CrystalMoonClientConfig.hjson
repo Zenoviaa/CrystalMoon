@@ -1,6 +1,7 @@
 Headers: {
 	Visuals: Visuals
 	Screenshake: Screenshake Header
+	UI: U I Header
 }
 
 DisplayName: Crystal Moon Client Config
@@ -27,5 +28,15 @@ VanillaUIRespritesToggle: {
 
 ShakeToggle: {
 	Label: Shake Toggle
+	Tooltip: ""
+}
+
+StaminaMeterX: {
+	Label: Stamina Meter X
+	Tooltip: ""
+}
+
+StaminaMeterY: {
+	Label: Stamina Meter Y
 	Tooltip: ""
 }
