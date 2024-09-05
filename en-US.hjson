@@ -13,5 +13,12 @@ Mods: {
 			RuneHammerSlash.DisplayName: Rune Hammer Slash
 			ExampleCircleExplosionProjectile.DisplayName: Example Circle Explosion Projectile
 		}
+
+		Buffs: {
+			CannotUseStaminaPotion: {
+				DisplayName: Cannot Use Stamina Potion
+				Description: Mods.CrystalMoon.Buffs.CannotUseStaminaPotion.Description
+			}
+		}
 	}
 }

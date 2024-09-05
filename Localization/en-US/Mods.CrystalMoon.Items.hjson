@@ -101,3 +101,8 @@ RuneSmasher: {
 	DisplayName: Rune Smasher
 	Tooltip: ""
 }
+
+StaminaPotion: {
+	DisplayName: Stamina Potion
+	Tooltip: ""
+}
