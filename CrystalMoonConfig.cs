@@ -28,8 +28,8 @@ namespace CrystalMoon
 
         [Header("UI")]
         [Range(0f, 100f)]
-        public float StaminaMeterX;
+        public float StaminaMeterX = 50;
         [Range(0f, 100f)]
-        public float StaminaMeterY;
+        public float StaminaMeterY = 3;
     }
 }
