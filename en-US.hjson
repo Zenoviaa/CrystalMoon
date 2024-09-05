@@ -11,6 +11,7 @@ Mods: {
 			CrystallineSwordSlash.DisplayName: Crystalline Sword Slash
 			ExampleTrailingProjectile.DisplayName: Example Trailing Projectile
 			RuneHammerSlash.DisplayName: Rune Hammer Slash
+			ExampleCircleExplosionProjectile.DisplayName: Example Circle Explosion Projectile
 		}
 	}
 }
