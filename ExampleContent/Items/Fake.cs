@@ -25,7 +25,7 @@ namespace CrystalMoon.ExampleContent.Items
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<ExampleMoonlightMagicHexProjectile>();
+            Item.shoot = ModContent.ProjectileType<ExampleMoonlightMagicRadianceProjectile>();
             Item.shootSpeed = 15;
         }
 

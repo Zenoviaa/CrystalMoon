@@ -8,7 +8,11 @@ namespace CrystalMoon.Systems.Shaders
     {
         public static string AssetDirectory => "CrystalMoon/Assets/NoiseTextures/";
         public static Asset<Texture2D> BeamTrail =>
-    ModContent.Request<Texture2D>($"{AssetDirectory}BeamTrail");
+            ModContent.Request<Texture2D>($"{AssetDirectory}BeamTrail");
+        public static Asset<Texture2D> DottedTrail =>
+            ModContent.Request<Texture2D>($"{AssetDirectory}DottedTrail");
+        public static Asset<Texture2D> DottedTrailOutline =>
+            ModContent.Request<Texture2D>($"{AssetDirectory}DottedTrailOutline");
         public static Asset<Texture2D> SlashTrail1 =>
             ModContent.Request<Texture2D>($"{AssetDirectory}SlashTrail1");
         public static Asset<Texture2D> GlowTrail =>
