@@ -335,6 +335,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
             bounceCount++;
         }
 
+
         //TRAIL VISUALS
         protected override Vector2 GetFramingSize()
         {
