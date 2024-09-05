@@ -11,10 +11,10 @@ namespace CrystalMoon.Systems.Players
 {
 
 
-    public class LunarPlayer : ModPlayer
+    public class MoonPlayer : ModPlayer
     {
 
-        public bool PracticeTarget;
+        
         public override void PostUpdate()
         {
 

@@ -1,6 +1,6 @@
 ﻿using Terraria.ModLoader;
 
-namespace CrystalMoon.Content.Bases
+namespace CrystalMoon.Systems.Players
 {
     internal class ComboPlayer : ModPlayer
     {
