@@ -22,12 +22,14 @@ namespace CrystalMoon.Content.Bases
         protected float _smoothedLerpValue;
         private Vector2[] _trailPoints = new Vector2[0];
         public float hitstopTimer=0;
+        public float bounceTimer = 0;
         public Player Owner => Main.player[Projectile.owner];
 
-        protected int SwingTime => (int)(((SwingTimeFunction() * ExtraUpdateMult) / Owner.GetAttackSpeed(Projectile.DamageType)));
+        protected int SwingTime => (int)((((SwingTimeFunction()) * ExtraUpdateMult) / Owner.GetAttackSpeed(Projectile.DamageType)));
         public float holdOffset = 60f;
         public float trailStartOffset = 0.15f;
         public float missTimeIncrease = 12;
+        public float extraSwingTime = 0;
         
         public override void SetStaticDefaults()
         {
@@ -106,8 +108,19 @@ namespace CrystalMoon.Content.Bases
                 _timer--;
                 Projectile.timeLeft++;
                 hitstopTimer--;
+            } 
+            else if(bounceTimer > 0)
+            {
+                _timer-=2;
+         
+                bounceTimer--;
+                if (bounceTimer <= 0)
+                {
+                    Projectile.ResetLocalNPCHitImmunity();
+                }
+                extraSwingTime++;
+                Projectile.timeLeft++;
             }
-
             if(!_hashit && !_hasMissed && _smoothedLerpValue > 0.9f)
             {
                 Projectile.timeLeft += (int)(missTimeIncrease * ExtraUpdateMult);
@@ -157,6 +170,7 @@ namespace CrystalMoon.Content.Bases
                 xOffset = swingXRadius * MathF.Sin((1f - swingProgress) * swingRange + swingRange);
                 yOffset = swingYRadius * MathF.Cos((1f - swingProgress) * swingRange + swingRange);
             }
+          
 
             Projectile.Center = Owner.Center + new Vector2(xOffset, yOffset).RotatedBy(targetRotation);
             Projectile.rotation = (Projectile.Center - Owner.Center).ToRotation() + MathHelper.PiOver4;

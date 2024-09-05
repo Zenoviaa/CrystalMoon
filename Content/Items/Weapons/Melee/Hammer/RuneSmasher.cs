@@ -67,6 +67,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
         public int BounceTimer;
         public int BounceDelay;
         public bool bounced = false;
+        public int bounceCount;
         public const int Swing_Speed_Multiplier = 8;
         public override void SetStaticDefaults()
         {
@@ -231,7 +232,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
 
         protected override void SwingAI()
         {
-        
+
             switch (ComboAtt)
             {
                 case 0:
@@ -309,41 +310,29 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
               //  ParticleManager.NewParticle<StarParticle2>(target.Center, velocity, Color.DarkGoldenrod, randScale);
             }
             */
-            if (BounceTimer <= 0)
+            if (bounceTimer <= 0 && bounceCount < 3)
             {
                 if (Main.myPlayer == player.whoAmI)
                 {
                     player.velocity = Projectile.DirectionTo(oldMouseWorld) * -3f;
                 }
 
-                BounceTimer = 10 * ExtraUpdateMult;
-                BounceDelay = 2 * ExtraUpdateMult;
+                bounceTimer = 10 * ExtraUpdateMult;
                 Projectile.netUpdate = true;
                 
             }
-           
-            if (BounceDelay > 0)
-            {
-                BounceDelay--;
-            }
-            else
-            {
-                BounceTimer--;
-                if (BounceTimer > 0)
-                {
-                    
-                }
-            }
+
 
             base.OnHitNPC(target, hit, damageDone);
             if (!Hit)
             {
                 Main.LocalPlayer.GetModPlayer<EffectsPlayer>().ShakeAtPosition(target.Center, 1024f, 8f);
                 //  Particle.NewParticle<IceStrikeParticle>(target.Center, Vector2.Zero, Color.White);
-                ComboAtt += 6;
+ 
                 Hit = true;
                 hitstopTimer = 4 * ExtraUpdateMult;
             }
+            bounceCount++;
         }
 
         //TRAIL VISUALS
