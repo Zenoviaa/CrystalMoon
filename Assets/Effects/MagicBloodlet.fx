@@ -58,7 +58,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     // Normalized pixel coordinates (from 0 to 1)
     //Calculate Distortion
     float2 coords = input.TextureCoordinates;
-    float d = tex2D(noiseTex, coords + float2(time * -0.1, 0.0)).r;
+    float d = tex2D(noiseTex, coords + float2(time * -0.1, time * -0.05)).r;
     float offset = d * distortion;
     float distortionNoise = tex2D(primaryTex, coords + offset + float2(time * -0.05, 0.0)).r;
     float distortion = 0.1;
@@ -68,7 +68,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float2 scrollingNoise = coords + float2(sin(rot) * distortion, time * 0.3);
     
     //Scroll multiple directions and lerp together to make a cool effect
-    float3 col = tex2D(primaryTex, coords + scrollingNoise).rgb * 0.5;
+    float3 col = tex2D(noiseTex, coords + scrollingNoise).rgb * 0.5;
     for (float f = 0.0; f < 1.0; f += 0.25)
     {
         float rot = f * 3.14;
@@ -79,7 +79,6 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
                            
         float colorMap = tex2D(noiseTex, offsetCoords + scrollingNoise).r;
         float3 targetCol = lerp(primaryColor, noiseColor, colorMap);
-        float4 s = tex2D(primaryTex, offsetCoords + scrollingNoise);
         col = lerp(col, targetCol, 0.25);
     }
   
@@ -91,9 +90,10 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float factor = l / 0.5;
     float3 finalCol = lerp(col, outlineCol, factor);
     
-    float3 trailCol = distortionNoise * finalCol;
-    float p = tex2D(primaryTex, coords + time * 0.05).r;
-
+    float3 trailCol = d * finalCol;
+    float p = tex2D(primaryTex, coords + float2(time * -0.05, 0.0)).r;
+    p *= d;
+    
     if (p > alpha)
     {
         return float4(trailCol, 1.0);

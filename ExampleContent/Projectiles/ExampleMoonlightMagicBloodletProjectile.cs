@@ -12,11 +12,12 @@ namespace CrystalMoon.ExampleContent.Projectiles
 {
     internal class ExampleMoonlightMagicBloodletProjectile : ModProjectile
     {
+        int trailingMode = 0;
         private ref float _timer => ref Projectile.ai[0];
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            ProjectileID.Sets.TrailCacheLength[Type] = 18;
+            ProjectileID.Sets.TrailCacheLength[Type] = 36;
             ProjectileID.Sets.TrailingMode[Type] = 2;
         }
 
@@ -36,7 +37,9 @@ namespace CrystalMoon.ExampleContent.Projectiles
         {
             base.AI();
             _timer++;
+
             //AI_Particles();
+            Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.PiOver4 / 48);
         }
 
         private void AI_Particles()
@@ -58,31 +61,44 @@ namespace CrystalMoon.ExampleContent.Projectiles
 
         private Color ColorFunction(float completionRatio)
         {
-            Color c = Color.White;
+            Color c = Color.Red;
             return c;
         }
 
         private float WidthFunction(float completionRatio)
         {
-            return MathHelper.Lerp(32, 8, completionRatio);
+            switch (trailingMode)
+            {
+                default:
+                case 0:
+                    return MathHelper.Lerp(32, 0, completionRatio);
+                case 1:
+                    return MathHelper.Lerp(190, 0, completionRatio);
+            }
+        
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
             //Trail
             var shader = MagicBloodletShader.Instance;
-
-            shader.PrimaryTexture = TextureRegistry.NoiseTextureWater3;
+            trailingMode = 0;
+            shader.PrimaryTexture = TrailRegistry.BloodletTrail;
             shader.NoiseTexture = TextureRegistry.NoiseTextureClouds3;
             shader.PrimaryColor = new Color(255, 51, 51);
-            shader.NoiseColor = Color.Black;
+            shader.NoiseColor = Color.Lerp(shader.PrimaryColor, Color.Black, 0.5f);
             shader.BlendState = BlendState.AlphaBlend;
             shader.SamplerState = SamplerState.PointWrap;
-            shader.Speed = 3.5f;
-            shader.Distortion = 0.3f;
+            shader.Speed = 10.5f;
+            shader.Distortion = 0.1f;
             shader.Alpha = 0.25f;
+
             //This just applis the shader changes
             TrailDrawer.Draw(Main.spriteBatch, Projectile.oldPos, Projectile.oldRot, ColorFunction, WidthFunction, shader, offset: Projectile.Size/2);
+
+            //trailingMode = 1;
+            //shader.Alpha = 0.25f;
+            //TrailDrawer.Draw(Main.spriteBatch, Projectile.oldPos, Projectile.oldRot, ColorFunction, WidthFunction, shader, offset: Projectile.Size / 2);
             return base.PreDraw(ref lightColor);
         }
     }
