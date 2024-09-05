@@ -26,6 +26,7 @@ namespace CrystalMoon.ExampleContent.Items
             _projectilesToShoot.Add(ModContent.ProjectileType<ExampleCircleExplosionProjectile>());
             _projectilesToShoot.Add(ModContent.ProjectileType<ExampleMoonlightMagicHexProjectile>());
             _projectilesToShoot.Add(ModContent.ProjectileType<ExampleMoonlightMagicRadianceProjectile>());
+            _projectilesToShoot.Add(ModContent.ProjectileType<ExampleMoonlightMagicBloodletProjectile>());
         }
 
         // The Display Name and Tooltip of this item can be edited in the 'Localization/en-US_Mods.CrystalMoon.hjson' file.
