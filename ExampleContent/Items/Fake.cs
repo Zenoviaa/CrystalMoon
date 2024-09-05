@@ -25,8 +25,8 @@ namespace CrystalMoon.ExampleContent.Items
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<ExampleCircleExplosionProjectile>();
-            Item.shootSpeed = 1;
+            Item.shoot = ModContent.ProjectileType<ExampleMoonlightMagicHexProjectile>();
+            Item.shootSpeed = 15;
         }
 
         public override void AddRecipes()

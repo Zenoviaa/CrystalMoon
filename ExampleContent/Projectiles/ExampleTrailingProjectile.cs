@@ -40,7 +40,7 @@ namespace CrystalMoon.ExampleContent.Projectiles
 
         private float WidthFunction(float p)
         {
-            return MathHelper.Lerp(250, 0, Easing.OutExpo(p, 6));
+            return MathHelper.Lerp(250, 180, Easing.OutExpo(p, 6));
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -56,27 +56,16 @@ namespace CrystalMoon.ExampleContent.Projectiles
             //Used for blending the trail colors
             //Set it to any noise texture
             simpleTrailShader.TertiaryTrailingTexture = TrailRegistry.CrystalTrail;
-            simpleTrailShader.PrimaryColor = Color.Red;
-            simpleTrailShader.SecondaryColor = Color.Green;
-
-            //Alpha Blend/Additive
-            simpleTrailShader.BlendState = BlendState.NonPremultiplied;
-
-            //How many times to draw the trail, useful for additive drawing
-            simpleTrailShader.DrawCount = 3;
-
+            simpleTrailShader.PrimaryColor = Color.Wheat;
+            simpleTrailShader.SecondaryColor = Color.Wheat;
+            simpleTrailShader.BlendState = BlendState.Additive;
             SpriteBatch spriteBatch = Main.spriteBatch;
             TrailDrawer.Draw(spriteBatch,
                 Projectile.oldPos, 
                 Projectile.oldRot, 
                 ColorFunction,
                 WidthFunction, simpleTrailShader, offset: new Vector2(Projectile.width / 2, Projectile.height / 2));
-            simpleTrailShader.BlendState = BlendState.Additive;
-            TrailDrawer.Draw(spriteBatch,
-              Projectile.oldPos,
-              Projectile.oldRot,
-              ColorFunction,
-              WidthFunction, simpleTrailShader, offset: new Vector2(Projectile.width / 2, Projectile.height / 2));
+    
             return base.PreDraw(ref lightColor);
         }
     }

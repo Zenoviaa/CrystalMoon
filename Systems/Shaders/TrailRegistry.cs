@@ -7,6 +7,8 @@ namespace CrystalMoon.Systems.Shaders
     internal static class TrailRegistry
     {
         public static string AssetDirectory => "CrystalMoon/Assets/NoiseTextures/";
+        public static Asset<Texture2D> BeamTrail =>
+    ModContent.Request<Texture2D>($"{AssetDirectory}BeamTrail");
         public static Asset<Texture2D> SlashTrail1 =>
             ModContent.Request<Texture2D>($"{AssetDirectory}SlashTrail1");
         public static Asset<Texture2D> GlowTrail =>

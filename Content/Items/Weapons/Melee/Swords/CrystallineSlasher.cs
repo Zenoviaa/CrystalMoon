@@ -10,6 +10,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using CrystalMoon.ExampleContent.Projectiles;
 
 namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
 {
@@ -49,7 +50,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             int dir = comboPlayer.ComboDirection;
             Projectile.NewProjectile(source, position, velocity, type, damage, knockback,
                 player.whoAmI, combo, dir);
-
+            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<ExampleTrailingProjectile>(), damage, knockback,
+                  player.whoAmI);
             comboPlayer.IncreaseCombo(maxCombo: 6);
             return false;
         }
@@ -234,7 +236,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
 
         protected override float WidthFunction(float p)
         {
-            float trailWidth = MathHelper.Lerp(0, 256, p);
+            float trailWidth = MathHelper.Lerp(0, 384, p);
             float fadeWidth = MathHelper.Lerp(trailWidth, 0, _smoothedLerpValue) * Easing.OutExpo(_smoothedLerpValue, 4);
             return fadeWidth;
         }

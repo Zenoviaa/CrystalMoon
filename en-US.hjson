@@ -12,6 +12,8 @@ Mods: {
 			ExampleTrailingProjectile.DisplayName: Example Trailing Projectile
 			RuneHammerSlash.DisplayName: Rune Hammer Slash
 			ExampleCircleExplosionProjectile.DisplayName: Example Circle Explosion Projectile
+			MoonlightMagicProjectile.DisplayName: Moonlight Magic Projectile
+			ExampleMoonlightMagicProjectile.DisplayName: Example Moonlight Magic Projectile
 		}
 
 		Buffs: {

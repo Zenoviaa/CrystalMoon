@@ -83,19 +83,10 @@ namespace CrystalMoon.Systems.Shaders
             return valid.ToArray();
         }
 
-        private static List<VertexPositionColorTexture> CalculateVertices(Vector2[] oldPos,
-            float[] oldRot,
-            Func<float, Color> colorFunc,
-            Func<float, float> widthFunc,
-       
-            Vector2? offset = null)
+
+        private static void CalculateVerticesPairs(Vector2[] trailingPoints, Func<float, Color> colorFunc,
+            Func<float, float> widthFunc, List<VertexPositionColorTexture> vertices)
         {
-            Vector2 o = offset == null ? Vector2.Zero : (Vector2)offset;
-            var vertices = new List<VertexPositionColorTexture>();
-            oldPos = RemoveZeros(oldPos, o);
-            LerpTrailPoints(oldPos, out Vector2[] trailingPoints);
-            //LerpRotationPoints(oldRot, out float[] rotationPoints);
-            /*
             for (int i = 0; i < trailingPoints.Length; i++)
             {
                 float length = trailingPoints.Length;
@@ -110,11 +101,15 @@ namespace CrystalMoon.Systems.Shaders
                 Vector3 finalTop = top.ToVector3();
                 Vector3 finalBottom = bottom.ToVector3();
 
-               
+
                 vertices.Add(new VertexPositionColorTexture(finalTop, color, new Vector2(uv, 0)));
                 vertices.Add(new VertexPositionColorTexture(finalBottom, color, new Vector2(uv, 1)));
+            }
+        }
 
-            }*/
+        private static void CalculateVerticesTris(Vector2[] trailingPoints, Func<float, Color> colorFunc,
+            Func<float, float> widthFunc, List<VertexPositionColorTexture> vertices)
+        {
 
             for (int i = 0; i < trailingPoints.Length - 1; i++)
             {
@@ -141,12 +136,11 @@ namespace CrystalMoon.Systems.Shaders
                 vertices.Add(new VertexPositionColorTexture(new Vector3(pos2 - off2, 0f), col2, new Vector2((uv2 + uvAdd) * uvMultiplier, coord2)));
                 vertices.Add(new VertexPositionColorTexture(new Vector3(pos1 - off1, 0f), col1, new Vector2((uv + uvAdd) * uvMultiplier, coord2)));
             }
-            return vertices;
         }
 
         private static void LerpTrailPoints(Vector2[] oldPos, out Vector2[] trailingPoints)
         {
-            float smoothFactor = 8;
+            float smoothFactor = 2;
             List<Vector2> points = new List<Vector2>();
             for (int i = 0; i < oldPos.Length - 1; i++)
             {
@@ -162,10 +156,10 @@ namespace CrystalMoon.Systems.Shaders
             trailingPoints = points.ToArray();
         }
 
-        /*
+
         private static void LerpRotationPoints(float[] oldRot, out float[] rotationPoints)
         {
-            float smoothFactor = 8;
+            float smoothFactor = 2;
             List<float> points = new List<float>();
             for (int i = 0; i < oldRot.Length - 1; i++)
             {
@@ -179,7 +173,24 @@ namespace CrystalMoon.Systems.Shaders
                 }
             }
             rotationPoints = points.ToArray();
-        }*/
+        }
+
+        private static List<VertexPositionColorTexture> CalculateVertices(Vector2[] oldPos,
+            float[] oldRot,
+            Func<float, Color> colorFunc,
+            Func<float, float> widthFunc,
+       
+            Vector2? offset = null)
+        {
+            Vector2 o = offset == null ? Vector2.Zero : (Vector2)offset;
+            var vertices = new List<VertexPositionColorTexture>();
+            oldPos = RemoveZeros(oldPos, o);
+            LerpTrailPoints(oldPos, out Vector2[] trailingPoints);
+            LerpRotationPoints(oldRot, out float[] rotationPoints);
+            CalculateVerticesTris(trailingPoints, colorFunc, widthFunc, vertices);
+            return vertices;
+        }
+
 
         public static void Draw(SpriteBatch spriteBatch,
             Vector2[] oldPos,
@@ -204,12 +215,12 @@ namespace CrystalMoon.Systems.Shaders
             }
 
             var vertices = CalculateVertices(oldPos, oldRot, colorFunc, widthFunc, offset);
-            DrawPrims(vertices, shader);
+            DrawPrimsTriangles(vertices, shader);
             shader.FillShape = false;
         }
 
 
-        private static void DrawPrims(List<VertexPositionColorTexture> vertices, BaseShader shader)
+        private static void DrawPrimsTriangles(List<VertexPositionColorTexture> vertices, BaseShader shader)
         {
             if (vertices.Count % 6 != 0 || vertices.Count <= 3)
                 return;
@@ -225,6 +236,28 @@ namespace CrystalMoon.Systems.Shaders
 
             graphicsDevice.DrawUserPrimitives(
               PrimitiveType.TriangleList, vertices.ToArray(), 0, vertices.Count / 3);
+
+            graphicsDevice.RasterizerState.CullMode = oldCullMode;
+            graphicsDevice.BlendState = originalBlendState;
+            graphicsDevice.SamplerStates[0] = originalSamplerState;
+        }
+
+        private static void DrawPrimsStrip(List<VertexPositionColorTexture> vertices, BaseShader shader)
+        {
+            if (vertices.Count % 2 != 0 || vertices.Count <= 1)
+                return;
+
+            GraphicsDevice graphicsDevice = Main.instance.GraphicsDevice;
+            BlendState originalBlendState = graphicsDevice.BlendState;
+            CullMode oldCullMode = graphicsDevice.RasterizerState.CullMode;
+            SamplerState originalSamplerState = graphicsDevice.SamplerStates[0];
+
+            graphicsDevice.RasterizerState.CullMode = CullMode.None;
+            graphicsDevice.BlendState = shader.BlendState;
+            graphicsDevice.SamplerStates[0] = shader.SamplerState;
+
+            graphicsDevice.DrawUserPrimitives(
+              PrimitiveType.TriangleStrip, vertices.ToArray(), 0, vertices.Count / 2);
 
             graphicsDevice.RasterizerState.CullMode = oldCullMode;
             graphicsDevice.BlendState = originalBlendState;

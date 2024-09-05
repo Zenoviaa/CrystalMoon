@@ -12,11 +12,13 @@ namespace CrystalMoon.Registries
         public static AssetRepository Assets => CrystalMoon.Instance.Assets;
         public static MiscShaderData SimpleTrailEffect => GameShaders.Misc["CrystalMoon:SimpleTrail"];
         public static MiscShaderData SimpleGradientTrailEffect => GameShaders.Misc["CrystalMoon:SimpleGradientTrail"];
+        public static MiscShaderData MagicHexEffect => GameShaders.Misc["CrystalMoon:MagicHex"];
         public static MiscShaderData CloudsShader => GameShaders.Misc["CrystalMoon:Clouds"];
         public static MiscShaderData CloudsFrontShader => GameShaders.Misc["CrystalMoon:CloudsFront"];
         public static MiscShaderData NightCloudsShader => GameShaders.Misc["CrystalMoon:NightClouds"];
         public static MiscShaderData CloudsDesertShader => GameShaders.Misc["CrystalMoon:CloudsDesert"];
         public static MiscShaderData CloudsDesertNightShader => GameShaders.Misc["CrystalMoon:CloudsDesertNight"];
+
         public static Filter WaterFilter => Filters.Scene["CrystalMoon:Water"];
         public static Filter WaterBasicFilter => Filters.Scene["CrystalMoon:WaterBasic"];
         public static Filter LavaFilter => Filters.Scene["CrystalMoon:Lava"];
@@ -40,6 +42,7 @@ namespace CrystalMoon.Registries
             RegisterMiscShader("CloudsDesertNight", "ScreenPass");
             RegisterMiscShader("Gradient", "ScreenPass");
             RegisterMiscShader("SimpleGradientTrail", "PrimitivesPass");
+            RegisterMiscShader("MagicHex", "PrimitivesPass");
 
             var miscShader9 = new Ref<Effect>(CrystalMoon.Instance.Assets.Request<Effect>("Assets/Effects/Water", AssetRequestMode.ImmediateLoad).Value);
             Filters.Scene["CrystalMoon:Water"] = new Filter(new ScreenShaderData(miscShader9, "PrimitivesPass"), EffectPriority.VeryHigh);

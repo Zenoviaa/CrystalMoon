@@ -9,6 +9,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Remove="Assets\Effects\Gradient.fx" />
+	  <None Remove="Assets\Effects\MagicHex.fx" />
 	  <None Remove="Assets\Effects\NightClouds.fx" />
 	  <None Remove="Assets\Effects\SimpleGradientTrail.fx" />
 	  <None Remove="Assets\NoiseTextures\BeamTrail.png" />
