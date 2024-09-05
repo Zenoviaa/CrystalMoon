@@ -10,6 +10,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using LunarVeil.Content.Bases;
 
 namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
 {
@@ -229,7 +230,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
         protected override Vector2 GetTrailOffset()
         {
             //Moves the trail along the blade, negative goes towards the player, positive goes away the player
-            return Vector2.One * 92;
+            return Vector2.One * 80;
         }
 
         protected override float WidthFunction(float p)
