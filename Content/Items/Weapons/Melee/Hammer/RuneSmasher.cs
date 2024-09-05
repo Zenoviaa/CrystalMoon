@@ -4,7 +4,7 @@ using CrystalMoon.Systems.Particles;
 using CrystalMoon.Systems.Players;
 using CrystalMoon.Systems.Shaders;
 using CrystalMoon.Visual.Particles;
-using LunarVeil.Content.Bases;
+using CrystalMoon.Content.Bases;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
@@ -13,6 +13,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 
 namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
 {

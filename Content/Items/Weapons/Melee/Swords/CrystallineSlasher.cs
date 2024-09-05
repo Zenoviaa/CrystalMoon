@@ -10,7 +10,6 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using LunarVeil.Content.Bases;
 
 namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
 {
