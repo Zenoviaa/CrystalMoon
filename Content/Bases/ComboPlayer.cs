@@ -1,6 +1,6 @@
 ﻿using Terraria.ModLoader;
 
-namespace LunarVeil.Content.Bases
+namespace CrystalMoon.Content.Bases
 {
     internal class ComboPlayer : ModPlayer
     {

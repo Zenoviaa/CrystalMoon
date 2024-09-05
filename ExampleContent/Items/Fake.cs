@@ -1,3 +1,4 @@
+using CrystalMoon.ExampleContent.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -24,6 +25,8 @@ namespace CrystalMoon.ExampleContent.Items
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<ExampleCircleExplosionProjectile>();
+            Item.shootSpeed = 1;
         }
 
         public override void AddRecipes()

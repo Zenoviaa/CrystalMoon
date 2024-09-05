@@ -3,7 +3,7 @@ using CrystalMoon.Systems.Particles;
 using CrystalMoon.Systems.Players;
 using CrystalMoon.Systems.Shaders;
 using CrystalMoon.Visual.Particles;
-using LunarVeil.Content.Bases;
+using CrystalMoon.Content.Bases;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -20,7 +20,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
 
     public class CrystallineSlasher : ModItem
     {
-        // The Display Name and Tooltip of this item can be edited in the 'Localization/en-US_Mods.LunarVeil.hjson' file.
+        // The Display Name and Tooltip of this item can be edited in the 'Localization/en-US_Mods.CrystalMoon.hjson' file.
         public override void SetDefaults()
         {
             Item.damage = 8;

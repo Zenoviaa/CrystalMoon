@@ -10,6 +10,7 @@ Mods: {
 		Projectiles: {
 			CrystallineSwordSlash.DisplayName: Crystalline Sword Slash
 			ExampleTrailingProjectile.DisplayName: Example Trailing Projectile
+			ExampleCircleExplosionProjectile.DisplayName: Example Circle Explosion Projectile
 		}
 	}
 }

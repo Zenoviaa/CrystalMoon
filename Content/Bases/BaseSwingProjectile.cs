@@ -8,7 +8,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace LunarVeil.Content.Bases
+namespace CrystalMoon.Content.Bases
 {
     public abstract class BaseSwingProjectile : ModProjectile
     {       
