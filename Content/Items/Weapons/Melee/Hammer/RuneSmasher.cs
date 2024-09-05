@@ -310,7 +310,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
               //  ParticleManager.NewParticle<StarParticle2>(target.Center, velocity, Color.DarkGoldenrod, randScale);
             }
             */
-            if (bounceTimer <= 0 && bounceCount < 3)
+            if (bounceTimer <= 0 && bounceCount < 1)
             {
                 if (Main.myPlayer == player.whoAmI)
                 {
