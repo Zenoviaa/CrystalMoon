@@ -4,11 +4,13 @@ Mods: {
 			RainforestTree.MapEntry: Rainforest Tree
 			RainforestTreeBase.MapEntry: Rainforest Tree Base
 			RainforestTreeSapling.MapEntry: Rainforest Tree Sapling
+			MothlightGrass.MapEntry: Mothlight Grass
 		}
 
 		Projectiles: {
 			CrystallineSwordSlash.DisplayName: Crystalline Sword Slash
 			ExampleTrailingProjectile.DisplayName: Example Trailing Projectile
+			RuneHammerSlash.DisplayName: Rune Hammer Slash
 		}
 	}
 }

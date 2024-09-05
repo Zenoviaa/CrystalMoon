@@ -96,3 +96,8 @@ MothlightGrassBlock: {
 	DisplayName: Mothlight Grass Block
 	Tooltip: ""
 }
+
+RuneSmasher: {
+	DisplayName: Rune Smasher
+	Tooltip: ""
+}
