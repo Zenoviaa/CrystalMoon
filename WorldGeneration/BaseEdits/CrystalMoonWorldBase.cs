@@ -3233,42 +3233,39 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     Vector2 HillPosition = new Vector2(smx - Main.rand.Next(10), smy + contdown);
                     if (daa < 10)
                     {
-                       
 
-                        WorldUtils.Gen(HillPosition.ToPoint(), new BrokenCircleShape(radius: 10, distortionAmount: 0.5f), Actions.Chain(new GenAction[]
-                                   {
-                                    new Actions.SetTile(TileID.Stone),
-                                   }));
+                        WorldUtils.Gen(HillPosition.ToPoint(), new Shapes.Circle(Main.rand.Next(30, 65)), new Actions.SetTile(TileID.Stone));
+
 
 
                     //    WorldGen.digTunnel(smx - Main.rand.Next(10), smy - 250 - contdown, 0, 1, 1, 15, false);
                     }
 
-                    if (daa >= 10 && daa < 15)
+                    if (daa >= 10 && daa < 14)
                     {
 
+                   
+                        WorldUtils.Gen(HillPosition.ToPoint(), new Shapes.Circle(Main.rand.Next(30, 55)), new Actions.SetTile((ushort)ModContent.TileType<MothlightGrass>()));
 
-                        WorldUtils.Gen(HillPosition.ToPoint(), new Shapes.Circle(Main.rand.Next(10,20)), Actions.Chain(new GenAction[]
-                                   {
-                                 
-                                    new Actions.SetTile((ushort)ModContent.TileType<MothlightGrass>()),
-                                  
-                                   }));
 
 
                         //    WorldGen.digTunnel(smx - Main.rand.Next(10), smy - 250 - contdown, 0, 1, 1, 15, false);
                     }
 
-                    if (daa == 15)
+                    if (daa == 14)
                     {
 
+                       // WorldUtils.Gen(HillPosition.ToPoint(), new UpsideDownMound(Main.rand.Next(10, 30), Main.rand.Next(10, 20)), new Actions.SetTile((ushort)ModContent.TileType<MothlightGrass>()));
 
-                        WorldUtils.Gen(HillPosition.ToPoint(), new UpsideDownMound(Main.rand.Next(10, 30), Main.rand.Next(10, 20)), Actions.Chain(new GenAction[]
-                                   {
+                        WorldUtils.Gen(HillPosition.ToPoint(), new Shapes.Circle(Main.rand.Next(80, 90), Main.rand.Next(80, 90)), new Actions.SetTile((ushort)ModContent.TileType<MothlightGrass>()));
+                       
+                        WorldUtils.Gen(HillPosition.ToPoint(), new Shapes.HalfCircle(90), Actions.Chain(new GenAction[]
+                                    {
+                                     new Actions.ClearTile(true),
+                                     new Actions.Smooth(true)
+                                    }));
 
-                                    new Actions.SetTile((ushort)ModContent.TileType<MothlightGrass>()),
 
-                                   }));
 
 
                         //    WorldGen.digTunnel(smx - Main.rand.Next(10), smy - 250 - contdown, 0, 1, 1, 15, false);
@@ -3287,15 +3284,71 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                // AbysmStart = new Point(smx, smy - 250 - contdown);
                // AbysmStart2 = new Point(smx, smy - 250 - contdown);
 
-            
+
+        }
+
+        private void MakingMothRandomness(GenerationProgress progress, GameConfiguration configuration)
+        {
+            progress.Message = "The Moths taking pieces of the moon";
 
 
-            
 
+
+            // Select a place in the first 6th of the world, avoiding the oceans
            
 
-           
-            
+            for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY * 2.2f) * 6E-03); k++)
+            {
+                int X = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
+                int Y = WorldGen.genRand.Next(0, (int)Main.worldSurface + 200);
+                int yBelow = Y + 1;
+                Vector2 WallPosition = new Vector2(X, yBelow);
+                if (!WorldGen.SolidTile(X, yBelow))
+                    continue;
+
+                if (Main.tile[X, yBelow].TileType == TileID.Stone)
+                {
+                    StructureMap structures = GenVars.structures;
+                    Rectangle areaToPlaceIn = new Rectangle(
+                        (int)WallPosition.X - 3,
+                        (int)WallPosition.Y - 3,
+                        6, 6);
+                    if (!structures.CanPlace(areaToPlaceIn))
+                        continue;
+                    WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Circle(WorldGen.genRand.Next(1, 3)), Actions.Chain(new GenAction[]
+                       {
+                            //new Actions.ClearWall(true),
+                            new Actions.SetTile(TileID.Stone),
+                            new Actions.Smooth(true)
+                       }));
+
+
+
+                }
+
+            }
+
+            for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY * 8.2f) * 6E-04); k++)
+            {
+                int X = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
+                int Y = WorldGen.genRand.Next((int)Main.worldSurface - 1000, Main.maxTilesY);
+                int yBelow = Y + 1;
+                Vector2 WallPosition = new Vector2(X, yBelow);
+                if (!WorldGen.SolidTile(X, yBelow))
+                    continue;
+
+                if (Main.tile[X, yBelow].TileType == ModContent.TileType<MothlightGrass>())
+                {
+
+                    WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Circle(WorldGen.genRand.Next(1, 4)), Actions.Chain(new GenAction[]
+                       {
+                            new Actions.SetTile(TileID.Stone),
+                            new Actions.Smooth(true)
+                       }));
+
+
+
+                }
 
 
 
@@ -3303,8 +3356,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
 
 
-
-
+            }
 
 
 
