@@ -2,30 +2,19 @@
 using CrystalMoon.Registries;
 using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Systems.Shaders;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic.Enchantments
 {
-    internal class FlameLashEnchantmentItem : BaseEnchantmentItem<FlameLashEnchantment>
-    {
-
-    }
-
     internal class FlameLashEnchantment : BaseEnchantment
     {
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             base.OnHitNPC(target, hit, damageDone);
-
 
             //Spawn the explosion
             Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center, Vector2.Zero, ModContent.ProjectileType<FlameLashEnchantmentExplosion>(),
@@ -62,7 +51,6 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments
 
         protected override Color ColorFunction(float p)
         {
-
             //Main color of the beam
             Color c;
             switch (trailMode)
@@ -79,7 +67,6 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments
                     c.A = 0;
                     break;
             }
-
 
             return c;
         }
@@ -132,7 +119,6 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments
             shader.Power = 0.25f;
 
             //This just applis the shader changes
-
             //Main Fill
             TrailDrawer.Draw(Main.spriteBatch, _circlePos, Projectile.oldRot, ColorFunction, WidthFunction, shader, offset: Projectile.Size / 2);
             TrailDrawer.Draw(Main.spriteBatch, _circlePos, Projectile.oldRot, ColorFunction, WidthFunction, shader, offset: Projectile.Size / 2);

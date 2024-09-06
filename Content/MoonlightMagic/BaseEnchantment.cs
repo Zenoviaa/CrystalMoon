@@ -1,25 +1,31 @@
-﻿using Terraria;
+﻿using System;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic
 {
-    internal abstract class BaseEnchantmentItem<T> : ModItem 
-        where T : BaseEnchantment, new()
+    internal abstract class BaseEnchantment : ModItem, 
+        IAdvancedMagicAddon,
+        ICloneable
     {
-        public T Enchant => new();
+        public AdvancedMagicProjectile MagicProj { get; set; }
+        public Projectile Projectile => MagicProj.Projectile;
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
+
+        public BaseEnchantment Instantiate()
+        {
+            return (BaseEnchantment)Clone(); 
+        }
+
         public override void SetDefaults()
         {
             base.SetDefaults();
         }
-    }
 
-    internal abstract class BaseEnchantment :
-        IMagicAddon
-    {
-        public MoonlightMagicProjectile MagicProj { get; set; }
-        public Projectile Projectile => MagicProj.Projectile;
         //Enchantment stuff
-        public virtual void SetDefaults() { }
         public virtual void AI() { }
         public virtual void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) { }
         public virtual void OnKill(int timeLeft) { }
