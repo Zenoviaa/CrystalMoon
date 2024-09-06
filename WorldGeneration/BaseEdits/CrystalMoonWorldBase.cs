@@ -3418,6 +3418,45 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
             progress.Message = "Bounding the flowers";
 
 
+            for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY * 6.2f) * 6E-04); k++)
+            {
+                int X = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
+                int Y = WorldGen.genRand.Next((int)Main.worldSurface - 1000, (int)Main.worldSurface + 400);
+                int yBelow = Y;
+                Vector2 WallPosition = new Vector2(X, yBelow);
+                Vector2D WallPosition2 = new Vector2D(WorldGen.genRand.Next(-35, -25), WorldGen.genRand.Next(1, 8));
+                Vector2D WallPosition3 = new Vector2D(WorldGen.genRand.Next(25, 35), WorldGen.genRand.Next(1, 8));
+                if (!WorldGen.SolidTile(X, yBelow))
+                    continue;
+
+                if (Main.tile[X, yBelow].TileType == ModContent.TileType<MothlightGrass>())
+                {
+
+                    WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Tail(15, WallPosition2), Actions.Chain(new GenAction[]
+                       {
+                           new Actions.ClearWall(true),
+                            new Actions.SetTile(TileID.GrayBrick),
+                            //new Actions.Smooth(true)
+                       }));
+
+                    WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Tail(15, WallPosition3), Actions.Chain(new GenAction[]
+                       {
+                           new Actions.ClearWall(true),
+                            new Actions.SetTile(TileID.GrayBrick),
+                            //new Actions.Smooth(true)
+                       }));
+
+
+
+                }
+
+
+
+
+
+
+
+            }
 
 
             // Select a place in the first 6th of the world, avoiding the oceans
@@ -3461,58 +3500,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
             }
 
-            for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY * 9.2f) * 6E-04); k++)
-            {
-                int X = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
-                int Y = WorldGen.genRand.Next((int)0, (int)Main.UnderworldLayer);
-                int yBelow = Y + 1;
-                Vector2 WallPosition = new Vector2(X, yBelow + 2);
-                if (!WorldGen.SolidTile(X, yBelow))
-                    continue;
-
-                if (Main.tile[X, yBelow].TileType == TileID.IceBlock)
-                {
-                    switch (Main.rand.Next(2))
-                    {
-                        case 0:
-                            //Start Left
-
-
-                            WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Circle(1), Actions.Chain(new GenAction[]
-                 {
-                            new Actions.SetTile(TileID.IceBlock),
-                            //new Modifiers.Dither(.2),// Dithering
-                          //  new Actions.ClearWall()
-
-                 }));
-
-                            //    WorldGen.PlaceWall(X, yBelow + 3, (ushort)ModContent.WallType<LargeIceyStone>());
-                            break;
-
-
-                        case 1:
-                            //Start Right
-
-
-                            WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Circle(3), Actions.Chain(new GenAction[]
-                 {
-                            new Actions.SetTile(TileID.IceBlock),
-                            new Actions.ClearWall()
-                            //new Modifiers.Dither(.2),// Dithering
-                            }));
-
-                            //   WorldGen.PlaceWall(X, yBelow + 1, (ushort)ModContent.WallType<MediumIceyStone>());
-                            break;
-
-
-                    }
-
-
-
-
-
-
-                }
+           
 
 
 
@@ -3523,7 +3511,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
             }
 
 
-        }
+        
         #endregion
 
 
