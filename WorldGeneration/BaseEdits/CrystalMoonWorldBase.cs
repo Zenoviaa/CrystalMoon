@@ -768,10 +768,10 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     WorldGen.TileRunner(Loc7.X, Loc7.Y + 300, 1200, 7, TileID.IceBlock, false, 0f, 0f, true, true);
                     WorldGen.TileRunner(Loc7.X, Loc7.Y + 600, 1000, 2, TileID.IceBlock, false, 0f, 0f, true, true);
                     WorldGen.TileRunner(Loc7.X, Loc7.Y + 900, 500, 2, TileID.IceBlock, false, 0f, 0f, true, true);
-                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1200, 500, 2, ModContent.TileType<AbyssalDirt>(), false, 0f, 0f, true, true);
-                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1500, 500, 2, ModContent.TileType<AbyssalDirt>(), false, 0f, 0f, true, true);
-                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1800, 500, 2, ModContent.TileType<AbyssalDirt>(), false, 0f, 0f, true, true);
-                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1800, 700, 2, ModContent.TileType<AbyssalDirt>(), false, 0f, 0f, true, true);
+                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1200, 500, 2, TileID.IceBlock, false, 0f, 0f, true, true);
+                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1500, 500, 2, TileID.IceBlock, false, 0f, 0f, true, true);
+                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1800, 500, 2, TileID.IceBlock, false, 0f, 0f, true, true);
+                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1800, 700, 2, TileID.IceBlock, false, 0f, 0f, true, true);
 
 
 
@@ -795,9 +795,9 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     // Dig big chasm at top
                     WorldGen.digTunnel(smx - Main.rand.Next(10), smy - 250 - contdown, 0, 1, 1, 15, false);
 
-                    WorldGen.digTunnel(smx - 300 - contdownx, smy + 1200, 0, 1, 1, Main.rand.Next(40) + 10, false);
+                    WorldGen.digTunnel(smx - 300 - contdownx, smy + 1200, 0, 1, 1, Main.rand.Next(40) + 10, true);
 
-                    WorldGen.digTunnel(smx - 300 - contdownx, smy + 1500, 0, 1, 1, Main.rand.Next(40) + 10, false);
+                    WorldGen.digTunnel(smx - 300 - contdownx, smy + 1500, 0, 1, 1, Main.rand.Next(40) + 10, true);
 
                     WorldGen.digTunnel(smx - 300 - contdownx, smy + 1800, 0, 1, 1, Main.rand.Next(40) + 10, true);
                     placed = true;
@@ -844,10 +844,10 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     WorldGen.TileRunner(Loc7.X, Loc7.Y + 300, 1200, 7, TileID.IceBlock, false, 0f, 0f, true, true);
                     WorldGen.TileRunner(Loc7.X, Loc7.Y + 600, 1000, 2, TileID.IceBlock, false, 0f, 0f, true, true);
                     WorldGen.TileRunner(Loc7.X, Loc7.Y + 900, 500, 2, TileID.IceBlock, false, 0f, 0f, true, true);
-                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1200, 500, 2, ModContent.TileType<AbyssalDirt>(), false, 0f, 0f, true, true);
-                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1500, 500, 2, ModContent.TileType<AbyssalDirt>(), false, 0f, 0f, true, true);
-                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1800, 500, 2, ModContent.TileType<AbyssalDirt>(), false, 0f, 0f, true, true);
-                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1800, 700, 2, ModContent.TileType<AbyssalDirt>(), false, 0f, 0f, true, true);
+                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1200, 500, 2, TileID.IceBlock, false, 0f, 0f, true, true);
+                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1500, 500, 2, TileID.IceBlock, false, 0f, 0f, true, true);
+                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1800, 500, 2, TileID.IceBlock, false, 0f, 0f, true, true);
+                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1800, 700, 2, TileID.IceBlock, false, 0f, 0f, true, true);
 
                     WorldUtils.Gen(Loc7, new Shapes.Circle(500, 300), Actions.Chain(new GenAction[]
                     {
@@ -869,9 +869,9 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     // Dig big chasm at top
                     WorldGen.digTunnel(smx - Main.rand.Next(10), smy - 250 - contdown, 0, 1, 1, 15, false);
 
-                    WorldGen.digTunnel(smx - 300 - contdownx, smy + 1200, 0, 1, 1, Main.rand.Next(40) + 10, false);
+                    WorldGen.digTunnel(smx - 300 - contdownx, smy + 1200, 0, 1, 1, Main.rand.Next(40) + 10, true);
 
-                    WorldGen.digTunnel(smx - 300 - contdownx, smy + 1500, 0, 1, 1, Main.rand.Next(40) + 10, false);
+                    WorldGen.digTunnel(smx - 300 - contdownx, smy + 1500, 0, 1, 1, Main.rand.Next(40) + 10, true);
 
                     WorldGen.digTunnel(smx - 300 - contdownx, smy + 1800, 0, 1, 1, Main.rand.Next(40) + 10, true);
                     placed = true;
@@ -924,8 +924,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     continue;
 
                 if (Main.tile[X, yBelow].TileType == TileID.SnowBlock ||
-                    Main.tile[X, yBelow].TileType == TileID.IceBlock ||
-                    Main.tile[X, yBelow].TileType == ModContent.TileType<AbyssalDirt>())
+                    Main.tile[X, yBelow].TileType == TileID.IceBlock)
                 {
 
                     WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Circle(WorldGen.genRand.Next(1, 17)), Actions.Chain(new GenAction[]
@@ -992,7 +991,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     {
                         WorldUtils.Gen(AbysmPosition.ToPoint(), new Shapes.Circle(Blockwidth3), Actions.Chain(new GenAction[]
                      {
-                            new Actions.SetTile((ushort)ModContent.TileType<AbyssalDirt>()),
+                            new Actions.SetTile(TileID.IceBlock),
                             //new Modifiers.Dither(.2),// Dithering
                             new Actions.Smooth(true)
                      }));
@@ -1162,8 +1161,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                         continue;
 
                     if (Main.tile[X, yBelow].TileType == TileID.SnowBlock ||
-                        Main.tile[X, yBelow].TileType == TileID.IceBlock ||
-                        Main.tile[X, yBelow].TileType == ModContent.TileType<AbyssalDirt>())
+                        Main.tile[X, yBelow].TileType == TileID.IceBlock)
                     {
 
                      WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Circle(WorldGen.genRand.Next(1, 7)), Actions.Chain(new GenAction[]
@@ -1195,8 +1193,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     continue;
 
                 if (Main.tile[X, yBelow].TileType == TileID.SnowBlock ||
-                    Main.tile[X, yBelow].TileType == TileID.IceBlock ||
-                    Main.tile[X, yBelow].TileType == ModContent.TileType<AbyssalDirt>())
+                    Main.tile[X, yBelow].TileType == TileID.IceBlock)
                 {
 
                     WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Circle(WorldGen.genRand.Next(1, 7)), Actions.Chain(new GenAction[]
@@ -1266,8 +1263,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     continue;
 
                 if (Main.tile[X, yBelow].TileType == TileID.SnowBlock ||
-                    Main.tile[X, yBelow].TileType == TileID.IceBlock ||
-                    Main.tile[X, yBelow].TileType == ModContent.TileType<AbyssalDirt>())
+                    Main.tile[X, yBelow].TileType == TileID.IceBlock)
                 {
 
                     WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Circle(WorldGen.genRand.Next(1, 5)), Actions.Chain(new GenAction[]
