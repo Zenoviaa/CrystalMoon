@@ -160,7 +160,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                 //tasks.Insert(JungleGen + 2, new PassLegacy("RainDeeps", RainforestDeeps));
             }
 
-            int MothlightClumping = tasks.FindIndex(genpass => genpass.Name.Equals("Lunar Sands"));
+            int MothlightClumping = tasks.FindIndex(genpass => genpass.Name.Equals("Ice Clump"));
             if (MothlightClumping != -1)
             {
                 tasks.Insert(MothlightClumping + 1, new PassLegacy("Mothlight Clump", MothlightClump));
