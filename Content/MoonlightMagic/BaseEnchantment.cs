@@ -7,6 +7,8 @@ namespace CrystalMoon.Content.MoonlightMagic
         where T : BaseEnchantment, new()
     {
         public T Enchant => new();
+
+
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -14,9 +16,9 @@ namespace CrystalMoon.Content.MoonlightMagic
     }
 
     internal abstract class BaseEnchantment :
-        IMagicAddon
+        IAdvancedMagicAddon
     {
-        public MoonlightMagicProjectile MagicProj { get; set; }
+        public AdvancedMagicProjectile MagicProj { get; set; }
         public Projectile Projectile => MagicProj.Projectile;
         //Enchantment stuff
         public virtual void SetDefaults() { }

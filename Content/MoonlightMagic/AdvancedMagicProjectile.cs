@@ -1,5 +1,6 @@
 ﻿using CrystalMoon.Registries;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -7,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic
 {
-    internal class MoonlightMagicProjectile : ModProjectile
+    internal class AdvancedMagicProjectile : ModProjectile
     {
         public override string Texture => TextureRegistry.EmptyTexturePath;
 
@@ -26,7 +27,7 @@ namespace CrystalMoon.Content.MoonlightMagic
             }
         }
 
-        public BaseForm Form { get; private set; }
+        public Texture2D Form { get; private set; }
         public BaseMovement Movement { get; private set; }
         public BaseElement PrimaryElement { get; private set; }
         public List<BaseEnchantment> Enchantments { get; private set; } = new List<BaseEnchantment>();
@@ -43,7 +44,7 @@ namespace CrystalMoon.Content.MoonlightMagic
 
         public void SetMoonlightDefaults(
             BaseElement primaryElement,
-            BaseForm form,
+            Texture2D form,
             BaseMovement movement,
             List<BaseEnchantment> enchantments)
         {
@@ -63,8 +64,6 @@ namespace CrystalMoon.Content.MoonlightMagic
                 PrimaryElement.MagicProj = this;
             if (Movement != null)
                 Movement.MagicProj = this;
-            if (Form != null)
-                Form.MagicProj = this;
             OldPos = new Vector2[TrailLength];
         }
 
@@ -85,7 +84,6 @@ namespace CrystalMoon.Content.MoonlightMagic
                 OldPos[i] = OldPos[i - 1];
             }
             OldPos[0] = Projectile.position;
-
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -111,13 +109,25 @@ namespace CrystalMoon.Content.MoonlightMagic
         public override bool PreDraw(ref Color lightColor)
         {
             PrimaryElement?.DrawTrail();
-            Form?.PreDraw(ref lightColor);
+            if(Form != null)
+            {
+                PrimaryElement?.ApplyFormShader();
+                SpriteBatch spriteBatch = Main.spriteBatch;
+                Vector2 drawPos = Main.screenPosition - Projectile.Center;
+                Vector2 drawOrigin = Form.Size() / 2;
+                Color color = Color.White.MultiplyRGB(lightColor);
+                spriteBatch.Draw(Form, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+                
+                //Exit Shader Region
+                spriteBatch.End();
+                spriteBatch.Begin();
+            }
+
             return false;
         }
 
         public override void PostDraw(Color lightColor)
         {
-            Form?.PostDraw(lightColor);
             base.PostDraw(lightColor);
         }
     }

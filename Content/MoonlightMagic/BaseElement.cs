@@ -2,11 +2,12 @@
 
 namespace CrystalMoon.Content.MoonlightMagic
 {
-    internal abstract class BaseElement : IMagicAddon
+    internal abstract class BaseElement : IAdvancedMagicAddon
     {
-        public MoonlightMagicProjectile MagicProj { get; set; }
+        public AdvancedMagicProjectile MagicProj { get; set; }
         public Projectile Projectile => MagicProj.Projectile;
         public virtual void AI() { }
         public virtual void DrawTrail() { }
+        public virtual void ApplyFormShader() { }
     }
 }
