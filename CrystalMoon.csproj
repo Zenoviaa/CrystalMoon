@@ -14,6 +14,7 @@
 	  <None Remove="Assets\Effects\MagicGuut.fx" />
 	  <None Remove="Assets\Effects\MagicHex.fx" />
 	  <None Remove="Assets\Effects\MagicNatural.fx" />
+	  <None Remove="Assets\Effects\MagicNormal.fx" />
 	  <None Remove="Assets\Effects\MagicPhantasmal.fx" />
 	  <None Remove="Assets\Effects\MagicRadiance.fx" />
 	  <None Remove="Assets\Effects\MagicRadianceOutline.fx" />
@@ -52,6 +53,8 @@
 	  <Folder Include="Assets\Sounds\" />
 	  <Folder Include="Assets\Textures\TextureRemake\" />
 	  <Folder Include="Content\Items\Weapons\Melee\Axes\" />
+	  <Folder Include="Content\MoonlightMagic\Forms\" />
+	  <Folder Include="Content\MoonlightMagic\Movements\" />
 	  <Folder Include="Structures\" />
 	  <Folder Include="Systems\Foreground\" />
 	  <Folder Include="Systems\Primitives\" />

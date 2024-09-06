@@ -3,6 +3,7 @@ using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Systems.Shaders;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -10,7 +11,7 @@ namespace CrystalMoon.Content.Bases
 {
     internal abstract class BaseExplosionProjectile : ModProjectile
     {
-        private Vector2[] _circlePos = new Vector2[64];
+        protected Vector2[] _circlePos = new Vector2[64];
         private ref float _timer => ref Projectile.ai[0];
         private float _duration;
         private float _beamWidth;
@@ -38,12 +39,15 @@ namespace CrystalMoon.Content.Bases
             float r = RadiusFunction(progress);
             _beamWidth = BeamWidthFunction(progress);
             _beamColor = ColorFunction(progress);
+
+    
             for (int f = 0; f < _circlePos.Length; f++)
             {
                 float p = f / (float)_circlePos.Length;
-                Vector2 circlePos = Projectile.Center + Vector2.UnitY.RotatedBy(p * MathHelper.TwoPi) * r;
+                Vector2 circlePos = Projectile.position + Vector2.UnitY.RotatedBy(p * MathHelper.TwoPi) * r;
                 _circlePos[f] = circlePos;
             }
+         
         }
 
         protected virtual Color ColorFunction(float p)
@@ -56,11 +60,11 @@ namespace CrystalMoon.Content.Bases
             return _beamWidth;
         }
 
-        private float WidthFunction(float p)
+        protected float WidthFunction(float p)
         {
             return _beamWidth;
         }
-        private Color ColorFunctionReal(float p)
+        protected Color ColorFunctionReal(float p)
         {
             return _beamColor;
         }

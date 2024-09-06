@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CrystalMoon.Content.Bases.MoonlightMagic
+namespace CrystalMoon.Systems.Shaders
 {
-    internal abstract class BaseMoonlightMagicItem
+    internal class PrimDust
     {
     }
 }
