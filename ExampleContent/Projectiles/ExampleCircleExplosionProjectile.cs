@@ -1,4 +1,5 @@
 ﻿using CrystalMoon.Content.Bases;
+using CrystalMoon.Registries;
 using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Systems.Shaders;
 using Microsoft.Xna.Framework;
@@ -36,14 +37,14 @@ namespace CrystalMoon.ExampleContent.Projectiles
             var shader = SimpleTrailShader.Instance;
 
             //Main trailing texture
-            shader.TrailingTexture = TrailRegistry.GlowTrail;
+            shader.TrailingTexture = TextureRegistry.GlowTrail;
 
             //Blends with the main texture
-            shader.SecondaryTrailingTexture = TrailRegistry.GlowTrail;
+            shader.SecondaryTrailingTexture = TextureRegistry.GlowTrail;
 
             //Used for blending the trail colors
             //Set it to any noise texture
-            shader.TertiaryTrailingTexture = TrailRegistry.CrystalTrail;
+            shader.TertiaryTrailingTexture = TextureRegistry.CrystalTrail;
             shader.PrimaryColor = Color.DarkGoldenrod;
             shader.SecondaryColor = Color.Purple;
             shader.Speed = 20;

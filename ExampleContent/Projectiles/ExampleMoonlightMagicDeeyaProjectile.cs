@@ -15,6 +15,7 @@ namespace CrystalMoon.ExampleContent.Projectiles
     {
         int trailingMode = 0;
         private ref float _timer => ref Projectile.ai[0];
+        public override string Texture => TextureRegistry.EmptyTexturePath;
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
@@ -98,7 +99,7 @@ namespace CrystalMoon.ExampleContent.Projectiles
             trailingMode = 0;
 
    
-            shader.PrimaryTexture = TrailRegistry.BloodletTrail;
+            shader.PrimaryTexture = TextureRegistry.BloodletTrail;
             shader.NoiseTexture = TextureRegistry.NoiseTextureClouds3;
             shader.PrimaryColor = Color.Black;
             shader.NoiseColor = Color.Black;
@@ -115,7 +116,7 @@ namespace CrystalMoon.ExampleContent.Projectiles
         {
             trailingMode = 1;
             var shader = MagicRadianceOutlineShader.Instance;
-            shader.PrimaryTexture = TrailRegistry.DottedTrailOutline;
+            shader.PrimaryTexture = TextureRegistry.DottedTrailOutline;
             shader.NoiseTexture = TextureRegistry.NoiseTextureCloudsSmall;
             Color pink = new Color(255, 59, 247);
             Color c = Color.White;
@@ -135,7 +136,7 @@ namespace CrystalMoon.ExampleContent.Projectiles
         {
             trailingMode = 2;
             var shader = MagicRadianceOutlineShader.Instance;
-            shader.PrimaryTexture = TrailRegistry.DottedTrailOutline;
+            shader.PrimaryTexture = TextureRegistry.DottedTrailOutline;
             shader.NoiseTexture = TextureRegistry.NoiseTextureCloudsSmall;
 
             Color c = new Color(255, 112, 170);

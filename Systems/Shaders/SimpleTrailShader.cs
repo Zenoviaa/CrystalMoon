@@ -13,9 +13,9 @@ namespace CrystalMoon.Systems.Shaders
         public SimpleTrailShader()
         {
             Data = ShaderRegistry.SimpleTrailEffect;
-            TrailingTexture = TrailRegistry.StarTrail;
-            SecondaryTrailingTexture = TrailRegistry.StarTrail;
-            TertiaryTrailingTexture = TrailRegistry.StarTrail;
+            TrailingTexture = TextureRegistry.StarTrail;
+            SecondaryTrailingTexture = TextureRegistry.StarTrail;
+            TertiaryTrailingTexture = TextureRegistry.StarTrail;
             PrimaryColor = Color.White;
             SecondaryColor = Color.White;
             Speed = 5;

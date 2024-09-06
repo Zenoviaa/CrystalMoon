@@ -15,6 +15,7 @@ namespace CrystalMoon.ExampleContent.Projectiles
     {
         int trailingMode = 0;
         private ref float _timer => ref Projectile.ai[0];
+        public override string Texture => TextureRegistry.EmptyTexturePath;
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
@@ -66,8 +67,8 @@ namespace CrystalMoon.ExampleContent.Projectiles
         {
             trailingMode = 0;
             var shader = MagicPhantasmalShader.Instance;
-            shader.PrimaryTexture = TrailRegistry.GlowTrail;
-            shader.NoiseTexture = TrailRegistry.SpikyTrail;
+            shader.PrimaryTexture = TextureRegistry.GlowTrail;
+            shader.NoiseTexture = TextureRegistry.SpikyTrail;
             shader.BlendState = BlendState.Additive;
             shader.SamplerState = SamplerState.PointWrap;
             shader.Speed = 0.5f;

@@ -370,14 +370,14 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
             var shader = SimpleTrailShader.Instance;
 
             //Main trailing texture
-            shader.TrailingTexture = TrailRegistry.LightningTrail;
+            shader.TrailingTexture = TextureRegistry.LightningTrail;
 
             //Blends with the main texture
-            shader.SecondaryTrailingTexture = TrailRegistry.GlowTrail;
+            shader.SecondaryTrailingTexture = TextureRegistry.GlowTrail;
 
             //Used for blending the trail colors
             //Set it to any noise texture
-            shader.TertiaryTrailingTexture = TrailRegistry.CrystalTrail;
+            shader.TertiaryTrailingTexture = TextureRegistry.CrystalTrail;
             shader.PrimaryColor = Color.White;
             shader.SecondaryColor = Color.DarkGoldenrod;
             shader.BlendState = BlendState.AlphaBlend;

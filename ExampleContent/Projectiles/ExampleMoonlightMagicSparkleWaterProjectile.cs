@@ -15,6 +15,7 @@ namespace CrystalMoon.ExampleContent.Projectiles
     {
         int trailingMode = 0;
         private ref float _timer => ref Projectile.ai[0];
+        public override string Texture => TextureRegistry.EmptyTexturePath;
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
@@ -111,9 +112,9 @@ namespace CrystalMoon.ExampleContent.Projectiles
         {
             trailingMode = 0;
             var shader = MagicSparkleWaterShader.Instance;
-            shader.PrimaryTexture = TrailRegistry.DottedTrail;
+            shader.PrimaryTexture = TextureRegistry.DottedTrail;
             shader.NoiseTexture = TextureRegistry.NoiseTextureCloudsSmall;
-            shader.OutlineTexture = TrailRegistry.DottedTrailOutline;
+            shader.OutlineTexture = TextureRegistry.DottedTrailOutline;
             shader.PrimaryColor = Color.Lerp(Color.White, new Color(255, 207, 79), 0.5f);
             shader.NoiseColor = new Color(92, 100, 255);
             shader.OutlineColor = Color.Black;
@@ -131,7 +132,7 @@ namespace CrystalMoon.ExampleContent.Projectiles
         {
             trailingMode = 1;
             var shader = MagicRadianceOutlineShader.Instance;
-            shader.PrimaryTexture = TrailRegistry.DottedTrailOutline;
+            shader.PrimaryTexture = TextureRegistry.DottedTrailOutline;
             shader.NoiseTexture = TextureRegistry.NoiseTextureCloudsSmall;
 
             Color c = new Color(38, 204, 255);
@@ -149,7 +150,7 @@ namespace CrystalMoon.ExampleContent.Projectiles
         {
             trailingMode = 2;
             var shader = MagicRadianceOutlineShader.Instance;
-            shader.PrimaryTexture = TrailRegistry.DottedTrailOutline;
+            shader.PrimaryTexture = TextureRegistry.DottedTrailOutline;
             shader.NoiseTexture = TextureRegistry.NoiseTextureCloudsSmall;
 
             Color c = Color.White;

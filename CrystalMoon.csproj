@@ -13,6 +13,7 @@
 	  <None Remove="Assets\Effects\MagicDeeya.fx" />
 	  <None Remove="Assets\Effects\MagicGuut.fx" />
 	  <None Remove="Assets\Effects\MagicHex.fx" />
+	  <None Remove="Assets\Effects\MagicNatural.fx" />
 	  <None Remove="Assets\Effects\MagicPhantasmal.fx" />
 	  <None Remove="Assets\Effects\MagicRadiance.fx" />
 	  <None Remove="Assets\Effects\MagicRadianceOutline.fx" />
@@ -42,12 +43,6 @@
 	  <None Remove="Assets\NoiseTextures\WaveTrail.png" />
 	  <None Remove="Assets\NoiseTextures\WhispyTrail.png" />
 	  <None Remove="Assets\Textures\FX\SwordSlash.png" />
-	  <None Remove="ExampleContent\Projectiles\ExampleMoonlightMagicBloodletProjectile.png" />
-	  <None Remove="ExampleContent\Projectiles\ExampleMoonlightMagicDeeyaProjectile.png" />
-	  <None Remove="ExampleContent\Projectiles\ExampleMoonlightMagicGuutProjectile.png" />
-	  <None Remove="ExampleContent\Projectiles\ExampleMoonlightMagicPhantasmalProjectile.png" />
-	  <None Remove="ExampleContent\Projectiles\ExampleMoonlightMagicRadianceProjectile.png" />
-	  <None Remove="ExampleContent\Projectiles\ExampleMoonlightMagicSparkleWaterProjectile.png" />
 	</ItemGroup>
 
 	<!-- References -->

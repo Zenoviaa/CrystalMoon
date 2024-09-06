@@ -12,7 +12,7 @@ namespace CrystalMoon.Systems.Shaders
         public MagicRadianceOutlineShader()
         {
             Data = ShaderRegistry.MagicRadianceOutlineEffect;
-            PrimaryTexture = TrailRegistry.DottedTrail;
+            PrimaryTexture = TextureRegistry.DottedTrail;
             NoiseTexture = TextureRegistry.NoiseTextureClouds3;
             PrimaryColor = Color.White;
             NoiseColor = Color.White;

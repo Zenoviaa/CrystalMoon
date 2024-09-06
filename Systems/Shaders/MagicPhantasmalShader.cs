@@ -11,8 +11,8 @@ namespace CrystalMoon.Systems.Shaders
         public MagicPhantasmalShader()
         {
             Data = ShaderRegistry.MagicPhantasmalEffect;
-            PrimaryTexture = TrailRegistry.StarTrail;
-            NoiseTexture = TrailRegistry.StarTrail;
+            PrimaryTexture = TextureRegistry.StarTrail;
+            NoiseTexture = TextureRegistry.StarTrail;
             Speed = 5;
             Repeats = 1;
         }

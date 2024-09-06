@@ -74,14 +74,14 @@ namespace CrystalMoon.Content.Bases
             SimpleTrailShader simpleTrailShader = SimpleTrailShader.Instance;
 
             //Main trailing texture
-            simpleTrailShader.TrailingTexture = TrailRegistry.StarTrail;
+            simpleTrailShader.TrailingTexture = TextureRegistry.StarTrail;
 
             //Blends with the main texture
-            simpleTrailShader.SecondaryTrailingTexture = TrailRegistry.StarTrail;
+            simpleTrailShader.SecondaryTrailingTexture = TextureRegistry.StarTrail;
 
             //Used for blending the trail colors
             //Set it to any noise texture
-            simpleTrailShader.TertiaryTrailingTexture = TrailRegistry.CrystalTrail;
+            simpleTrailShader.TertiaryTrailingTexture = TextureRegistry.CrystalTrail;
             simpleTrailShader.PrimaryColor = Color.Red;
             simpleTrailShader.SecondaryColor = Color.Green;
 

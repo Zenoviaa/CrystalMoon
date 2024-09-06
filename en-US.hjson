@@ -21,6 +21,7 @@ Mods: {
 			ExampleMoonlightMagicDeeyaProjectile.DisplayName: Example Moonlight Magic Deeya Projectile
 			ExampleMoonlightMagicPhantasmalProjectile.DisplayName: Example Moonlight Magic Phantasmal Projectile
 			ExampleMoonlightMagicGuutProjectile.DisplayName: Example Moonlight Magic Guut Projectile
+			ExampleMoonlightMagicNaturalProjectile.DisplayName: Example Moonlight Magic Natural Projectile
 		}
 
 		Buffs: {

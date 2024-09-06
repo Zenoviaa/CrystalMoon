@@ -14,6 +14,7 @@ namespace CrystalMoon.ExampleContent.Projectiles
     {
         int trailingMode = 0;
         private ref float _timer => ref Projectile.ai[0];
+        public override string Texture => TextureRegistry.EmptyTexturePath;
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
@@ -86,7 +87,7 @@ namespace CrystalMoon.ExampleContent.Projectiles
             //Trail
             var shader = MagicBloodletShader.Instance;
             trailingMode = 0;
-            shader.PrimaryTexture = TrailRegistry.BloodletTrail;
+            shader.PrimaryTexture = TextureRegistry.BloodletTrail;
             shader.NoiseTexture = TextureRegistry.NoiseTextureClouds3;
             shader.PrimaryColor = new Color(255, 51, 51);
             shader.NoiseColor = Color.Lerp(shader.PrimaryColor, Color.Black, 0.5f);

@@ -11,6 +11,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CrystalMoon.ExampleContent.Projectiles;
+using CrystalMoon.Registries;
 
 namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
 {
@@ -253,14 +254,14 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             var shader = SimpleTrailShader.Instance;
 
             //Main trailing texture
-            shader.TrailingTexture = TrailRegistry.GlowTrail;
+            shader.TrailingTexture = TextureRegistry.GlowTrail;
 
             //Blends with the main texture
-            shader.SecondaryTrailingTexture = TrailRegistry.GlowTrail;
+            shader.SecondaryTrailingTexture = TextureRegistry.GlowTrail;
 
             //Used for blending the trail colors
             //Set it to any noise texture
-            shader.TertiaryTrailingTexture = TrailRegistry.CrystalTrail;
+            shader.TertiaryTrailingTexture = TextureRegistry.CrystalTrail;
             shader.PrimaryColor = Color.White;
             shader.SecondaryColor = Color.DarkSlateBlue;
             shader.BlendState = BlendState.Additive;

@@ -13,6 +13,7 @@ namespace CrystalMoon.ExampleContent.Projectiles
     internal class ExampleMoonlightMagicHexProjectile : ModProjectile
     {
         private ref float _timer => ref Projectile.ai[0];
+        public override string Texture => TextureRegistry.EmptyTexturePath;
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
@@ -73,7 +74,7 @@ namespace CrystalMoon.ExampleContent.Projectiles
             //Trail
             var shader = MagicHexShader.Instance;
 
-            shader.PrimaryTexture = TrailRegistry.GlowTrail;
+            shader.PrimaryTexture = TextureRegistry.GlowTrail;
             shader.NoiseTexture = TextureRegistry.NoiseTextureCloudsSmall;
             shader.PrimaryColor = new Color(195, 158, 255);
             shader.NoiseColor = new Color(78, 76, 180);//new Color(78, 76, 180);
