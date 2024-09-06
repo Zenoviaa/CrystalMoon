@@ -16,7 +16,7 @@ namespace CrystalMoon.ExampleContent.Projectiles
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            ProjectileID.Sets.TrailCacheLength[Type] = 18;
+            ProjectileID.Sets.TrailCacheLength[Type] = 36;
             ProjectileID.Sets.TrailingMode[Type] = 2;
         }
 
@@ -35,6 +35,7 @@ namespace CrystalMoon.ExampleContent.Projectiles
         public override void AI()
         {
             base.AI();
+       
             _timer++;
             AI_Particles();
         }
