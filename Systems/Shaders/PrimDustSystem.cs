@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria.ModLoader;
 
-namespace CrystalMoon.Content.Bases.MoonlightMagic
+namespace CrystalMoon.Systems.Shaders
 {
-    internal abstract class BaseElement
+    internal class PrimDustSystem : ModSystem
     {
     }
 }

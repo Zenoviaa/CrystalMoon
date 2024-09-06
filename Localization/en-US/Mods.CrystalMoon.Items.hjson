@@ -106,3 +106,13 @@ StaminaPotion: {
 	DisplayName: Stamina Potion
 	Tooltip: ""
 }
+
+CrescentStaff: {
+	DisplayName: Crescent Staff
+	Tooltip: ""
+}
+
+FlameLashEnchantmentItem: {
+	DisplayName: Flame Lash Enchantment Item
+	Tooltip: ""
+}
