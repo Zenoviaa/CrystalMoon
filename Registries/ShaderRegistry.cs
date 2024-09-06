@@ -18,6 +18,7 @@ namespace CrystalMoon.Registries
         public static MiscShaderData MagicBloodletEffect => GameShaders.Misc["CrystalMoon:MagicBloodlet"];
         public static MiscShaderData MagicSparkleWaterEffect => GameShaders.Misc["CrystalMoon:MagicSparkleWater"];
         public static MiscShaderData MagicDeeyaEffect => GameShaders.Misc["CrystalMoon:MagicDeeya"];
+        public static MiscShaderData MagicPhantasmalEffect => GameShaders.Misc["CrystalMoon:MagicPhantasmal"];
         public static MiscShaderData CloudsShader => GameShaders.Misc["CrystalMoon:Clouds"];
         public static MiscShaderData CloudsFrontShader => GameShaders.Misc["CrystalMoon:CloudsFront"];
         public static MiscShaderData NightCloudsShader => GameShaders.Misc["CrystalMoon:NightClouds"];
@@ -53,7 +54,7 @@ namespace CrystalMoon.Registries
             RegisterMiscShader("MagicBloodlet", "PrimitivesPass");
             RegisterMiscShader("MagicSparkleWater", "PrimitivesPass");
             RegisterMiscShader("MagicDeeya", "PrimitivesPass");
-
+            RegisterMiscShader("MagicPhantasmal", "PrimitivesPass");
             var miscShader9 = new Ref<Effect>(CrystalMoon.Instance.Assets.Request<Effect>("Assets/Effects/Water", AssetRequestMode.ImmediateLoad).Value);
             Filters.Scene["CrystalMoon:Water"] = new Filter(new ScreenShaderData(miscShader9, "PrimitivesPass"), EffectPriority.VeryHigh);
             Filters.Scene["CrystalMoon:Water"].Load();
