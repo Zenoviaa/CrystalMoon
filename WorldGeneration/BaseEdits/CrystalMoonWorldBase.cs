@@ -3210,34 +3210,64 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
                 */
                 }
-            for (int daa = 0; daa < 30; daa++)
+            for (int daaa = 0; daaa < 10; daaa++)
             {
-                smx = ((Main.maxTilesX) / 2 + Main.rand.Next(-325,325));
-
+                smx = ((Main.maxTilesX) / 2 + Main.rand.Next(-325, 325));
+                smy = (int)GenVars.worldSurfaceHigh - 600;
+                while (!WorldGen.SolidTile(smx, smy) && smy <= Main.UnderworldLayer)
+                {
+                    //seperation
+                    smy += 1;
+                }
                 //AbysmStart = new Point(smx, smy - 250 - contdown);
                 // AbysmStart2 = new Point(smx, smy - 250 - contdown);
-            }
 
 
-
-            for (int daa = 0; daa < 30; daa++)
+                contdown = 0;
+                contdownx = 0;
+                for (int daa = 0; daa < 15; daa++)
                 {
                     contdown -= 10;
                     contdownx -= 20;
+
+                    Vector2 HillPosition = new Vector2(smx - Main.rand.Next(10), smy + contdown);
+                    if (daa < 10)
+                    {
+                       
+
+                        WorldUtils.Gen(HillPosition.ToPoint(), new BrokenCircleShape(radius: 10, distortionAmount: 0.5f), Actions.Chain(new GenAction[]
+                                   {
+                                    new Actions.SetTile(TileID.Stone),
+                                   }));
+
+
+                    //    WorldGen.digTunnel(smx - Main.rand.Next(10), smy - 250 - contdown, 0, 1, 1, 15, false);
+                    }
+
+                    if (daa >= 10)
+                    {
+
+
+                        WorldUtils.Gen(HillPosition.ToPoint(), new Shapes.Circle(Main.rand.Next(10,20)), Actions.Chain(new GenAction[]
+                                   {
+                                 
+                                    new Actions.SetTile((ushort)ModContent.TileType<MothlightGrass>()),
+                                  
+                                   }));
+
+
+                        //    WorldGen.digTunnel(smx - Main.rand.Next(10), smy - 250 - contdown, 0, 1, 1, 15, false);
+                    }
                     // Dig big chasm at top
-                    WorldGen.digTunnel(smx - Main.rand.Next(10), smy - 250 - contdown, 0, 1, 1, 15, false);
 
-                    WorldGen.digTunnel(smx - 300 - contdownx, smy + 1200, 0, 1, 1, Main.rand.Next(40) + 10, true);
 
-                    WorldGen.digTunnel(smx - 300 - contdownx, smy + 1500, 0, 1, 1, Main.rand.Next(40) + 10, true);
 
-                    WorldGen.digTunnel(smx - 300 - contdownx, smy + 1800, 0, 1, 1, Main.rand.Next(40) + 10, true);
                     placed = true;
 
                     //AbysmStart = new Point(smx, smy - 250 - contdown);
-                   // AbysmStart2 = new Point(smx, smy - 250 - contdown);
+                    // AbysmStart2 = new Point(smx, smy - 250 - contdown);
                 }
-
+            }
 
                // AbysmStart = new Point(smx, smy - 250 - contdown);
                // AbysmStart2 = new Point(smx, smy - 250 - contdown);
