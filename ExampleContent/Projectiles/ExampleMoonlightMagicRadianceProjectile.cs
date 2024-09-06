@@ -37,6 +37,7 @@ namespace CrystalMoon.ExampleContent.Projectiles
         public override void AI()
         {
             base.AI();
+            ProjectileID.Sets.TrailCacheLength[Type] = 36;
             _timer++;
             AI_Particles();
             Projectile.velocity = Vector2.Lerp(
@@ -94,15 +95,19 @@ namespace CrystalMoon.ExampleContent.Projectiles
 
         private float WidthFunction(float completionRatio)
         {
+            float progress = completionRatio / 0.3f;
+            float rounded = Easing.SpikeOutCirc(progress);
+            float spikeProgress = Easing.SpikeOutExpo(completionRatio);
+            float fireball = MathHelper.Lerp(rounded, spikeProgress, Easing.OutExpo(1.0f-completionRatio));
             switch (trailMode)
             {
                 default:
                 case 0:
-                    return MathHelper.Lerp(46, 0, completionRatio);
+                    return MathHelper.Lerp(0, 46, fireball);
                 case 1:
-                    return MathHelper.Lerp(16, 32, Easing.SpikeOutCirc(completionRatio));
+                    return MathHelper.Lerp(16, 32, spikeProgress);
                 case 2:
-                    return MathHelper.Lerp(52, 0, completionRatio);
+                    return MathHelper.Lerp(0, 52, fireball);
             }
       
         }
