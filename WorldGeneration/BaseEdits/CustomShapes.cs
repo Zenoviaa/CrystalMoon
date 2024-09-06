@@ -5,6 +5,34 @@ using Terraria.WorldBuilding;
 
 namespace CrystalMoon.WorldGeneration.BaseEdits
 {
+    internal class UpsideDownMound : GenShape
+    {
+        private int _halfWidth;
+        private int _height;
+
+        public UpsideDownMound(int halfWidth, int height)
+        {
+            _halfWidth = halfWidth;
+            _height = height;
+        }
+
+        public override bool Perform(Point origin, GenAction action)
+        {
+            _ = _height;
+            double num = _halfWidth;
+            for (int i = -_halfWidth; i <= _halfWidth; i++)
+            {
+                int num2 = Math.Min(_height, (int)((0.0 - (double)(_height + 1) / (num * num)) * ((double)i + num) * ((double)i - num)));
+                for (int j = 0; j < num2; j++)
+                {
+                    if (!UnitApply(action, origin, i + origin.X, origin.Y + j) && _quitOnFail)
+                        return false;
+                }
+            }
+
+            return true;
+        }
+    }
     internal class BrokenCircleShape : GenShape
     {
         private int _radius;
