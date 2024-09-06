@@ -13,6 +13,7 @@
 	  <None Remove="Assets\Effects\MagicHex.fx" />
 	  <None Remove="Assets\Effects\MagicRadiance.fx" />
 	  <None Remove="Assets\Effects\MagicRadianceOutline.fx" />
+	  <None Remove="Assets\Effects\MagicSparkleWater.fx" />
 	  <None Remove="Assets\Effects\NightClouds.fx" />
 	  <None Remove="Assets\Effects\SimpleGradientTrail.fx" />
 	  <None Remove="Assets\NoiseTextures\BeamTrail.png" />
@@ -40,6 +41,7 @@
 	  <None Remove="Assets\Textures\FX\SwordSlash.png" />
 	  <None Remove="ExampleContent\Projectiles\ExampleMoonlightMagicBloodletProjectile.png" />
 	  <None Remove="ExampleContent\Projectiles\ExampleMoonlightMagicRadianceProjectile.png" />
+	  <None Remove="ExampleContent\Projectiles\ExampleMoonlightMagicSparkleWaterProjectile.png" />
 	</ItemGroup>
 
 	<!-- References -->

@@ -11,7 +11,7 @@ namespace CrystalMoon.Visual.Particles
         public int MaxHorizontalFrameCount = 5;
         public int MaxVerticalFrameCount = 21;
         public int FrameCounter = 0;
-        public int TicksPerFrame = 4;
+        public int TicksPerFrame = 2;
         public override void OnSpawn()
         {
             Rotation += Main.rand.NextFloat(-MathHelper.TwoPi, MathHelper.TwoPi);
@@ -22,6 +22,7 @@ namespace CrystalMoon.Visual.Particles
         public override void Update()
         {
             Velocity *= 0.98f;
+          //  Velocity.Y += 0.15f;
             Rotation += 0.01f;
             Scale *= 0.997f;
             color *= 0.99f;
