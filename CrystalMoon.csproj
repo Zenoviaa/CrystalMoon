@@ -10,6 +10,7 @@
 	<ItemGroup>
 	  <None Remove="Assets\Effects\Gradient.fx" />
 	  <None Remove="Assets\Effects\MagicBloodlet.fx" />
+	  <None Remove="Assets\Effects\MagicDeeya.fx" />
 	  <None Remove="Assets\Effects\MagicHex.fx" />
 	  <None Remove="Assets\Effects\MagicRadiance.fx" />
 	  <None Remove="Assets\Effects\MagicRadianceOutline.fx" />
@@ -40,6 +41,7 @@
 	  <None Remove="Assets\NoiseTextures\WhispyTrail.png" />
 	  <None Remove="Assets\Textures\FX\SwordSlash.png" />
 	  <None Remove="ExampleContent\Projectiles\ExampleMoonlightMagicBloodletProjectile.png" />
+	  <None Remove="ExampleContent\Projectiles\ExampleMoonlightMagicDeeyaProjectile.png" />
 	  <None Remove="ExampleContent\Projectiles\ExampleMoonlightMagicRadianceProjectile.png" />
 	  <None Remove="ExampleContent\Projectiles\ExampleMoonlightMagicSparkleWaterProjectile.png" />
 	</ItemGroup>

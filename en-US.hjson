@@ -18,6 +18,7 @@ Mods: {
 			ExampleMoonlightMagicRadianceProjectile.DisplayName: Example Moonlight Magic Radiance Projectile
 			ExampleMoonlightMagicBloodletProjectile.DisplayName: Example Moonlight Magic Bloodlet Projectile
 			ExampleMoonlightMagicSparkleWaterProjectile.DisplayName: Example Moonlight Magic Sparkle Water Projectile
+			ExampleMoonlightMagicDeeyaProjectile.DisplayName: Example Moonlight Magic Deeya Projectile
 		}
 
 		Buffs: {
