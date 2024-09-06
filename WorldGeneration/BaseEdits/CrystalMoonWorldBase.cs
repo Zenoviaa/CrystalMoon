@@ -3427,8 +3427,8 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                 int Y = WorldGen.genRand.Next((int)Main.worldSurface - 1000, (int)Main.worldSurface + 400);
                 int yBelow = Y;
                 Vector2 WallPosition = new Vector2(X, yBelow);
-                Vector2D WallPosition2 = new Vector2D(WorldGen.genRand.Next(-40, -25), WorldGen.genRand.Next(1, 10));
-                Vector2D WallPosition3 = new Vector2D(WorldGen.genRand.Next(25, 40), WorldGen.genRand.Next(1, 10));
+                Vector2D WallPosition2 = new Vector2D(WorldGen.genRand.Next(-50, -25), WorldGen.genRand.Next(1, 10));
+                Vector2D WallPosition3 = new Vector2D(WorldGen.genRand.Next(25, 50), WorldGen.genRand.Next(1, 10));
                 if (!WorldGen.SolidTile(X, yBelow))
                     continue;
 
