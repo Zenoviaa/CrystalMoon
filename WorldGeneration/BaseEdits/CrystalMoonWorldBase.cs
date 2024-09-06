@@ -160,7 +160,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                 //tasks.Insert(JungleGen + 2, new PassLegacy("RainDeeps", RainforestDeeps));
             }
 
-            int MothlightClumping = tasks.FindIndex(genpass => genpass.Name.Equals("Ice Clump"));
+            int MothlightClumping = tasks.FindIndex(genpass => genpass.Name.Equals("Lunar Sands"));
             if (MothlightClumping != -1)
             {
                 tasks.Insert(MothlightClumping + 1, new PassLegacy("Mothlight Clump", MothlightClump));
@@ -2559,7 +2559,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                                 {
                                     Point Loc = new Point(smx - 20, smy + 10);
                                     //StructureLoader.ReadStruct(Loc, "Struct/Underground/Manor", tileBlend);
-                                    string path = "WorldGeneration/STRUCT/IceStruct/BridgeIce4";//
+                                    string path = "WorldGeneration/STRUCT/IceStruct/BridgeIce3";//
 
                                     int[] ChestIndexs = StructureLoader.ReadStruct(Loc, path);
                                     //StructureLoader.ProtectStructure(Loc, path);
@@ -3147,71 +3147,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
 
         #endregion
-        /*
-        private void MakingIcyWalls(GenerationProgress progress, GameConfiguration configuration)
-        {
-            progress.Message = "Walls forming in the ice and abysm";
-
-
-            Point origin;
-            StructureMap structures;
-            // By using TileScanner, check that the 50x50 area centered around the origin is mostly Dirt or Stone
-            Dictionary<ushort, int> tileDictionary = new Dictionary<ushort, int>();
-            WorldUtils.Gen(new Point(origin.X - 25, origin.Y - 25), new Shapes.Rectangle(50, 50), new Actions.TileScanner(TileID.Dirt, TileID.Stone).Output(tileDictionary));
-            if (tileDictionary[TileID.Dirt] + tileDictionary[TileID.Stone] < 1250)
-                return false; // If not, return false, which will cause the calling method to attempt a different origin
-
-            Point surfacePoint;
-            // Search up to 1000 tiles above for an area 50 tiles tall and 1 tile wide without a single solid tile. Basically find the surface.
-            bool flag = WorldUtils.Find(origin, Searches.Chain(new Searches.Up(1000), new Conditions.IsSolid().AreaOr(1, 50).Not()), out surfacePoint);
-            // Search from the orgin up to the surface and make sure no sand is between origin and surface
-            if (WorldUtils.Find(origin, Searches.Chain(new Searches.Up(origin.Y - surfacePoint.Y), new Conditions.IsTile(TileID.Sand)), out Point _))
-                return false;
-
-            if (!flag)
-                return false;
-
-            surfacePoint.Y += 50; // Adjust result to point to surface, not 50 tiles above
-            ShapeData slimeShapeData = new ShapeData();
-            ShapeData moundShapeData = new ShapeData();
-            Point point = new Point(origin.X, origin.Y + 20);
-            Point point2 = new Point(origin.X, origin.Y + 30);
-            float xScale = 0.8f + Main.rand.NextFloat() * 0.5f; // Randomize the width of the shrine area
-                                                                      // Check that the StructureMap doesn't have any existing conflicts for the intended area we wish to place the shrine.
-            if (!structures.CanPlace(new Rectangle(point.X - (int)(20f * xScale), point.Y - 20, (int)(40f * xScale), 40)))
-                return false;
-            // Check that the StructureMap doesn't have any existing conflicts for the shaft leading to the surface
-            if (!structures.CanPlace(new Rectangle(origin.X, surfacePoint.Y + 10, 1, origin.Y - surfacePoint.Y - 9), 2))
-                return false;
-            // Using the Slime shape, clear out tiles. Blotches gives the edges a more organic look. https://i.imgur.com/WtZaBbn.png
-            WorldUtils.Gen(point, new Shapes.Slime(20, xScale, 1f), Actions.Chain(new Modifiers.Blotches(2, 0.4), new Actions.ClearTile(frameNeighbors: true).Output(slimeShapeData)));
-            // Place a dirt mound within the cut out slime shape
-            WorldUtils.Gen(point2, new Shapes.Mound(14, 14), Actions.Chain(new Modifiers.Blotches(2, 1, 0.8), new Actions.SetTile(TileID.Dirt), new Actions.SetFrames(frameNeighbors: true).Output(moundShapeData)));
-            // Remove the mound coordinates from the slime coordinate data
-            slimeShapeData.Subtract(moundShapeData, point, point2);
-            // Place grass along the inner outline of the slime coordinate data
-            WorldUtils.Gen(point, new ModShapes.InnerOutline(slimeShapeData), Actions.Chain(new Actions.SetTile(TileID.Grass), new Actions.SetFrames(frameNeighbors: true)));
-            // Place water in empty coordinates in the bottom half of the slime shape
-            WorldUtils.Gen(point, new ModShapes.All(slimeShapeData), Actions.Chain(new Modifiers.RectangleMask(-40, 40, 0, 40), new Modifiers.IsEmpty(), new Actions.SetLiquid()));
-            // Place Flower wall on all slime shape coordinates. Place vines 1 tile below all grass tiles of the slime shape.
-            WorldUtils.Gen(point, new ModShapes.All(slimeShapeData), Actions.Chain(new Actions.PlaceWall(WallID.Flower), new Modifiers.OnlyTiles(TileID.Grass), new Modifiers.Offset(0, 1), new ActionVines(3, 5)));
-            // Remove tiles to create shaft to surface. Convert Sand tiles along shaft to hardened sand tiles.
-            ShapeData shaftShapeData = new ShapeData();
-            WorldUtils.Gen(new Point(origin.X, surfacePoint.Y + 10), new Shapes.Rectangle(1, origin.Y - surfacePoint.Y - 9), Actions.Chain(new Modifiers.Blotches(2, 0.2), new Actions.ClearTile().Output(shaftShapeData), new Modifiers.Expand(1), new Modifiers.OnlyTiles(TileID.Sand), new Actions.SetTile(TileID.HardenedSand).Output(shaftShapeData)));
-            WorldUtils.Gen(new Point(origin.X, surfacePoint.Y + 10), new ModShapes.All(shaftShapeData), new Actions.SetFrames(frameNeighbors: true));
-            // 33% chance to place an enchanted sword shrine tile
-            if (Main.rand.NextBool(3))
-                WorldGen.PlaceTile(point2.X, point2.Y - 15, TileID.LargePiles2, mute: true, forced: false, -1, 17);
-            else
-                WorldGen.PlaceTile(point2.X, point2.Y - 15, TileID.LargePiles, mute: true, forced: false, -1, 15);
-            // Place plants above grass tiles in the mound shape.
-            WorldUtils.Gen(point2, new ModShapes.All(moundShapeData), Actions.Chain(new Modifiers.Offset(0, -1), new Modifiers.OnlyTiles(TileID.Grass), new Modifiers.Offset(0, -1), new ActionGrass()));
-            // Add to the StructureMap to prevent other worldgen from intersecting this area.
-            structures.AddStructure(new Rectangle(point.X - (int)(20f * xScale), point.Y - 20, (int)(40f * xScale), 40), 4);
-           
-        }
-
-        */
+       
 
         #region MothlightGeneration
 
@@ -3254,11 +3190,11 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     WorldGen.TileRunner(Loc7.X, Loc7.Y, 1000, 6, ModContent.TileType<MothlightGrass>(), false, 0f, 0f, true, true);
                     WorldGen.TileRunner(Loc7.X, Loc7.Y + 300, 1200, 7, ModContent.TileType<MothlightGrass>(), false, 0f, 0f, true, true);
                     WorldGen.TileRunner(Loc7.X, Loc7.Y + 600, 1000, 2, ModContent.TileType<MothlightGrass>(), false, 0f, 0f, true, true);
-                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 900, 500, 2, ModContent.TileType<MothlightGrass>(), false, 0f, 0f, true, true);
-                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1200, 500, 2, ModContent.TileType<MothlightGrass>(), false, 0f, 0f, true, true);
-                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1500, 500, 2, ModContent.TileType<MothlightGrass>(), false, 0f, 0f, true, true);
-                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1800, 500, 2, ModContent.TileType<MothlightGrass>(), false, 0f, 0f, true, true);
-                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1800, 700, 2, ModContent.TileType<MothlightGrass>(), false, 0f, 0f, true, true);
+                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 900, 500, 2, TileID.Stone, false, 0f, 0f, true, true);
+                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1200, 500, 2, TileID.Stone, false, 0f, 0f, true, true);
+                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1500, 500, 2, TileID.Stone, false, 0f, 0f, true, true);
+                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1800, 500, 2, TileID.Stone, false, 0f, 0f, true, true);
+                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1800, 700, 2, TileID.Stone, false, 0f, 0f, true, true);
 
 
                 /*
@@ -3274,8 +3210,17 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
                 */
                 }
+            for (int daa = 0; daa < 30; daa++)
+            {
+                smx = ((Main.maxTilesX) / 2 + Main.rand.Next(-325,325));
 
-                for (int daa = 0; daa < 30; daa++)
+                //AbysmStart = new Point(smx, smy - 250 - contdown);
+                // AbysmStart2 = new Point(smx, smy - 250 - contdown);
+            }
+
+
+
+            for (int daa = 0; daa < 30; daa++)
                 {
                     contdown -= 10;
                     contdownx -= 20;
