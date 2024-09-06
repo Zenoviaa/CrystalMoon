@@ -19,6 +19,7 @@ using CrystalMoon.WorldGeneration.StructureManager;
 using CrystalMoon.Tiles.IceTiles;
 using CrystalMoon.Tiles.RainforestTiles;
 using CrystalMoon.Tiles.AbysmTiles;
+using CrystalMoon.Tiles.MothlightTiles;
 
 
 
@@ -140,6 +141,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                 tasks.Insert(RainforestingGen + 1, new PassLegacy("Rain Clump", RainforestClump));
                 tasks.Insert(RainforestingGen + 2, new PassLegacy("Rain Deeps", RainforestDeeps));
                 tasks.Insert(RainforestingGen + 3, new PassLegacy("Rain Trees", RainforestTreeSpawning));
+
             }
 
 
@@ -157,6 +159,15 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                 tasks.Insert(IceClumping + 2, new PassLegacy("Ice Caves Surface", IceyCaves));
                 //tasks.Insert(JungleGen + 2, new PassLegacy("RainDeeps", RainforestDeeps));
             }
+
+            int MothlightClumping = tasks.FindIndex(genpass => genpass.Name.Equals("Ice Clump"));
+            if (MothlightClumping != -1)
+            {
+                tasks.Insert(MothlightClumping + 1, new PassLegacy("Mothlight Clump", MothlightClump));
+               // tasks.Insert(MothlightClumping + 2, new PassLegacy("Ice Caves Surface", IceyCaves));
+             
+            }
+
 
             int IceGen = tasks.FindIndex(genpass => genpass.Name.Equals("Clean Up Dirt"));
             if (IceGen != -1)
@@ -3202,7 +3213,115 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
         */
 
+        #region MothlightGeneration
 
+
+        private void MothlightClump(GenerationProgress progress, GameConfiguration configuration)
+        {
+            progress.Message = "Mothlight awareness month";
+            int smx = 0;
+            int smy = 0;
+            bool placed;
+            int contdown = 0;
+            int contdownx = 0;
+           
+                //
+
+                smx = ((Main.maxTilesX) / 2);
+                smy = (int)GenVars.worldSurfaceHigh - 600;
+                while (!WorldGen.SolidTile(smx, smy) && smy <= Main.UnderworldLayer)
+                {
+                    //seperation
+                    smy += 1;
+                }
+
+
+                for (int da = 0; da < 1; da++)
+                {
+                    Point Loc7 = new Point(smx, smy);
+                    Point Loc8 = new Point(smx, smy + 100);
+
+                /*
+                    WorldUtils.Gen(Loc8, new Shapes.Mound(450, 300), Actions.Chain(new GenAction[]
+                        {
+                            new Actions.ClearWall(true),
+                            new Actions.SetTile(TileID.SnowBlock),
+                            new Actions.Smooth(true)
+                        }));
+
+                */
+                    // Spawn in Ice Chunks
+                    WorldGen.TileRunner(Loc7.X, Loc7.Y, 1000, 6, ModContent.TileType<MothlightGrass>(), false, 0f, 0f, true, true);
+                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 300, 1200, 7, ModContent.TileType<MothlightGrass>(), false, 0f, 0f, true, true);
+                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 600, 1000, 2, ModContent.TileType<MothlightGrass>(), false, 0f, 0f, true, true);
+                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 900, 500, 2, ModContent.TileType<MothlightGrass>(), false, 0f, 0f, true, true);
+                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1200, 500, 2, ModContent.TileType<MothlightGrass>(), false, 0f, 0f, true, true);
+                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1500, 500, 2, ModContent.TileType<MothlightGrass>(), false, 0f, 0f, true, true);
+                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1800, 500, 2, ModContent.TileType<MothlightGrass>(), false, 0f, 0f, true, true);
+                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1800, 700, 2, ModContent.TileType<MothlightGrass>(), false, 0f, 0f, true, true);
+
+
+                /*
+
+                    WorldUtils.Gen(Loc7, new Shapes.Circle(500, 300), Actions.Chain(new GenAction[]
+                    {
+                        new Actions.ClearWall(true),
+                        new Actions.PlaceWall(WallID.SnowWallUnsafe),
+                        new Actions.Smooth(true)
+                    }));
+
+                    // Dig big chasm at top
+
+                */
+                }
+
+                for (int daa = 0; daa < 30; daa++)
+                {
+                    contdown -= 10;
+                    contdownx -= 20;
+                    // Dig big chasm at top
+                    WorldGen.digTunnel(smx - Main.rand.Next(10), smy - 250 - contdown, 0, 1, 1, 15, false);
+
+                    WorldGen.digTunnel(smx - 300 - contdownx, smy + 1200, 0, 1, 1, Main.rand.Next(40) + 10, true);
+
+                    WorldGen.digTunnel(smx - 300 - contdownx, smy + 1500, 0, 1, 1, Main.rand.Next(40) + 10, true);
+
+                    WorldGen.digTunnel(smx - 300 - contdownx, smy + 1800, 0, 1, 1, Main.rand.Next(40) + 10, true);
+                    placed = true;
+
+                    //AbysmStart = new Point(smx, smy - 250 - contdown);
+                   // AbysmStart2 = new Point(smx, smy - 250 - contdown);
+                }
+
+
+               // AbysmStart = new Point(smx, smy - 250 - contdown);
+               // AbysmStart2 = new Point(smx, smy - 250 - contdown);
+
+            
+
+
+            
+
+           
+
+           
+            
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+        #endregion
 
 
 
