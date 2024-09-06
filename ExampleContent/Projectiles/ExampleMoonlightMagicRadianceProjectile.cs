@@ -47,7 +47,7 @@ namespace CrystalMoon.ExampleContent.Projectiles
 
         private void AI_Particles()
         {
-            /*
+            
             if (_timer % 8 == 0)
             {
                 for(int i = 0; i < Projectile.oldPos.Length - 1; i++)
@@ -57,10 +57,20 @@ namespace CrystalMoon.ExampleContent.Projectiles
                     Vector2 offset = Main.rand.NextVector2Circular(16, 16);
                     Vector2 spawnPoint = Projectile.oldPos[i] + offset + Projectile.Size / 2;
                     Vector2 velocity = Projectile.oldPos[i + 1] - Projectile.oldPos[i];
-                    velocity = velocity.SafeNormalize(Vector2.Zero) * -8;
-                    Particle.NewParticle<SparkleHexParticle>(spawnPoint, velocity, Color.White);
+                    velocity = velocity.SafeNormalize(Vector2.Zero) * -2;
+
+                    if (Main.rand.NextBool(2))
+                    {
+                        Color color = Color.RosyBrown;
+                        color.A = 0;
+                        Particle.NewBlackParticle<FireSmokeParticle>(spawnPoint, velocity, color);
+                    }
+                    else
+                    {
+                        Particle.NewBlackParticle<FireHeatParticle>(spawnPoint, velocity, new Color(255, 255, 255, 0));
+                    }
                 }
-            }*/
+            }
         }
 
         private Color ColorFunction(float completionRatio)

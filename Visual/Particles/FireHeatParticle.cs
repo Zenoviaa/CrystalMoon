@@ -1,62 +1,55 @@
 ﻿using CrystalMoon.Systems.Particles;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace CrystalMoon.Visual.Particles
 {
-    internal class SparkleHexParticle : Particle
+    internal class FireHeatParticle : Particle
     {
-        public int FrameWidth = 488;
-        public int FrameHeight = 422;
+        public int FrameWidth = 80;
+        public int FrameHeight = 82;
         public int MaxHorizontalFrameCount = 5;
-        public int MaxVerticalFrameCount = 11;
+        public int MaxVerticalFrameCount = 21;
         public int FrameCounter = 0;
         public int TicksPerFrame = 4;
         public override void OnSpawn()
         {
             Rotation += Main.rand.NextFloat(-MathHelper.TwoPi, MathHelper.TwoPi);
             Frame = new Rectangle(0, 0, FrameWidth, FrameHeight);
-            Scale = Main.rand.NextFloat(0.04f, 0.2f);
+            Scale = Main.rand.NextFloat(0.75f, 1.0f) * 0.8f;
         }
 
         public override void Update()
         {
             Velocity *= 0.98f;
             Rotation += 0.01f;
-            Scale *= 0.997f;
-            color *= 0.99f;
+            Scale *= 0.96f;
 
             FrameCounter++;
             if (FrameCounter >= TicksPerFrame)
             {
-                if(Frame.X < FrameWidth * MaxHorizontalFrameCount)
+                if (Frame.X < FrameWidth * MaxHorizontalFrameCount)
                 {
                     Frame.X += FrameWidth;
-                  
+
                 }
 
-                if(Frame.X >= Frame.Width * MaxHorizontalFrameCount)
+                if (Frame.X >= Frame.Width * MaxHorizontalFrameCount)
                 {
                     Frame.Y += FrameHeight;
                 }
 
-                if(Frame.Y >= Frame.Height * MaxVerticalFrameCount)
+                if (Frame.Y >= Frame.Height * MaxVerticalFrameCount)
                 {
                     active = false;
                 }
                 FrameCounter = 0;
             }
-
-            fadeIn++;
-            if (fadeIn > 60)
-                active = false;
         }
     }
 }

@@ -1,22 +1,15 @@
 ﻿using CrystalMoon.Systems.Particles;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace CrystalMoon.Visual.Particles
 {
-    internal class SparkleHexParticle : Particle
+    internal class WaterSparkleParticle : Particle
     {
-        public int FrameWidth = 488;
-        public int FrameHeight = 422;
+        public int FrameWidth = 151;
+        public int FrameHeight = 125;
         public int MaxHorizontalFrameCount = 5;
-        public int MaxVerticalFrameCount = 11;
+        public int MaxVerticalFrameCount = 21;
         public int FrameCounter = 0;
         public int TicksPerFrame = 4;
         public override void OnSpawn()
@@ -36,18 +29,18 @@ namespace CrystalMoon.Visual.Particles
             FrameCounter++;
             if (FrameCounter >= TicksPerFrame)
             {
-                if(Frame.X < FrameWidth * MaxHorizontalFrameCount)
+                if (Frame.X < FrameWidth * MaxHorizontalFrameCount)
                 {
                     Frame.X += FrameWidth;
-                  
+
                 }
 
-                if(Frame.X >= Frame.Width * MaxHorizontalFrameCount)
+                if (Frame.X >= Frame.Width * MaxHorizontalFrameCount)
                 {
                     Frame.Y += FrameHeight;
                 }
 
-                if(Frame.Y >= Frame.Height * MaxVerticalFrameCount)
+                if (Frame.Y >= Frame.Height * MaxVerticalFrameCount)
                 {
                     active = false;
                 }

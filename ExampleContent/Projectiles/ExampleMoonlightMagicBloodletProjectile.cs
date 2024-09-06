@@ -38,7 +38,7 @@ namespace CrystalMoon.ExampleContent.Projectiles
             base.AI();
             _timer++;
 
-            //AI_Particles();
+            AI_Particles();
             Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.PiOver4 / 48);
         }
 
@@ -54,7 +54,10 @@ namespace CrystalMoon.ExampleContent.Projectiles
                     Vector2 spawnPoint = Projectile.oldPos[i] + offset + Projectile.Size / 2;
                     Vector2 velocity = Projectile.oldPos[i + 1] - Projectile.oldPos[i];
                     velocity = velocity.SafeNormalize(Vector2.Zero) * -8;
-                    Particle.NewParticle<SparkleHexParticle>(spawnPoint, velocity, Color.White);
+
+                    Color color = Color.White;
+                    color.A = 0;
+                    Particle.NewBlackParticle<BloodSparkleParticle>(spawnPoint, velocity, color);
                 }
             }
         }
