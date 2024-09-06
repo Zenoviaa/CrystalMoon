@@ -3227,7 +3227,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                 contdownx = 0;
                 for (int daa = 0; daa < 15; daa++)
                 {
-                    contdown -= 10;
+                    contdown -= 5;
                     contdownx -= 20;
 
                     Vector2 HillPosition = new Vector2(smx - Main.rand.Next(10), smy + contdown);
@@ -3244,7 +3244,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     //    WorldGen.digTunnel(smx - Main.rand.Next(10), smy - 250 - contdown, 0, 1, 1, 15, false);
                     }
 
-                    if (daa >= 10)
+                    if (daa >= 10 && daa < 15)
                     {
 
 
@@ -3253,6 +3253,21 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                                  
                                     new Actions.SetTile((ushort)ModContent.TileType<MothlightGrass>()),
                                   
+                                   }));
+
+
+                        //    WorldGen.digTunnel(smx - Main.rand.Next(10), smy - 250 - contdown, 0, 1, 1, 15, false);
+                    }
+
+                    if (daa == 15)
+                    {
+
+
+                        WorldUtils.Gen(HillPosition.ToPoint(), new UpsideDownMound(Main.rand.Next(10, 30), Main.rand.Next(10, 20)), Actions.Chain(new GenAction[]
+                                   {
+
+                                    new Actions.SetTile((ushort)ModContent.TileType<MothlightGrass>()),
+
                                    }));
 
 
