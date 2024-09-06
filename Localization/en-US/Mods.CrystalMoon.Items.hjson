@@ -116,3 +116,8 @@ FlameLashEnchantmentItem: {
 	DisplayName: Flame Lash Enchantment Item
 	Tooltip: ""
 }
+
+FlameLashEnchantment: {
+	DisplayName: Flame Lash Enchantment
+	Tooltip: ""
+}

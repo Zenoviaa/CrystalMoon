@@ -48,13 +48,13 @@ namespace CrystalMoon.Content.MoonlightMagic
             BaseMovement movement,
             List<BaseEnchantment> enchantments)
         {
-            PrimaryElement = primaryElement;
+            PrimaryElement = primaryElement.Instantiate();
             Movement = movement;
             Form = form;
             Enchantments.Clear();
             for (int i = 0; i < enchantments.Count; i++)
             {
-                var enchantment = enchantments[i];
+                var enchantment = enchantments[i].Instantiate();
                 enchantment.MagicProj = this;
                 enchantment.SetDefaults();
                 Enchantments.Add(enchantment);
