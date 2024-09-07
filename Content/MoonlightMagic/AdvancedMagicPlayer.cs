@@ -15,7 +15,7 @@ namespace CrystalMoon.Content.MoonlightMagic
             bool success = false;
             for(int i = 0; i < Backpack.Count; i++)
             {
-                if (Backpack[i] == null)
+                if (Backpack[i].IsAir)
                 {
                     Backpack[i] = item;
                     success = true;
