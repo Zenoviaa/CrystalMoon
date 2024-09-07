@@ -76,7 +76,7 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
 
             Vector2 centerPos = pos + rectangle.Size() / 2f;
             spriteBatch.Draw(value, rectangle.TopLeft(), null, color2, 0f, default(Vector2), _scale, SpriteEffects.None, 0f);
-            ItemSlot.DrawItemIcon(Item, _context, spriteBatch, centerPos + new Vector2(12, 12), _scale, 32, Color.White);
+            ItemSlot.DrawItemIcon(Item, _context, spriteBatch, centerPos + new Vector2(12, 12), _scale, 64, Color.White);
 
             if (contains && Item.IsAir)
             {
