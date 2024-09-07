@@ -121,3 +121,8 @@ FlameLashEnchantment: {
 	DisplayName: Flame Lash Enchantment
 	Tooltip: ""
 }
+
+RadianceElement: {
+	DisplayName: Radiance Element
+	Tooltip: ""
+}
