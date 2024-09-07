@@ -126,7 +126,7 @@ namespace CrystalMoon.Tiles.MothlightTiles
                 {
                     r = 0.05f;
                     g = 0.15f;
-                    b = 0.05f;
+                    b = 0.25f;
                 }
             }
 
