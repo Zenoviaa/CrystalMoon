@@ -3430,6 +3430,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                 int Y = WorldGen.genRand.Next((int)Main.worldSurface - 1000, (int)Main.worldSurface + 400);
                 int yBelow = Y;
                 Vector2 WallPosition = new Vector2(X, yBelow);
+                Vector2 WallPosition4 = new Vector2(X + 2, yBelow);
                 Vector2D WallPosition2 = new Vector2D(WorldGen.genRand.Next(-35, -25), WorldGen.genRand.Next(1, 8));
                 Vector2D WallPosition3 = new Vector2D(WorldGen.genRand.Next(25, 35), WorldGen.genRand.Next(1, 8));
                 if (!WorldGen.SolidTile(X, yBelow))
@@ -3438,7 +3439,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                 if (Main.tile[X, yBelow].TileType == ModContent.TileType<MothlightMushroom>())
                 {
 
-                    WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Tail(15, WallPosition2), Actions.Chain(new GenAction[]
+                    WorldUtils.Gen(WallPosition4.ToPoint(), new Shapes.Tail(15, WallPosition2), Actions.Chain(new GenAction[]
                        {
                            new Actions.ClearWall(true),
                             new Actions.SetTile((ushort)ModContent.TileType<MothlightGrass>()),
@@ -3526,7 +3527,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     {
                         if (IsGroundMoth(k, y, 1))
                         {
-                            PlaceBorealTrees(k, y, Main.rand.Next(1, 1));
+                            PlaceMothlightTrees(k, y, Main.rand.Next(1, 1));
                             k += 1;
 
                             break;
@@ -3545,7 +3546,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
             for (int k = 0; k < w; k++)
             {
                 Tile tile = Framing.GetTileSafely(x + k, y);
-                if (!(tile.HasTile && tile.Slope == SlopeType.Solid && !tile.IsHalfBlock && (tile.TileType == ModContent.TileType<MothlightGrass>())))
+                if (!(tile.HasTile && tile.Slope == SlopeType.Solid && !tile.IsHalfBlock && (tile.TileType == ModContent.TileType<MothlightMushroom>())))
                     return false;
 
                 Tile tile2 = Framing.GetTileSafely(x + k, y - 1);
