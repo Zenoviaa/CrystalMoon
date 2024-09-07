@@ -3162,7 +3162,6 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
         #region MothlightGeneration
 
-
         private void MothlightClump(GenerationProgress progress, GameConfiguration configuration)
         {
             progress.Message = "Mothlight awareness month";
