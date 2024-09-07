@@ -196,6 +196,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
             {
                 tasks.Insert(MothlightDeeps + 1, new PassLegacy("Mothlight mushy sides", MakingMushySpikes));
                 tasks.Insert(MothlightDeeps + 2, new PassLegacy("Mothlight Randomness", MakingMothRandomness));
+                tasks.Insert(MothlightDeeps + 3, new PassLegacy("Mothlight Trees!", MothlightTreeSpawning));
                 //tasks.Insert(JungleGen + 2, new PassLegacy("RainDeeps", RainforestDeeps));
             }
 
@@ -3514,9 +3515,81 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
 
             }
+        private void MothlightTreeSpawning(GenerationProgress progress, GameConfiguration configuration)
+        {
+            progress.Message = "Mothy trees!";
+            for (int k = 60; k < Main.maxTilesX - 60; k++)
+            {
+                if (k > 200 && k < Main.maxTilesX - 200 && WorldGen.genRand.NextBool(1)) //inner part of the world
+                {
+                    for (int y = 10; y < Main.worldSurface; y++)
+                    {
+                        if (IsGroundMoth(k, y, 1))
+                        {
+                            PlaceBorealTrees(k, y, Main.rand.Next(1, 1));
+                            k += 1;
+
+                            break;
+                        }
+
+                        if (!IsAir(k, y, 2))
+                            break;
+                    }
+                }
+            }
 
 
-        
+        }
+        public static bool IsGroundMoth(int x, int y, int w)
+        {
+            for (int k = 0; k < w; k++)
+            {
+                Tile tile = Framing.GetTileSafely(x + k, y);
+                if (!(tile.HasTile && tile.Slope == SlopeType.Solid && !tile.IsHalfBlock && (tile.TileType == ModContent.TileType<MothlightGrass>())))
+                    return false;
+
+                Tile tile2 = Framing.GetTileSafely(x + k, y - 1);
+                if (tile2.HasTile && Main.tileSolid[tile2.TileType])
+                    return false;
+            }
+
+            return true;
+        }
+        public static void PlaceMothlightTrees(int treex, int treey, int height)
+        {
+            treey -= 1;
+
+            if (treey - height < 1)
+                return;
+
+            for (int x = -1; x < 3; x++)
+            {
+                for (int y = 0; y < (height + 2); y++)
+                {
+                    WorldGen.KillTile(treex + x, treey - y);
+                }
+            }
+
+            // MultitileHelper.PlaceMultitile(new Point16(treex, treey - 1), ModContent.TileType<RainforestTreeBase>());
+
+            for (int x = 0; x < 1; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+
+                    WorldGen.PlaceTile(treex + x, treey - (y), TileID.Saplings, true, true);
+                    WorldGen.GrowTree(treex + x, treey - (y));
+                }
+            }
+
+            for (int x = -1; x < 3; x++)
+            {
+                for (int y = 0; y < (height + 2); y++)
+                {
+                    WorldGen.TileFrame(treex + x, treey + y);
+                }
+            }
+        }
         #endregion
 
 
