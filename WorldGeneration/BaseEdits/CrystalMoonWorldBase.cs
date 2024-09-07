@@ -164,13 +164,12 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
             if (MothlightClumping != -1)
             {
                 tasks.Insert(MothlightClumping + 1, new PassLegacy("Mothlight Clump", MothlightClump));
-                tasks.Insert(MothlightClumping + 2, new PassLegacy("Mothlight mushy sides", MakingMushySpikes));
-                tasks.Insert(MothlightClumping + 3, new PassLegacy("Mothlight Randomness", MakingMothRandomness));
+        
               
                 // tasks.Insert(MothlightClumping + 2, new PassLegacy("Ice Caves Surface", IceyCaves));
 
             }
-
+          
 
             int IceGen = tasks.FindIndex(genpass => genpass.Name.Equals("Clean Up Dirt"));
             if (IceGen != -1)
@@ -189,6 +188,14 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                 tasks.Insert(IceGen + 12, new PassLegacy("Ice Fog", IceFog));
                 tasks.Insert(IceGen + 13, new PassLegacy("Boreal Trees!", BorealTreeSpawning));
 
+                //tasks.Insert(JungleGen + 2, new PassLegacy("RainDeeps", RainforestDeeps));
+            }
+
+            int MothlightDeeps = tasks.FindIndex(genpass => genpass.Name.Equals("Boreal Trees!"));
+            if (MothlightDeeps != -1)
+            {
+                tasks.Insert(MothlightDeeps + 1, new PassLegacy("Mothlight mushy sides", MakingMushySpikes));
+                tasks.Insert(MothlightDeeps + 2, new PassLegacy("Mothlight Randomness", MakingMothRandomness));
                 //tasks.Insert(JungleGen + 2, new PassLegacy("RainDeeps", RainforestDeeps));
             }
 
@@ -3190,9 +3197,9 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
                 */
                     // Spawn in Ice Chunks
-                    WorldGen.TileRunner(Loc7.X, Loc7.Y, 1000, 6, ModContent.TileType<MothlightGrass>(), false, 0f, 0f, true, true);
-                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 300, 1200, 7, ModContent.TileType<MothlightGrass>(), false, 0f, 0f, true, true);
-                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 600, 1000, 2, ModContent.TileType<MothlightGrass>(), false, 0f, 0f, true, true);
+                    WorldGen.TileRunner(Loc7.X, Loc7.Y, 1000, 6, ModContent.TileType<MothlightMushroom>(), false, 0f, 0f, true, true);
+                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 300, 1200, 7, ModContent.TileType<MothlightMushroom>(), false, 0f, 0f, true, true);
+                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 600, 1000, 2, ModContent.TileType<MothlightMushroom>(), false, 0f, 0f, true, true);
                     WorldGen.TileRunner(Loc7.X, Loc7.Y + 900, 500, 2, TileID.Stone, false, 0f, 0f, true, true);
                     WorldGen.TileRunner(Loc7.X, Loc7.Y + 1200, 500, 2, TileID.Stone, false, 0f, 0f, true, true);
                     WorldGen.TileRunner(Loc7.X, Loc7.Y + 1500, 500, 2, TileID.Stone, false, 0f, 0f, true, true);
@@ -3248,7 +3255,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     {
 
                    
-                        WorldUtils.Gen(HillPosition.ToPoint(), new Shapes.Circle(Main.rand.Next(30, 55)), new Actions.SetTile((ushort)ModContent.TileType<MothlightGrass>()));
+                        WorldUtils.Gen(HillPosition.ToPoint(), new Shapes.Circle(Main.rand.Next(30, 55)), new Actions.SetTile((ushort)ModContent.TileType<MothlightMushroom>()));
 
 
 
@@ -3258,9 +3265,9 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     if (daa == 14)
                     {
 
-                       // WorldUtils.Gen(HillPosition.ToPoint(), new UpsideDownMound(Main.rand.Next(10, 30), Main.rand.Next(10, 20)), new Actions.SetTile((ushort)ModContent.TileType<MothlightGrass>()));
+                       // WorldUtils.Gen(HillPosition.ToPoint(), new UpsideDownMound(Main.rand.Next(10, 30), Main.rand.Next(10, 20)), new Actions.SetTile((ushort)ModContent.TileType<MothlightMushroom>()));
 
-                        WorldUtils.Gen(HillPosition.ToPoint(), new Shapes.Circle(Main.rand.Next(80, 90), Main.rand.Next(80, 90)), new Actions.SetTile((ushort)ModContent.TileType<MothlightGrass>()));
+                        WorldUtils.Gen(HillPosition.ToPoint(), new Shapes.Circle(Main.rand.Next(80, 90), Main.rand.Next(80, 90)), new Actions.SetTile((ushort)ModContent.TileType<MothlightMushroom>()));
                        
                         WorldUtils.Gen(HillPosition.ToPoint(), new Shapes.HalfCircle(90), Actions.Chain(new GenAction[]
                                     {
@@ -3339,7 +3346,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                 if (!WorldGen.SolidTile(X, yBelow))
                     continue;
 
-                if (Main.tile[X, yBelow].TileType == ModContent.TileType<MothlightGrass>())
+                if (Main.tile[X, yBelow].TileType == ModContent.TileType<MothlightMushroom>())
                 {
 
                     WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Circle(WorldGen.genRand.Next(1, 4)), Actions.Chain(new GenAction[]
@@ -3369,7 +3376,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                 if (!WorldGen.SolidTile(X, yBelow))
                     continue;
 
-                if (Main.tile[X, yBelow].TileType == ModContent.TileType<MothlightGrass>())
+                if (Main.tile[X, yBelow].TileType == ModContent.TileType<MothlightMushroom>())
                 {
 
                     WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Circle(WorldGen.genRand.Next(1, 3)), Actions.Chain(new GenAction[]
@@ -3394,7 +3401,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                 if (!WorldGen.SolidTile(X, yBelow))
                     continue;
 
-                if (Main.tile[X, yBelow].TileType == ModContent.TileType<MothlightGrass>())
+                if (Main.tile[X, yBelow].TileType == ModContent.TileType<MothlightMushroom>())
                 {
                     WorldGen.digTunnel(WallPosition.X, WallPosition.Y, 0, 0, 1, (int)(WorldGen.genRand.Next(3, 15)), true);
                     WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Circle(WorldGen.genRand.Next(1, 5)), Actions.Chain(new GenAction[]
@@ -3427,20 +3434,20 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                 if (!WorldGen.SolidTile(X, yBelow))
                     continue;
 
-                if (Main.tile[X, yBelow].TileType == ModContent.TileType<MothlightGrass>())
+                if (Main.tile[X, yBelow].TileType == ModContent.TileType<MothlightMushroom>())
                 {
 
                     WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Tail(15, WallPosition2), Actions.Chain(new GenAction[]
                        {
                            new Actions.ClearWall(true),
-                            new Actions.SetTile(TileID.GrayBrick),
+                            new Actions.SetTile((ushort)ModContent.TileType<MothlightGrass>()),
                             //new Actions.Smooth(true)
                        }));
 
                     WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Tail(15, WallPosition3), Actions.Chain(new GenAction[]
                        {
                            new Actions.ClearWall(true),
-                            new Actions.SetTile(TileID.GrayBrick),
+                            new Actions.SetTile((ushort)ModContent.TileType<MothlightGrass>()),
                             //new Actions.Smooth(true)
                        }));
 
@@ -3475,14 +3482,14 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Tail(15, WallPosition2), Actions.Chain(new GenAction[]
                        {
                            new Actions.ClearWall(true),
-                            new Actions.SetTile((ushort)ModContent.TileType<MothlightGrass>()),
+                            new Actions.SetTile((ushort)ModContent.TileType<MothlightMushroom>()),
                             //new Actions.Smooth(true)
                        }));
 
                     WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Tail(15, WallPosition3), Actions.Chain(new GenAction[]
                        {
                            new Actions.ClearWall(true),
-                            new Actions.SetTile((ushort)ModContent.TileType<MothlightGrass>()),
+                            new Actions.SetTile((ushort)ModContent.TileType<MothlightMushroom>()),
                             //new Actions.Smooth(true)
                        }));
 

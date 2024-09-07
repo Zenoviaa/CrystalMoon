@@ -126,3 +126,8 @@ RadianceElement: {
 	DisplayName: Radiance Element
 	Tooltip: ""
 }
+
+MothlightMushroomBlock: {
+	DisplayName: Mothlight Mushroom Block
+	Tooltip: ""
+}
