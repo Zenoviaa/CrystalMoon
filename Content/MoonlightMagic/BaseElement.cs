@@ -1,10 +1,9 @@
 ﻿using System;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic
 {
-    internal abstract class BaseElement : ModItem,
+    internal abstract class BaseElement : BaseMagicItem,
         ICloneable,
         IAdvancedMagicAddon
     {

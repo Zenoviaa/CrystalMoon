@@ -42,22 +42,28 @@ namespace CrystalMoon.Content.MoonlightMagic
             Projectile.timeLeft = 360;
         }
 
-        public void SetMoonlightDefaults(
-            BaseElement primaryElement,
-            Texture2D form,
-            BaseMovement movement,
-            List<BaseEnchantment> enchantments)
+        public void SetMoonlightDefaults(BaseStaff item)
         {
-            PrimaryElement = primaryElement.Instantiate();
-            Movement = movement;
-            Form = form;
+            PrimaryElement = (item.PrimaryElement.ModItem as BaseElement).Instantiate();
+            Movement = item.Movement;
+            Form = item.Form;
             Enchantments.Clear();
-            for (int i = 0; i < enchantments.Count; i++)
+
+            var enchantments = item.EquippedEnchantments;
+            for (int i = 0; i < enchantments.Length; i++)
             {
-                var enchantment = enchantments[i].Instantiate();
-                enchantment.MagicProj = this;
-                enchantment.SetDefaults();
-                Enchantments.Add(enchantment);
+                var enchantmentTemplate = enchantments[i];
+                if (enchantmentTemplate == null)
+                    continue;
+
+                var modItem = enchantments[i].ModItem;
+                if(modItem is BaseEnchantment enchantment)
+                {
+                    var instance = enchantment.Instantiate();
+                    instance.MagicProj = this;
+                    instance.SetDefaults();
+                    Enchantments.Add(instance);
+                }
             }
 
             if(PrimaryElement != null)

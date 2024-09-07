@@ -1,23 +1,18 @@
 ﻿using CrystalMoon.Systems.Players;
-using CrystalMoon.Content.Bases;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
-using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 using Terraria.UI;
-using static Terraria.GameContent.Animations.IL_Actions.Sprites;
 
 namespace CrystalMoon.UI.StaminaSystem
 {
+    [Autoload(Side = ModSide.Client)]
     internal class StaminaMeter : ModSystem
     {
         private UserInterface _interface;
