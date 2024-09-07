@@ -44,6 +44,7 @@
 	  <None Remove="Assets\NoiseTextures\WaveTrail.png" />
 	  <None Remove="Assets\NoiseTextures\WhispyTrail.png" />
 	  <None Remove="Assets\Textures\FX\SwordSlash.png" />
+	  <None Remove="Content\MoonlightMagic\Elements\BasicElement.png" />
 	</ItemGroup>
 
 	<!-- References -->

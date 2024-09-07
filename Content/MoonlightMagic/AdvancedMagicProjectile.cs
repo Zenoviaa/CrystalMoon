@@ -1,4 +1,5 @@
-﻿using CrystalMoon.Registries;
+﻿using CrystalMoon.Content.MoonlightMagic.Elements;
+using CrystalMoon.Registries;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -44,7 +45,10 @@ namespace CrystalMoon.Content.MoonlightMagic
 
         public void SetMoonlightDefaults(BaseStaff item)
         {
-            PrimaryElement = (item.PrimaryElement.ModItem as BaseElement).Instantiate();
+            if (item.PrimaryElement == null || item.PrimaryElement.ModItem is not BaseElement)
+                PrimaryElement = new BasicElement();
+            else
+                PrimaryElement = (item.PrimaryElement.ModItem as BaseElement).Instantiate();
             Movement = item.Movement;
             Form = item.Form;
             Enchantments.Clear();
@@ -66,6 +70,7 @@ namespace CrystalMoon.Content.MoonlightMagic
                 }
             }
 
+         
             if(PrimaryElement != null)
                 PrimaryElement.MagicProj = this;
             if (Movement != null)

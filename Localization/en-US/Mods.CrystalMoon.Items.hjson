@@ -131,3 +131,8 @@ MothlightMushroomBlock: {
 	DisplayName: Mothlight Mushroom Block
 	Tooltip: ""
 }
+
+BasicElement: {
+	DisplayName: Basic Element
+	Tooltip: ""
+}
