@@ -225,6 +225,7 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             if (staff == null)
                 return;
 
+ 
             if(_elementUI != null)
             {
                 var elementSlot = _elementUI.ElementSlot;

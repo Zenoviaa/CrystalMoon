@@ -57,6 +57,22 @@ namespace CrystalMoon.Content.MoonlightMagic
             TrailLength = Random.Next(24, 32);
         }
 
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            base.ModifyTooltips(tooltips);
+   
+
+            for(int i = 0; i < EquippedEnchantments.Length; i++)
+            {
+                var item = EquippedEnchantments[i];
+                if(item.ModItem is BaseEnchantment enchantment)
+                {
+                    TooltipLine tooltipLine = new TooltipLine(Mod, $"MoonMagicEnchant_{enchantment.Name}_{i}", enchantment.DisplayName.Value);
+                    tooltips.Add(tooltipLine);
+                }
+            }
+      
+        }
         public virtual int GetNormalSlotCount()
         {
             return 5;
@@ -78,6 +94,24 @@ namespace CrystalMoon.Content.MoonlightMagic
         {
             base.RightClick(player);
             AdvancedMagicUISystem.OpenUI(this);
+        }
+
+        public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+        {
+            if(PrimaryElement.ModItem is BaseElement element)
+            {
+                element.SpecialInventoryDraw(Item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
+            }
+
+            for(int i = 0; i < EquippedEnchantments.Length; i++)
+            {
+                var enchant = EquippedEnchantments[i];
+                if(enchant.ModItem is BaseEnchantment enchantment)
+                {
+                    enchantment.SpecialInventoryDraw(Item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
+                }
+            }
+            return base.PreDrawInInventory(spriteBatch, position, frame, drawColor, itemColor, origin, scale);
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
