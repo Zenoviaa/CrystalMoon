@@ -23,7 +23,7 @@ namespace CrystalMoon.Tiles.MothlightTiles
                 Main.tileLighted[Type] = true;
                 Main.tileBlockLight[Type] = true;
                 LocalizedText name = CreateMapEntryName();
-                AddMapEntry(new Color(10, 140, 124), name);
+                AddMapEntry(new Color(69, 83, 64), name);
 
             RegisterItemDrop(ModContent.ItemType<MothlightGrassBlock>());
             // DustType = Main.rand.Next(110, 113);
