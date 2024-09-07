@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic
 {
-    internal abstract class BaseEnchantment : ModItem, 
+    internal abstract class BaseEnchantment : BaseMagicItem, 
         IAdvancedMagicAddon,
         ICloneable
     {
@@ -24,6 +26,7 @@ namespace CrystalMoon.Content.MoonlightMagic
         {
             base.SetDefaults();
         }
+
 
         //Enchantment stuff
         public virtual void AI() { }

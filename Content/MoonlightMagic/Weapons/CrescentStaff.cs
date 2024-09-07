@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CrystalMoon.Content.MoonlightMagic.Weapons
 {
-    internal class CrescentStaff : BaseAdvancedMagicItem
+    internal class CrescentStaff : BaseStaff
     {
         public override void SetDefaults()
         {

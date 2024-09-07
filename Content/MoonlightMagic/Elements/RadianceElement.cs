@@ -1,6 +1,7 @@
 ﻿using CrystalMoon.Registries;
 using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Systems.Particles;
+using CrystalMoon.Systems.ScreenSystems;
 using CrystalMoon.Systems.Shaders;
 using CrystalMoon.Visual.Particles;
 using Microsoft.Xna.Framework;
@@ -13,6 +14,15 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
     internal class RadianceElement : BaseElement
     {
         private int trailMode = 0;
+
+        public override void SpecialInventoryDraw(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+        {
+            base.SpecialInventoryDraw(item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
+            
+      
+            //DrawHelper.DrawGlowInInventory(item, spriteBatch, position, Color.Red);
+        }
+
         public override void AI()
         {
             AI_Particles();
