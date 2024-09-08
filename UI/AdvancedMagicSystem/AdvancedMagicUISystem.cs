@@ -11,85 +11,63 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
     [Autoload(Side = ModSide.Client)]
     internal class AdvancedMagicUISystem : ModSystem
     {
-        private static UserInterface _backpackInterface;
-        private static UserInterface _staffInterface;
-        private static UserInterface _btnInterface;
-        private static AdvancedMagicItemUI _itemUI;
-        private static AdvancedMagicStaffUI _staffUI;
-        private static AdvancedMagicElementUI _elementUI;
-        private static AdvancedMagicButtonUI _buttonUI;
+        private UserInterface _backpackInterface;
+        private UserInterface _staffInterface;
+        private UserInterface _btnInterface;
+
+        public StaffUIState staffUIState;
+        public ItemUIState itemUIState;
+        public ButtonUIState buttonUIState;
 
         public static BaseStaff Staff { get; private set; }
         private GameTime _lastUpdateUiGameTime;
-        public override void Load()
+
+        public override void OnModLoad()
         {
-            base.Load();
-            if (!Main.dedServ)
-            {
-                _backpackInterface = new UserInterface();
-                _staffInterface = new UserInterface();
-                _btnInterface = new UserInterface();
-            }
+            base.OnModLoad();
+            _backpackInterface = new UserInterface();
+            _staffInterface = new UserInterface();
+            _btnInterface = new UserInterface();
+
+            staffUIState = new StaffUIState();
+            itemUIState = new ItemUIState();
+            buttonUIState = new ButtonUIState();
+
+            staffUIState.Activate();
+            itemUIState.Activate();
+            buttonUIState.Activate();
         }
 
-        public override void Unload()
+        internal void Recalculate()
         {
-            _backpackInterface = null;
-            _btnInterface = null;
-            _staffInterface = null;
+            staffUIState.staffUI.Recalculate();
+            staffUIState.elementUI.Recalculate();
+            staffUIState.elementUI.ElementSlot.Refresh();
+            itemUIState.itemUI.Recalculate();
         }
 
-        public override void PostUpdateEverything()
+        internal void OpenUI(BaseStaff staff)
         {
-            base.PostUpdateEverything();
-            /*if(_staffInterface.CurrentState != null)
+            if(Staff != staff)
             {
-                SaveEnchantmentsToStaff();
-            }
-            if(_backpackInterface.CurrentState != null)
-            {
-                SaveBackpackToPlayer();
-            }*/
-        }
-
-        internal static void OpenUI(BaseStaff baseAdvancedMagicItem)
-        {
-            bool resetup = false;
-            if(Staff != baseAdvancedMagicItem)
-            {
-                Staff = baseAdvancedMagicItem;
-                resetup = true;
-            }
-     
-            if(_staffInterface.CurrentState == null)
-            {
+                CloseStaffUI();
+                Staff = staff;
+                Recalculate();
                 OpenStaffUI();
-                _staffUI.SetupSlots();
-                _elementUI.SetupSlot();
                 if (_backpackInterface.CurrentState == null)
                 {
                     OpenBackpackUI();
                 }
             }
-            else if (resetup)
-            {
-
-                _staffUI.ReSetupSlots();
-                _elementUI.SetupSlot();
-                if (_backpackInterface.CurrentState == null)
-                {
-                    OpenBackpackUI();
-                }
-            } else if (!resetup)
+            else
             {
                 CloseStaffUI();
                 CloseBackpackUI();
+                Staff = null;
             }
-
-       
         }
 
-        internal static void ToggleUI()
+        internal void ToggleUI()
         {
             if (_backpackInterface.CurrentState != null)
             {
@@ -122,7 +100,6 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
                 CloseStaffUI();
             }
 
-            _itemUI?.Activate();
             _lastUpdateUiGameTime = gameTime;
             if (_backpackInterface?.CurrentState != null)
             {
@@ -145,116 +122,43 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             {
              //   RenamePetUI.saveItemInUI = true;
                 _backpackInterface.SetState(null);
+                _staffInterface.SetState(null);
+                _btnInterface.SetState(null);
             }
         }
 
-        internal static void OpenButtonUI()
+        internal void OpenButtonUI()
         {
-            _buttonUI = new();
-            UIState state = new UIState();
-            state.Append(_buttonUI);
-            state.Activate();
-            _buttonUI.Activate();
-            _btnInterface.SetState(state);
+            //Set State
+            _btnInterface.SetState(buttonUIState);
         }
 
-        internal static void CloseButtonUI()
+        internal void CloseButtonUI()
         {
-            _buttonUI = null;
+            //Kill
             _btnInterface.SetState(null);
         }
 
-        internal static void ToggleStaffUI()
+        internal void OpenStaffUI()
         {
-            if (_staffInterface.CurrentState != null)
-            {
-                CloseStaffUI();
-            }
-            else
-            {
-                OpenStaffUI();
-            }
+            //Set State
+            _staffInterface.SetState(staffUIState);
         }
 
-        internal static void OpenStaffUI()
+        internal void CloseStaffUI()
         {
-            _staffUI = new();
-            _elementUI = new();
-
-            UIState state = new UIState();
-            state.Append(_staffUI);
-            state.Append(_elementUI);
-            state.Activate();
-
-            _staffUI.Activate();
-            _elementUI.Activate();
-            _staffInterface.SetState(state);
-        }
-
-        internal static void CloseStaffUI()
-        {
-            SaveEnchantmentsToStaff();
-            _elementUI = null;
-            _staffUI = null;
             _staffInterface.SetState(null);
         }
 
-        internal static void OpenBackpackUI()
+        internal void OpenBackpackUI()
         {
-            _itemUI = new();      
-    
-            UIState state = new UIState();
-            state.Append(_itemUI); 
-            state.Activate();
-
-            _itemUI.Activate();
-            _backpackInterface.SetState(state);
+            //Set State
+            _backpackInterface.SetState(itemUIState);
         }
 
-        internal static void CloseBackpackUI()
+        internal void CloseBackpackUI()
         {
-            SaveBackpackToPlayer();
-            _itemUI = null;
             _backpackInterface.SetState(null);
-        }
-
-
-        internal static void SaveEnchantmentsToStaff()
-        {
-            var staff = Staff;
-            if (staff == null)
-                return;
-
- 
-            if(_elementUI != null)
-            {
-                var elementSlot = _elementUI.ElementSlot;
-                staff.PrimaryElement = elementSlot.Item.Clone();
-            }
-
-            if (_staffUI != null)
-            {
-                var slots = _staffUI.StaffSlots;
-                for (int i = 0; i < slots.Count; i++)
-                {
-                    var slot = slots[i];
-                    staff.EquippedEnchantments[i] = slot.Item.Clone();
-                }
-            }
-        }
-
-        internal static void SaveBackpackToPlayer()
-        {
-            var player = Main.LocalPlayer.GetModPlayer<AdvancedMagicPlayer>();
-            if (_itemUI == null)
-                return;
-
-            var slots = _itemUI.ItemSlots;
-            for (int i = 0; i < slots.Count; i++)
-            {
-                var slot = slots[i];
-                player.Backpack[i] = slot.Item.Clone();
-            }
         }
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)

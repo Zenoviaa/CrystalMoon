@@ -1,0 +1,44 @@
+BasicElement: {
+	DisplayName: Basic Element
+	Tooltip: ""
+}
+
+BloodletElement: {
+	DisplayName: Bloodlet Element
+	Tooltip: ""
+}
+
+DeeyaElement: {
+	DisplayName: Deeya Element
+	Tooltip: ""
+}
+
+GuutElement: {
+	DisplayName: Guut Element
+	Tooltip: ""
+}
+
+HexElement: {
+	DisplayName: Hex Element
+	Tooltip: ""
+}
+
+NaturalElement: {
+	DisplayName: Natural Element
+	Tooltip: ""
+}
+
+PhantasmalElement: {
+	DisplayName: Phantasmal Element
+	Tooltip: ""
+}
+
+RadianceElement: {
+	DisplayName: Radiance Element
+	Tooltip: ""
+}
+
+UvilisElement: {
+	DisplayName: Uvilis Element
+	Tooltip: ""
+}

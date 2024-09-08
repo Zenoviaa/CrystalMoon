@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CrystalMoon.UI.AdvancedMagicSystem;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
@@ -12,19 +13,25 @@ namespace CrystalMoon.Content.MoonlightMagic
         public static event Action<Item> MagicPickupEvent;
         public void Pickup(Item item)
         {
+            var uiSystem = ModContent.GetInstance<AdvancedMagicUISystem>();
             bool success = false;
+            int updateIndex = 0;
             for(int i = 0; i < Backpack.Count; i++)
             {
                 if (Backpack[i].IsAir)
                 {
                     Backpack[i] = item;
+                    updateIndex = i;
                     success = true;
                     break;
                 }
             }
 
-            if(!success)
+            if (!success)
+            {
+                updateIndex = Backpack.Count;
                 Backpack.Add(item);
+            }    
 
             int airCount = 0;
             for (int i = 0; i < Backpack.Count; i++)
@@ -35,13 +42,15 @@ namespace CrystalMoon.Content.MoonlightMagic
                 }
             }
 
-            if(airCount == 0)
+            Backpack.RemoveAll(x => x.IsAir);
+            if (airCount == 0)
             {
                 Item emptyItem = new Item();
                 emptyItem.SetDefaults(0);
                 Backpack.Add(emptyItem);
             }
-    
+
+            uiSystem.Recalculate();
             MagicPickupEvent?.Invoke(item);
         }
 

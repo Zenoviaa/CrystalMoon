@@ -45,15 +45,15 @@ namespace CrystalMoon.Content.MoonlightMagic
 
         public void SetMoonlightDefaults(BaseStaff item)
         {
-            if (item.PrimaryElement == null || item.PrimaryElement.ModItem is not BaseElement)
+            if (item.primaryElement == null || item.primaryElement.ModItem is not BaseElement)
                 PrimaryElement = new BasicElement();
             else
-                PrimaryElement = (item.PrimaryElement.ModItem as BaseElement).Instantiate();
+                PrimaryElement = (item.primaryElement.ModItem as BaseElement).Instantiate();
             Movement = item.Movement;
             Form = item.Form;
             Enchantments.Clear();
 
-            var enchantments = item.EquippedEnchantments;
+            var enchantments = item.equippedEnchantments;
             for (int i = 0; i < enchantments.Length; i++)
             {
                 var enchantmentTemplate = enchantments[i];

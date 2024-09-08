@@ -1,0 +1,7 @@
+EnchantmentCommonTooltip: Enchantment
+EnchantmentCommonHelp: Insert into a staff to enchant your spell
+
+FlameLashEnchantment: {
+	DisplayName: Flame Lash
+	Tooltip: When your spell hits an enemy or tile, it explodes into fire!
+}

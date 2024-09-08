@@ -1,4 +1,5 @@
 ﻿using CrystalMoon.Content.MoonlightMagic;
+using CrystalMoon.Systems.ScreenSystems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -13,6 +14,7 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
 {
     internal class AdvancedMagicItemSlot : UIElement
     {
+        private Item _prevItem;
         internal Item Item;
         private readonly int _context;
         private readonly float _scale;
@@ -48,8 +50,13 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
         {
             if (Valid(Main.mouseItem))
             {
+                _prevItem = Item;
                 //Handles all the click and hover actions based on the context
                 ItemSlot.Handle(ref Item, _context);
+                if(Item != _prevItem)
+                {
+                    SaveToBackpack();
+                }
             }
         }
 
@@ -72,7 +79,10 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             Texture2D value = ModContent.Request<Texture2D>("CrystalMoon/UI/AdvancedMagicSystem/EnchantmentSlot").Value;
 
             Vector2 centerPos = pos + rectangle.Size() / 2f;
+
+
             spriteBatch.Draw(value, rectangle.TopLeft(), null, color2, 0f, default(Vector2), _scale, SpriteEffects.None, 0f);
+            //DrawHelper.DrawGlowInInventory(Item, spriteBatch, centerPos, Color.AliceBlue);
             ItemSlot.DrawItemIcon(Item, _context, spriteBatch, centerPos, _scale, 32, Color.White);
       
             if (contains && Item.IsAir)
@@ -86,6 +96,19 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             }
 
             Main.inventoryScale = oldScale;
+        }
+
+        public void SaveToBackpack()
+        {
+            var player = Main.LocalPlayer.GetModPlayer<AdvancedMagicPlayer>();
+            player.Backpack[index] = Item.Clone();
+        }
+
+        public void Refresh()
+        {
+            var player = Main.LocalPlayer.GetModPlayer<AdvancedMagicPlayer>();
+            Item = player.Backpack[index].Clone();
+            _prevItem = Item;
         }
     }
 }

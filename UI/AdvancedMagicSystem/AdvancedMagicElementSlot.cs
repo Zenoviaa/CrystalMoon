@@ -1,4 +1,5 @@
 ﻿using CrystalMoon.Content.MoonlightMagic;
+using CrystalMoon.Systems.ScreenSystems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -14,12 +15,12 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
 {
     internal class AdvancedMagicElementSlot : UIElement
     {
-
-        internal Item Item;
+        private Item _prevItem;
+        private BaseStaff ActiveStaff => AdvancedMagicUISystem.Staff;
         private readonly int _context;
         private readonly float _scale;
-        internal Func<Item, bool> ValidItemFunc;
 
+        internal Item Item;
         internal event Action<int> OnEmptyMouseover;
 
         private int timer = 0;
@@ -28,9 +29,6 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
         {
             _context = context;
             _scale = scale;
-            Item = new Item();
-            Item.SetDefaults(0);
-
             var inventoryBack9 = TextureAssets.InventoryBack9;
             Width.Set(inventoryBack9.Width() * scale, 0f);
             Height.Set(inventoryBack9.Height() * scale, 0f);
@@ -49,8 +47,12 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             if (Valid(Main.mouseItem))
             {
                 //Handles all the click and hover actions based on the context
-     
+                _prevItem = Item;
                 ItemSlot.Handle(ref Item, _context);
+                if(_prevItem != Item)
+                {
+                    SaveElementToStaff();
+                }
             }
         }
 
@@ -76,6 +78,28 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
 
             Vector2 centerPos = pos + rectangle.Size() / 2f;
             spriteBatch.Draw(value, rectangle.TopLeft(), null, color2, 0f, default(Vector2), _scale, SpriteEffects.None, 0f);
+
+            if(Item.ModItem is BaseElement element)
+            {
+                float sizeLimit = 64;
+                int numberOfCloneImages = 6;
+
+                Vector2 glowCenterPos = centerPos + new Vector2(12, 12);
+                Main.DrawItemIcon(spriteBatch, Item, glowCenterPos, Color.White * 0.7f, sizeLimit);
+                Color glowColor = element.GetElementColor();
+                for (float i = 0; i < 1; i += 1f / numberOfCloneImages)
+                {
+                    float cloneImageDistance = MathF.Cos(Main.GlobalTimeWrappedHourly / 2.4f * MathF.Tau / 2f) + 0.5f;
+                    cloneImageDistance = MathHelper.Max(cloneImageDistance, 0.1f);
+                    Color color = glowColor * 0.4f;
+                    color *= 1f - cloneImageDistance * 0.5f;
+                    color.A = 0;
+                    cloneImageDistance *= 3;
+                    Vector2 drawPos = glowCenterPos + (i * MathF.Tau).ToRotationVector2() * (cloneImageDistance + 2f);
+                    Main.DrawItemIcon(spriteBatch, Item, drawPos, color, sizeLimit);
+                }
+            }
+           
             ItemSlot.DrawItemIcon(Item, _context, spriteBatch, centerPos + new Vector2(12, 12), _scale, 64, Color.White);
 
             if (contains && Item.IsAir)
@@ -89,6 +113,16 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             }
 
             Main.inventoryScale = oldScale;
+        }
+
+        private void SaveElementToStaff()
+        {
+            ActiveStaff.primaryElement = Item.Clone();
+        }
+
+        public void Refresh()
+        {
+            Item = ActiveStaff.primaryElement.Clone();
         }
     }
 }

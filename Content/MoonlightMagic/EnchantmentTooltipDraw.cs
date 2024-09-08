@@ -3,6 +3,11 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.ModLoader;
+using static System.Net.Mime.MediaTypeNames;
+using Terraria.UI.Chat;
+using CrystalMoon.Systems.Shaders;
+using CrystalMoon.Content.MoonlightMagic.Elements;
+using CrystalMoon.Registries;
 
 namespace CrystalMoon.Content.MoonlightMagic
 {
@@ -12,7 +17,6 @@ namespace CrystalMoon.Content.MoonlightMagic
 
         public override bool PreDrawTooltipLine(Item item, DrawableTooltipLine line, ref int yOffset)
         {
-
             if (line.Mod == "CrystalMoon" && line.Name.Contains("MoonMagicEnchant_"))
             {
                 line.BaseScale *= 0.75f;
@@ -20,8 +24,30 @@ namespace CrystalMoon.Content.MoonlightMagic
                 line.Y += 6;
             }
 
+            bool isItemName = line.Mod == "Terraria" && line.Name == "ItemName";
+            bool isEnchantTooltip = line.Mod == "CrystalMoon" && line.Name == "EnchantmentTooltip";
+            if (isItemName || isEnchantTooltip) 
+            {
+                if (isEnchantTooltip)
+                {
+                    line.BaseScale *= 0.95f;
+                }
+                SpriteBatch spriteBatch = Main.spriteBatch;  
+                if (item.ModItem is BaseEnchantment enchantment)
+                {
+                    int elementType = enchantment.GetElementType();
+                    BaseElement element = ModContent.GetModItem(elementType) as BaseElement;
+                    if(element.DrawTextShader(spriteBatch, item, line, ref yOffset))
+                    {
+                        return false;
+                    }
+                }
+            }
+
             return base.PreDrawTooltipLine(item, line, ref yOffset);
         }
+
+
 
         public override void PostDrawTooltipLine(Item item, DrawableTooltipLine line)
         {
@@ -29,9 +55,9 @@ namespace CrystalMoon.Content.MoonlightMagic
 
             if (line.Mod == "Terraria" && line.Name == "ItemName")
             {
-                if(item.ModItem is BaseStaff baseStaff && baseStaff.PrimaryElement.ModItem is BaseElement)
+                if(item.ModItem is BaseStaff baseStaff && baseStaff.primaryElement.ModItem is BaseElement)
                 {
-                    string elementName = baseStaff.PrimaryElement.Name;
+                    string elementName = baseStaff.primaryElement.Name;
                     elementName = elementName.Replace(" ", "");
                     Texture2D texture = ModContent.Request<Texture2D>(
                         $"CrystalMoon/Content/MoonlightMagic/Elements/{elementName}").Value;

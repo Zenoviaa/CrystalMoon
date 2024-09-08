@@ -8,6 +8,7 @@
 		
 	</PropertyGroup>
 	<ItemGroup>
+	  <None Remove="Assets\Effects\FirePixel.fx" />
 	  <None Remove="Assets\Effects\Gradient.fx" />
 	  <None Remove="Assets\Effects\MagicBloodlet.fx" />
 	  <None Remove="Assets\Effects\MagicDeeya.fx" />
@@ -45,6 +46,8 @@
 	  <None Remove="Assets\NoiseTextures\WhispyTrail.png" />
 	  <None Remove="Assets\Textures\FX\SwordSlash.png" />
 	  <None Remove="Content\MoonlightMagic\Elements\BasicElement.png" />
+	  <None Remove="Localization\en-US\Mods.CrystalMoon.Elements.hjson" />
+	  <None Remove="Localization\en-US\Mods.CrystalMoon.Enchantments.hjson" />
 	</ItemGroup>
 
 	<!-- References -->

@@ -15,6 +15,7 @@ namespace CrystalMoon.Content.MoonlightMagic
         public override bool OnPickup(Player player)
         {
             player.GetModPlayer<AdvancedMagicPlayer>().Pickup(Item);
+            PopupText.NewText(PopupTextContext.SonarAlert, Item, 1, longText: true);
             return false;
         }
     }
