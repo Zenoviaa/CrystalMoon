@@ -23,8 +23,8 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
 
             Width.Pixels = width;
             Height.Pixels = height;
-            Top.Pixels = int.MaxValue / 2;
-            Left.Pixels = int.MaxValue / 2;
+            Left.Pixels = RelativeLeft;
+            Top.Pixels = RelativeTop;
             BackgroundColor = Color.Transparent;
             BorderColor = Color.Transparent;
             _btn = new UIImage(ModContent.Request<Texture2D>("CrystalMoon/UI/AdvancedMagicSystem/Paper"));
@@ -35,7 +35,8 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
 
         private void ToggleUI()
         {
-            AdvancedMagicUISystem.ToggleUI();
+            AdvancedMagicUISystem uiSystem = ModContent.GetInstance<AdvancedMagicUISystem>();
+            uiSystem.ToggleUI();
         }
 
         public override void Update(GameTime gameTime)

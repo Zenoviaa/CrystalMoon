@@ -119,7 +119,7 @@ namespace CrystalMoon.Content.MoonlightMagic
         public override void RightClick(Player player)
         {
             base.RightClick(player);
-            AdvancedMagicUISystem.OpenUI(this);
+            ModContent.GetInstance<AdvancedMagicUISystem>().OpenUI(this);
         }
 
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)

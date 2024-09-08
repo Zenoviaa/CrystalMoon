@@ -12,6 +12,7 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
 {
     internal class AdvancedMagicStaffSlot : UIElement
     {
+        private Item _prevItem;
         private readonly BaseStaff _staff;
         private readonly int _context;
         private readonly float _scale;
@@ -34,6 +35,7 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             var asset = ModContent.Request<Texture2D>("CrystalMoon/UI/AdvancedMagicSystem/EnchantmentCard");
             Width.Set(asset.Width() * scale, 0f);
             Height.Set(asset.Height() * scale, 0f);
+    
         }
 
         public int index;
@@ -50,14 +52,18 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
         {
             if (Valid(Main.mouseItem))
             {
+                _prevItem = Item;
                 //Handles all the click and hover actions based on the context
                 ItemSlot.Handle(ref Item, _context);
+                if(Item != _prevItem)
+                {
+                    SaveToStaff();
+                }
             }
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-
             float oldScale = Main.inventoryScale;
             Main.inventoryScale = _scale;
             Rectangle rectangle = GetDimensions().ToRectangle();
@@ -73,7 +79,8 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             Vector2 pos = rectangle.TopLeft();
 
             //Enchantment Card
-            var elementItem = AdvancedMagicUISystem.ElementUI.ElementSlot.Item;
+            var uiSystem = ModContent.GetInstance<AdvancedMagicUISystem>();
+            var elementItem = uiSystem.staffUIState.elementUI.ElementSlot.Item;
             if (Item.ModItem is BaseEnchantment enchantment &&
                elementItem.type == enchantment.GetElementType())
             {
@@ -86,6 +93,7 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             Texture2D value = ModContent.Request<Texture2D>("CrystalMoon/UI/AdvancedMagicSystem/EnchantmentCard").Value;
             int offset = (int)(value.Size().Y / 2);
             Vector2 centerPos = pos + rectangle.Size() / 2f;
+       
             spriteBatch.Draw(value, rectangle.TopLeft(), null, color2, 0f, default(Vector2), _scale, SpriteEffects.None, 0f);
 
             //Enchantment Slot
@@ -105,12 +113,6 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             }
 
             Main.inventoryScale = oldScale;
-        }
-
-        public override void OnDeactivate()
-        {
-            base.OnDeactivate();
-            SaveToStaff();
         }
 
         public void SaveToStaff()

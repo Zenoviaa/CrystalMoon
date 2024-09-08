@@ -15,7 +15,8 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
 {
     internal class AdvancedMagicElementSlot : UIElement
     {
-        private readonly BaseStaff _staff;
+        private Item _prevItem;
+        private BaseStaff ActiveStaff => AdvancedMagicUISystem.Staff;
         private readonly int _context;
         private readonly float _scale;
 
@@ -24,12 +25,10 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
 
         private int timer = 0;
 
-        internal AdvancedMagicElementSlot(BaseStaff staff, int context = ItemSlot.Context.BankItem, float scale = 1f)
+        internal AdvancedMagicElementSlot(int context = ItemSlot.Context.BankItem, float scale = 1f)
         {
             _context = context;
             _scale = scale;
-            _staff = staff;
-            Item = staff.primaryElement.Clone();
             var inventoryBack9 = TextureAssets.InventoryBack9;
             Width.Set(inventoryBack9.Width() * scale, 0f);
             Height.Set(inventoryBack9.Height() * scale, 0f);
@@ -48,8 +47,12 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             if (Valid(Main.mouseItem))
             {
                 //Handles all the click and hover actions based on the context
-     
+                _prevItem = Item;
                 ItemSlot.Handle(ref Item, _context);
+                if(_prevItem != Item)
+                {
+                    SaveElementToStaff();
+                }
             }
         }
 
@@ -112,15 +115,14 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             Main.inventoryScale = oldScale;
         }
 
-        public override void OnDeactivate()
-        {
-            base.OnDeactivate();
-            SaveElementToStaff();
-        }
-
         private void SaveElementToStaff()
         {
-            _staff.primaryElement = Item.Clone();
+            ActiveStaff.primaryElement = Item.Clone();
+        }
+
+        public void Refresh()
+        {
+            Item = ActiveStaff.primaryElement.Clone();
         }
     }
 }

@@ -14,6 +14,7 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
 {
     internal class AdvancedMagicItemSlot : UIElement
     {
+        private Item _prevItem;
         internal Item Item;
         private readonly int _context;
         private readonly float _scale;
@@ -49,8 +50,13 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
         {
             if (Valid(Main.mouseItem))
             {
+                _prevItem = Item;
                 //Handles all the click and hover actions based on the context
                 ItemSlot.Handle(ref Item, _context);
+                if(Item != _prevItem)
+                {
+                    SaveToBackpack();
+                }
             }
         }
 
@@ -92,16 +98,17 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             Main.inventoryScale = oldScale;
         }
 
-        public override void OnDeactivate()
-        {
-            base.OnDeactivate();
-            SaveToBackpack();
-        }
-
         public void SaveToBackpack()
         {
             var player = Main.LocalPlayer.GetModPlayer<AdvancedMagicPlayer>();
             player.Backpack[index] = Item.Clone();
+        }
+
+        public void Refresh()
+        {
+            var player = Main.LocalPlayer.GetModPlayer<AdvancedMagicPlayer>();
+            Item = player.Backpack[index].Clone();
+            _prevItem = Item;
         }
     }
 }

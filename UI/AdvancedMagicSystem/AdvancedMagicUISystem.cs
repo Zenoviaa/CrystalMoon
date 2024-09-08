@@ -11,53 +11,49 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
     [Autoload(Side = ModSide.Client)]
     internal class AdvancedMagicUISystem : ModSystem
     {
+        private UserInterface _backpackInterface;
+        private UserInterface _staffInterface;
+        private UserInterface _btnInterface;
 
-        private static UserInterface _backpackInterface;
-        private static UserInterface _staffInterface;
-        private static UserInterface _btnInterface;
+        public StaffUIState staffUIState;
+        public ItemUIState itemUIState;
+        public ButtonUIState buttonUIState;
 
-        public static AdvancedMagicItemUI ItemUI { get; private set; }
-        public static AdvancedMagicStaffUI StaffUI { get; private set; }
-        public static AdvancedMagicElementUI ElementUI { get; private set; }
-        public static AdvancedMagicButtonUI ButtonUI { get; private set; }
         public static BaseStaff Staff { get; private set; }
         private GameTime _lastUpdateUiGameTime;
+
         public override void Load()
         {
             base.Load();
-            if (!Main.dedServ)
-            {
-                _backpackInterface = new UserInterface();
-                _staffInterface = new UserInterface();
-                _btnInterface = new UserInterface();
-            }
+            _backpackInterface = new UserInterface();
+            _staffInterface = new UserInterface();
+            _btnInterface = new UserInterface();
+
+            staffUIState = new StaffUIState();
+            itemUIState = new ItemUIState();
+            buttonUIState = new ButtonUIState();
+
+            staffUIState.Activate();
+            itemUIState.Activate();
+            buttonUIState.Activate();
         }
 
-        public override void Unload()
+        internal void Recalculate()
         {
-       
-            _backpackInterface?.SetState(null);
-            _btnInterface?.SetState(null);
-            _staffInterface?.SetState(null);
-            
-            _backpackInterface = null;
-            _btnInterface = null;
-            _staffInterface = null;
-
-            Staff = null;
-            ItemUI = null;
-            StaffUI = null;
-            ElementUI = null;
-            ButtonUI = null;
+            staffUIState.staffUI.Recalculate();
+            staffUIState.elementUI.Recalculate();
+            staffUIState.elementUI.ElementSlot.Refresh();
+            itemUIState.itemUI.Recalculate();
         }
 
-        internal static void OpenUI(BaseStaff staff)
+        internal void OpenUI(BaseStaff staff)
         {
             if(Staff != staff)
             {
                 CloseStaffUI();
                 Staff = staff;
-                OpenStaffUI(staff);
+                Recalculate();
+                OpenStaffUI();
                 if (_backpackInterface.CurrentState == null)
                 {
                     OpenBackpackUI();
@@ -71,7 +67,7 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             }
         }
 
-        internal static void ToggleUI()
+        internal void ToggleUI()
         {
             if (_backpackInterface.CurrentState != null)
             {
@@ -131,70 +127,37 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             }
         }
 
-        internal static void OpenButtonUI()
+        internal void OpenButtonUI()
         {
-            //New Button
-            ButtonUI = new();      
-
-            //Setup UI State
-            UIState state = new UIState();
-            state.Append(ButtonUI);
-            state.Activate();
-
             //Set State
-            _btnInterface.SetState(state);
+            _btnInterface.SetState(buttonUIState);
         }
 
-        internal static void CloseButtonUI()
+        internal void CloseButtonUI()
         {
             //Kill
-            ButtonUI = null;
             _btnInterface.SetState(null);
         }
 
-        internal static void OpenStaffUI(BaseStaff staff)
+        internal void OpenStaffUI()
         {
-            //Initialize UI
-            ElementUI = new(staff);
-            StaffUI = new(staff);
-      
-            //Setup UI State
-            UIState state = new UIState();
-            state.Append(ElementUI);
-            state.Append(StaffUI);
-            state.Activate();
-
             //Set State
-            _staffInterface.SetState(state);
+            _staffInterface.SetState(staffUIState);
         }
 
-        internal static void CloseStaffUI()
+        internal void CloseStaffUI()
         {
-            ElementUI?.Deactivate();
-            StaffUI?.Deactivate();
-            ElementUI = null;
-            StaffUI = null;
             _staffInterface.SetState(null);
         }
 
-        internal static void OpenBackpackUI()
+        internal void OpenBackpackUI()
         {
-            //Initialize UI
-            ItemUI = new();
-            
-            //Setup UI State
-            UIState state = new UIState();
-            state.Append(ItemUI); 
-            state.Activate();
-
             //Set State
-            _backpackInterface.SetState(state);
+            _backpackInterface.SetState(itemUIState);
         }
 
-        internal static void CloseBackpackUI()
+        internal void CloseBackpackUI()
         {
-            ItemUI?.Deactivate();
-            ItemUI = null;
             _backpackInterface.SetState(null);
         }
 

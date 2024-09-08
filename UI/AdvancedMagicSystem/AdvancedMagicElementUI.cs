@@ -7,7 +7,7 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
 {
     internal class AdvancedMagicElementUI : UIPanel
     {
-        private BaseStaff _staff;
+        private BaseStaff ActiveStaff => AdvancedMagicUISystem.Staff;
         internal const int width = 480;
         internal const int height = 155;
 
@@ -15,21 +15,22 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
         internal int RelativeTop => Main.screenHeight / 2 - 314;
 
         public AdvancedMagicElementSlot ElementSlot { get; private set; }
-        public AdvancedMagicElementUI(BaseStaff staff) : base()
+        public AdvancedMagicElementUI() : base()
         {
-            _staff = staff;
+
         }
+
         public override void OnInitialize()
         {
             base.OnInitialize();
 
             Width.Pixels = width;
             Height.Pixels = height;
-            Top.Pixels = int.MaxValue / 2;
-            Left.Pixels = int.MaxValue / 2;
+            Left.Pixels = RelativeLeft;
+            Top.Pixels = RelativeTop;
             BackgroundColor = Color.Transparent;
             BorderColor = Color.Transparent;
-            ElementSlot = new(_staff);
+            ElementSlot = new();
             Append(ElementSlot);
         }
 

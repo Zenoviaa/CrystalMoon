@@ -1,6 +1,7 @@
 ﻿using CrystalMoon.Content.MoonlightMagic;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -14,7 +15,7 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
     internal class AdvancedMagicStaffUI : UIPanel
     {
         private UIGrid _enchantmentsGrid;
-        private BaseStaff _staff;
+        private BaseStaff ActiveStaff => AdvancedMagicUISystem.Staff;
 
         internal const int width = 480;
         internal const int height = 155;
@@ -23,19 +24,19 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
         internal int RelativeTop => Main.screenHeight / 2 - 256;
 
         public List<AdvancedMagicStaffSlot> StaffSlots { get; private set; } = new();
-      
-        internal AdvancedMagicStaffUI(BaseStaff staff) : base()
+ 
+        internal AdvancedMagicStaffUI() : base()
         {
-            _staff = staff;
+  
         }
+
         public override void OnInitialize()
         {
             base.OnInitialize();
-        
             Width.Pixels = width;
             Height.Pixels = height;
-            Top.Pixels = int.MaxValue / 2;
-            Left.Pixels = int.MaxValue / 2;
+            Left.Pixels = RelativeLeft;
+            Top.Pixels = RelativeTop;
             BackgroundColor = Color.Transparent;
             BorderColor = Color.Transparent;
 
@@ -44,9 +45,9 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             _enchantmentsGrid.Height.Set(0, 1f);
             _enchantmentsGrid.HAlign = 0.5f;
             _enchantmentsGrid.ListPadding = 2f;
-            SetupSlots(_staff);
             Append(_enchantmentsGrid);
         }
+
 
         public override void OnActivate()
         {
@@ -63,18 +64,27 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             }
         }
 
-        public void SetupSlots(BaseStaff staff)
+        public override void Recalculate()
         {
+            var staff = ActiveStaff;
+            Left.Pixels = RelativeLeft;
+            Top.Pixels = RelativeTop;
+            _enchantmentsGrid?.Clear();
+            StaffSlots.Clear();
+            if (staff == null)
+                return;
+
             for (int i = 0; i < staff.GetNormalSlotCount(); i++)
             {
                 AdvancedMagicStaffSlot slot = new AdvancedMagicStaffSlot(staff);
                 slot.index = _enchantmentsGrid._items.Count;
                 slot.Item = staff.equippedEnchantments[i].Clone();
+
                 _enchantmentsGrid.Add(slot);
                 StaffSlots.Add(slot);
             }
 
-            for(int i = 0;  i < staff.GetTimedSlotCount(); i++)
+            for (int i = 0; i < staff.GetTimedSlotCount(); i++)
             {
                 AdvancedMagicStaffSlot slot = new AdvancedMagicStaffSlot(staff);
                 slot.index = _enchantmentsGrid._items.Count;
@@ -82,6 +92,8 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
                 _enchantmentsGrid.Add(slot);
                 StaffSlots.Add(slot);
             }
+            _enchantmentsGrid.Recalculate();
+            base.Recalculate();
         }
 
         public override void Update(GameTime gameTime)
