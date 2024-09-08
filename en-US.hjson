@@ -27,6 +27,7 @@ Mods: {
 			ExampleMoonlightMagicNormalProjectile.DisplayName: Example Moonlight Magic Normal Projectile
 			FlameLashEnchantmentExplosion.DisplayName: Flame Lash Enchantment Explosion
 			AdvancedMagicProjectile.DisplayName: Advanced Magic Projectile
+			AdvancedMagicStaffProjectile.DisplayName: Advanced Magic Staff Projectile
 		}
 
 		Buffs: {

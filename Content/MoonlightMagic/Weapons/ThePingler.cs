@@ -5,6 +5,11 @@
         public override void SetDefaults()
         {
             base.SetDefaults();
+            Item.damage = 6;
+            Item.shootSpeed = 7;
+            Size = 16;
+            TrailLength = 12;
+         
         }
 
         public override int GetNormalSlotCount()

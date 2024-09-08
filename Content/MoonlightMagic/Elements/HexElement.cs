@@ -53,7 +53,8 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 
         private float WidthFunction(float completionRatio)
         {
-            return MathHelper.Lerp(32, 8, completionRatio);
+            float width = MagicProj.Size * 2;
+            return MathHelper.Lerp(width, 8, completionRatio);
         }
 
         public override void DrawTrail()

@@ -77,8 +77,9 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 
         private float WidthFunction(float completionRatio)
         {
+            int width = (int)(MagicProj.Size * 2.5f);
             completionRatio = Easing.SpikeOutCirc(completionRatio);
-            return MathHelper.Lerp(0, 64, completionRatio);
+            return MathHelper.Lerp(0, width, completionRatio);
         }
 
         private void DrawMainShader()
