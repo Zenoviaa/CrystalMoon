@@ -42,7 +42,8 @@ namespace CrystalMoon.Content.MoonlightMagic
                 }
             }
 
-            if(airCount == 0)
+            Backpack.RemoveAll(x => x.IsAir);
+            if (airCount == 0)
             {
                 Item emptyItem = new Item();
                 emptyItem.SetDefaults(0);

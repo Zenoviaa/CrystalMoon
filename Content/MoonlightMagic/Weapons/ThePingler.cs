@@ -6,5 +6,15 @@
         {
             base.SetDefaults();
         }
+
+        public override int GetNormalSlotCount()
+        {
+            return 2;
+        }
+
+        public override int GetTimedSlotCount()
+        {
+            return 0;
+        }
     }
 }

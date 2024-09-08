@@ -22,9 +22,9 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
         public static BaseStaff Staff { get; private set; }
         private GameTime _lastUpdateUiGameTime;
 
-        public override void Load()
+        public override void OnModLoad()
         {
-            base.Load();
+            base.OnModLoad();
             _backpackInterface = new UserInterface();
             _staffInterface = new UserInterface();
             _btnInterface = new UserInterface();
