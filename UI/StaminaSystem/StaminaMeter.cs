@@ -123,7 +123,7 @@ namespace CrystalMoon.UI.StaminaSystem
 
             Rectangle mouseRect = new Rectangle((int)Main.MouseScreen.X, (int)Main.MouseScreen.Y, 8, 8);
             Vector2 size = new Vector2(_staminaMeterFilledEdge.Size().X * (maxFillAmount + 1), _staminaMeterFilledEdge.Size().Y);
-            Rectangle barRect = Utils.CenteredRectangle(drawPos, size * Main.UIScale);
+            Rectangle barRect = Utils.CenteredRectangle(drawPos + size / 2, size * Main.UIScale);
 
             MouseState ms = Mouse.GetState();
             Vector2 mousePos = Main.MouseScreen;

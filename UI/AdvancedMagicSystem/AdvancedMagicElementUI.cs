@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CrystalMoon.Content.MoonlightMagic;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 
@@ -6,7 +7,7 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
 {
     internal class AdvancedMagicElementUI : UIPanel
     {
-
+        private BaseStaff _staff;
         internal const int width = 480;
         internal const int height = 155;
 
@@ -14,6 +15,10 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
         internal int RelativeTop => Main.screenHeight / 2 - 314;
 
         public AdvancedMagicElementSlot ElementSlot { get; private set; }
+        public AdvancedMagicElementUI(BaseStaff staff) : base()
+        {
+            _staff = staff;
+        }
         public override void OnInitialize()
         {
             base.OnInitialize();
@@ -24,10 +29,9 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             Left.Pixels = int.MaxValue / 2;
             BackgroundColor = Color.Transparent;
             BorderColor = Color.Transparent;
-            ElementSlot = new();
+            ElementSlot = new(_staff);
             Append(ElementSlot);
         }
-
 
         public override void Update(GameTime gameTime)
         {
@@ -36,14 +40,6 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             //Constantly lock the UI in the position regardless of resolution changes
             Left.Pixels = RelativeLeft;
             Top.Pixels = RelativeTop;
-        }
-
-        public void SetupSlot()
-        {
-            var staff = AdvancedMagicUISystem.Staff;
-            if (staff == null)
-                return;
-            ElementSlot.Item = staff.PrimaryElement.Clone();
         }
     }
 }

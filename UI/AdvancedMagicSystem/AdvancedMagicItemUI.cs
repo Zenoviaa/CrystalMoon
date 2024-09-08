@@ -33,8 +33,8 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             enchantmentsGrid.Height.Set(0, 1f);
             enchantmentsGrid.HAlign = 0.5f;
             enchantmentsGrid.ListPadding = 2f;
-            Append(enchantmentsGrid);
             SetupSlots();
+            Append(enchantmentsGrid);
         }
 
         private void SetupSlots()

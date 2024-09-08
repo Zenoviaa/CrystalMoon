@@ -1,5 +1,9 @@
-﻿using System;
+﻿using CrystalMoon.Systems.ScreenSystems;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic
 {
@@ -14,10 +18,23 @@ namespace CrystalMoon.Content.MoonlightMagic
         {
             base.SetDefaults();
         }
+        public override string LocalizationCategory => "Elements";
 
         public virtual void AI() { }
         public virtual void DrawTrail() { }
         public virtual void ApplyFormShader() { }
+
+        public virtual Color GetElementColor() { return Color.White; }
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        {
+            DrawHelper.DrawGlow2InWorld(Item, spriteBatch, ref rotation, ref scale, whoAmI);
+            return base.PreDrawInWorld(spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
+        }
+
+        public virtual bool DrawTextShader(SpriteBatch spriteBatch, Item item, DrawableTooltipLine line, ref int yOffset)
+        {
+            return false;
+        }
 
         public object Clone()
         {

@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.GameInput;
 using Terraria.ModLoader;
 using Terraria.UI;
@@ -13,19 +12,22 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
 {
     internal class AdvancedMagicStaffSlot : UIElement
     {
-        internal Item Item;
+        private readonly BaseStaff _staff;
         private readonly int _context;
         private readonly float _scale;
+
+        internal Item Item;
         internal Func<Item, bool> ValidItemFunc;
 
         internal event Action<int> OnEmptyMouseover;
 
         private int timer = 0;
 
-        internal AdvancedMagicStaffSlot(int context = ItemSlot.Context.BankItem, float scale = 1f)
+        internal AdvancedMagicStaffSlot(BaseStaff staff, int context = ItemSlot.Context.BankItem, float scale = 1f)
         {
             _context = context;
             _scale = scale;
+            _staff = staff;
             Item = new Item();
             Item.SetDefaults(0);
 
@@ -71,6 +73,16 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             Vector2 pos = rectangle.TopLeft();
 
             //Enchantment Card
+            var elementItem = AdvancedMagicUISystem.ElementUI.ElementSlot.Item;
+            if (Item.ModItem is BaseEnchantment enchantment &&
+               elementItem.type == enchantment.GetElementType())
+            {
+                if (elementItem.ModItem is BaseElement element)
+                {
+                    color2 = element.GetElementColor();
+                }
+            }
+
             Texture2D value = ModContent.Request<Texture2D>("CrystalMoon/UI/AdvancedMagicSystem/EnchantmentCard").Value;
             int offset = (int)(value.Size().Y / 2);
             Vector2 centerPos = pos + rectangle.Size() / 2f;
@@ -93,6 +105,18 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             }
 
             Main.inventoryScale = oldScale;
+        }
+
+        public override void OnDeactivate()
+        {
+            base.OnDeactivate();
+            SaveToStaff();
+        }
+
+        public void SaveToStaff()
+        {
+            //Save Item 
+            _staff.equippedEnchantments[index] = Item.Clone();
         }
     }
 }

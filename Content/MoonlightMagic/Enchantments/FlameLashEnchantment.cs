@@ -1,4 +1,5 @@
 ﻿using CrystalMoon.Content.Bases;
+using CrystalMoon.Content.MoonlightMagic.Elements;
 using CrystalMoon.Registries;
 using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Systems.ScreenSystems;
@@ -8,11 +9,24 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.UI.Chat;
 
 namespace CrystalMoon.Content.MoonlightMagic.Enchantments
 {
     internal class FlameLashEnchantment : BaseEnchantment
     {
+        public override int GetElementType()
+        {
+            return ModContent.ItemType<RadianceElement>();
+        }
+
+
+        public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+        {
+            
+            return true;
+        }
+
         public override void SpecialInventoryDraw(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             base.SpecialInventoryDraw(item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);

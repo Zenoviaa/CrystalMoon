@@ -112,16 +112,6 @@ CrescentStaff: {
 	Tooltip: ""
 }
 
-FlameLashEnchantmentItem: {
-	DisplayName: Flame Lash Enchantment Item
-	Tooltip: ""
-}
-
-FlameLashEnchantment: {
-	DisplayName: Flame Lash Enchantment
-	Tooltip: ""
-}
-
 RadianceElement: {
 	DisplayName: Radiance Element
 	Tooltip: ""
@@ -132,7 +122,12 @@ MothlightMushroomBlock: {
 	Tooltip: ""
 }
 
-BasicElement: {
-	DisplayName: Basic Element
+FlameLashEnchantment: {
+	DisplayName: Flame Lash Enchantment
+	Tooltip: ""
+}
+
+ThePingler: {
+	DisplayName: The Pingler
 	Tooltip: ""
 }

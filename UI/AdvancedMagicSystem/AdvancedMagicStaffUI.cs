@@ -1,14 +1,20 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CrystalMoon.Content.MoonlightMagic;
+using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
+using Terraria.ID;
 using Terraria.ModLoader.UI.Elements;
+using Terraria.UI;
 
 namespace CrystalMoon.UI.AdvancedMagicSystem
 {
     internal class AdvancedMagicStaffUI : UIPanel
     {
         private UIGrid _enchantmentsGrid;
+        private BaseStaff _staff;
 
         internal const int width = 480;
         internal const int height = 155;
@@ -17,7 +23,11 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
         internal int RelativeTop => Main.screenHeight / 2 - 256;
 
         public List<AdvancedMagicStaffSlot> StaffSlots { get; private set; } = new();
-
+      
+        internal AdvancedMagicStaffUI(BaseStaff staff) : base()
+        {
+            _staff = staff;
+        }
         public override void OnInitialize()
         {
             base.OnInitialize();
@@ -34,44 +44,41 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             _enchantmentsGrid.Height.Set(0, 1f);
             _enchantmentsGrid.HAlign = 0.5f;
             _enchantmentsGrid.ListPadding = 2f;
+            SetupSlots(_staff);
             Append(_enchantmentsGrid);
         }
 
-        public void ReSetupSlots()
+        public override void OnActivate()
         {
-            var item = AdvancedMagicUISystem.Staff;
-            if (item == null)
-                return;
+            base.OnActivate();
+            SoundEngine.PlaySound(SoundID.MenuOpen);
+        }
 
-            for (int i =0;i < StaffSlots.Count; i++)
+        public override void OnDeactivate()
+        {
+            base.OnDeactivate();
+            if (!Main.gameMenu)
             {
-                StaffSlots[i].Item = item.EquippedEnchantments[i].Clone();
+                SoundEngine.PlaySound(SoundID.MenuClose);
             }
         }
 
-        public void SetupSlots()
+        public void SetupSlots(BaseStaff staff)
         {
-            _enchantmentsGrid.Clear();
-            var item = AdvancedMagicUISystem.Staff;
-            if (item == null)
-                return;
-
-            for(int i = 0; i < item.GetNormalSlotCount(); i++)
+            for (int i = 0; i < staff.GetNormalSlotCount(); i++)
             {
-                AdvancedMagicStaffSlot slot = new AdvancedMagicStaffSlot();
+                AdvancedMagicStaffSlot slot = new AdvancedMagicStaffSlot(staff);
                 slot.index = _enchantmentsGrid._items.Count;
-                slot.Item = item.EquippedEnchantments[i].Clone();
-
+                slot.Item = staff.equippedEnchantments[i].Clone();
                 _enchantmentsGrid.Add(slot);
                 StaffSlots.Add(slot);
             }
 
-            for(int i = 0;  i < item.GetTimedSlotCount(); i++)
+            for(int i = 0;  i < staff.GetTimedSlotCount(); i++)
             {
-                AdvancedMagicStaffSlot slot = new AdvancedMagicStaffSlot();
+                AdvancedMagicStaffSlot slot = new AdvancedMagicStaffSlot(staff);
                 slot.index = _enchantmentsGrid._items.Count;
-                slot.Item = item.EquippedEnchantments[item.GetNormalSlotCount() + i].Clone();
-                
+                slot.Item = staff.equippedEnchantments[staff.GetNormalSlotCount() + i].Clone();
                 _enchantmentsGrid.Add(slot);
                 StaffSlots.Add(slot);
             }

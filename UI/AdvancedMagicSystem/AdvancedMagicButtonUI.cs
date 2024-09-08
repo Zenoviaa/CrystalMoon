@@ -29,12 +29,12 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             BorderColor = Color.Transparent;
             _btn = new UIImage(ModContent.Request<Texture2D>("CrystalMoon/UI/AdvancedMagicSystem/Paper"));
             _btn.OnLeftClick += (evt, element) => { ToggleUI(); };
+            _btn.Activate();
             Append(_btn);
         }
 
         private void ToggleUI()
         {
-            Console.WriteLine("E");
             AdvancedMagicUISystem.ToggleUI();
         }
 

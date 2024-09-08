@@ -1,6 +1,7 @@
 ﻿using CrystalMoon.UI.AdvancedMagicSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -13,25 +14,27 @@ namespace CrystalMoon.Content.MoonlightMagic
 {
     internal abstract class BaseStaff : ModItem
     {
+        private static Item _preReforgeElement;
+        private static Item[] _preReforgeEnchants;
         public Texture2D Form { get; set;}
         public BaseMovement Movement { get; set; }
         public int TrailLength { get; set; }
         public UnifiedRandom Random { get; private set; }
 
         //Enchantment Slots
-        public Item PrimaryElement { get; set; }
-        public Item[] EquippedEnchantments { get; set; }
-        
+        public Item primaryElement;
+        public Item[] equippedEnchantments;
+
         public override void SetDefaults()
         {
             base.SetDefaults();
-            EquippedEnchantments = new Item[GetNormalSlotCount() + GetTimedSlotCount()];
-            PrimaryElement = new Item();
-            PrimaryElement.SetDefaults(0);
-            for (int i = 0; i < EquippedEnchantments.Length; i++)
+            equippedEnchantments = new Item[GetNormalSlotCount() + GetTimedSlotCount()];
+            primaryElement = new Item();
+            primaryElement.SetDefaults(0);
+            for (int i = 0; i < equippedEnchantments.Length; i++)
             {
-                EquippedEnchantments[i] = new Item();
-                EquippedEnchantments[i].SetDefaults(0);
+                equippedEnchantments[i] = new Item();
+                equippedEnchantments[i].SetDefaults(0);
             }
 
             Item.damage = 18;
@@ -57,14 +60,37 @@ namespace CrystalMoon.Content.MoonlightMagic
             TrailLength = Random.Next(24, 32);
         }
 
+
+
+        public override void PreReforge()
+        {
+            base.PreReforge();
+            
+            _preReforgeElement = primaryElement.Clone();
+            _preReforgeEnchants = new Item[equippedEnchantments.Length];
+            for(int i = 0; i < _preReforgeEnchants.Length; i++)
+            {
+                _preReforgeEnchants[i] = equippedEnchantments[i].Clone();
+            }
+        }
+
+        public override void PostReforge()
+        {
+            base.PostReforge();
+            
+            primaryElement = _preReforgeElement;
+            equippedEnchantments = _preReforgeEnchants;
+            
+        }
+
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             base.ModifyTooltips(tooltips);
    
 
-            for(int i = 0; i < EquippedEnchantments.Length; i++)
+            for(int i = 0; i < equippedEnchantments.Length; i++)
             {
-                var item = EquippedEnchantments[i];
+                var item = equippedEnchantments[i];
                 if(item.ModItem is BaseEnchantment enchantment)
                 {
                     TooltipLine tooltipLine = new TooltipLine(Mod, $"MoonMagicEnchant_{enchantment.Name}_{i}", enchantment.DisplayName.Value);
@@ -98,14 +124,14 @@ namespace CrystalMoon.Content.MoonlightMagic
 
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
-            if(PrimaryElement.ModItem is BaseElement element)
+            if(primaryElement.ModItem is BaseElement element)
             {
                 element.SpecialInventoryDraw(Item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
             }
 
-            for(int i = 0; i < EquippedEnchantments.Length; i++)
+            for(int i = 0; i < equippedEnchantments.Length; i++)
             {
-                var enchant = EquippedEnchantments[i];
+                var enchant = equippedEnchantments[i];
                 if(enchant.ModItem is BaseEnchantment enchantment)
                 {
                     enchantment.SpecialInventoryDraw(Item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
@@ -123,12 +149,12 @@ namespace CrystalMoon.Content.MoonlightMagic
         public override void SaveData(TagCompound tag)
         {
             base.SaveData(tag);
-            tag["itemCount"] = EquippedEnchantments.Length;
-            if (PrimaryElement != null)
-                tag["element"] = PrimaryElement;
-            for(int i = 0; i < EquippedEnchantments.Length; i++)
+            tag["itemCount"] = equippedEnchantments.Length;
+            if (primaryElement != null)
+                tag["element"] = primaryElement;
+            for(int i = 0; i < equippedEnchantments.Length; i++)
             {
-                var enchantment = EquippedEnchantments[i];
+                var enchantment = equippedEnchantments[i];
                 if (enchantment == null)
                     continue;
                 tag[$"enchantment_{i}"] = enchantment;
@@ -141,19 +167,19 @@ namespace CrystalMoon.Content.MoonlightMagic
             if (tag.ContainsKey("element"))
             {
                 var element = tag.Get<Item>("element");
-                PrimaryElement = element;
+                primaryElement = element;
             }
 
             if (tag.ContainsKey("itemCount"))
             {
                 int itemCount = tag.GetInt("itemCount");
-                EquippedEnchantments = new Item[itemCount];
+                equippedEnchantments = new Item[itemCount];
                 for (int i = 0; i < itemCount; i++)
                 {
                     if (tag.ContainsKey($"enchantment_{i}"))
                     {
                         var enchantment = tag.Get<Item>($"enchantment_{i}");
-                        EquippedEnchantments[i] = enchantment;
+                        equippedEnchantments[i] = enchantment;
                     }       
                 }
             }
