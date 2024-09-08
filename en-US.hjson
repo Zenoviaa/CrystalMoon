@@ -7,6 +7,7 @@ Mods: {
 			MothlightGrass.MapEntry: Mothlight Grass
 			MothlightMushroom.MapEntry: Mothlight Mushroom
 			MothlightBrick.MapEntry: Mothlight Brick
+			MothlightSpawnerBrick.MapEntry: Mothlight Spawner Brick
 		}
 
 		Projectiles: {

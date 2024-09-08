@@ -487,35 +487,7 @@ namespace CrystalMoon.Tiles.MothlightTiles.MothlightManor
 
     #endregion
 
-    #region MothlightStand
-    public class MothlightStandBlock : DecorativeWallItem
-    {
-        public override void SetStaticDefaults()
-        {
-            // Tooltip.SetDefault("Super silk!");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
-
-        }
-
-        public override void SetDefaults()
-        {
-            base.SetDefaults();
-            Item.createWall = ModContent.WallType<MothlightStand>();
-        }
-    }
-
-    internal class MothlightStand : DecorativeWall
-    {
-        public override void SetStaticDefaults()
-        {
-            // Origin = DrawOrigin.TopDown;
-            base.SetStaticDefaults();
-            StructureColor = Color.Gray;
-            //If you need other static defaults it go here
-        }
-    }
-
-    #endregion
+   
 
     #region MothlightBiggerTable
     public class MothlightHighTableBlock : DecorativeWallItem
