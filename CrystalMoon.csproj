@@ -62,6 +62,7 @@
 	  <Folder Include="Systems\Foreground\" />
 	  <Folder Include="Systems\Primitives\" />
 	  <Folder Include="Systems\WaterSystsems\" />
+	  <Folder Include="Tiles\MothlightTiles\MothlightManor\" />
 	</ItemGroup>
 
 </Project>
