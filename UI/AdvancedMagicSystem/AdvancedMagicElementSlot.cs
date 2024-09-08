@@ -81,7 +81,8 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
 
             if(Item.ModItem is BaseElement element)
             {
-                float sizeLimit = 64;
+
+                /*
                 int numberOfCloneImages = 6;
 
                 Vector2 glowCenterPos = centerPos + new Vector2(12, 12);
@@ -96,10 +97,10 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
                     color.A = 0;
                     cloneImageDistance *= 3;
                     Vector2 drawPos = glowCenterPos + (i * MathF.Tau).ToRotationVector2() * (cloneImageDistance + 2f);
-                    Main.DrawItemIcon(spriteBatch, Item, drawPos, color, sizeLimit);
-                }
+                    ItemSlot.DrawItemIcon(Item, _context, spriteBatch, drawPos, _scale, 69, color);
+                }*/
             }
-           
+              
             ItemSlot.DrawItemIcon(Item, _context, spriteBatch, centerPos + new Vector2(12, 12), _scale, 64, Color.White);
 
             if (contains && Item.IsAir)

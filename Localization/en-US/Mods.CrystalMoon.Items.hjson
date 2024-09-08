@@ -131,3 +131,8 @@ ThePingler: {
 	DisplayName: The Pingler
 	Tooltip: ""
 }
+
+MothlightBrickBlock: {
+	DisplayName: Mothlight Brick Block
+	Tooltip: ""
+}

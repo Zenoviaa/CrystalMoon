@@ -1,4 +1,5 @@
 ﻿using CrystalMoon.Content.MoonlightMagic;
+using CrystalMoon.Systems.Shaders;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -6,6 +7,7 @@ using Terraria;
 using Terraria.GameInput;
 using Terraria.ModLoader;
 using Terraria.UI;
+using Terraria.UI.Chat;
 
 
 namespace CrystalMoon.UI.AdvancedMagicSystem
@@ -93,8 +95,31 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             Texture2D value = ModContent.Request<Texture2D>("CrystalMoon/UI/AdvancedMagicSystem/EnchantmentCard").Value;
             int offset = (int)(value.Size().Y / 2);
             Vector2 centerPos = pos + rectangle.Size() / 2f;
-       
             spriteBatch.Draw(value, rectangle.TopLeft(), null, color2, 0f, default(Vector2), _scale, SpriteEffects.None, 0f);
+
+            if(Item.ModItem is BaseEnchantment myEnchantment)
+            {
+                var myElement = ModContent.GetModItem(myEnchantment.GetElementType()) as BaseElement;
+                var shader = FirePixelShader.Instance;
+                shader.PrimaryColor = Color.Lerp(Color.White, new Color(255, 207, 79), 0.5f);
+                shader.NoiseColor = myElement.GetElementColor();
+                shader.Distortion = 0.0075f;
+                shader.Speed = 10;
+                shader.Power = 0.01f;
+                shader.Apply();
+
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, default, default, default, default, Main.UIScaleMatrix);
+
+                shader.Data.Apply(null);
+
+                spriteBatch.Draw(value, rectangle.TopLeft(), null, color2, 0f, default(Vector2), _scale, SpriteEffects.None, 0f);
+
+                spriteBatch.End();
+                spriteBatch.Begin(default, default, default, default, default, default, Main.UIScaleMatrix);
+
+            }
+
 
             //Enchantment Slot
             value = ModContent.Request<Texture2D>("CrystalMoon/UI/AdvancedMagicSystem/EnchantmentSlot").Value;

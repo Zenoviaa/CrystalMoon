@@ -6,6 +6,7 @@ Mods: {
 			RainforestTreeSapling.MapEntry: Rainforest Tree Sapling
 			MothlightGrass.MapEntry: Mothlight Grass
 			MothlightMushroom.MapEntry: Mothlight Mushroom
+			MothlightBrick.MapEntry: Mothlight Brick
 		}
 
 		Projectiles: {
