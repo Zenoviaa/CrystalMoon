@@ -64,16 +64,17 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 
         private float WidthFunction(float completionRatio)
         {
+            float width = MagicProj.Size * 2f;
             completionRatio = Easing.SpikeOutCirc(completionRatio);
             switch (trailingMode)
             {
                 default:
                 case 0:
-                    return MathHelper.Lerp(0, 102, completionRatio);
+                    return MathHelper.Lerp(0, width, completionRatio);
                 case 1:
-                    return MathHelper.Lerp(0, 32, completionRatio);
+                    return MathHelper.Lerp(0, width / 3f, completionRatio);
                 case 2:
-                    return MathHelper.Lerp(0, 48, completionRatio);
+                    return MathHelper.Lerp(0, width / 2f, completionRatio);
             }
         }
 

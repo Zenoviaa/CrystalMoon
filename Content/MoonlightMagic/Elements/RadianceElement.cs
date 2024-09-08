@@ -129,7 +129,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             float spikeProgress = Easing.SpikeOutExpo(completionRatio);
             float fireball = MathHelper.Lerp(rounded, spikeProgress, Easing.OutExpo(1.0f - completionRatio));
 
-            float midWidth = 46;
+            float midWidth = MagicProj.Size;
             switch (trailMode)
             {
                 default:

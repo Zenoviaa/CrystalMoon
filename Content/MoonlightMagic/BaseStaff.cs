@@ -18,6 +18,8 @@ namespace CrystalMoon.Content.MoonlightMagic
         private static Item[] _preReforgeEnchants;
         public Texture2D Form { get; set;}
         public BaseMovement Movement { get; set; }
+
+        public int Size { get; set; }
         public int TrailLength { get; set; }
         public UnifiedRandom Random { get; private set; }
 
@@ -53,6 +55,7 @@ namespace CrystalMoon.Content.MoonlightMagic
             Item.shoot = ModContent.ProjectileType<AdvancedMagicProjectile>();
             Item.autoReuse = true;
             TrailLength = 32;
+            Size = 8;
 
             //Randomize trail values
             int seed = WorldGen._genRandSeed;

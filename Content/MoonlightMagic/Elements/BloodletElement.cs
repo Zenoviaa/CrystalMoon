@@ -58,11 +58,12 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 
         private float WidthFunction(float completionRatio)
         {
+            float width = MagicProj.Size * 1.5f;
             switch (trailingMode)
             {
                 default:
                 case 0:
-                    return MathHelper.Lerp(32, 0, completionRatio);
+                    return MathHelper.Lerp(width, 0, completionRatio);
                 case 1:
                     return MathHelper.Lerp(190, 0, completionRatio);
             }
