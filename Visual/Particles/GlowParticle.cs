@@ -11,14 +11,15 @@ namespace CrystalMoon.Visual.Particles
         public int MaxFrameCount = 1;
         public override void OnSpawn()
         {
-            Frame = new Rectangle(0, FrameHeight * Main.rand.Next(MaxFrameCount), FrameWidth, FrameHeight);
+            Frame = new Rectangle(0, 0, FrameWidth, FrameHeight);
+            Scale = Main.rand.NextFloat(0.3f, 0.6f);
         }
 
         public override void Update()
         {
             Velocity *= 0.98f;
             Rotation += 0.01f;
-            Scale *= 0.997f;
+            Scale *= 0.97f;
             color *= 0.99f;
 
             fadeIn++;

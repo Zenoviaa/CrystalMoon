@@ -67,9 +67,10 @@ namespace CrystalMoon.Content.MoonlightMagic
             tooltips.Add(tooltipLine);
 
 
+            /*
             tooltipLine = new TooltipLine(Mod, "EnchantmentTooltip",
                 Language.GetTextValue("Mods.CrystalMoon.Enchantments.EnchantmentCommonTooltip"));
-            tooltips.Add(tooltipLine);
+            tooltips.Add(tooltipLine);*/
         }
 
         public virtual void DrawTextShader(SpriteBatch spriteBatch, Item item, DrawableTooltipLine line, ref int yOffset) { }   public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
