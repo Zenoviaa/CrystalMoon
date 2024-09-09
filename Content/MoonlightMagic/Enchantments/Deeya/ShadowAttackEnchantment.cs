@@ -62,9 +62,10 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Deeya
         {
             if (HitOnce)
             {
+                Projectile.tileCollide = false;
                 NPC npcToChase = ProjectileHelper.FindNearestEnemy(Projectile.Center, maxHomingDetectDistance);
                 if (npcToChase != null)
-                    Projectile.velocity = ProjectileHelper.SimpleHomingVelocity(Projectile, npcToChase.Center, degreesToRotate: 8);
+                    Projectile.velocity = ProjectileHelper.SimpleHomingVelocity(Projectile, npcToChase.Center, degreesToRotate: 11);
             }
           
         }

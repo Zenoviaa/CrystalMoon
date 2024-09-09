@@ -28,3 +28,18 @@ WaveSpeedEnchantment: {
 	DisplayName: Wave Speed Enchantment
 	Tooltip: Your spell gets sent into a wave pattern!
 }
+
+BloodyHeartEnchantment: {
+	DisplayName: Bloody Heart Enchantment
+	Tooltip: Every hit on an enemy heals you for 2 health!
+}
+
+ShadowAttackEnchantment: {
+	DisplayName: Shadow Attack Enchantment
+	Tooltip: Hitting an enemy will cause the spell to try and attack it again!
+}
+
+SpikyBarnEnchantment: {
+	DisplayName: Spiky Barn Enchantment
+	Tooltip: +2 Penetration to your spells.
+}
