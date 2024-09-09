@@ -14,7 +14,7 @@ namespace CrystalMoon.Content.MoonlightMagic
         public override string Texture => TextureRegistry.EmptyTexturePath;
 
         public Vector2[] OldPos { get; private set; }
-        public float Size { get; set; }
+        public float Size { get; set; } = 16;
         public int TrailLength { get; set; }
         public float GlobalTimer
         {
@@ -36,8 +36,7 @@ namespace CrystalMoon.Content.MoonlightMagic
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 16;
-            Projectile.height = 16;
+            Projectile.width = Projectile.height = 1;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.friendly = true;
             Projectile.timeLeft = 360;
@@ -82,6 +81,8 @@ namespace CrystalMoon.Content.MoonlightMagic
         public override void AI()
         {
             base.AI();
+            Projectile.width = (int)Size;
+            Projectile.height = (int)Size;
             PrimaryElement?.AI();
             if(Movement != null)
             {
