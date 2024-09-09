@@ -38,6 +38,15 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Radiance
             DrawHelper.DrawGlowInInventory(item, spriteBatch, position, Color.Red);
         }
 
+
+        public override void OnTileCollide(Vector2 oldVelocity)
+        {
+            base.OnTileCollide(oldVelocity);
+        //Spawn the explosion
+            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<FlameLashEnchantmentExplosion>(),
+              Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
+        }
+
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             base.OnHitNPC(target, hit, damageDone);

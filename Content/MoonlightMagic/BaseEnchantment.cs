@@ -53,16 +53,23 @@ namespace CrystalMoon.Content.MoonlightMagic
             tooltipLine.OverrideColor = Color.Gray;
             tooltips.Add(tooltipLine);
 
-            tooltipLine = new TooltipLine(Mod, "EnchantmentTooltip", 
-                Language.GetTextValue("Mods.CrystalMoon.Enchantments.EnchantmentCommonTooltip"));
-            tooltips.Add(tooltipLine);
-           
             if (isTimedEnchantment)
             {
                 tooltipLine = new TooltipLine(Mod, "EnchantmentTimedHelp",
                     Language.GetTextValue("Mods.CrystalMoon.Enchantments.EnchantmentCommonTimed", time));
                 tooltips.Add(tooltipLine);
             }
+
+            tooltipLine = new TooltipLine(Mod, "EnchantmentManaHelp",
+                Language.GetTextValue("Mods.CrystalMoon.Enchantments.EnchantmentCommonMana", 
+                GetStaffManaModifier() * 100));
+            tooltipLine.OverrideColor = Color.IndianRed;
+            tooltips.Add(tooltipLine);
+
+
+            tooltipLine = new TooltipLine(Mod, "EnchantmentTooltip",
+                Language.GetTextValue("Mods.CrystalMoon.Enchantments.EnchantmentCommonTooltip"));
+            tooltips.Add(tooltipLine);
         }
 
         public virtual void DrawTextShader(SpriteBatch spriteBatch, Item item, DrawableTooltipLine line, ref int yOffset) { }   public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
@@ -75,5 +82,7 @@ namespace CrystalMoon.Content.MoonlightMagic
         public virtual void AI() { }
         public virtual void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) { }
         public virtual void OnKill(int timeLeft) { }
+        public virtual void OnTileCollide(Vector2 oldVelocity) { }
     }
+    
 }
