@@ -26,6 +26,7 @@ namespace CrystalMoon.Registries
         public static MiscShaderData FirePixelEffect => GameShaders.Misc["CrystalMoon:FirePixel"];
 
         public static MiscShaderData CloudsShader => GameShaders.Misc["CrystalMoon:Clouds"];
+        public static MiscShaderData FogShader => GameShaders.Misc["CrystalMoon:Fog"];
         public static MiscShaderData CloudsFrontShader => GameShaders.Misc["CrystalMoon:CloudsFront"];
         public static MiscShaderData NightCloudsShader => GameShaders.Misc["CrystalMoon:NightClouds"];
         public static MiscShaderData CloudsDesertShader => GameShaders.Misc["CrystalMoon:CloudsDesert"];
@@ -65,6 +66,7 @@ namespace CrystalMoon.Registries
             RegisterMiscShader("MagicNatural", "PrimitivesPass");
             RegisterMiscShader("MagicNormal", "PrimitivesPass");
             RegisterMiscShader("FirePixel", "PixelPass");
+            RegisterMiscShader("Fog", "PixelPass");
 
             var miscShader9 = new Ref<Effect>(CrystalMoon.Instance.Assets.Request<Effect>("Assets/Effects/Water", AssetRequestMode.ImmediateLoad).Value);
             Filters.Scene["CrystalMoon:Water"] = new Filter(new ScreenShaderData(miscShader9, "PrimitivesPass"), EffectPriority.VeryHigh);

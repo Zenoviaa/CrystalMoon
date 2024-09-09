@@ -11,7 +11,16 @@ namespace CrystalMoon.Systems.Shaders
         public SamplerState SamplerState { get; set; } = SamplerState.LinearWrap;
         public bool FillShape { get; set; }
         public int DrawCount { get; set; } = 1;
-        public abstract void Apply();
+        public virtual void Apply() { OnApply(); }
+        protected virtual void OnApply()
+        {
+
+        }
+        public virtual void ApplyShaderData()
+        {
+            OnApply();
+            Data.Apply();
+        }
         public virtual void ResetDefaults()
         {
             FillShape = false;

@@ -9,6 +9,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Remove="Assets\Effects\FirePixel.fx" />
+	  <None Remove="Assets\Effects\Fog.fx" />
 	  <None Remove="Assets\Effects\Gradient.fx" />
 	  <None Remove="Assets\Effects\MagicBloodlet.fx" />
 	  <None Remove="Assets\Effects\MagicDeeya.fx" />
@@ -62,6 +63,7 @@
 	  <Folder Include="Systems\Foreground\" />
 	  <Folder Include="Systems\Primitives\" />
 	  <Folder Include="Systems\WaterSystsems\" />
+	  <Folder Include="Visual\Fog\" />
 	</ItemGroup>
 
 </Project>

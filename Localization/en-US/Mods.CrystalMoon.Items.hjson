@@ -241,3 +241,8 @@ MothlightSpawnerBrickBlock: {
 	DisplayName: Mothlight Spawner Brick Block
 	Tooltip: ""
 }
+
+FogSpawnerBlock: {
+	DisplayName: Fog Spawner Block
+	Tooltip: ""
+}

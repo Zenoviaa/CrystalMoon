@@ -15,6 +15,8 @@ namespace CrystalMoon.Registries
         public static Asset<Texture2D> FXSwordSlash => ModContent.Request<Texture2D>("CrystalMoon/Assets/Textures/FX/SwordSlash");
         public static Asset<Texture2D> FXSwordSlashGradientBright => ModContent.Request<Texture2D>("CrystalMoon/Assets/Textures/FX/SwordSlashGradientBright");
         public static Asset<Texture2D> NoiseTextureCloudsSmall => ModContent.Request<Texture2D>("CrystalMoon/Assets/NoiseTextures/SmallClouds");
+        public static Asset<Texture2D> NoiseTextureFog => ModContent.Request<Texture2D>("CrystalMoon/Assets/NoiseTextures/Fog");
+        public static Asset<Texture2D> NoiseTextureFogEmpty => ModContent.Request<Texture2D>("CrystalMoon/Assets/NoiseTextures/FogEmpty");
         public static Asset<Texture2D> NoiseTextureStarsSmall => ModContent.Request<Texture2D>("CrystalMoon/Assets/NoiseTextures/StarsSmall");
         public static Asset<Texture2D> NoiseTextureLeaves => 
             ModContent.Request<Texture2D>("CrystalMoon/Assets/NoiseTextures/Leaves");
