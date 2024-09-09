@@ -16,7 +16,7 @@ using CrystalMoon.Visual.Particles;
 
 namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Phantasmal
 {
-    internal class MoonFinderEnchantment : BaseEnchantment
+    internal class WaveSpeedEnchantment : BaseEnchantment
     {
         private int _timer;
         public override void SetDefaults()
@@ -39,21 +39,21 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Phantasmal
                 {
                     Vector2 spawnPoint = Projectile.Center + Main.rand.NextVector2Circular(8, 8);
                     Vector2 velocity = Main.rand.NextVector2Circular(8, 8);
-                    Particle.NewParticle<SparkleHexParticle>(spawnPoint, velocity, Color.White);
+                    Particle.NewParticle<SparkleUvilisParticle>(spawnPoint, velocity, Color.White);
                 }
 
-                MagicProj.Movement = new OutwardMovement();
+                MagicProj.Movement = new SiningMovement();
             }
         }
 
         public override float GetStaffManaModifier()
         {
-            return 0.2f;
+            return 0.4f;
         }
 
         public override int GetElementType()
         {
-            return ModContent.ItemType<PhantasmalElement>();
+            return ModContent.ItemType<UvilisElement>();
         }
 
 
