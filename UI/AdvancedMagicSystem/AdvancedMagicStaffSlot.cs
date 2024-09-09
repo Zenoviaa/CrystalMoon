@@ -41,13 +41,37 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
         }
 
         public int index;
-
+        public bool isTimedSlot;
         /// <summary>
         /// Returns true if this item can be placed into the slot (either empty or a pet item)
         /// </summary>
         internal bool Valid(Item item)
         {
-            return item.ModItem is BaseEnchantment || item.IsAir;
+            if (isTimedSlot)
+            {
+                if(item.ModItem is BaseEnchantment enchantment && enchantment.isTimedEnchantment)
+                {
+                    return true;
+                }
+                if (item.IsAir)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                if(item.ModItem is BaseEnchantment enchantment && !enchantment.isTimedEnchantment)
+                {
+                    return true;
+                }
+
+                if (item.IsAir)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         internal void HandleMouseItem()
@@ -92,10 +116,13 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
                 }
             }
 
-            Texture2D value = ModContent.Request<Texture2D>("CrystalMoon/UI/AdvancedMagicSystem/EnchantmentCard").Value;
-            int offset = (int)(value.Size().Y / 2);
+            Texture2D cardTexture = isTimedSlot 
+                ? ModContent.Request<Texture2D>("CrystalMoon/UI/AdvancedMagicSystem/TimedEnchantmentCard").Value
+                : ModContent.Request<Texture2D>("CrystalMoon/UI/AdvancedMagicSystem/EnchantmentCard").Value;
+
+            int offset = (int)(cardTexture.Size().Y / 2);
             Vector2 centerPos = pos + rectangle.Size() / 2f;
-            spriteBatch.Draw(value, rectangle.TopLeft(), null, color2, 0f, default(Vector2), _scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(cardTexture, rectangle.TopLeft(), null, color2, 0f, default(Vector2), _scale, SpriteEffects.None, 0f);
 
             if(Item.ModItem is BaseEnchantment myEnchantment)
             {
@@ -113,7 +140,7 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
 
                 shader.Data.Apply(null);
 
-                spriteBatch.Draw(value, rectangle.TopLeft(), null, color2, 0f, default(Vector2), _scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(cardTexture, rectangle.TopLeft(), null, color2, 0f, default(Vector2), _scale, SpriteEffects.None, 0f);
 
                 spriteBatch.End();
                 spriteBatch.Begin(default, default, default, default, default, default, Main.UIScaleMatrix);
@@ -122,8 +149,10 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
 
 
             //Enchantment Slot
-            value = ModContent.Request<Texture2D>("CrystalMoon/UI/AdvancedMagicSystem/EnchantmentSlot").Value;
-            spriteBatch.Draw(value, rectangle.TopLeft() + new Vector2(0, 38), null, color2, 0f, default(Vector2), _scale, SpriteEffects.None, 0f);
+            cardTexture = isTimedSlot 
+                ? ModContent.Request<Texture2D>("CrystalMoon/UI/AdvancedMagicSystem/TimedEnchantmentSlot").Value
+                : ModContent.Request<Texture2D>("CrystalMoon/UI/AdvancedMagicSystem/EnchantmentSlot").Value;
+            spriteBatch.Draw(cardTexture, rectangle.TopLeft() + new Vector2(0, 38), null, color2, 0f, default(Vector2), _scale, SpriteEffects.None, 0f);
             ItemSlot.DrawItemIcon(Item, _context, spriteBatch, centerPos, _scale, 32, Color.White);
 
 

@@ -20,6 +20,9 @@ namespace CrystalMoon.Content.MoonlightMagic
         public AdvancedMagicProjectile MagicProj { get; set; }
         public Projectile Projectile => MagicProj.Projectile;
         public override string LocalizationCategory => "Enchantments";
+
+        public int time;
+        public bool isTimedEnchantment => time > 0;
         public virtual float GetStaffManaModifier() { return 0.2f; }
 
         public object Clone()
@@ -53,6 +56,13 @@ namespace CrystalMoon.Content.MoonlightMagic
             tooltipLine = new TooltipLine(Mod, "EnchantmentTooltip", 
                 Language.GetTextValue("Mods.CrystalMoon.Enchantments.EnchantmentCommonTooltip"));
             tooltips.Add(tooltipLine);
+           
+            if (isTimedEnchantment)
+            {
+                tooltipLine = new TooltipLine(Mod, "EnchantmentTimedHelp",
+                    Language.GetTextValue("Mods.CrystalMoon.Enchantments.EnchantmentCommonTimed", time));
+                tooltips.Add(tooltipLine);
+            }
         }
 
         public virtual void DrawTextShader(SpriteBatch spriteBatch, Item item, DrawableTooltipLine line, ref int yOffset) { }   public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)

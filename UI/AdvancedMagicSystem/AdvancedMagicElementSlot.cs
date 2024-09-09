@@ -118,11 +118,15 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
 
         private void SaveElementToStaff()
         {
+            if (ActiveStaff == null)
+                return;
             ActiveStaff.primaryElement = Item.Clone();
         }
 
         public void Refresh()
         {
+            if (ActiveStaff == null)
+                return;
             Item = ActiveStaff.primaryElement.Clone();
         }
     }

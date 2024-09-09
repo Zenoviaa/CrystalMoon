@@ -40,10 +40,10 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
 
         internal void Recalculate()
         {
-            staffUIState.staffUI.Recalculate();
-            staffUIState.elementUI.Recalculate();
-            staffUIState.elementUI.ElementSlot.Refresh();
-            itemUIState.itemUI.Recalculate();
+            staffUIState?.staffUI?.Recalculate();
+            staffUIState?.elementUI?.Recalculate();
+            staffUIState?.elementUI?.ElementSlot?.Refresh();
+            itemUIState?.itemUI?.Recalculate();
         }
 
         internal void OpenUI(BaseStaff staff)
