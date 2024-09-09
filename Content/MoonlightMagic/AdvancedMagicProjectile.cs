@@ -116,6 +116,7 @@ namespace CrystalMoon.Content.MoonlightMagic
         public override void OnKill(int timeLeft)
         {
             base.OnKill(timeLeft);
+            PrimaryElement?.OnKill();
             for (int i = 0; i < Enchantments.Count; i++)
             {
                 var enchantment = Enchantments[i];

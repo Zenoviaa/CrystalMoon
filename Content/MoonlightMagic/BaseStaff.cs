@@ -64,6 +64,24 @@ namespace CrystalMoon.Content.MoonlightMagic
             TrailLength = Random.Next(24, 32);
         }
 
+        public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
+        {
+            base.ModifyWeaponDamage(player, ref damage);
+            for(int i = 0; i < equippedEnchantments.Length; i++)
+            {
+                Item item = equippedEnchantments[i];
+                if(item.ModItem is BaseEnchantment enchantment)
+                {
+                    if(enchantment.GetElementType() == primaryElement.type)
+                    {
+            
+                        damage *= 1.1f;
+                        //damage *= 1.14f;
+                    }
+                }
+            }
+        }
+
 
         public override void ModifyManaCost(Player player, ref float reduce, ref float mult)
         {
@@ -109,7 +127,7 @@ namespace CrystalMoon.Content.MoonlightMagic
                 var item = equippedEnchantments[i];
                 if(item.ModItem is BaseEnchantment enchantment)
                 {
-                    TooltipLine tooltipLine = new TooltipLine(Mod, $"MoonMagicEnchant_{enchantment.Name}_{i}", enchantment.DisplayName.Value);
+                    TooltipLine tooltipLine = new TooltipLine(Mod, $"MoonMagicEnchant_{enchantment.Texture}_{i}", enchantment.DisplayName.Value);
                     tooltips.Add(tooltipLine);
                 }
             }

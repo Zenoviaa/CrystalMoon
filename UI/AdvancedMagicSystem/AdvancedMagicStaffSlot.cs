@@ -101,6 +101,7 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             }
 
             //Draw Backing
+            bool isMatch = false;
             Color color2 = Main.inventoryBack;
             Vector2 pos = rectangle.TopLeft();
 
@@ -112,8 +113,13 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             {
                 if (elementItem.ModItem is BaseElement element)
                 {
+                    isMatch = true;
                     color2 = element.GetElementColor();
                 }
+            }
+            else
+            {
+                color2 = Color.LightGoldenrodYellow;
             }
 
             Texture2D cardTexture = isTimedSlot 
@@ -153,9 +159,28 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
                 ? ModContent.Request<Texture2D>("CrystalMoon/UI/AdvancedMagicSystem/TimedEnchantmentSlot").Value
                 : ModContent.Request<Texture2D>("CrystalMoon/UI/AdvancedMagicSystem/EnchantmentSlot").Value;
             spriteBatch.Draw(cardTexture, rectangle.TopLeft() + new Vector2(0, 38), null, color2, 0f, default(Vector2), _scale, SpriteEffects.None, 0f);
+            if (isMatch)
+            {
+                float sizeLimit = 34;
+                int numberOfCloneImages = 6;
+                Color glowColor = color2;
+                Main.DrawItemIcon(spriteBatch, Item, centerPos, glowColor * 0.7f, sizeLimit);
+                for (float i = 0; i < 1; i += 1f / numberOfCloneImages)
+                {
+                    float cloneImageDistance = MathF.Cos(Main.GlobalTimeWrappedHourly / 2.4f * MathF.Tau / 2f) + 0.5f;
+                    cloneImageDistance = MathHelper.Max(cloneImageDistance, 0.1f);
+                    Color color = glowColor * 0.4f;
+                    color *= 1f - cloneImageDistance * 0.2f;
+                    color.A = 0;
+                    cloneImageDistance *= 3;
+                    Vector2 drawPos = centerPos + (i * MathF.Tau).ToRotationVector2() * (cloneImageDistance + 2f);
+                    Main.DrawItemIcon(spriteBatch, Item, drawPos, color, sizeLimit);
+                }
+            }
+
             ItemSlot.DrawItemIcon(Item, _context, spriteBatch, centerPos, _scale, 32, Color.White);
 
-
+     
             if (contains && Item.IsAir)
             {
                 timer++;
