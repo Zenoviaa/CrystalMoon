@@ -1,7 +1,7 @@
 EnchantmentCommonTooltip: Enchantment
 EnchantmentCommonHelp: Insert into a staff to enchant your spell
 EnchantmentCommonTimed: This effect activates after {0} ticks
-EnchantmentCommonMana: {0}% increased mana cost
+EnchantmentCommonMana: "{0}% increased mana cost"
 
 FlameLashEnchantment: {
 	DisplayName: Flame Lash
