@@ -16,3 +16,8 @@ HexCloudEnchantment: {
 	DisplayName: Hex Cloud Enchantment
 	Tooltip: When your spell hits an enemy or tile, it explodes into hex!
 }
+
+MoonFinderEnchantment: {
+	DisplayName: Moon Finder Enchantment
+	Tooltip: ""
+}
