@@ -44,7 +44,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Movements
                 Projectile.spriteDirection = 0;
             }
 
-            distance += 0.5f;
+            distance += 1f;
             TimerSpeed += rotationalSpeed;
 
             Vector2 offset = initialSpeed.RotatedBy(Math.PI / 2);
