@@ -89,6 +89,7 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
                 AdvancedMagicStaffSlot slot = new AdvancedMagicStaffSlot(staff);
                 slot.index = _enchantmentsGrid._items.Count;
                 slot.Item = staff.equippedEnchantments[staff.GetNormalSlotCount() + i].Clone();
+                slot.isTimedSlot = true;
                 _enchantmentsGrid.Add(slot);
                 StaffSlots.Add(slot);
             }

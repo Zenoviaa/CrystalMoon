@@ -29,7 +29,7 @@ namespace CrystalMoon.Content.MoonlightMagic
         }
 
         public Texture2D Form { get; private set; }
-        public BaseMovement Movement { get; private set; }
+        public BaseMovement Movement { get; set; }
         public BaseElement PrimaryElement { get; private set; }
         public List<BaseEnchantment> Enchantments { get; private set; } = new List<BaseEnchantment>();
 
@@ -83,7 +83,12 @@ namespace CrystalMoon.Content.MoonlightMagic
         {
             base.AI();
             PrimaryElement?.AI();
-            Movement?.AI();
+            if(Movement != null)
+            {
+                Movement.MagicProj = this;
+                Movement.AI();
+            }
+      
             GlobalTimer++;
             for (int i = 0; i < Enchantments.Count; i++)
             {

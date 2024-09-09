@@ -60,7 +60,6 @@
 	  <Folder Include="Assets\Sounds\" />
 	  <Folder Include="Assets\Textures\TextureRemake\" />
 	  <Folder Include="Content\Items\Weapons\Melee\Axes\" />
-	  <Folder Include="Content\MoonlightMagic\Movements\" />
 	  <Folder Include="Structures\" />
 	  <Folder Include="Systems\Foreground\" />
 	  <Folder Include="Systems\Primitives\" />

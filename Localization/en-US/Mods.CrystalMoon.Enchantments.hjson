@@ -1,7 +1,13 @@
 EnchantmentCommonTooltip: Enchantment
 EnchantmentCommonHelp: Insert into a staff to enchant your spell
+EnchantmentCommonTimed: This effect activates after {0} ticks
 
 FlameLashEnchantment: {
 	DisplayName: Flame Lash
 	Tooltip: When your spell hits an enemy or tile, it explodes into fire!
+}
+
+PuppetMasterEnchantment: {
+	DisplayName: Puppet Master
+	Tooltip: Your spell will exponentially home into nearby enemies!
 }
