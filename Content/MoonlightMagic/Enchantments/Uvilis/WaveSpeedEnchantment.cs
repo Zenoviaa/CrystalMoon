@@ -14,7 +14,7 @@ using CrystalMoon.Content.MoonlightMagic.Movements;
 using CrystalMoon.Systems.Particles;
 using CrystalMoon.Visual.Particles;
 
-namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Phantasmal
+namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Uvilis
 {
     internal class WaveSpeedEnchantment : BaseEnchantment
     {

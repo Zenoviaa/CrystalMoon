@@ -22,3 +22,8 @@ MoonFinderEnchantment: {
 	DisplayName: Moon Finder Enchantment
 	Tooltip: ""
 }
+
+WaveSpeedEnchantment: {
+	DisplayName: Wave Speed Enchantment
+	Tooltip: ""
+}
