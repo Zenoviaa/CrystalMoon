@@ -40,8 +40,9 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Guuts
             DrawHelper.DrawGlowInInventory(item, spriteBatch, position, Color.LightGray);
         }
 
-        public override void SetDefaults()
+        public override void SetMagicDefaults()
         {
+            
             Projectile.penetrate += 2;
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

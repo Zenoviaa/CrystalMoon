@@ -40,8 +40,9 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Deeya
             DrawHelper.DrawGlowInInventory(item, spriteBatch, position, Color.MediumPurple);
         }
 
-        public override void SetDefaults()
+        public override void SetMagicDefaults()
         {
+
             Projectile.penetrate += 3;
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
