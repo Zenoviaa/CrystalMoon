@@ -4,12 +4,12 @@ EnchantmentCommonTimed: This effect activates after {0} ticks
 EnchantmentCommonMana: "{0}% increased mana cost"
 
 FlameLashEnchantment: {
-	DisplayName: Flame Lash
+	DisplayName: Flame Lash Enchantment
 	Tooltip: When your spell hits an enemy or tile, it explodes into fire!
 }
 
 PuppetMasterEnchantment: {
-	DisplayName: Puppet Master
+	DisplayName: Puppet Master Enchantment
 	Tooltip: Your spell will exponentially home into nearby enemies!
 }
 

@@ -6,6 +6,7 @@ using CrystalMoon.Systems.Shaders;
 using CrystalMoon.Visual.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
@@ -95,15 +96,19 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
                 }
                 else
                 {
+                    Color color = ColorUtil.RadianceYellow;
+                    color.A = 0;
+                    Particle.NewBlackParticle<GlowParticle>(spawnPoint, velocity, color);
                     Particle.NewBlackParticle<FireHeatParticle>(spawnPoint, velocity, new Color(255, 255, 255, 0));
                 }
             }
 
-            for(float f = 0f; f < 1f; f += 0.1f)
+            for(float f = 0f; f < 1f; f += 0.2f)
             {
                 float rot = f * MathHelper.TwoPi;
-                Vector2 spawnPoint = Projectile.Center;
-                Vector2 velocity = spawnPoint + rot.ToRotationVector2() * Main.rand.NextFloat(0f, 4f);
+                Vector2 spawnPoint = Projectile.position;
+                Vector2 velocity = rot.ToRotationVector2() * Main.rand.NextFloat(0f, 4f);
+                
                 if (Main.rand.NextBool(2))
                 {
                     Color color = Color.RosyBrown;
@@ -112,6 +117,14 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
                 }
                 else
                 {
+                   
+                    Color color = ColorUtil.RadianceYellow;
+                    if (Main.rand.NextBool(2))
+                        color = Color.OrangeRed;
+                    color.A = 0;
+                    Particle p = Particle.NewBlackParticle<GlowParticle>(spawnPoint, velocity * 0.2f, color);
+                    p.Scale *= 2;
+                    p.Scale *= MagicProj.Size / 16;
                     Particle.NewBlackParticle<FireHeatParticle>(spawnPoint, velocity, new Color(255, 255, 255, 0));
                 }
             }
