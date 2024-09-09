@@ -11,6 +11,7 @@ namespace CrystalMoon.Content.MoonlightMagic
     {
         public List<Item> Backpack { get; set; } = new List<Item>();
         public static event Action<Item> MagicPickupEvent;
+
         public void Pickup(Item item)
         {
             var uiSystem = ModContent.GetInstance<AdvancedMagicUISystem>();
