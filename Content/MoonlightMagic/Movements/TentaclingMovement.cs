@@ -7,7 +7,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Movements
 {
     internal class TentaclingMovement : BaseMovement
     {
-        public float maxHomingDetectDistance = 512;
+        public float maxHomingDetectDistance = 4012;
         float distance = 8;
         int rotationalSpeed = 4;
         int afterImgCancelDrawCount = 0;
@@ -44,7 +44,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Movements
                 Projectile.spriteDirection = 0;
             }
 
-            distance += 1f;
+            distance += 1.2f;
             TimerSpeed += rotationalSpeed;
 
             Vector2 offset = initialSpeed.RotatedBy(Math.PI / 2);
