@@ -4,6 +4,7 @@ using CrystalMoon.Systems.Shaders;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic.Elements
 {
@@ -22,6 +23,16 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
         private void AI_Particles()
         {
 
+        }
+
+        public override bool DrawTextShader(SpriteBatch spriteBatch, Item item, DrawableTooltipLine line, ref int yOffset)
+        {
+            base.DrawTextShader(spriteBatch, item, line, ref yOffset);
+            EnchantmentDrawHelper.DrawTextShader(spriteBatch, item, line, ref yOffset,
+                glowColor: Color.White,
+                primaryColor: Color.White,
+                noiseColor: Color.DarkGray);
+            return true;
         }
 
         private Color ColorFunction(float completionRatio)

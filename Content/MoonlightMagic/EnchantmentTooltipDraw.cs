@@ -35,7 +35,18 @@ namespace CrystalMoon.Content.MoonlightMagic
                     }
                 }
             }
-
+            if (line.Mod == "CrystalMoon" && line.Name.Contains("WeaponType"))
+            {
+                if (item.ModItem is BaseStaff ele)
+                {
+                    //EnchantmentDrawHelper.GlowTextureOverride = ModContent.Request<Texture2D>(TextureRegistry.EmptyTexturePath);
+                    BaseElement element = ModContent.GetInstance<BasicElement>();
+                    if (element.DrawTextShader(spriteBatch, item, line, ref yOffset))
+                    {
+                        return false;
+                    }
+                }
+            }
             bool isItemName = line.Mod == "Terraria" && line.Name == "ItemName";
             bool isEnchantTooltip = line.Mod == "CrystalMoon" && line.Name == "EnchantmentTooltip";
             if (isItemName || isEnchantTooltip) 

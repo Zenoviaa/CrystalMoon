@@ -48,3 +48,8 @@ TentaclingHoneEnchantment: {
 	DisplayName: Tentacling Hone Enchantment
 	Tooltip: ""
 }
+
+BloodlustEnchantment: {
+	DisplayName: Bloodlust Enchantment
+	Tooltip: Your spell doubles in damage, but hurts you if you miss...
+}

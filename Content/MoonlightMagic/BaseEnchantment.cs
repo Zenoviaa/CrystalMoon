@@ -49,10 +49,7 @@ namespace CrystalMoon.Content.MoonlightMagic
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             base.ModifyTooltips(tooltips);
-            TooltipLine tooltipLine = new TooltipLine(Mod, "EnchantmentHelp",
-                Language.GetTextValue("Mods.CrystalMoon.Enchantments.EnchantmentCommonHelp"));
-            tooltipLine.OverrideColor = Color.Gray;
-            tooltips.Add(tooltipLine);
+            TooltipLine tooltipLine;
 
             if (isTimedEnchantment)
             {
@@ -60,6 +57,11 @@ namespace CrystalMoon.Content.MoonlightMagic
                     Language.GetTextValue("Mods.CrystalMoon.Enchantments.EnchantmentCommonTimed", time));
                 tooltips.Add(tooltipLine);
             }
+
+            tooltipLine = new TooltipLine(Mod, "EnchantmentHelp",
+                Language.GetTextValue("Mods.CrystalMoon.Enchantments.EnchantmentCommonHelp"));
+            tooltipLine.OverrideColor = Color.Gray;
+            tooltips.Add(tooltipLine);
 
             tooltipLine = new TooltipLine(Mod, "EnchantmentManaHelp",
                 Language.GetTextValue("Mods.CrystalMoon.Enchantments.EnchantmentCommonMana", 

@@ -129,6 +129,10 @@ namespace CrystalMoon.Content.MoonlightMagic
             tooltipLine.OverrideColor = Color.White;
             tooltips.Add(tooltipLine);
 
+            tooltipLine = new TooltipLine(Mod, "EnchantHelp",
+                Language.GetTextValue("Mods.CrystalMoon.Enchantments.EnchantmentCommonStaffHelp"));
+            tooltipLine.OverrideColor = Color.Gray;
+            tooltips.Add(tooltipLine);
 
             for (int i = 0; i < equippedEnchantments.Length; i++)
             {

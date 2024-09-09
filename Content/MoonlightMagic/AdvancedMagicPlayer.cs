@@ -12,6 +12,7 @@ namespace CrystalMoon.Content.MoonlightMagic
         public List<Item> Backpack { get; set; } = new List<Item>();
         public static event Action<Item> MagicPickupEvent;
 
+
         public void Pickup(Item item)
         {
             var uiSystem = ModContent.GetInstance<AdvancedMagicUISystem>();
@@ -53,6 +54,32 @@ namespace CrystalMoon.Content.MoonlightMagic
 
             uiSystem.Recalculate();
             MagicPickupEvent?.Invoke(item);
+        }
+
+        public override void PostUpdate()
+        {
+            base.PostUpdate();
+            bool isBackpackEmpty = Backpack.Count == 0;
+            bool isFinalSlotFull = Backpack.Count > 0 && !Backpack[Backpack.Count - 1].IsAir;
+            if (isBackpackEmpty || isFinalSlotFull)
+            {
+                var uiSystem = ModContent.GetInstance<AdvancedMagicUISystem>();
+                Item emptyItem = new Item();
+                emptyItem.SetDefaults(0);
+                Backpack.Add(emptyItem);
+                uiSystem.Recalculate();
+            }
+
+            for(int i = 0; i < Backpack.Count; i++)
+            {
+                if (Backpack[i].IsAir && i + 1 < Backpack.Count)
+                {
+                    var uiSystem = ModContent.GetInstance<AdvancedMagicUISystem>();
+                    Backpack.RemoveAt(i);
+                    uiSystem.Recalculate();
+                    break;
+                }
+            }
         }
 
         public override void SaveData(TagCompound tag)
