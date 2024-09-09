@@ -54,3 +54,8 @@ BloodlustEnchantment: {
 	DisplayName: Bloodlust Enchantment
 	Tooltip: Your spell doubles in damage, but hurts you if you miss...
 }
+
+SizerEnchantment: {
+	DisplayName: Sizer Enchantment
+	Tooltip: ""
+}
