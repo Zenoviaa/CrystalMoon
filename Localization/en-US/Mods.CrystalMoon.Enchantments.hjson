@@ -11,3 +11,8 @@ PuppetMasterEnchantment: {
 	DisplayName: Puppet Master
 	Tooltip: Your spell will exponentially home into nearby enemies!
 }
+
+HexCloudEnchantment: {
+	DisplayName: Hex Cloud Enchantment
+	Tooltip: ""
+}

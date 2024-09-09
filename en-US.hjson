@@ -30,6 +30,7 @@ Mods: {
 			FlameLashEnchantmentExplosion.DisplayName: Flame Lash Enchantment Explosion
 			AdvancedMagicProjectile.DisplayName: Advanced Magic Projectile
 			AdvancedMagicStaffProjectile.DisplayName: Advanced Magic Staff Projectile
+			HexCloudEnchantmentExplosion.DisplayName: Hex Cloud Enchantment Explosion
 		}
 
 		Buffs: {

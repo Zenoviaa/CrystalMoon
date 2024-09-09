@@ -14,7 +14,7 @@ using CrystalMoon.Content.MoonlightMagic.Movements;
 using CrystalMoon.Systems.Particles;
 using CrystalMoon.Visual.Particles;
 
-namespace CrystalMoon.Content.MoonlightMagic.Enchantments
+namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
 {
     internal class PuppetMasterEnchantment : BaseEnchantment
     {
@@ -33,15 +33,15 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments
             _timer++;
 
             //If greater than time then start homing, we'll just swap the movement type of the projectile
-            if(_timer == time)
+            if (_timer == time)
             {
-                for(int i = 0; i < 4; i++)
+                for (int i = 0; i < 4; i++)
                 {
                     Vector2 spawnPoint = Projectile.Center + Main.rand.NextVector2Circular(8, 8);
                     Vector2 velocity = Main.rand.NextVector2Circular(8, 8);
                     Particle.NewParticle<SparkleHexParticle>(spawnPoint, velocity, Color.White);
                 }
-   
+
                 MagicProj.Movement = new HomingMovement();
             }
         }

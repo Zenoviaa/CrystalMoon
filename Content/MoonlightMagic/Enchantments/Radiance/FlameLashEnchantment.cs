@@ -11,7 +11,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
 
-namespace CrystalMoon.Content.MoonlightMagic.Enchantments
+namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Radiance
 {
     internal class FlameLashEnchantment : BaseEnchantment
     {
@@ -28,7 +28,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments
 
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
-            
+
             return true;
         }
 
