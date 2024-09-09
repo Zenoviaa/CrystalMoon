@@ -16,9 +16,11 @@ namespace CrystalMoon.Content.MoonlightMagic.Movements
         float alphaCounter;
         Vector2 initialSpeed = Vector2.Zero;
         int TimerSpeed = 0;
+        int TimerSwitch = 0;
 
         public override void AI()
         {
+            TimerSwitch++;
             Projectile.velocity *= 0.991f;
             alphaCounter += 0.04f;
             int rightValue = (int)Projectile.ai[1] - 1;
@@ -48,13 +50,24 @@ namespace CrystalMoon.Content.MoonlightMagic.Movements
             Vector2 offset = initialSpeed.RotatedBy(Math.PI / 2);
             offset.Normalize();
             offset *= (float)(Math.Cos(TimerSpeed * (Math.PI / 180)) * (distance / 3));
-           
 
+            if (TimerSwitch > 0 && TimerSwitch < 30)
+            {
+                Projectile.velocity = initialSpeed + offset;
+            }
 
+            if (TimerSwitch > 30 && TimerSwitch < 60)
+            {
+                NPC npcToChase = ProjectileHelper.FindNearestEnemy(Projectile.Center, maxHomingDetectDistance);
+                if (npcToChase != null)
+                    Projectile.velocity = ProjectileHelper.SimpleHomingVelocity(Projectile, npcToChase.Center, degreesToRotate: 8);
+            }
 
-            NPC npcToChase = ProjectileHelper.FindNearestEnemy(Projectile.Center, maxHomingDetectDistance);
-            if (npcToChase != null)
-             Projectile.velocity = ProjectileHelper.SimpleHomingVelocity(Projectile, npcToChase.Center, degreesToRotate: 8) + initialSpeed + offset;
+            if (TimerSwitch > 60)
+            {
+                TimerSwitch = 0;
+            }
+
         }
     }
 }
