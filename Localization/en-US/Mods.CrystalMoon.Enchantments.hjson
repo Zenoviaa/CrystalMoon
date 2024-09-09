@@ -57,5 +57,5 @@ BloodlustEnchantment: {
 
 SizerEnchantment: {
 	DisplayName: Sizer Enchantment
-	Tooltip: ""
+	Tooltip: Expands your spell making it do 25% more damage!
 }
