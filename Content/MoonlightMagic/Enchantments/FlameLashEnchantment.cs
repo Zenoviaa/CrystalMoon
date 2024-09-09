@@ -15,6 +15,11 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments
 {
     internal class FlameLashEnchantment : BaseEnchantment
     {
+        public override float GetStaffManaModifier()
+        {
+            return 0.2f;
+        }
+
         public override int GetElementType()
         {
             return ModContent.ItemType<RadianceElement>();

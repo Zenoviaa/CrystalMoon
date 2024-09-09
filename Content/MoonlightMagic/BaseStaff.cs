@@ -49,6 +49,7 @@ namespace CrystalMoon.Content.MoonlightMagic
             Item.useAnimation = 32;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.knockBack = 6;
+            Item.mana = 10;
 
             Item.rare = ItemRarityID.Blue;
             Item.shootSpeed = 15;
@@ -64,6 +65,18 @@ namespace CrystalMoon.Content.MoonlightMagic
         }
 
 
+        public override void ModifyManaCost(Player player, ref float reduce, ref float mult)
+        {
+            base.ModifyManaCost(player, ref reduce, ref mult);
+            for(int i = 0; i < equippedEnchantments.Length; i++)
+            {
+                Item item = equippedEnchantments[i];
+                if(item.ModItem is BaseEnchantment enchantment)
+                {
+                    mult += enchantment.GetStaffManaModifier();
+                }
+            }
+        }
 
         public override void PreReforge()
         {

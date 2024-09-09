@@ -20,6 +20,7 @@ namespace CrystalMoon.Content.MoonlightMagic
         public AdvancedMagicProjectile MagicProj { get; set; }
         public Projectile Projectile => MagicProj.Projectile;
         public override string LocalizationCategory => "Enchantments";
+        public virtual float GetStaffManaModifier() { return 0.2f; }
 
         public object Clone()
         {
