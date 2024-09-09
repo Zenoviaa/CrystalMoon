@@ -70,7 +70,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
         protected override float BeamWidthFunction(float p)
         {
             //How wide the trail is going to be
-            float trailWidth = MathHelper.Lerp(64, 32, p);
+            float trailWidth = MathHelper.Lerp(64, 8, p);
             float fadeWidth = MathHelper.Lerp(0, trailWidth, Easing.SpikeOutCirc(p)) * Main.rand.NextFloat(0.75f, 1.0f);
             return fadeWidth;
         }
@@ -83,7 +83,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
             {
                 default:
                 case 0:
-                    c = Color.Lerp(Color.White, new Color(147, 72, 121) * 0.5f, p);
+                    c = Color.Lerp(Color.Purple, new Color(147, 72, 121) * 0.5f, p);
                     break;
                 case 1:
                     c = Color.Lerp(Color.White, new Color(147, 72, 121) * 0f, p);
@@ -159,7 +159,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             base.OnHitNPC(target, hit, damageDone);
-            target.AddBuff(BuffID.OnFire, 90);
+          //  target.AddBuff(BuffID.OnFire, 90);
         }
     }
 }
