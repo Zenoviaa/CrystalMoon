@@ -14,5 +14,5 @@ PuppetMasterEnchantment: {
 
 HexCloudEnchantment: {
 	DisplayName: Hex Cloud Enchantment
-	Tooltip: ""
+	Tooltip: When your spell hits an enemy or tile, it explodes into hex!
 }

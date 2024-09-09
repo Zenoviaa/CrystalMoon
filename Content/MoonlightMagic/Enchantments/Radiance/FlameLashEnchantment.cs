@@ -38,6 +38,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Radiance
             DrawHelper.DrawGlowInInventory(item, spriteBatch, position, Color.Red);
         }
 
+      
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             base.OnHitNPC(target, hit, damageDone);
