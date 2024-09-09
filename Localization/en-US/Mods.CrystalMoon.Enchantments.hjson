@@ -46,7 +46,7 @@ SpikyBarnEnchantment: {
 
 TentaclingHoneEnchantment: {
 	DisplayName: Tentacling Hone Enchantment
-	Tooltip: ""
+	Tooltip: Spells switch from a tentacle movement to honing in on enemies.
 }
 
 BloodlustEnchantment: {
