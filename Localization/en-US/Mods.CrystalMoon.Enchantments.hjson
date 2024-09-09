@@ -43,3 +43,8 @@ SpikyBarnEnchantment: {
 	DisplayName: Spiky Barn Enchantment
 	Tooltip: +2 Penetration to your spells.
 }
+
+TentaclingHoneEnchantment: {
+	DisplayName: Tentacling Hone Enchantment
+	Tooltip: ""
+}

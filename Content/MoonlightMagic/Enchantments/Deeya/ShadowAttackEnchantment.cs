@@ -17,6 +17,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Deeya
     internal class ShadowAttackEnchantment : BaseEnchantment
     {
         bool HitOnce = false;
+        int Attagain = 14;
         public override float GetStaffManaModifier()
         {
             return 0.6f;
@@ -52,20 +53,36 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Deeya
             //Spawn the explosion
             Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero);
             direction = direction.RotatedByRandom(MathHelper.ToRadians(30));
-            Projectile.velocity = -direction * 7;
+            Projectile.velocity = -direction * 14;
             HitOnce = true;
-
+            Attagain = 0;
         }
 
-        public float maxHomingDetectDistance = 512;
+        public float maxHomingDetectDistance = 2012;
         public override void AI()
         {
+            
+            if (Attagain <= 14)
+            {
+                Attagain++;
+            }
+            
+            if (Attagain > 14)
+            {
+                Projectile.friendly = false;
+            }
+
+            if (Attagain >= 14)
+            {
+                Projectile.friendly = true;
+            }
+
             if (HitOnce)
             {
                 Projectile.tileCollide = false;
                 NPC npcToChase = ProjectileHelper.FindNearestEnemy(Projectile.Center, maxHomingDetectDistance);
                 if (npcToChase != null)
-                    Projectile.velocity = ProjectileHelper.SimpleHomingVelocity(Projectile, npcToChase.Center, degreesToRotate: 11);
+                    Projectile.velocity = ProjectileHelper.SimpleHomingVelocity(Projectile, npcToChase.Center, degreesToRotate: 8);
             }
           
         }
