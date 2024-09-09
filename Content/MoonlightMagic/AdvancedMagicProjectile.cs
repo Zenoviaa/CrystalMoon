@@ -66,7 +66,7 @@ namespace CrystalMoon.Content.MoonlightMagic
                 {
                     var instance = enchantment.Instantiate();
                     instance.MagicProj = this;
-                    instance.SetDefaults();
+                    instance.SetMagicDefaults();
                     Enchantments.Add(instance);
                 }
             }

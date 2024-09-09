@@ -44,6 +44,7 @@ namespace CrystalMoon.Content.MoonlightMagic
         {
             base.SetDefaults();
         }
+        public virtual void SetMagicDefaults() { }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {

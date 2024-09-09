@@ -10,11 +10,13 @@ using Terraria.UI.Chat;
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using ReLogic.Content;
 
 namespace CrystalMoon.Content.MoonlightMagic
 {
     internal static class EnchantmentDrawHelper
     {
+        public static Asset<Texture2D> GlowTextureOverride;
         public static void DrawTextShader(SpriteBatch spriteBatch, 
             Item item, DrawableTooltipLine line, ref int yOffset,
             Color glowColor, Color primaryColor, Color noiseColor)
@@ -22,6 +24,9 @@ namespace CrystalMoon.Content.MoonlightMagic
             Vector2 textPosition = new Vector2(line.X, line.Y);
             //Draw BackGlow
             var glowTexture = TextureRegistry.GlowTrail;
+            if (GlowTextureOverride != null)
+                glowTexture = GlowTextureOverride;
+            GlowTextureOverride = null;
             Vector2 scale = new Vector2(0.45f, 0.15f);
             glowColor.A = 0;
             glowColor *= 0.5f;

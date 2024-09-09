@@ -15,11 +15,25 @@ namespace CrystalMoon.Content.MoonlightMagic
     {
         public override bool PreDrawTooltipLine(Item item, DrawableTooltipLine line, ref int yOffset)
         {
+            SpriteBatch spriteBatch = Main.spriteBatch;
             if (line.Mod == "CrystalMoon" && line.Name.Contains("MoonMagicEnchant_"))
             {
                 line.BaseScale *= 0.75f;
                 line.X += 15;
                 line.Y += 6;
+                if (item.ModItem is BaseStaff ele)
+                {
+                    EnchantmentDrawHelper.GlowTextureOverride = ModContent.Request<Texture2D>(TextureRegistry.EmptyTexturePath);
+                    int endIndex = line.Name.LastIndexOf("_") + 1;
+                    int enchantIndex =int.Parse(line.Name.Substring(endIndex, line.Name.Length - endIndex));
+                    var enchantment = ele.equippedEnchantments[enchantIndex].ModItem as BaseEnchantment;
+                    int elementType = enchantment.GetElementType();
+                    BaseElement element = ModContent.GetModItem(elementType) as BaseElement;
+                    if (element.DrawTextShader(spriteBatch, item, line, ref yOffset))
+                    {
+                        return false;
+                    }
+                }
             }
 
             bool isItemName = line.Mod == "Terraria" && line.Name == "ItemName";
@@ -30,7 +44,7 @@ namespace CrystalMoon.Content.MoonlightMagic
                 {
                     line.BaseScale *= 0.95f;
                 }
-                SpriteBatch spriteBatch = Main.spriteBatch;  
+               
                 if (item.ModItem is BaseEnchantment enchantment)
                 {
                     int elementType = enchantment.GetElementType();

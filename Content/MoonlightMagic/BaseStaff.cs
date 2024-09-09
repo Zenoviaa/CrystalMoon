@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
@@ -120,19 +121,26 @@ namespace CrystalMoon.Content.MoonlightMagic
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             base.ModifyTooltips(tooltips);
-   
 
-            for(int i = 0; i < equippedEnchantments.Length; i++)
+            TooltipLine tooltipLine;
+
+            tooltipLine = new TooltipLine(Mod, "WeaponType",
+                Language.GetTextValue("Mods.CrystalMoon.Enchantments.EnchantmentCommonStaff"));
+            tooltipLine.OverrideColor = Color.White;
+            tooltips.Add(tooltipLine);
+
+
+            for (int i = 0; i < equippedEnchantments.Length; i++)
             {
                 var item = equippedEnchantments[i];
                 if(item.ModItem is BaseEnchantment enchantment)
                 {
-                    TooltipLine tooltipLine = new TooltipLine(Mod, $"MoonMagicEnchant_{enchantment.Texture}_{i}", enchantment.DisplayName.Value);
+                    tooltipLine = new TooltipLine(Mod, $"MoonMagicEnchant_{enchantment.Texture}_{i}", enchantment.DisplayName.Value);
                     tooltips.Add(tooltipLine);
                 }
             }
-      
         }
+
         public virtual int GetNormalSlotCount()
         {
             return 5;

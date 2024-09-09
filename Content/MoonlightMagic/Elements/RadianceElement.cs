@@ -122,9 +122,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
                     if (Main.rand.NextBool(2))
                         color = Color.OrangeRed;
                     color.A = 0;
-                    Particle p = Particle.NewBlackParticle<GlowParticle>(spawnPoint, velocity * 0.2f, color);
-                    p.Scale *= 2;
-                    p.Scale *= MagicProj.Size / 16;
+                    Particle.NewBlackParticle<GlowParticle>(spawnPoint, velocity * 0.2f, color);
                     Particle.NewBlackParticle<FireHeatParticle>(spawnPoint, velocity, new Color(255, 255, 255, 0));
                 }
             }
