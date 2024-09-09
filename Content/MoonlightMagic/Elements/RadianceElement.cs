@@ -75,6 +75,48 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             }
         }
 
+        public override void OnKill()
+        {
+            base.OnKill();
+
+            //Kill Trail
+            for (int i = 0; i < MagicProj.OldPos.Length - 1; i++)
+            {
+                Vector2 offset = Main.rand.NextVector2Circular(16, 16);
+                Vector2 spawnPoint = MagicProj.OldPos[i] + offset + Projectile.Size / 2;
+                Vector2 velocity = MagicProj.OldPos[i + 1] - MagicProj.OldPos[i];
+                velocity = velocity.SafeNormalize(Vector2.Zero) * -2;
+
+                if (Main.rand.NextBool(2))
+                {
+                    Color color = Color.RosyBrown;
+                    color.A = 0;
+                    Particle.NewBlackParticle<FireSmokeParticle>(spawnPoint, velocity, color);
+                }
+                else
+                {
+                    Particle.NewBlackParticle<FireHeatParticle>(spawnPoint, velocity, new Color(255, 255, 255, 0));
+                }
+            }
+
+            for(float f = 0f; f < 1f; f += 0.1f)
+            {
+                float rot = f * MathHelper.TwoPi;
+                Vector2 spawnPoint = Projectile.Center;
+                Vector2 velocity = spawnPoint + rot.ToRotationVector2() * Main.rand.NextFloat(0f, 4f);
+                if (Main.rand.NextBool(2))
+                {
+                    Color color = Color.RosyBrown;
+                    color.A = 0;
+                    Particle.NewBlackParticle<FireSmokeParticle>(spawnPoint, velocity, color);
+                }
+                else
+                {
+                    Particle.NewBlackParticle<FireHeatParticle>(spawnPoint, velocity, new Color(255, 255, 255, 0));
+                }
+            }
+        }
+
         private Color ColorFunction(float completionRatio)
         {
             Color c;

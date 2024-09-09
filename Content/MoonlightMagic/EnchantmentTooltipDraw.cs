@@ -60,13 +60,9 @@ namespace CrystalMoon.Content.MoonlightMagic
 
             if (line.Mod == "Terraria" && line.Name == "ItemName")
             {
-                if(item.ModItem is BaseStaff baseStaff && baseStaff.primaryElement.ModItem is BaseElement)
+                if(item.ModItem is BaseStaff baseStaff && baseStaff.primaryElement.ModItem is BaseElement ele)
                 {
-                    string elementName = baseStaff.primaryElement.Name;
-                    elementName = elementName.Replace(" ", "");
-                    Texture2D texture = ModContent.Request<Texture2D>(
-                        $"CrystalMoon/Content/MoonlightMagic/Elements/{elementName}").Value;
-
+                    Texture2D texture = ModContent.Request<Texture2D>(ele.Texture).Value;
                     SpriteBatch spriteBatch = Main.spriteBatch;
                     Vector2 textPosition = new(line.X, line.Y);
                     Vector2 drawPos = textPosition + new Vector2(0, texture.Size().Y / 3.5f) - new Vector2(25, 6);
@@ -76,11 +72,11 @@ namespace CrystalMoon.Content.MoonlightMagic
 
             if (line.Mod == "CrystalMoon" && line.Name.Contains("MoonMagicEnchant_"))
             {
+            
                 int startIndex = line.Name.IndexOf("_")+1;
                 int endIndex = line.Name.LastIndexOf("_");
                 string textureName = line.Name.Substring(startIndex, endIndex - startIndex);
-                Texture2D texture = ModContent.Request<Texture2D>(
-                    $"CrystalMoon/Content/MoonlightMagic/Enchantments/{textureName}").Value;
+                Texture2D texture = ModContent.Request<Texture2D>(textureName).Value;
 
                 SpriteBatch spriteBatch = Main.spriteBatch;
                 Vector2 textPosition = new(line.X, line.Y);

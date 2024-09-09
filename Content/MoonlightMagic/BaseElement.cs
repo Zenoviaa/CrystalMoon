@@ -25,6 +25,7 @@ namespace CrystalMoon.Content.MoonlightMagic
         public virtual void AI() { }
         public virtual void DrawTrail() { }
         public virtual void ApplyFormShader() { }
+        public virtual void OnKill() { }
 
         public virtual Color GetElementColor() { return Color.White; }
 
