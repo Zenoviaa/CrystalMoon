@@ -83,7 +83,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
             {
                 default:
                 case 0:
-                    c = Color.Lerp(Color.Purple, new Color(147, 72, 121) * 0.5f, p);
+                    c = Color.Lerp(Color.White, new Color(147, 72, 121) * 0.5f, p);
                     break;
                 case 1:
                     c = Color.Lerp(Color.White, new Color(147, 72, 121) * 0f, p);
