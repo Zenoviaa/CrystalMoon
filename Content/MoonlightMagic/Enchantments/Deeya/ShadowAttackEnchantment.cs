@@ -52,7 +52,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Deeya
             //Spawn the explosion
             Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero);
             direction = direction.RotatedByRandom(MathHelper.ToRadians(30));
-            Projectile.velocity = -direction * 71;
+            Projectile.velocity = -direction * 7;
             HitOnce = true;
 
         }
