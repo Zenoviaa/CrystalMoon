@@ -69,6 +69,7 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
 
         internal void ToggleUI()
         {
+            Console.WriteLine("Toggle UI");
             if (_backpackInterface.CurrentState != null)
             {
                 CloseBackpackUI();

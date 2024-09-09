@@ -13,13 +13,23 @@ using System.Threading.Tasks;
 using Terraria.ID;
 using Terraria;
 using CrystalMoon.Systems.ScreenSystems;
+using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic.Elements
 {
     internal class UvilisElement : BaseElement
     {
-        int trailingMode = 0; 
-        
+        int trailingMode = 0;
+        public override bool DrawTextShader(SpriteBatch spriteBatch, Item item, DrawableTooltipLine line, ref int yOffset)
+        {
+            base.DrawTextShader(spriteBatch, item, line, ref yOffset);
+            EnchantmentDrawHelper.DrawTextShader(spriteBatch, item, line, ref yOffset,
+                glowColor: ColorUtil.UvilisLightBlue,
+                primaryColor: Color.Lerp(Color.White, new Color(255, 207, 79), 0.5f),
+                noiseColor: Color.Blue);
+            return true;
+        }
+
         public override Color GetElementColor()
         {
             return ColorUtil.UvilisLightBlue;

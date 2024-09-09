@@ -13,8 +13,6 @@ namespace CrystalMoon.Content.MoonlightMagic
 {
     internal class EnchantmentTooltipDraw : GlobalItem
     {
-
-
         public override bool PreDrawTooltipLine(Item item, DrawableTooltipLine line, ref int yOffset)
         {
             if (line.Mod == "CrystalMoon" && line.Name.Contains("MoonMagicEnchant_"))
@@ -38,6 +36,13 @@ namespace CrystalMoon.Content.MoonlightMagic
                     int elementType = enchantment.GetElementType();
                     BaseElement element = ModContent.GetModItem(elementType) as BaseElement;
                     if(element.DrawTextShader(spriteBatch, item, line, ref yOffset))
+                    {
+                        return false;
+                    }
+                }
+                if(item.ModItem is BaseElement ele)
+                {
+                    if (ele.DrawTextShader(spriteBatch, item, line, ref yOffset))
                     {
                         return false;
                     }

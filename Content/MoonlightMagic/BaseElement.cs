@@ -2,7 +2,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic
@@ -25,6 +27,16 @@ namespace CrystalMoon.Content.MoonlightMagic
         public virtual void ApplyFormShader() { }
 
         public virtual Color GetElementColor() { return Color.White; }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            base.ModifyTooltips(tooltips);
+            TooltipLine tooltipLine = new TooltipLine(Mod, "EnchantmentHelp",
+                Language.GetTextValue("Mods.CrystalMoon.Enchantments.EnchantmentCommonHelp"));
+            tooltipLine.OverrideColor = Color.Gray;
+            tooltips.Add(tooltipLine);
+        }
+
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
             DrawHelper.DrawGlow2InWorld(Item, spriteBatch, ref rotation, ref scale, whoAmI);

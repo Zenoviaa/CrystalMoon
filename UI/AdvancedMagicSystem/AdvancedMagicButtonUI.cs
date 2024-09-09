@@ -1,21 +1,26 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
+
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
+using Terraria.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CrystalMoon.UI.AdvancedMagicSystem
 {
     internal class AdvancedMagicButtonUI : UIPanel
     {
-        private UIImage _btn;
 
-        internal const int width = 100;
-        internal const int height = 100;
+        private UIPanel _button;
 
-        internal int RelativeLeft => 505;
-        internal int RelativeTop => Main.screenHeight / 2 - 96;
+        internal const int width = 42;
+        internal const int height = 56;
+
+        internal int RelativeLeft => 515;
+        internal int RelativeTop => Main.screenHeight / 2 - 64;
 
         public override void OnInitialize()
         {
@@ -27,25 +32,50 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             Top.Pixels = RelativeTop;
             BackgroundColor = Color.Transparent;
             BorderColor = Color.Transparent;
-            _btn = new UIImage(ModContent.Request<Texture2D>("CrystalMoon/UI/AdvancedMagicSystem/Paper"));
-            _btn.OnLeftClick += (evt, element) => { ToggleUI(); };
-            _btn.Activate();
-            Append(_btn);
+            OnLeftClick += OnButtonClick;
+            OnMouseOver += OnMouseHover;
         }
 
-        private void ToggleUI()
+        private void OnButtonClick(UIMouseEvent evt, UIElement listeningElement)
         {
             AdvancedMagicUISystem uiSystem = ModContent.GetInstance<AdvancedMagicUISystem>();
             uiSystem.ToggleUI();
+            // We can do stuff in here!
+        }
+
+        private void OnMouseHover(UIMouseEvent evt, UIElement listeningElement)
+        {
+           // AdvancedMagicUISystem uiSystem = ModContent.GetInstance<AdvancedMagicUISystem>();
+          //  uiSystem.ToggleUI();
+            // We can do stuff in here! 
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-
+            BackgroundColor = Color.Transparent;
             //Constantly lock the UI in the position regardless of resolution changes
             Left.Pixels = RelativeLeft;
             Top.Pixels = RelativeTop;
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            base.DrawSelf(spriteBatch);
+            CalculatedStyle dimensions = GetDimensions();
+            Point point = new Point((int)dimensions.X, (int)dimensions.Y);
+            Texture2D textureToDraw;
+            if (IsMouseHovering)
+            {
+                point.X -= 2;
+                point.Y -= 10;
+                textureToDraw = ModContent.Request<Texture2D>("CrystalMoon/UI/AdvancedMagicSystem/PaperSelected").Value;
+            }
+            else
+            {
+                textureToDraw = ModContent.Request<Texture2D>("CrystalMoon/UI/AdvancedMagicSystem/Paper").Value;
+            }
+            spriteBatch.Draw(textureToDraw, new Rectangle(point.X, point.Y, textureToDraw.Width, textureToDraw.Height), null, Color.White);
         }
     }
 }

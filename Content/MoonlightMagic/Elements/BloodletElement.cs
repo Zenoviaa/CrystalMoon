@@ -6,6 +6,7 @@ using CrystalMoon.Visual.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic.Elements
 {
@@ -17,7 +18,15 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
         {
             return ColorUtil.BloodletRed;
         }
-
+        public override bool DrawTextShader(SpriteBatch spriteBatch, Item item, DrawableTooltipLine line, ref int yOffset)
+        {
+            base.DrawTextShader(spriteBatch, item, line, ref yOffset);
+            EnchantmentDrawHelper.DrawTextShader(spriteBatch, item, line, ref yOffset,
+                glowColor: ColorUtil.BloodletRed,
+                primaryColor: Color.White,
+                noiseColor: Color.DarkRed);
+            return true;
+        }
         public override void SpecialInventoryDraw(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             base.SpecialInventoryDraw(item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);

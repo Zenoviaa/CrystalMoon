@@ -5,6 +5,7 @@ using CrystalMoon.Systems.Shaders;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic.Elements
 {
@@ -13,6 +14,15 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
         public override Color GetElementColor()
         {
             return ColorUtil.PhantasmalGreen;
+        }
+        public override bool DrawTextShader(SpriteBatch spriteBatch, Item item, DrawableTooltipLine line, ref int yOffset)
+        {
+            base.DrawTextShader(spriteBatch, item, line, ref yOffset);
+            EnchantmentDrawHelper.DrawTextShader(spriteBatch, item, line, ref yOffset,
+                glowColor: ColorUtil.PhantasmalGreen,
+                primaryColor: Color.White,
+                noiseColor: Color.DarkGreen);
+            return true;
         }
 
         public override void SpecialInventoryDraw(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
