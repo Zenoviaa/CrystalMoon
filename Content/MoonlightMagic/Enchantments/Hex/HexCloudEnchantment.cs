@@ -63,7 +63,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
             Projectile.timeLeft = 24;
-            rStart = Main.rand.Next(4, 8);
+            rStart = Main.rand.Next(2, 4);
             rEnd = Main.rand.Next(96, 128);
         }
 
@@ -100,7 +100,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
         protected override float RadiusFunction(float p)
         {
             //How large the circle is going to be
-            return MathHelper.Lerp(rStart, rEnd, Easing.OutCirc(p));
+            return MathHelper.Lerp(rStart, 100, Easing.OutCirc(p));
         }
 
         protected override BaseShader ReadyShader()
