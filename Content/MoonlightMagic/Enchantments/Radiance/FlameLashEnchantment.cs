@@ -44,7 +44,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Radiance
 
             //Spawn the explosion
             Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center, Vector2.Zero, ModContent.ProjectileType<FlameLashEnchantmentExplosion>(),
-                Projectile.damage, Projectile.knockBack, Projectile.owner);
+                Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
         }
     }
 
