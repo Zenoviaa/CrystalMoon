@@ -43,7 +43,7 @@ namespace CrystalMoon.Tiles.SpecialTiles
 
         private void FogCreateFunction(Fog fog)
         {
-            fog.startColor = Color.WhiteSmoke;
+            fog.startColor = Color.White;
             fog.startScale = new Vector2(Main.rand.NextFloat(0.75f, 1.0f), Main.rand.NextFloat(0.7f, 0.9f)) * 2.3f;
         }
         

@@ -72,16 +72,17 @@ namespace CrystalMoon.Systems
         private void DrawFog(On_Main.orig_DrawDust orig, Main self)
         {
             orig(self);
-            var texture = TextureRegistry.NoiseTextureFogEmpty;
+            var texture = TextureRegistry.NoiseTextureClouds;
             SpriteBatch spriteBatch = Main.spriteBatch;
             Vector2 origin = texture.Size() / 2;
 
             //Apply Fog Shader
             var fogShader = FogShader.Instance;
-            fogShader.FogTexture = TextureRegistry.NoiseTextureFog;
-            fogShader.ProgressPower = 1f;
+            fogShader.FogTexture = TextureRegistry.NoiseTextureClouds3;
+            fogShader.ProgressPower = 0.75f;
             fogShader.EdgePower = 1f;
-            fogShader.Speed = 0.025f;
+            fogShader.Speed = 0.05f;
+          
             fogShader.Apply();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, fogShader.Effect, Main.GameViewMatrix.TransformationMatrix);
 
@@ -89,7 +90,7 @@ namespace CrystalMoon.Systems
             {
                 var fog = kvp.Value;
                 Vector2 center = fog.position - Main.screenPosition;
-                spriteBatch.Draw(texture.Value, center, null, fog.color, 0, origin, fog.scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(texture.Value, center, null, fog.color, 0, origin, fog.scale * 0.75f, SpriteEffects.None, 0f);
             }
 
             spriteBatch.End();
