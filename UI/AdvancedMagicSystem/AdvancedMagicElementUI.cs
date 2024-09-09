@@ -7,7 +7,6 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
 {
     internal class AdvancedMagicElementUI : UIPanel
     {
-        private BaseStaff ActiveStaff => AdvancedMagicUISystem.Staff;
         internal const int width = 480;
         internal const int height = 155;
 

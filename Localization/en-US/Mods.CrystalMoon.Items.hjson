@@ -246,3 +246,8 @@ FogSpawnerBlock: {
 	DisplayName: Fog Spawner Block
 	Tooltip: ""
 }
+
+EnchantmentKiller: {
+	Tooltip: ""
+	DisplayName: Enchantment Killer
+}
