@@ -21,10 +21,10 @@ HexCloudEnchantment: {
 
 MoonFinderEnchantment: {
 	DisplayName: Moon Finder Enchantment
-	Tooltip: ""
+	Tooltip: Your spell will find and hit nearby enemies!
 }
 
 WaveSpeedEnchantment: {
 	DisplayName: Wave Speed Enchantment
-	Tooltip: ""
+	Tooltip: Your spell gets sent into a wave pattern!
 }
