@@ -124,6 +124,17 @@ namespace CrystalMoon.Content.MoonlightMagic
             }
         }
 
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            for (int i = 0; i < Enchantments.Count; i++)
+            {
+                var enchantment = Enchantments[i];
+                enchantment.OnTileCollide(oldVelocity);
+            }
+            return base.OnTileCollide(oldVelocity);
+        }
+
         public override bool PreDraw(ref Color lightColor)
         {
             PrimaryElement?.DrawTrail();
