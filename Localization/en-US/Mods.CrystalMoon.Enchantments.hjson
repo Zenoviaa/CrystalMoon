@@ -3,6 +3,7 @@ EnchantmentCommonHelp: Insert into a staff to enchant your spell
 EnchantmentCommonTimed: This effect activates after {0} ticks
 EnchantmentCommonMana: "{0}% increased mana cost"
 EnchantmentCommonStaff: Staff Weapon Type
+EnchantmentCommonStaffHelp: Right click to open the enchanting menu
 
 FlameLashEnchantment: {
 	DisplayName: Flame Lash Enchantment
