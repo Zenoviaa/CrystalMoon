@@ -10,7 +10,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Movements
         public override void AI()
         {
 
-            Projectile.velocity.Y += 0.05f;
+            Projectile.velocity.Y += 0.2f;
         }
     }
 }

@@ -59,3 +59,18 @@ SizerEnchantment: {
 	DisplayName: Sizer Enchantment
 	Tooltip: Expands your spell making it do 25% more damage!
 }
+
+SharpenEnchantment: {
+	DisplayName: Sharpen Enchantment
+	Tooltip: Make your spells boune off your target at flying speeds increasing the damage by 25%.
+}
+
+FloralBlastEnchantment: {
+	DisplayName: Floral Blast Enchantment
+	Tooltip: When your spell hits an enemy or tile, it explodes into some flowery nature!
+}
+
+FlowerfallEnchantment: {
+	DisplayName: Flowerfall Enchantment
+	Tooltip: Make that spell have gravity! Totally not a Diari reference.
+}
