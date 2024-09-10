@@ -21,7 +21,10 @@ namespace CrystalMoon.Content.MoonlightMagic.Weapons
         {
             return 3;
         }
-
+        public override int GetTimedSlotCount()
+        {
+            return 0;
+        }
 
     }
 }

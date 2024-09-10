@@ -266,3 +266,8 @@ MothwingStaff: {
 	DisplayName: Mothwing Staff
 	Tooltip: ""
 }
+
+RainsyStaff: {
+	DisplayName: Rainsy Staff
+	Tooltip: ""
+}
