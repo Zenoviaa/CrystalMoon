@@ -1,4 +1,5 @@
-﻿using CrystalMoon.Systems.ScreenSystems;
+﻿using CrystalMoon.Systems.MiscellaneousMath;
+using CrystalMoon.Systems.ScreenSystems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -51,6 +52,27 @@ namespace CrystalMoon.Content.MoonlightMagic
         {
             DrawHelper.DrawGlow2InWorld(Item, spriteBatch, ref rotation, ref scale, whoAmI);
             return base.PreDrawInWorld(spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
+        }
+
+
+        public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+        {
+            float sizeLimit = 34;
+            int numberOfCloneImages = 6;
+            float p = MathUtil.Osc(0f, 0.5f, speed: 3);
+            Main.DrawItemIcon(spriteBatch, Item, position, Color.White * 0.33f * p, sizeLimit);
+            for (float i = 0; i < 1; i += 1f / numberOfCloneImages)
+            {
+                float cloneImageDistance = MathF.Cos(Main.GlobalTimeWrappedHourly / 2.4f * MathF.Tau / 2f) + 0.5f;
+                cloneImageDistance = MathHelper.Max(cloneImageDistance, 0.1f);
+                Color color = GetElementColor() * p* 0.4f;
+                color *= 1f - cloneImageDistance * 0.2f;
+                color.A = 0;
+                cloneImageDistance *= 3;
+                Vector2 drawPos = position + (i * MathF.Tau).ToRotationVector2() * (cloneImageDistance + 2f);
+                Main.DrawItemIcon(spriteBatch, Item, drawPos, color, sizeLimit);
+            }
+            base.PostDrawInInventory(spriteBatch, position, frame, drawColor, itemColor, origin, scale);
         }
 
         public virtual bool DrawTextShader(SpriteBatch spriteBatch, Item item, DrawableTooltipLine line, ref int yOffset)
