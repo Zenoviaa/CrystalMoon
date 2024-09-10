@@ -10,7 +10,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Movements
        // public float maxHomingDetectDistance = 512;
         public override void AI()
         {
-            Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.ToRadians(15));
+            Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.ToRadians(9));
         }
     }
 }

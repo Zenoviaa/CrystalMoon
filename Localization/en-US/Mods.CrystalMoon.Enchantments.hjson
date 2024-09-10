@@ -84,3 +84,18 @@ FlashpointEnchantment: {
 	DisplayName: Flashpoint Enchantment
 	Tooltip: Slowly increases projectile velocity!
 }
+
+HurricaneEnchantment: {
+	DisplayName: Hurricane Enchantment
+	Tooltip: Turn your projectiles into waving circles!
+}
+
+TyphoonWaverEnchantment: {
+	DisplayName: Typhoon Waver Enchantment
+	Tooltip: Swirl your projectiles in an oval!
+}
+
+RadioSilenceEnchantment: {
+	DisplayName: Radio Silence Enchantment
+	Tooltip: Randomizes projectile speeds to create shapes!
+}

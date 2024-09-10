@@ -15,9 +15,9 @@ using CrystalMoon.Systems.Particles;
 using CrystalMoon.Visual.Particles;
 using CrystalMoon.Systems.MiscellaneousMath;
 
-namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Uvilis
+namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Deeya
 {
-    internal class TyphoonWaverEnchantment : BaseEnchantment
+    internal class RadioSilenceEnchantment : BaseEnchantment
     {
         private float _timer;
 
@@ -28,23 +28,32 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Uvilis
             //Count up
             _timer++ ;
             float oscSpeed = 0.05f;
-            float xAmp = 0.5f;
-            float yAmp = 0.5f;
+            float xAmp = 5;
+            float yAmp = 5;
             Projectile.velocity += new Vector2(
-                MathF.Sin(_timer * oscSpeed) * xAmp,
-                MathF.Cos(_timer * oscSpeed) * yAmp);
+                MathF.Sin(Projectile.position.X * oscSpeed) * xAmp,
+                MathF.Cos(Projectile.position.Y * oscSpeed) * yAmp);
+
+
+            /*float p = MathF.Sin(_timer * 0.05f);
+            float ep = Easing.SpikeOutExpo(p);
+            float radiansRange = 3;
+            float radiansToRotateBy = MathHelper.Lerp(-radiansRange, radiansRange, ep);
+            Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero).RotatedBy(radiansToRotateBy);
             //If greater than time then start homing, we'll just swap the movement type of the projectile
+
+            */
 
         }
 
         public override float GetStaffManaModifier()
         {
-            return 0.3f;
+            return 0.1f;
         }
 
         public override int GetElementType()
         {
-            return ModContent.ItemType<UvilisElement>();
+            return ModContent.ItemType<DeeyaElement>();
         }
 
 
@@ -57,7 +66,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Uvilis
         public override void SpecialInventoryDraw(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             base.SpecialInventoryDraw(item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
-            DrawHelper.DrawGlowInInventory(item, spriteBatch, position, ColorUtil.PhantasmalGreen);
+            DrawHelper.DrawGlowInInventory(item, spriteBatch, position, ColorUtil.DeeyaPink);
         }
     }
 }
