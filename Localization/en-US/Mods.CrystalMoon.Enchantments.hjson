@@ -62,7 +62,7 @@ SizerEnchantment: {
 
 SharpenEnchantment: {
 	DisplayName: Sharpen Enchantment
-	Tooltip: Make your spells boune off your target at flying speeds increasing the damage by 25%.
+	Tooltip: Make your spells bounce off your target at flying speeds increasing the damage by 10%.
 }
 
 FloralBlastEnchantment: {
