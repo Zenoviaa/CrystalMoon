@@ -53,6 +53,8 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 
             //Draw The Base Form
             base.DrawForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale);
+            base.DrawForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale);
+            base.DrawForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale);
 
             spriteBatch.End();
             spriteBatch.Begin();

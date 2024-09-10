@@ -29,9 +29,9 @@ namespace CrystalMoon.Content.MoonlightMagic
             }
         }
 
-        public Texture2D Form { get; private set; }
+        public Texture2D Form { get; set; }
         public BaseMovement Movement { get; set; }
-        public BaseElement PrimaryElement { get; private set; }
+        public BaseElement PrimaryElement { get; set; }
         public List<BaseEnchantment> Enchantments { get; private set; } = new List<BaseEnchantment>();
 
         public override void SetDefaults()
