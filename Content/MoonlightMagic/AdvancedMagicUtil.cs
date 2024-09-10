@@ -26,8 +26,11 @@ namespace CrystalMoon.Content.MoonlightMagic
 
         public static void NewMagicProjectile(BaseStaff item, Projectile sourceProjectile)
         {
+            Player player = Main.player[sourceProjectile.owner];
+            float speed = sourceProjectile.velocity.Length();
+            Vector2 velocity = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * speed;
             Projectile p = Projectile.NewProjectileDirect(
-                                sourceProjectile.GetSource_FromThis(), sourceProjectile.Center, sourceProjectile.velocity,
+                                sourceProjectile.GetSource_FromThis(), player.Center, velocity,
                                 ModContent.ProjectileType<AdvancedMagicProjectile>(), sourceProjectile.damage, sourceProjectile.knockBack, sourceProjectile.owner);
             //Set Moonlight Defaults
             AdvancedMagicProjectile moonlightMagicProjectile = p.ModProjectile as AdvancedMagicProjectile;
