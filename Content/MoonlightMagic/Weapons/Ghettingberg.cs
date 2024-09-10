@@ -9,8 +9,8 @@ namespace CrystalMoon.Content.MoonlightMagic.Weapons
             base.SetDefaults();
             Item.damage = 14;
             Item.shootSpeed = 10;
-            Item.useTime = 12;
-            Item.useAnimation = 12;
+            Item.useTime = 21;
+            Item.useAnimation = 21;
             Size = 10;
             TrailLength = 32;
             Form = FormRegistry.FourPointedStar.Value;
