@@ -13,7 +13,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
 
-namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Guuts
+namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Basic
 {
     internal class LampFormEnchantment : BaseEnchantment
     {
