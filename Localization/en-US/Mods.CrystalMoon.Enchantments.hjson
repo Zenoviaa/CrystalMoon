@@ -84,3 +84,8 @@ FlashpointEnchantment: {
 	DisplayName: Flashpoint Enchantment
 	Tooltip: Slowly increases projectile velocity!
 }
+
+SecondWindEnchantment: {
+	DisplayName: Second Wind Enchantment
+	Tooltip: Your spell teleports back to you after hitting an enemy! +1 Penetration
+}
