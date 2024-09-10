@@ -127,10 +127,15 @@ PhasingMoonEnchantment: {
 
 MesmerizerStatusEnchantment: {
 	DisplayName: Mesmerizer Status Enchantment
-	Tooltip:  Slowly decreases projectile velocity with a mesmerizing gaze.
+	Tooltip: Slowly decreases projectile velocity with a mesmerizing gaze.
 }
 
 SpellMistEnchantment: {
 	DisplayName: Spell Mist Enchantment
 	Tooltip: Turns your spell hallow! Your spell can go through walls!
+}
+
+PheonixSwirlEnchantment: {
+	DisplayName: Pheonix Swirl Enchantment
+	Tooltip: Swirl your projectiles in a large oval!
 }
