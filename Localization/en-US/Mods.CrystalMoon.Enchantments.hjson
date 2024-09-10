@@ -99,3 +99,8 @@ RadioSilenceEnchantment: {
 	DisplayName: Radio Silence Enchantment
 	Tooltip: Randomizes projectile speeds to create shapes!
 }
+
+SecondWindEnchantment: {
+	DisplayName: Second Wind Enchantment
+	Tooltip: ""
+}
