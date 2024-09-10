@@ -42,7 +42,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Guuts
                   //  Particle.NewParticle<SparkleHexParticle>(spawnPoint, velocity, Color.White);
                 }
 
-                Projectile.Size *= 2;
+                MagicProj.Size *= 2;
                
                 float damage = Projectile.damage;
                 damage *= 1.25f;
