@@ -139,3 +139,13 @@ PheonixSwirlEnchantment: {
 	DisplayName: Pheonix Swirl Enchantment
 	Tooltip: Swirl your projectiles in a large oval!
 }
+
+LampFormEnchantment: {
+	DisplayName: Lamp Form Enchantment
+	Tooltip: Changes the form of the spell to a lamp and +10% Spell damage!
+}
+
+TreeSplitEnchantment: {
+	DisplayName: Tree Split Enchantment
+	Tooltip: Splits your projectile in 3 doing 33% less damage!
+}
