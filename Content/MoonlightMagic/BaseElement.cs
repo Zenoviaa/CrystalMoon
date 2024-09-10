@@ -24,7 +24,16 @@ namespace CrystalMoon.Content.MoonlightMagic
 
         public virtual void AI() { }
         public virtual void DrawTrail() { }
-        public virtual void ApplyFormShader() { }
+        public virtual void DrawForm(SpriteBatch spriteBatch,
+            Texture2D formTexture, 
+            Vector2 drawPos, Color drawColor, Color lightColor, float drawRotation, float drawScale)
+        {
+            Vector2 drawOrigin = formTexture.Size() / 2;
+
+            spriteBatch.Draw(formTexture, drawPos, null, drawColor,
+               drawRotation, drawOrigin, drawScale, SpriteEffects.None, 0);
+        }
+
         public virtual void OnKill() { }
 
         public virtual Color GetElementColor() { return Color.White; }

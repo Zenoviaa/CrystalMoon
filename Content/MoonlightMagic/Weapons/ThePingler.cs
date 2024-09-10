@@ -1,4 +1,6 @@
-﻿namespace CrystalMoon.Content.MoonlightMagic.Weapons
+﻿using CrystalMoon.Content.MoonlightMagic.Forms;
+
+namespace CrystalMoon.Content.MoonlightMagic.Weapons
 {
     internal class ThePingler : BaseStaff
     {
@@ -9,7 +11,7 @@
             Item.shootSpeed = 7;
             Size = 16;
             TrailLength = 12;
-         
+            Form = FormRegistry.Circle.Value;
         }
 
         public override int GetNormalSlotCount()

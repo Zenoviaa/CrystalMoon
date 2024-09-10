@@ -15,6 +15,7 @@ namespace CrystalMoon.Content.MoonlightMagic
 
         public Vector2[] OldPos { get; private set; }
         public float Size { get; set; } = 16;
+        public float ScaleMultiplier => Size / 16f;
         public int TrailLength { get; set; }
         public float GlobalTimer
         {
@@ -40,6 +41,7 @@ namespace CrystalMoon.Content.MoonlightMagic
             Projectile.DamageType = DamageClass.Magic;
             Projectile.friendly = true;
             Projectile.timeLeft = 360;
+            Projectile.light = 0.78f;
         }
 
         public void SetMoonlightDefaults(BaseStaff item)
@@ -81,6 +83,7 @@ namespace CrystalMoon.Content.MoonlightMagic
         public override void AI()
         {
             base.AI();
+ 
             Projectile.width = (int)Size;
             Projectile.height = (int)Size;
             PrimaryElement?.AI();
@@ -141,16 +144,9 @@ namespace CrystalMoon.Content.MoonlightMagic
             PrimaryElement?.DrawTrail();
             if(Form != null)
             {
-                PrimaryElement?.ApplyFormShader();
                 SpriteBatch spriteBatch = Main.spriteBatch;
-                Vector2 drawPos = Main.screenPosition - Projectile.Center;
-                Vector2 drawOrigin = Form.Size() / 2;
-                Color color = Color.White.MultiplyRGB(lightColor);
-                spriteBatch.Draw(Form, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
-                
-                //Exit Shader Region
-                spriteBatch.End();
-                spriteBatch.Begin();
+                Color drawColor = Color.White.MultiplyRGB(lightColor);
+                PrimaryElement?.DrawForm(spriteBatch, Form, Projectile.Center - Main.screenPosition, drawColor, lightColor, Projectile.rotation, Projectile.scale);
             }
 
             return false;
