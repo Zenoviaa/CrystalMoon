@@ -54,7 +54,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Nature
 
         public override int GetElementType()
         {
-            return ModContent.ItemType<HexElement>();
+            return ModContent.ItemType<NaturalElement>();
         }
 
 
@@ -67,7 +67,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Nature
         public override void SpecialInventoryDraw(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             base.SpecialInventoryDraw(item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
-            DrawHelper.DrawGlowInInventory(item, spriteBatch, position, ColorUtil.HexPurple);
+            DrawHelper.DrawGlowInInventory(item, spriteBatch, position, ColorUtil.NaturalGreen);
         }
     }
 }

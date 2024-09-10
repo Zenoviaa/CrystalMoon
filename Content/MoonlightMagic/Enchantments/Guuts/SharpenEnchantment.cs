@@ -12,7 +12,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
 
-namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Deeya
+namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Guuts
 {
     internal class SharpenEnchantment : BaseEnchantment
     {
@@ -25,7 +25,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Deeya
 
         public override int GetElementType()
         {
-            return ModContent.ItemType<DeeyaElement>();
+            return ModContent.ItemType<GuutElement>();
         }
 
 
@@ -38,7 +38,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Deeya
         public override void SpecialInventoryDraw(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             base.SpecialInventoryDraw(item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
-            DrawHelper.DrawGlowInInventory(item, spriteBatch, position, Color.MediumPurple);
+            DrawHelper.DrawGlowInInventory(item, spriteBatch, position, Color.Gray);
         }
 
         public override void SetMagicDefaults()
