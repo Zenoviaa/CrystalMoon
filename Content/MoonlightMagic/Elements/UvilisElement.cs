@@ -41,11 +41,64 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             DrawHelper.DrawGlowInInventory(item, spriteBatch, position, ColorUtil.UvilisLightBlue);
         }
 
-
         public override void AI()
         {
             base.AI();
             AI_Particles();
+        }
+        
+        public override void OnKill()
+        {
+            base.OnKill();
+            SpawnDeathParticles();
+        }
+
+        private void SpawnDeathParticles()
+        {
+            //Kill Trail
+            for (int i = 0; i < MagicProj.OldPos.Length - 1; i++)
+            {
+                Vector2 offset = Main.rand.NextVector2Circular(16, 16);
+                Vector2 spawnPoint = MagicProj.OldPos[i] + offset + Projectile.Size / 2;
+                Vector2 velocity = MagicProj.OldPos[i + 1] - MagicProj.OldPos[i];
+                velocity = velocity.SafeNormalize(Vector2.Zero) * -2;
+
+                if (Main.rand.NextBool(2))
+                {
+                    Color color = Color.White;
+                    color.A = 0;
+                    Particle.NewBlackParticle<WaterSparkleParticle>(spawnPoint, velocity, color);
+                }
+                else
+                {
+                    Color color = ColorUtil.UvilisLightBlue;
+                    color.A = 0;
+                    Particle.NewBlackParticle<GlowParticle>(spawnPoint, velocity, color);
+                    Particle.NewBlackParticle<WaterSparkleParticle>(spawnPoint, velocity, new Color(255, 255, 255, 0));
+                }
+            }
+
+            for (float f = 0f; f < 1f; f += 0.2f)
+            {
+                float rot = f * MathHelper.TwoPi;
+                Vector2 spawnPoint = Projectile.position;
+                Vector2 velocity = rot.ToRotationVector2() * Main.rand.NextFloat(0f, 4f);
+
+                if (Main.rand.NextBool(2))
+                {
+                    Color color = ColorUtil.UvilisLightBlue;
+                    color.A = 0;
+                    Particle.NewBlackParticle<SparkleUvilisParticle>(spawnPoint, velocity, color);
+                }
+                else
+                {
+
+                    Color color = Color.White;
+                    color.A = 0;
+                    Particle.NewBlackParticle<GlowParticle>(spawnPoint, velocity * 0.2f, color);
+                    Particle.NewBlackParticle<WaterSparkleParticle>(spawnPoint, velocity, new Color(255, 255, 255, 0));
+                }
+            }
         }
 
         private void AI_Particles()
@@ -97,7 +150,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 
         private float WidthFunction(float completionRatio)
         {
-            float width = MagicProj.Size *  1.3f;
+            float width = 16 *  1.3f * MagicProj.ScaleMultiplier;
             completionRatio = Easing.SpikeOutCirc(completionRatio);
             switch (trailingMode)
             {

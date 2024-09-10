@@ -1,7 +1,9 @@
 ﻿using CrystalMoon.Registries;
 using CrystalMoon.Systems.MiscellaneousMath;
+using CrystalMoon.Systems.Particles;
 using CrystalMoon.Systems.ScreenSystems;
 using CrystalMoon.Systems.Shaders;
+using CrystalMoon.Visual.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -15,6 +17,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
         {
             return ColorUtil.PhantasmalGreen;
         }
+
         public override bool DrawTextShader(SpriteBatch spriteBatch, Item item, DrawableTooltipLine line, ref int yOffset)
         {
             base.DrawTextShader(spriteBatch, item, line, ref yOffset);
@@ -39,24 +42,62 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 
         private void AI_Particles()
         {
+            if (MagicProj.GlobalTimer % 8 == 0)
+            {
+                for (int i = 0; i < MagicProj.OldPos.Length - 1; i++)
+                {
+                    if (!Main.rand.NextBool(4))
+                        continue;
+                    Vector2 offset = Main.rand.NextVector2Circular(16, 16);
+                    Vector2 spawnPoint = MagicProj.OldPos[i] + offset + Projectile.Size / 2;
+                    Vector2 velocity = MagicProj.OldPos[i + 1] - MagicProj.OldPos[i];
+                    velocity = velocity.SafeNormalize(Vector2.Zero) * -8;
 
+
+                    Color color = Color.Lerp(Color.White, Color.Turquoise, 0.5f);
+                    color.A = 0;
+                    Particle.NewBlackParticle<GlowParticle>(spawnPoint, velocity, color, Scale: 0.33f);
+                }
+            }
         }
 
-        private Color ColorFunction(float completionRatio)
+        public override void OnKill()
         {
-            return Color.Lerp(new Color(69, 196, 182), Color.SpringGreen, completionRatio);
+            base.OnKill();
+            SpawnDeathParticles();
         }
 
-        private float WidthFunction(float completionRatio)
+        private void SpawnDeathParticles()
         {
-            float width = MagicProj.Size * 10f;
-            float p = Easing.SpikeOutCirc(completionRatio);
-            float ep = Easing.InBack(1 - completionRatio);
-            return MathHelper.Lerp(0, width, p * ep);
+            //Kill Trail
+            for (int i = 0; i < MagicProj.OldPos.Length - 1; i++)
+            {
+                Vector2 offset = Main.rand.NextVector2Circular(16, 16);
+                Vector2 spawnPoint = MagicProj.OldPos[i] + offset + Projectile.Size / 2;
+                Vector2 velocity = MagicProj.OldPos[i + 1] - MagicProj.OldPos[i];
+                velocity = velocity.SafeNormalize(Vector2.Zero) * -2;
+
+                Color color = Color.Lerp(Color.White, Color.Turquoise, 0.5f);
+                color.A = 0;
+                Particle.NewBlackParticle<GlowParticle>(spawnPoint, velocity, color, Scale: 0.5f);
+            }
+
+            for (float f = 0f; f < 1f; f += 0.2f)
+            {
+                float rot = f * MathHelper.TwoPi;
+                Vector2 spawnPoint = Projectile.position;
+                Vector2 velocity = rot.ToRotationVector2() * Main.rand.NextFloat(0f, 4f);
+
+                Color color = Color.Lerp(Color.White, Color.Turquoise, 0.5f);
+                color.A = 0;
+                Particle.NewBlackParticle<GlowParticle>(spawnPoint, velocity, color, Scale: 0.5f);
+            }
         }
 
-        private void DrawMainShader()
+        #region Visuals
+        public override void DrawTrail()
         {
+            base.DrawTrail();
             var shader = MagicPhantasmalShader.Instance;
             shader.PrimaryTexture = TextureRegistry.GlowTrail;
             shader.NoiseTexture = TextureRegistry.SpikyTrail;
@@ -68,10 +109,24 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             TrailDrawer.Draw(Main.spriteBatch, MagicProj.OldPos, Projectile.oldRot, ColorFunction, WidthFunction, shader, offset: Projectile.Size / 2);
         }
 
-        public override void DrawTrail()
+        private Color ColorFunction(float completionRatio)
         {
-            base.DrawTrail();
-            DrawMainShader();
+            return Color.Lerp(new Color(69, 196, 182), Color.SpringGreen, completionRatio);
         }
+
+        private float WidthFunction(float completionRatio)
+        {
+            float w = 120;
+            float ew = w / 10;
+            float width =w *  MagicProj.ScaleMultiplier;
+
+            float p = completionRatio / 0.5f;
+            float ep = Easing.OutCirc(p);
+            float circleWidth = MathHelper.Lerp(0, w * MagicProj.ScaleMultiplier, ep);
+            float trailWidth = MathHelper.Lerp(width, 0, Easing.OutCirc(completionRatio));
+            return MathHelper.Lerp(circleWidth, trailWidth, Easing.OutExpo(completionRatio));
+        }
+
+        #endregion
     }
 }

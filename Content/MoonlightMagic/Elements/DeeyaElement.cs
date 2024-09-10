@@ -14,11 +14,11 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
     internal class DeeyaElement : BaseElement
     {
         int trailingMode = 0;
-
         public override Color GetElementColor()
         {
             return ColorUtil.DeeyaPink;
         }
+
         public override bool DrawTextShader(SpriteBatch spriteBatch, Item item, DrawableTooltipLine line, ref int yOffset)
         {
             base.DrawTextShader(spriteBatch, item, line, ref yOffset);
@@ -61,6 +61,47 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             }
         }
 
+        public override void OnKill()
+        {
+            base.OnKill();
+            SpawnDeathParticles();
+        }
+
+        private void SpawnDeathParticles()
+        {
+            //Kill Trail
+            for (int i = 0; i < MagicProj.OldPos.Length - 1; i++)
+            {
+                Vector2 offset = Main.rand.NextVector2Circular(16, 16);
+                Vector2 spawnPoint = MagicProj.OldPos[i] + offset + Projectile.Size / 2;
+                Vector2 velocity = MagicProj.OldPos[i + 1] - MagicProj.OldPos[i];
+                velocity = velocity.SafeNormalize(Vector2.Zero) * -2;
+
+                Color color = Color.White;
+                color.A = 0;
+                Particle.NewBlackParticle<BloodSparkleParticle>(spawnPoint, velocity, color);
+            }
+
+            for (float f = 0f; f < 1f; f += 0.2f)
+            {
+                float rot = f * MathHelper.TwoPi;
+                Vector2 spawnPoint = Projectile.position;
+                Vector2 velocity = rot.ToRotationVector2() * Main.rand.NextFloat(0f, 4f);
+
+                Color color = ColorUtil.DeeyaPink;
+                color.A = 0;
+                Particle.NewBlackParticle<GlowParticle>(spawnPoint, velocity * 0.5f, color);
+            }
+        }
+
+        #region Visuals
+        public override void DrawTrail()
+        {
+            base.DrawTrail();
+            DrawMainShader();
+            DrawOutlineShader();
+        }
+
         private Color ColorFunction(float completionRatio)
         {
             Color c = Color.White;
@@ -73,7 +114,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 
         private float WidthFunction(float completionRatio)
         {
-            float width = MagicProj.Size * 2f;
+            float width = 16 * 2f * MagicProj.ScaleMultiplier;
             completionRatio = Easing.SpikeOutCirc(completionRatio);
             switch (trailingMode)
             {
@@ -91,9 +132,6 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
         {
             trailingMode = 0;
             var shader = MagicBloodletShader.Instance;
-            trailingMode = 0;
-
-
             shader.PrimaryTexture = TextureRegistry.BloodletTrail;
             shader.NoiseTexture = TextureRegistry.NoiseTextureClouds3;
             shader.PrimaryColor = Color.Black;
@@ -105,8 +143,8 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             shader.Alpha = 0.25f;
             //This just applis the shader changes
             TrailDrawer.Draw(Main.spriteBatch, MagicProj.OldPos, Projectile.oldRot, ColorFunction, WidthFunction, shader, offset: Projectile.Size / 2);
-
         }
+
         private void DrawOutlineShader()
         {
             trailingMode = 1;
@@ -127,12 +165,6 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 
             TrailDrawer.Draw(Main.spriteBatch, MagicProj.OldPos, Projectile.oldRot, ColorFunction, WidthFunction, shader, offset: Projectile.Size / 2);
         }
-
-        public override void DrawTrail()
-        {
-            base.DrawTrail();
-            DrawMainShader();
-            DrawOutlineShader();
-        }
+        #endregion
     }
 }

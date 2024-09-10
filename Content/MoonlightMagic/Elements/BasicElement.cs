@@ -1,6 +1,8 @@
 ﻿using CrystalMoon.Registries;
 using CrystalMoon.Systems.MiscellaneousMath;
+using CrystalMoon.Systems.Particles;
 using CrystalMoon.Systems.Shaders;
+using CrystalMoon.Visual.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -10,21 +12,40 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 {
     internal class BasicElement : BaseElement
     {
-        public override void AI()
+        public override void OnKill()
         {
-            AI_Particles();
+            base.OnKill();
+            SpawnDeathParticles();
         }
 
-        public override void DrawTrail()
+        private void SpawnDeathParticles()
         {
-            DrawMainShader();
+            //Kill Trail
+            for (int i = 0; i < MagicProj.OldPos.Length - 1; i++)
+            {
+                Vector2 offset = Main.rand.NextVector2Circular(16, 16);
+                Vector2 spawnPoint = MagicProj.OldPos[i] + offset + Projectile.Size / 2;
+                Vector2 velocity = MagicProj.OldPos[i + 1] - MagicProj.OldPos[i];
+                velocity = velocity.SafeNormalize(Vector2.Zero) * -2;
+
+                Color color = Color.White;
+                color.A = 0;
+                Particle.NewBlackParticle<GlowParticle>(spawnPoint, velocity, color);
+            }
+
+            for (float f = 0f; f < 1f; f += 0.2f)
+            {
+                float rot = f * MathHelper.TwoPi;
+                Vector2 spawnPoint = Projectile.position;
+                Vector2 velocity = rot.ToRotationVector2() * Main.rand.NextFloat(0f, 4f);
+
+                Color color = Color.White;
+                color.A = 0;
+                Particle.NewBlackParticle<GlowParticle>(spawnPoint, velocity, color);
+            }
         }
 
-        private void AI_Particles()
-        {
-
-        }
-
+        #region Visuals
         public override bool DrawTextShader(SpriteBatch spriteBatch, Item item, DrawableTooltipLine line, ref int yOffset)
         {
             base.DrawTextShader(spriteBatch, item, line, ref yOffset);
@@ -35,19 +56,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             return true;
         }
 
-        private Color ColorFunction(float completionRatio)
-        {
-            return Color.Lerp(Color.Gray, Color.White, completionRatio);
-        }
-
-        private float WidthFunction(float completionRatio)
-        {
-            float width = MagicProj.Size;
-            completionRatio = Easing.SpikeOutCirc(completionRatio);
-            return MathHelper.Lerp(0, width, completionRatio);
-        }
-
-        private void DrawMainShader()
+        public override void DrawTrail()
         {
             var shader = MagicNormalShader.Instance;
             shader.PrimaryTexture = TextureRegistry.GlowTrail;
@@ -59,5 +68,19 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             //This just applis the shader changes
             TrailDrawer.Draw(Main.spriteBatch, MagicProj.OldPos, Projectile.oldRot, ColorFunction, WidthFunction, shader, offset: Projectile.Size / 2);
         }
+
+        private Color ColorFunction(float completionRatio)
+        {
+            return Color.Lerp(Color.Gray, Color.White, completionRatio);
+        }
+
+        private float WidthFunction(float completionRatio)
+        {
+            float width = 16 * MagicProj.ScaleMultiplier;
+            completionRatio = Easing.SpikeOutCirc(completionRatio);
+            return MathHelper.Clamp(MathHelper.Lerp(-5, width, completionRatio),0,width);
+        }
+
+        #endregion
     }
 }

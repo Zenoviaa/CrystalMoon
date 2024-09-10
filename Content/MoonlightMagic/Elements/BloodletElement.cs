@@ -12,26 +12,6 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 {
     internal class BloodletElement : BaseElement
     {
-        int trailingMode = 0;
-
-        public override Color GetElementColor()
-        {
-            return ColorUtil.BloodletRed;
-        }
-        public override bool DrawTextShader(SpriteBatch spriteBatch, Item item, DrawableTooltipLine line, ref int yOffset)
-        {
-            base.DrawTextShader(spriteBatch, item, line, ref yOffset);
-            EnchantmentDrawHelper.DrawTextShader(spriteBatch, item, line, ref yOffset,
-                glowColor: ColorUtil.BloodletRed,
-                primaryColor: Color.White,
-                noiseColor: Color.DarkRed);
-            return true;
-        }
-        public override void SpecialInventoryDraw(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-        {
-            base.SpecialInventoryDraw(item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
-            DrawHelper.DrawGlowInInventory(item, spriteBatch, position, ColorUtil.BloodletRed);
-        }
 
         public override void AI()
         {
@@ -59,30 +39,65 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             }
         }
 
-        private Color ColorFunction(float completionRatio)
+        public override void OnKill()
         {
-            Color c = Color.Red;
-            return c;
+            base.OnKill();
+            SpawnDeathParticles();
         }
 
-        private float WidthFunction(float completionRatio)
+        private void SpawnDeathParticles()
         {
-            float width = MagicProj.Size * 1.5f;
-            switch (trailingMode)
+            //Kill Trail
+            for (int i = 0; i < MagicProj.OldPos.Length - 1; i++)
             {
-                default:
-                case 0:
-                    return MathHelper.Lerp(width, 0, completionRatio);
-                case 1:
-                    return MathHelper.Lerp(190, 0, completionRatio);
+                Vector2 offset = Main.rand.NextVector2Circular(16, 16);
+                Vector2 spawnPoint = MagicProj.OldPos[i] + offset + Projectile.Size / 2;
+                Vector2 velocity = MagicProj.OldPos[i + 1] - MagicProj.OldPos[i];
+                velocity = velocity.SafeNormalize(Vector2.Zero) * -2;
+
+                Color color = Color.White;
+                color.A = 0;
+                Particle.NewBlackParticle<BloodSparkleParticle>(spawnPoint, velocity, color);
             }
+
+            for (float f = 0f; f < 1f; f += 0.2f)
+            {
+                float rot = f * MathHelper.TwoPi;
+                Vector2 spawnPoint = Projectile.position;
+                Vector2 velocity = rot.ToRotationVector2() * Main.rand.NextFloat(0f, 4f);
+
+                Color color = Color.White;
+                color.A = 0;
+                Particle.NewBlackParticle<BloodSparkleParticle>(spawnPoint, velocity, color);
+            }
+        }
+
+        #region Visuals
+        public override Color GetElementColor()
+        {
+            return ColorUtil.BloodletRed;
+        }
+
+        public override bool DrawTextShader(SpriteBatch spriteBatch, Item item, DrawableTooltipLine line, ref int yOffset)
+        {
+            base.DrawTextShader(spriteBatch, item, line, ref yOffset);
+            EnchantmentDrawHelper.DrawTextShader(spriteBatch, item, line, ref yOffset,
+                glowColor: ColorUtil.BloodletRed,
+                primaryColor: Color.White,
+                noiseColor: Color.DarkRed);
+            return true;
+        }
+
+        public override void SpecialInventoryDraw(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+        {
+            base.SpecialInventoryDraw(item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
+            DrawHelper.DrawGlowInInventory(item, spriteBatch, position, ColorUtil.BloodletRed);
         }
 
         public override void DrawTrail()
         {
             base.DrawTrail();
             var shader = MagicBloodletShader.Instance;
-            trailingMode = 0;
             shader.PrimaryTexture = TextureRegistry.BloodletTrail;
             shader.NoiseTexture = TextureRegistry.NoiseTextureClouds3;
             shader.PrimaryColor = new Color(255, 51, 51);
@@ -96,5 +111,18 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             //This just applis the shader changes
             TrailDrawer.Draw(Main.spriteBatch, MagicProj.OldPos, Projectile.oldRot, ColorFunction, WidthFunction, shader, offset: Projectile.Size / 2);
         }
+
+        private Color ColorFunction(float completionRatio)
+        {
+            Color c = Color.Red;
+            return c;
+        }
+
+        private float WidthFunction(float completionRatio)
+        {
+            float width = 16 * 1.5f * MagicProj.ScaleMultiplier;
+            return MathHelper.Lerp(width, 0, completionRatio);
+        }
+        #endregion
     }
 }

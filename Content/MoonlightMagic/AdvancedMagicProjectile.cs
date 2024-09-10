@@ -28,7 +28,7 @@ namespace CrystalMoon.Content.MoonlightMagic
                 Projectile.ai[0] = value;
             }
         }
-
+        public bool IsClone { get; set; }
         public Texture2D Form { get; set; }
         public BaseMovement Movement { get; set; }
         public BaseElement PrimaryElement { get; set; }
@@ -42,6 +42,41 @@ namespace CrystalMoon.Content.MoonlightMagic
             Projectile.friendly = true;
             Projectile.timeLeft = 360;
             Projectile.light = 0.78f;
+        }
+        public void SetMoonlightDefaults(AdvancedMagicProjectile item)
+        {
+            Projectile.width = Projectile.height = (int)item.Size;
+            if (item.PrimaryElement == null || item.PrimaryElement is not BaseElement || item.PrimaryElement.Item.IsAir)
+                PrimaryElement = new BasicElement();
+            else
+                PrimaryElement = (item.PrimaryElement as BaseElement).Instantiate();
+            Movement = item.Movement;
+            Form = item.Form;
+            Enchantments.Clear();
+
+            var enchantments = item.Enchantments;
+            for (int i = 0; i < enchantments.Count; i++)
+            {
+                var enchantmentTemplate = enchantments[i];
+                if (enchantmentTemplate == null)
+                    continue;
+
+                var modItem = enchantments[i];
+                if (modItem is BaseEnchantment enchantment)
+                {
+                    var instance = (ModContent.GetModItem(enchantment.Type) as BaseEnchantment).Instantiate();
+                    instance.MagicProj = this;
+                    instance.SetMagicDefaults();
+                    Enchantments.Add(instance);
+                }
+            }
+
+
+            if (PrimaryElement != null)
+                PrimaryElement.MagicProj = this;
+            if (Movement != null)
+                Movement.MagicProj = this;
+            OldPos = new Vector2[TrailLength];
         }
 
         public void SetMoonlightDefaults(BaseStaff item)
@@ -150,7 +185,8 @@ namespace CrystalMoon.Content.MoonlightMagic
             {
                 SpriteBatch spriteBatch = Main.spriteBatch;
                 Color drawColor = Color.White.MultiplyRGB(lightColor);
-                PrimaryElement?.DrawForm(spriteBatch, Form, Projectile.Center - Main.screenPosition, drawColor, lightColor, Projectile.rotation, Projectile.scale);
+                PrimaryElement?.DrawForm(spriteBatch, Form, Projectile.Center - Main.screenPosition, 
+                    drawColor, lightColor, Projectile.velocity.ToRotation(), Projectile.scale);
             }
 
             return false;

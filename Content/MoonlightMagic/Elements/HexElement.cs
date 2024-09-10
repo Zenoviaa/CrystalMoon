@@ -16,6 +16,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
         {
             return ColorUtil.HexPurple;
         }
+
         public override bool DrawTextShader(SpriteBatch spriteBatch, Item item, DrawableTooltipLine line, ref int yOffset)
         {
             base.DrawTextShader(spriteBatch, item, line, ref yOffset);
@@ -25,6 +26,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
                 noiseColor: Color.DarkBlue);
             return true;
         }
+
         public override void SpecialInventoryDraw(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             base.SpecialInventoryDraw(item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
@@ -54,18 +56,42 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             }
         }
 
-        private Color ColorFunction(float completionRatio)
+        public override void OnKill()
         {
-            Color c = Color.Lerp(Color.White, Color.Transparent, completionRatio);
-            return c;
+            base.OnKill();
+            SpawnDeathParticles();
         }
 
-        private float WidthFunction(float completionRatio)
+        private void SpawnDeathParticles()
         {
-            float width = MagicProj.Size * 2;
-            return MathHelper.Lerp(width, 8, completionRatio);
+            //Kill Trail
+            for (int i = 0; i < MagicProj.OldPos.Length - 1; i++)
+            {
+                Vector2 offset = Main.rand.NextVector2Circular(16, 16);
+                Vector2 spawnPoint = MagicProj.OldPos[i] + offset + Projectile.Size / 2;
+                Vector2 velocity = MagicProj.OldPos[i + 1] - MagicProj.OldPos[i];
+                velocity = velocity.SafeNormalize(Vector2.Zero) * -2;
+
+                Color color = Color.White;
+                color.A = 0;
+                Particle.NewParticle<SparkleHexParticle>(spawnPoint, velocity, color);
+            }
+
+            for (float f = 0f; f < 1f; f += 0.2f)
+            {
+                float rot = f * MathHelper.TwoPi;
+                Vector2 spawnPoint = Projectile.position;
+                Vector2 velocity = rot.ToRotationVector2() * Main.rand.NextFloat(0f, 4f);
+
+                Color color = Color.White;
+                color.A = 0;
+                if(Main.rand.NextBool(2))
+                    Particle.NewParticle<SparkleHexParticle>(spawnPoint, velocity.RotatedByRandom(MathHelper.TwoPi), color);
+                Particle.NewBlackParticle<GlowParticle>(spawnPoint, velocity, color);
+            }
         }
 
+        #region Visuals
         public override void DrawTrail()
         {
             base.DrawTrail();
@@ -84,5 +110,17 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             //This just applis the shader changes
             TrailDrawer.Draw(Main.spriteBatch, MagicProj.OldPos, Projectile.oldRot, ColorFunction, WidthFunction, shader, offset: Projectile.Size / 2);
         }
+        private Color ColorFunction(float completionRatio)
+        {
+            Color c = Color.Lerp(Color.White, Color.Transparent, completionRatio);
+            return c;
+        }
+
+        private float WidthFunction(float completionRatio)
+        {
+            float width = 16 * 2 * MagicProj.ScaleMultiplier;
+            return MathHelper.Lerp(width, 8, completionRatio);
+        }
+        #endregion
     }
 }

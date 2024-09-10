@@ -101,7 +101,11 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
         public override void OnKill()
         {
             base.OnKill();
+            SpawnDeathParticles();
+        }
 
+        private void SpawnDeathParticles()
+        {
             //Kill Trail
             for (int i = 0; i < MagicProj.OldPos.Length - 1; i++)
             {
@@ -125,12 +129,12 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
                 }
             }
 
-            for(float f = 0f; f < 1f; f += 0.2f)
+            for (float f = 0f; f < 1f; f += 0.2f)
             {
                 float rot = f * MathHelper.TwoPi;
                 Vector2 spawnPoint = Projectile.position;
                 Vector2 velocity = rot.ToRotationVector2() * Main.rand.NextFloat(0f, 4f);
-                
+
                 if (Main.rand.NextBool(2))
                 {
                     Color color = Color.RosyBrown;
@@ -139,7 +143,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
                 }
                 else
                 {
-                   
+
                     Color color = ColorUtil.RadianceYellow;
                     if (Main.rand.NextBool(2))
                         color = Color.OrangeRed;
@@ -177,7 +181,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             float spikeProgress = Easing.SpikeOutExpo(completionRatio);
             float fireball = MathHelper.Lerp(rounded, spikeProgress, Easing.OutExpo(1.0f - completionRatio));
 
-            float midWidth = MagicProj.Size;
+            float midWidth = 16 * MagicProj.ScaleMultiplier;
             switch (trailMode)
             {
                 default:

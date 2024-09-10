@@ -17,6 +17,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
         {
             return ColorUtil.NaturalGreen;
         }
+
         public override bool DrawTextShader(SpriteBatch spriteBatch, Item item, DrawableTooltipLine line, ref int yOffset)
         {
             base.DrawTextShader(spriteBatch, item, line, ref yOffset);
@@ -26,6 +27,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
                 noiseColor: Color.DarkGreen);
             return true;
         }
+
         public override void SpecialInventoryDraw(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             base.SpecialInventoryDraw(item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
@@ -78,21 +80,75 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
                 }
             }
         }
-
-        private Color ColorFunction(float completionRatio)
+        public override void OnKill()
         {
-            return Color.White; ;
+            base.OnKill();
+            SpawnDeathParticles();
         }
 
-        private float WidthFunction(float completionRatio)
+        private void SpawnDeathParticles()
         {
-            int width = (int)(MagicProj.Size * 2.5f);
-            completionRatio = Easing.SpikeOutCirc(completionRatio);
-            return MathHelper.Lerp(0, width, completionRatio);
+            //Kill Trail
+            for (int i = 0; i < MagicProj.OldPos.Length - 1; i++)
+            {
+                Vector2 offset = Main.rand.NextVector2Circular(16, 16);
+                Vector2 spawnPoint = MagicProj.OldPos[i] + offset + Projectile.Size / 2;
+                Vector2 velocity = MagicProj.OldPos[i + 1] - MagicProj.OldPos[i];
+                velocity = velocity.SafeNormalize(Vector2.Zero) * -2;
+
+                Color color = Color.White;
+                color.A = 0;
+                if (Main.rand.NextBool(1))
+                {
+                    switch (Main.rand.Next(3))
+                    {
+                        case 0:
+                            Particle.NewBlackParticle<WhiteFlowerParticle>(spawnPoint, velocity, Color.White);
+                            break;
+                        case 1:
+                            Particle.NewBlackParticle<PurpleFlowerParticle>(spawnPoint, velocity, Color.White);
+                            break;
+                        case 2:
+                            Particle.NewBlackParticle<BlueFlowerParticle>(spawnPoint, velocity, Color.White);
+                            break;
+                    }
+
+                }
+            }
+
+            for (float f = 0f; f < 1f; f += 0.2f)
+            {
+                float rot = f * MathHelper.TwoPi;
+                Vector2 spawnPoint = Projectile.position;
+                Vector2 velocity = rot.ToRotationVector2() * Main.rand.NextFloat(0f, 4f);
+
+                Color color = Color.White;
+                color.A = 0;
+                if (Main.rand.NextBool(2))
+                {
+                    switch (Main.rand.Next(3))
+                    {
+                        case 0:
+                            Particle.NewBlackParticle<WhiteFlowerParticle>(spawnPoint, velocity, Color.White);
+                            break;
+                        case 1:
+                            Particle.NewBlackParticle<PurpleFlowerParticle>(spawnPoint, velocity, Color.White);
+                            break;
+                        case 2:
+                            Particle.NewBlackParticle<BlueFlowerParticle>(spawnPoint, velocity, Color.White);
+                            break;
+                    }
+
+                }
+                Particle.NewBlackParticle<MusicParticle>(spawnPoint, velocity, color);
+            }
         }
 
-        private void DrawMainShader()
+        #region Visuals
+
+        public override void DrawTrail()
         {
+            base.DrawTrail();
             //Trail
             var shader = MagicNaturalShader.Instance;
             shader.PrimaryTexture = TextureRegistry.NoiseTextureLeaves;
@@ -110,10 +166,17 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             TrailDrawer.Draw(Main.spriteBatch, MagicProj.OldPos, Projectile.oldRot, ColorFunction, WidthFunction, shader, offset: Projectile.Size / 2);
         }
 
-        public override void DrawTrail()
+        private Color ColorFunction(float completionRatio)
         {
-            base.DrawTrail();
-            DrawMainShader();
+            return Color.White; ;
         }
+
+        private float WidthFunction(float completionRatio)
+        {
+            int width = (int)(16 * 2.5f * MagicProj.ScaleMultiplier);
+            completionRatio = Easing.SpikeOutCirc(completionRatio);
+            return MathHelper.Lerp(0, width, completionRatio);
+        }
+        #endregion
     }
 }

@@ -38,5 +38,21 @@ namespace CrystalMoon.Content.MoonlightMagic
             moonlightMagicProjectile.Size = item.Size;
             moonlightMagicProjectile.SetMoonlightDefaults(item);
         }
+
+
+        public static void CloneMagicProjectile(AdvancedMagicProjectile sourceProjectile,
+            Vector2 position, Vector2 velocity, int damage, float knockback, int trailLength, float size)
+        {
+            Projectile p = Projectile.NewProjectileDirect(
+                                sourceProjectile.Projectile.GetSource_FromThis(), position, velocity,
+                                ModContent.ProjectileType<AdvancedMagicProjectile>(), damage, knockback, sourceProjectile.Projectile.owner);
+         
+            //Set Moonlight Defaults
+            AdvancedMagicProjectile moonlightMagicProjectile = p.ModProjectile as AdvancedMagicProjectile;
+            moonlightMagicProjectile.TrailLength = trailLength;
+            moonlightMagicProjectile.Size = size;
+            moonlightMagicProjectile.IsClone = true;
+            moonlightMagicProjectile.SetMoonlightDefaults(sourceProjectile);
+        }
     }
 }

@@ -97,13 +97,14 @@ namespace CrystalMoon.Systems.Particles
             T p = ParticleLoader.GetParticle(CrystalMoonUtils.ParticleType<T>()).NewInstance() as T;
 
             //设置各种初始值
+    
             p.active = true;
             p.color = newColor;
             p.Center = center;
             p.Velocity = velocity;
             p.Scale = Scale;
             p.OnSpawn();
-
+            p.Scale *= Scale;
             ParticleSystem.BlackParticles.Add(p);
 
             return p;
