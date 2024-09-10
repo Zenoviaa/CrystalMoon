@@ -62,7 +62,7 @@ SizerEnchantment: {
 
 SharpenEnchantment: {
 	DisplayName: Sharpen Enchantment
-	Tooltip: Make your spells boune off your target at flying speeds increasing the damage by 25%.
+	Tooltip: Make your spells bounce off your target at flying speeds increasing the damage by 10%. +1 Penetration
 }
 
 FloralBlastEnchantment: {
@@ -77,5 +77,10 @@ FlowerfallEnchantment: {
 
 WorldToucherEnchantment: {
 	DisplayName: World Toucher Enchantment
-	Tooltip: ""
+	Tooltip: Hitting a tile causes the spell to get stronger by 5%! +1 Penetration
+}
+
+FlashpointEnchantment: {
+	DisplayName: Flashpoint Enchantment
+	Tooltip: Slowly increases projectile velocity!
 }
