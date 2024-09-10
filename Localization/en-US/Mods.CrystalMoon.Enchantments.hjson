@@ -114,3 +114,23 @@ ReverseMoonEnchantment: {
 	DisplayName: Reverse Moon Enchantment
 	Tooltip: Misplaces your spell after hitting an enemy!
 }
+
+BloodThinningEnchantment: {
+	DisplayName: Blood Thinning Enchantment
+	Tooltip: Shrinks your spell making it do 25% more damage!
+}
+
+PhasingMoonEnchantment: {
+	DisplayName: Phasing Moon Enchantment
+	Tooltip: Allows your spell to interact with tiles without destroying itself.
+}
+
+MesmerizerStatusEnchantment: {
+	DisplayName: Mesmerizer Status Enchantment
+	Tooltip:  Slowly decreases projectile velocity with a mesmerizing gaze.
+}
+
+SpellMistEnchantment: {
+	DisplayName: Spell Mist Enchantment
+	Tooltip: Turns your spell hallow! Your spell can go through walls!
+}

@@ -36,7 +36,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
         public override void SpecialInventoryDraw(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             base.SpecialInventoryDraw(item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
-            DrawHelper.DrawGlowInInventory(item, spriteBatch, position, Color.Red);
+            DrawHelper.DrawGlowInInventory(item, spriteBatch, position, Color.LightPink);
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
