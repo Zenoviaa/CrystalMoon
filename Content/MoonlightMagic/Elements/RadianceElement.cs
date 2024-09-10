@@ -50,7 +50,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             shader.PrimaryColor = Color.Lerp(Color.White, new Color(255, 207, 79), 0.5f);
             shader.NoiseColor = new Color(206, 101, 0);
             shader.Distortion = 0.5f;
-            shader.Speed = 5.5f;
+            shader.Speed = 15.5f;
             shader.Power = 0.1f;
             shader.Apply();
 
@@ -58,10 +58,33 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, default, default, default, shader.Effect, Main.GameViewMatrix.ZoomMatrix);
 
             //Draw The Base Form
-            base.DrawForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale);
-            base.DrawForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale);
-            base.DrawForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale);
+            base.DrawForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale * 0.5f);
+            base.DrawForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale * 0.5f);
 
+            shader.PrimaryColor = new Color(206, 101, 0);
+            shader.NoiseColor = Color.Red;
+            shader.OutlineColor = Color.Black;
+            shader.Speed = 12.2f;
+            shader.Distortion = 0.3f;
+            shader.Power = 1.5f;
+            shader.Apply();
+
+            base.DrawForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale * 0.75f);
+
+            shader.PrimaryTexture = TextureRegistry.DottedTrailOutline;
+            shader.NoiseTexture = TextureRegistry.NoiseTextureCloudsSmall;
+
+            Color c = Color.DarkRed;
+            shader.PrimaryColor = c * 0.1f;
+            shader.NoiseColor = Color.DarkRed * 0.1f;
+            shader.BlendState = BlendState.AlphaBlend;
+            shader.SamplerState = SamplerState.PointWrap;
+            shader.Speed = 15.2f;
+            shader.Distortion = 0.15f;
+            shader.Power = 0.05f;
+            shader.Apply();
+
+            base.DrawForm(spriteBatch, formTexture, drawPos, drawColor * 0.1f, lightColor, drawRotation, drawScale * 1.2f);
             spriteBatch.End();
             spriteBatch.Begin();
         }

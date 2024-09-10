@@ -160,10 +160,12 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
                 base.DrawForm(spriteBatch, formTexture, outlineDrawPos, outlineDrawColor, lightColor, drawRotation, drawScale);
             }
 
- 
+            p = MathUtil.Osc(0f, 1f, speed: 2, offset: 3);
             drawColor = Color.Lerp(ColorUtil.NaturalGreen, Color.RosyBrown, p);
             drawScale *= MathUtil.Osc(0.8f, 1f);
+            base.DrawForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale);
 
+            /*
             var shader = PixelMagicSparkleWaterShader.Instance;
             shader.NoiseTexture = TextureRegistry.NoiseTextureCloudsSmall;
             shader.OutlineTexture = TextureRegistry.NoiseTextureCloudsSmall;
@@ -185,7 +187,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             base.DrawForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale);
         
             spriteBatch.End();
-            spriteBatch.Begin();
+            spriteBatch.Begin();*/
         }
 
         public override void DrawTrail()
