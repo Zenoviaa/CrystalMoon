@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CrystalMoon.Content.MoonlightMagic.Forms;
 
 namespace CrystalMoon.Content.MoonlightMagic.Weapons
 {
@@ -11,7 +7,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Weapons
         public override void SetDefaults()
         {
             base.SetDefaults();
-            
+            Form = FormRegistry.FourPointedStar.Value;
         }
     }
 }

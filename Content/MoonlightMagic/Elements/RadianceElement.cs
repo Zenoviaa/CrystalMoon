@@ -6,7 +6,7 @@ using CrystalMoon.Systems.Shaders;
 using CrystalMoon.Visual.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
+using System;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
@@ -36,6 +36,26 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
         {
             base.SpecialInventoryDraw(item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
             DrawHelper.DrawGlowInInventory(item, spriteBatch, position, ColorUtil.RadianceYellow);
+        }
+
+        public override void DrawForm(SpriteBatch spriteBatch, Texture2D formTexture, Vector2 drawPos, Color drawColor, Color lightColor, float drawRotation, float drawScale)
+        {
+            var shader = FirePixelShader.Instance;
+            shader.PrimaryColor = Color.Lerp(Color.White, new Color(255, 207, 79), 0.5f);
+            shader.NoiseColor = new Color(206, 101, 0);
+            shader.Distortion = 0.5f;
+            shader.Speed = 5.5f;
+            shader.Power = 0.1f;
+            shader.Apply();
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, default, default, default, shader.Effect, Main.GameViewMatrix.ZoomMatrix);
+
+            //Draw The Base Form
+            base.DrawForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale);
+
+            spriteBatch.End();
+            spriteBatch.Begin();
         }
 
         public override void AI()
@@ -168,6 +188,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             }
         }
 
+   
         private void DrawMainShader()
         {
             //Trail

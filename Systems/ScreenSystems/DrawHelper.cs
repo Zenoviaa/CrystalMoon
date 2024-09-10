@@ -12,7 +12,18 @@ namespace CrystalMoon.Systems.ScreenSystems
 {
     public static class DrawHelper
     {
-       
+        public static void RestartSpriteBatch(this SpriteBatch spriteBatch)
+        {
+            spriteBatch.End();
+            spriteBatch.Begin();
+        }
+
+        public static void RestartSpriteBatchInUI(this SpriteBatch spriteBatch)
+        {
+            spriteBatch.End();
+            spriteBatch.Begin(default, BlendState.AlphaBlend, default, default, default, default, Main.UIScaleMatrix);
+        }
+
         /// <summary>
         /// Oscillates between two colors
         /// </summary>

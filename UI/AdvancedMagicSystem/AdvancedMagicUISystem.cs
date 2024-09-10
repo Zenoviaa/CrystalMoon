@@ -22,6 +22,7 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
         public static BaseStaff Staff { get; private set; }
         private GameTime _lastUpdateUiGameTime;
 
+        
         public override void OnModLoad()
         {
             base.OnModLoad();
