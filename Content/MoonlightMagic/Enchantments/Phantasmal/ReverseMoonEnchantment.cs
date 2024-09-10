@@ -16,23 +16,10 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Phantasmal
 {
     internal class ReverseMoonEnchantment: BaseEnchantment
     {
-        private bool _init;
-        private float _traveledDistance;
-        private Vector2 _oldPos;
+   
         public override void AI()
         {
             base.AI();
-            if (!_init)
-            {
-                _oldPos = Projectile.position;
-                _init = true;
-            }
-            if(_oldPos != Projectile.position)
-            {
-                _traveledDistance += Vector2.Distance(_oldPos, Projectile.position);
-                _oldPos = Projectile.position;
-            }
-        
         }
         public override void SetMagicDefaults()
         {
@@ -58,7 +45,9 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Phantasmal
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             base.OnHitNPC(target, hit, damageDone);
-            Projectile.Center += Projectile.velocity.SafeNormalize(Vector2.Zero) * _traveledDistance;
+            Player player = Main.player[Projectile.owner];
+            Vector2 diff = (player.Center - Projectile.Center);
+            Projectile.Center += -diff;
             Projectile.velocity = -Projectile.velocity;
         }
     }
