@@ -13,10 +13,11 @@ using CrystalMoon.Registries;
 using CrystalMoon.Content.MoonlightMagic.Movements;
 using CrystalMoon.Systems.Particles;
 using CrystalMoon.Visual.Particles;
+using System.Threading;
 
-namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Phantasmal
+namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Bloodlet
 {
-    internal class MoonFinderEnchantment : BaseEnchantment
+    internal class BloodThinningEnchantment : BaseEnchantment
     {
         private int _timer;
         public override void SetDefaults()
@@ -24,7 +25,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Phantasmal
             base.SetDefaults();
             time = 30;
         }
-
+    
         public override void AI()
         {
             base.AI();
@@ -39,34 +40,43 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Phantasmal
                 {
                     Vector2 spawnPoint = Projectile.Center + Main.rand.NextVector2Circular(8, 8);
                     Vector2 velocity = Main.rand.NextVector2Circular(8, 8);
-                    Particle.NewParticle<SparkleHexParticle>(spawnPoint, velocity, Color.White);
+                    Particle.NewParticle<BloodSparkleParticle>(spawnPoint, velocity, Color.White);
                 }
 
-                MagicProj.Movement = new OutwardMovement();
+                
+               
+                float damage = Projectile.damage;
+                damage *= 1.25f;
+                Projectile.damage = (int)damage;
+            }
+
+            if (_timer < time)
+            {
+                MagicProj.Size *= 0.98f;
             }
         }
 
         public override float GetStaffManaModifier()
         {
-            return 0.2f;
+            return 1f;
         }
 
         public override int GetElementType()
         {
-            return ModContent.ItemType<PhantasmalElement>();
+            return ModContent.ItemType<BloodletElement>();
         }
 
 
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
-           // Projectile.velocity += (Projectile.velocity.SafeNormalize(Vector2.Zero) * 4).RotatedBy(MathHelper.ToRadians(15 * MathF.Sin(_timer)));
+
             return true;
         }
 
         public override void SpecialInventoryDraw(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             base.SpecialInventoryDraw(item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
-            DrawHelper.DrawGlowInInventory(item, spriteBatch, position, ColorUtil.PhantasmalGreen);
+            DrawHelper.DrawGlowInInventory(item, spriteBatch, position, ColorUtil.BloodletRed);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CrystalMoon.Content.MoonlightMagic.Elements;
+using CrystalMoon.Registries;
 using CrystalMoon.Systems.ScreenSystems;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -9,42 +10,25 @@ using System.Threading.Tasks;
 using Terraria.ModLoader;
 using Terraria;
 using Microsoft.Xna.Framework;
-using CrystalMoon.Registries;
 using CrystalMoon.Content.MoonlightMagic.Movements;
 using CrystalMoon.Systems.Particles;
 using CrystalMoon.Visual.Particles;
 
-namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Phantasmal
+namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
 {
-    internal class MoonFinderEnchantment : BaseEnchantment
+    internal class SpellMistEnchantment : BaseEnchantment
     {
-        private int _timer;
-        public override void SetDefaults()
-        {
-            base.SetDefaults();
-            time = 30;
-        }
+        private float _timer;
+
 
         public override void AI()
         {
             base.AI();
 
             //Count up
-            _timer++;
-
-            //If greater than time then start homing, we'll just swap the movement type of the projectile
-            if (_timer == time)
-            {
-                for (int i = 0; i < 4; i++)
-                {
-                    Vector2 spawnPoint = Projectile.Center + Main.rand.NextVector2Circular(8, 8);
-                    Vector2 velocity = Main.rand.NextVector2Circular(8, 8);
-                    Particle.NewParticle<SparkleHexParticle>(spawnPoint, velocity, Color.White);
-                }
-
-                MagicProj.Movement = new OutwardMovement();
-            }
+            Projectile.tileCollide = false;
         }
+
 
         public override float GetStaffManaModifier()
         {
@@ -53,20 +37,20 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Phantasmal
 
         public override int GetElementType()
         {
-            return ModContent.ItemType<PhantasmalElement>();
+            return ModContent.ItemType<HexElement>();
         }
 
 
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
-           // Projectile.velocity += (Projectile.velocity.SafeNormalize(Vector2.Zero) * 4).RotatedBy(MathHelper.ToRadians(15 * MathF.Sin(_timer)));
+
             return true;
         }
 
         public override void SpecialInventoryDraw(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             base.SpecialInventoryDraw(item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
-            DrawHelper.DrawGlowInInventory(item, spriteBatch, position, ColorUtil.PhantasmalGreen);
+            DrawHelper.DrawGlowInInventory(item, spriteBatch, position, Color.LightPink);
         }
     }
 }
