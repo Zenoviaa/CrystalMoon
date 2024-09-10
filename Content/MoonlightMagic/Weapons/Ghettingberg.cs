@@ -1,0 +1,30 @@
+﻿using CrystalMoon.Content.MoonlightMagic.Forms;
+
+namespace CrystalMoon.Content.MoonlightMagic.Weapons
+{
+    internal class Ghettingberg : BaseStaff
+    {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.damage = 14;
+            Item.shootSpeed = 10;
+            Item.useTime = 12;
+            Item.useAnimation = 12;
+            Size = 10;
+            TrailLength = 32;
+            Form = FormRegistry.FourPointedStar.Value;
+        }
+
+
+        public override int GetNormalSlotCount()
+        {
+            return 1;
+        }
+
+        public override int GetTimedSlotCount()
+        {
+            return 3;
+        }
+    }
+}
