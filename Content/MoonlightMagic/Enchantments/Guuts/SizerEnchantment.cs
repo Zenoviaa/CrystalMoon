@@ -13,6 +13,7 @@ using CrystalMoon.Registries;
 using CrystalMoon.Content.MoonlightMagic.Movements;
 using CrystalMoon.Systems.Particles;
 using CrystalMoon.Visual.Particles;
+using System.Threading;
 
 namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Guuts
 {
@@ -42,11 +43,16 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Guuts
                   //  Particle.NewParticle<SparkleHexParticle>(spawnPoint, velocity, Color.White);
                 }
 
-                MagicProj.Size *= 2;
+                
                
                 float damage = Projectile.damage;
                 damage *= 1.25f;
                 Projectile.damage = (int)damage;
+            }
+
+            if (_timer < time)
+            {
+                MagicProj.Size *= 1.02f;
             }
         }
 
