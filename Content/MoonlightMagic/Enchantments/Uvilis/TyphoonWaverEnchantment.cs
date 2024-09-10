@@ -20,22 +20,26 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Uvilis
     internal class TyphoonWaverEnchantment : BaseEnchantment
     {
         private float _timer;
-
+        private Vector2 _velocity;
         public override void AI()
         {
             base.AI();
 
             //Count up
             _timer++ ;
-            float oscSpeed = 0.05f;
-            float xAmp = 0.5f;
-            float yAmp = 0.5f;
-            Projectile.velocity += new Vector2(
-                MathF.Sin(_timer * oscSpeed) * xAmp,
-                MathF.Cos(_timer * oscSpeed) * yAmp);
-            //If greater than time then start homing, we'll just swap the movement type of the projectile
+            if(_timer == 1)
+            {
+                _velocity = Projectile.velocity;
+            }
+
+            Vector2 newVelocity = Projectile.velocity.RotatedBy(MathHelper.ToRadians(25));
+            Projectile.velocity = newVelocity;
+            Projectile.Center += _velocity * 0.3f;
+
+            // Projectile.a greater than time then start homing, we'll just swap the movement type of the projectile
 
         }
+
 
         public override float GetStaffManaModifier()
         {
