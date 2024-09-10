@@ -86,7 +86,7 @@ namespace CrystalMoon.Content.MoonlightMagic
         public virtual void AI() { }
         public virtual void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) { }
         public virtual void OnKill(int timeLeft) { }
-        public virtual void OnTileCollide(Vector2 oldVelocity) { }
+        public virtual bool OnTileCollide(Vector2 oldVelocity) { return true; }
     }
     
 }

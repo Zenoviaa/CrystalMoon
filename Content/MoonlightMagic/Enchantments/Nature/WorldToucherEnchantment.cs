@@ -47,15 +47,13 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Nature
             Projectile.penetrate += 1;
         }
 
-        public override void OnTileCollide(Vector2 oldVelocity)
+        public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            base.OnTileCollide(oldVelocity);
           
             Projectile.penetrate--;
             if (Projectile.penetrate <= 0)
             {
-                Projectile.Kill();
-                
+                return true;
             }
             else
             {
@@ -67,7 +65,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Nature
             }
             HitOnce = true;
             Attagain = 0;
-
+            return false;
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

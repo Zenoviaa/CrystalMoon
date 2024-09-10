@@ -39,12 +39,12 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Nature
             DrawHelper.DrawGlowInInventory(item, spriteBatch, position, ColorUtil.NaturalGreen);
         }
 
-        public override void OnTileCollide(Vector2 oldVelocity)
+        public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            base.OnTileCollide(oldVelocity);
             //Spawn the explosion
             Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<FloralBlastEnchantmentExplosion>(),
               Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
+            return true;
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

@@ -36,9 +36,8 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Bloodlet
             }
         }
 
-        public override void OnTileCollide(Vector2 oldVelocity)
+        public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            base.OnTileCollide(oldVelocity);
             Player player = Main.player[Projectile.owner];
             player.statLife -= 25;
             for (int i = 0; i < 12; i++)
@@ -51,6 +50,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Bloodlet
                 Particle.NewBlackParticle<BloodSparkleParticle>(spawnPoint, velocity, color);
             }
             CombatText.NewText(player.getRect(), Color.Red, "-25", true);
+            return true;
         }
 
         public override float GetStaffManaModifier()

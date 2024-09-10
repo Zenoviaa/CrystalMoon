@@ -131,12 +131,16 @@ namespace CrystalMoon.Content.MoonlightMagic
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
+            bool shouldKill = true;
             for (int i = 0; i < Enchantments.Count; i++)
             {
                 var enchantment = Enchantments[i];
-                enchantment.OnTileCollide(oldVelocity);
+                bool allowKill = enchantment.OnTileCollide(oldVelocity);
+                if (!allowKill) {
+                    shouldKill = false;
+                }
             }
-            return base.OnTileCollide(oldVelocity);
+            return shouldKill;
         }
 
         public override bool PreDraw(ref Color lightColor)
