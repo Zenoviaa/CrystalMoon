@@ -13,17 +13,28 @@ namespace CrystalMoon.Registries
         public static MiscShaderData SimpleTrailEffect => GameShaders.Misc["CrystalMoon:SimpleTrail"];
         public static MiscShaderData SimpleGradientTrailEffect => GameShaders.Misc["CrystalMoon:SimpleGradientTrail"];
       
-        public static MiscShaderData MagicHexEffect => GameShaders.Misc["CrystalMoon:MagicHex"];
-        public static MiscShaderData MagicRadianceEffect => GameShaders.Misc["CrystalMoon:MagicRadiance"];
-        public static MiscShaderData MagicRadianceOutlineEffect => GameShaders.Misc["CrystalMoon:MagicRadianceOutline"];
-        public static MiscShaderData MagicBloodletEffect => GameShaders.Misc["CrystalMoon:MagicBloodlet"];
-        public static MiscShaderData MagicSparkleWaterEffect => GameShaders.Misc["CrystalMoon:MagicSparkleWater"];
-        public static MiscShaderData MagicDeeyaEffect => GameShaders.Misc["CrystalMoon:MagicDeeya"];
-        public static MiscShaderData MagicPhantasmalEffect => GameShaders.Misc["CrystalMoon:MagicPhantasmal"];
-        public static MiscShaderData MagicGuutEffect => GameShaders.Misc["CrystalMoon:MagicGuut"];
-        public static MiscShaderData MagicNaturalEffect => GameShaders.Misc["CrystalMoon:MagicNatural"];
-        public static MiscShaderData MagicNormalEffect => GameShaders.Misc["CrystalMoon:MagicNormal"];
-        public static MiscShaderData FirePixelEffect => GameShaders.Misc["CrystalMoon:FirePixel"];
+        //Trail Shaders
+        public static MiscShaderData MagicTrailHex => GameShaders.Misc["CrystalMoon:MagicHex"];
+        public static MiscShaderData MagicTrailRadiance => GameShaders.Misc["CrystalMoon:MagicRadiance"];
+        public static MiscShaderData MagicTrailRadianceOutline => GameShaders.Misc["CrystalMoon:MagicRadianceOutline"];
+        public static MiscShaderData MagicTrailBloodlet => GameShaders.Misc["CrystalMoon:MagicBloodlet"];
+        public static MiscShaderData MagicTrailWater => GameShaders.Misc["CrystalMoon:MagicSparkleWater"];
+        public static MiscShaderData MagicTrailDeeya => GameShaders.Misc["CrystalMoon:MagicDeeya"];
+        public static MiscShaderData MagicTrailPhantasmal => GameShaders.Misc["CrystalMoon:MagicPhantasmal"];
+        public static MiscShaderData MagicTrailGuut => GameShaders.Misc["CrystalMoon:MagicGuut"];
+        public static MiscShaderData MagicTrailNatural => GameShaders.Misc["CrystalMoon:MagicNatural"];
+        public static MiscShaderData MagicTrailNormal => GameShaders.Misc["CrystalMoon:MagicNormal"];
+        
+        
+        //Pixel Shaders
+        public static MiscShaderData PixelMagicFire => GameShaders.Misc["CrystalMoon:FirePixel"];
+        public static MiscShaderData PixelMagicPhantasmal => GameShaders.Misc["CrystalMoon:PixelMagicPhantasmal"];
+        public static MiscShaderData PixelMagicNormal => GameShaders.Misc["CrystalMoon:PixelMagicNormal"];
+        public static MiscShaderData PixelMagicBloodlet => GameShaders.Misc["CrystalMoon:PixelMagicBloodlet"];
+        public static MiscShaderData PixelMagicHex => GameShaders.Misc["CrystalMoon:PixelMagicHex"];
+        public static MiscShaderData PixelMagicNatural => GameShaders.Misc["CrystalMoon:PixelMagicNatural"];
+        public static MiscShaderData PixelMagicWater => GameShaders.Misc["CrystalMoon:PixelMagicSparkleWater"];
+        public static MiscShaderData PixelMagicGuut => GameShaders.Misc["CrystalMoon:PixelMagicGuut"];
 
         public static MiscShaderData CloudsShader => GameShaders.Misc["CrystalMoon:Clouds"];
         public static MiscShaderData FogShader => GameShaders.Misc["CrystalMoon:Fog"];
@@ -55,6 +66,8 @@ namespace CrystalMoon.Registries
             RegisterMiscShader("CloudsDesertNight", "ScreenPass");
             RegisterMiscShader("Gradient", "ScreenPass");
             RegisterMiscShader("SimpleGradientTrail", "PrimitivesPass");
+
+            //Magic Shaders
             RegisterMiscShader("MagicHex", "PrimitivesPass");
             RegisterMiscShader("MagicRadiance", "PrimitivesPass");
             RegisterMiscShader("MagicRadianceOutline", "PrimitivesPass");
@@ -65,8 +78,20 @@ namespace CrystalMoon.Registries
             RegisterMiscShader("MagicGuut", "PrimitivesPass");
             RegisterMiscShader("MagicNatural", "PrimitivesPass");
             RegisterMiscShader("MagicNormal", "PrimitivesPass");
-            RegisterMiscShader("FirePixel", "PixelPass");
+  
             RegisterMiscShader("Fog", "PixelPass");
+
+
+            //Magic Pixel
+            RegisterMiscShader("FirePixel", "PixelPass");
+            RegisterMiscShader("PixelMagicPhantasmal", "PixelPass");
+            RegisterMiscShader("PixelMagicNormal", "PixelPass");
+            RegisterMiscShader("PixelMagicBloodlet", "PixelPass");
+            RegisterMiscShader("PixelMagicSparkleWater", "PixelPass");
+    
+            RegisterMiscShader("PixelMagicGuut", "PixelPass");
+            RegisterMiscShader("PixelMagicNatural", "PixelPass");
+            RegisterMiscShader("PixelMagicHex", "PixelPass");
 
             var miscShader9 = new Ref<Effect>(CrystalMoon.Instance.Assets.Request<Effect>("Assets/Effects/Water", AssetRequestMode.ImmediateLoad).Value);
             Filters.Scene["CrystalMoon:Water"] = new Filter(new ScreenShaderData(miscShader9, "PrimitivesPass"), EffectPriority.VeryHigh);
@@ -93,8 +118,6 @@ namespace CrystalMoon.Registries
             SkyManager.Instance["CrystalMoon:DesertSky"] = new DesertSky();
             SkyManager.Instance["CrystalMoon:DesertSky"].Load();
             Filters.Scene["CrystalMoon:DesertSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0f, 0f).UseOpacity(0f), EffectPriority.VeryHigh);
-
-
         }
     }
 }

@@ -11,7 +11,7 @@ namespace CrystalMoon.Systems.Shaders
         private static MagicBloodletShader _instance;
         public MagicBloodletShader()
         {
-            Data = ShaderRegistry.MagicBloodletEffect;
+            Data = ShaderRegistry.MagicTrailBloodlet;
             PrimaryTexture = TextureRegistry.StarTrail;
             NoiseTexture = TextureRegistry.StarTrail;
             PrimaryColor = Color.White;

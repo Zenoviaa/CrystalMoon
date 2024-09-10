@@ -31,6 +31,16 @@ namespace CrystalMoon.WorldGeneration.StructureManager
                 }
             }
         }
+        public static Rectangle ReadRectangle(Stream stream)
+        {
+            using (var reader = new BinaryReader(stream, Encoding.UTF8, false))
+            {
+                int width = reader.ReadInt32();
+                int height = reader.ReadInt32();
+                Rectangle rectangle = new Rectangle(0, 0, width, height);
+                return rectangle;
+            }
+        }
 
         public static void ProtectStructure(Point location, string path)
         {
@@ -270,6 +280,18 @@ namespace CrystalMoon.WorldGeneration.StructureManager
                 return ReadStruct(stream, BottomLeft, tileBlend);
             }
         }
+        public static Rectangle ReadSavedRectangle()
+        {
+            if(!File.Exists(Main.SavePath + "/SavedStruct.str"))
+            {
+                return new Rectangle(0, 0, 1, 1);
+            }
+
+            using (FileStream stream = File.Open(Main.SavePath + "/SavedStruct.str", FileMode.Open))
+            {
+                return ReadRectangle(stream);
+            }
+        }
 
         private static int ReadModWall(BinaryReader reader)
         {
@@ -472,6 +494,22 @@ namespace CrystalMoon.WorldGeneration.StructureManager
         {
             Item.CloneDefaults(ItemID.MagicConch);
             Item.useTime = Item.useAnimation = 15;
+        }
+
+        public override void UpdateInventory(Player player)
+        {
+            base.UpdateInventory(player);
+            if(player.HeldItem.type == Type)
+            {
+                int x = (int)Main.MouseWorld.X / 16;
+                int y = (int)Main.MouseWorld.Y / 16;
+
+                Rectangle rectangle = StructureLoader.ReadSavedRectangle();
+                Vector2 bottomRight = new Vector2(x + 1, y + 1) * 16;
+                Vector2 topLeft = new Vector2(x + rectangle.Width, y - rectangle.Height) * 16;
+                Dust.QuickBox(topLeft, bottomRight, 2, Color.YellowGreen, null);
+                Dust.QuickBox(new Vector2(x, y) * 16, new Vector2(x + 1, y + 1) * 16, 2, Color.Red, null);
+            }
         }
 
         public override bool? UseItem(Player player)

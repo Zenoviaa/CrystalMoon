@@ -40,7 +40,13 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 
         public override void DrawForm(SpriteBatch spriteBatch, Texture2D formTexture, Vector2 drawPos, Color drawColor, Color lightColor, float drawRotation, float drawScale)
         {
+            float p = MathUtil.Osc(0f, 1f, speed: 3);
+            drawColor = Color.Lerp(Color.White, Color.Red, p);
+
             var shader = FirePixelShader.Instance;
+            shader.PrimaryTexture = TextureRegistry.DottedTrail;
+            shader.NoiseTexture = TextureRegistry.NoiseTextureCloudsSmall;
+            shader.OutlineTexture = TextureRegistry.DottedTrailOutline;
             shader.PrimaryColor = Color.Lerp(Color.White, new Color(255, 207, 79), 0.5f);
             shader.NoiseColor = new Color(206, 101, 0);
             shader.Distortion = 0.5f;

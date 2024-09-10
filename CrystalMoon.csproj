@@ -23,6 +23,13 @@
 	  <None Remove="Assets\Effects\MagicRadianceOutline.fx" />
 	  <None Remove="Assets\Effects\MagicSparkleWater.fx" />
 	  <None Remove="Assets\Effects\NightClouds.fx" />
+	  <None Remove="Assets\Effects\PixelMagicBloodlet.fx" />
+	  <None Remove="Assets\Effects\PixelMagicGuut.fx" />
+	  <None Remove="Assets\Effects\PixelMagicHex.fx" />
+	  <None Remove="Assets\Effects\PixelMagicNatural.fx" />
+	  <None Remove="Assets\Effects\PixelMagicNormal.fx" />
+	  <None Remove="Assets\Effects\PixelMagicPhantasmal.fx" />
+	  <None Remove="Assets\Effects\PixelMagicSparkleWater.fx" />
 	  <None Remove="Assets\Effects\SimpleGradientTrail.fx" />
 	  <None Remove="Assets\NoiseTextures\BeamTrail.png" />
 	  <None Remove="Assets\NoiseTextures\BulbTrail.png" />

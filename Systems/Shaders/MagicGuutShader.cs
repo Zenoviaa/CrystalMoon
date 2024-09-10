@@ -11,7 +11,7 @@ namespace CrystalMoon.Systems.Shaders
         private static MagicGuutShader _instance;
         public MagicGuutShader()
         {
-            Data = ShaderRegistry.MagicGuutEffect;
+            Data = ShaderRegistry.MagicTrailGuut;
             PrimaryTexture = TextureRegistry.DottedTrail;
             NoiseTexture = TextureRegistry.NoiseTextureClouds3;
             OutlineTexture = TextureRegistry.DottedTrailOutline;

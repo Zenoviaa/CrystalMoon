@@ -11,7 +11,7 @@ namespace CrystalMoon.Systems.Shaders
         private static MagicHexShader _instance;
         public MagicHexShader()
         {
-            Data = ShaderRegistry.MagicHexEffect;
+            Data = ShaderRegistry.MagicTrailHex;
             PrimaryTexture = TextureRegistry.StarTrail;
             NoiseTexture = TextureRegistry.StarTrail;
             PrimaryColor = Color.White;

@@ -10,7 +10,7 @@ namespace CrystalMoon.Systems.Shaders
         private static MagicNormalShader _instance;
         public MagicNormalShader()
         {
-            Data = ShaderRegistry.MagicNormalEffect;
+            Data = ShaderRegistry.MagicTrailNormal;
             PrimaryTexture = TextureRegistry.StarTrail;
             NoiseTexture = TextureRegistry.StarTrail;
             Speed = 5;

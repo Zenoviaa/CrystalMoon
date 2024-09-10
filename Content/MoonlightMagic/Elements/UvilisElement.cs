@@ -1,18 +1,12 @@
 ﻿using CrystalMoon.Registries;
 using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Systems.Particles;
+using CrystalMoon.Systems.ScreenSystems;
 using CrystalMoon.Systems.Shaders;
 using CrystalMoon.Visual.Particles;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.ID;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using CrystalMoon.Systems.ScreenSystems;
 using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic.Elements
@@ -162,6 +156,35 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
                 case 2:
                     return MathHelper.Lerp(0, width + 12, completionRatio);
             }
+        }
+
+
+        public override void DrawForm(SpriteBatch spriteBatch, Texture2D formTexture, Vector2 drawPos, Color drawColor, Color lightColor, float drawRotation, float drawScale)
+        {
+            var shader = PixelMagicSparkleWaterShader.Instance;
+            shader.NoiseTexture = TextureRegistry.NoiseTextureClouds3;
+            shader.OutlineTexture = TextureRegistry.DottedTrailOutline;
+            shader.PrimaryColor = Color.Lerp(Color.White, new Color(255, 207, 79), 0.5f);
+            shader.NoiseColor = new Color(92, 100, 255);
+            shader.OutlineColor = Color.Black;
+            shader.BlendState = BlendState.Additive;
+            shader.SamplerState = SamplerState.PointWrap;
+            shader.Speed = 0.8f;
+            shader.Distortion = 0.5f;
+            shader.Power = 0.5f;
+            shader.Threshold = 0.25f;
+            shader.Apply();
+
+            float p = MathUtil.Osc(0f, 1f, speed: 3);
+            drawColor = Color.Lerp(ColorUtil.UvilisLightBlue, Color.LightGoldenrodYellow, p);
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, default, default, default, shader.Effect, Main.GameViewMatrix.ZoomMatrix);
+
+            base.DrawForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale * 2f);
+
+            spriteBatch.End();
+            spriteBatch.Begin();
+            base.DrawForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale);
         }
 
         private void DrawMainShader()

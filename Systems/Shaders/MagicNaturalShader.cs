@@ -11,7 +11,7 @@ namespace CrystalMoon.Systems.Shaders
         private static MagicNaturalShader _instance;
         public MagicNaturalShader()
         {
-            Data = ShaderRegistry.MagicNaturalEffect;
+            Data = ShaderRegistry.MagicTrailNatural;
             PrimaryTexture = TextureRegistry.NoiseTextureLeaves;
             NoiseTexture = TextureRegistry.NoiseTextureClouds3;
             ShapeTexture = TextureRegistry.DottedTrail;

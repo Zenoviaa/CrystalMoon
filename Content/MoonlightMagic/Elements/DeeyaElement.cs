@@ -95,6 +95,15 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
         }
 
         #region Visuals
+
+        public override void DrawForm(SpriteBatch spriteBatch, Texture2D formTexture, Vector2 drawPos, Color drawColor, Color lightColor, float drawRotation, float drawScale)
+        {
+            float p = MathUtil.Osc(0f, 1f, speed: 3);
+            drawColor = Color.Lerp(Color.White, Color.Pink, p);
+            base.DrawForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale);
+        }
+
+
         public override void DrawTrail()
         {
             base.DrawTrail();

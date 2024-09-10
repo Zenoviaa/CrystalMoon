@@ -1,4 +1,5 @@
 ﻿using CrystalMoon.Registries;
+using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Systems.Particles;
 using CrystalMoon.Systems.ScreenSystems;
 using CrystalMoon.Systems.Shaders;
@@ -92,6 +93,13 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
         {
             base.SpecialInventoryDraw(item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
             DrawHelper.DrawGlowInInventory(item, spriteBatch, position, ColorUtil.BloodletRed);
+        }
+
+        public override void DrawForm(SpriteBatch spriteBatch, Texture2D formTexture, Vector2 drawPos, Color drawColor, Color lightColor, float drawRotation, float drawScale)
+        {
+            float p = MathUtil.Osc(0f, 1f, speed: 3);
+            drawColor = Color.Lerp(Color.Red, Color.Black, p);
+            base.DrawForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale);
         }
 
         public override void DrawTrail()

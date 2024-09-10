@@ -11,7 +11,7 @@ namespace CrystalMoon.Systems.Shaders
         private static MagicDeeyaShader _instance;
         public MagicDeeyaShader()
         {
-            Data = ShaderRegistry.MagicDeeyaEffect;
+            Data = ShaderRegistry.MagicTrailDeeya;
             PrimaryTexture = TextureRegistry.StarTrail;
             NoiseTexture = TextureRegistry.StarTrail;
             PrimaryColor = Color.White;

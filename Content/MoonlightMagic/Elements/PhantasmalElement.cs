@@ -95,6 +95,25 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
         }
 
         #region Visuals
+
+        public override void DrawForm(SpriteBatch spriteBatch, Texture2D formTexture, Vector2 drawPos, Color drawColor, Color lightColor, float drawRotation, float drawScale)
+        {
+            var shader = PixelMagicPhantasmalShader.Instance;
+            shader.NoiseTexture = TextureRegistry.NoiseTextureClouds3;
+            shader.BlendState = BlendState.Additive;
+            shader.SamplerState = SamplerState.PointWrap;
+            shader.Speed = 0.5f;
+            shader.Apply();
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, default, default, default, 
+                shader.Effect, Main.GameViewMatrix.ZoomMatrix);
+
+            base.DrawForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale);
+
+            spriteBatch.End();
+            spriteBatch.Begin();
+        }
+
         public override void DrawTrail()
         {
             base.DrawTrail();

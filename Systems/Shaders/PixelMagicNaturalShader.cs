@@ -6,56 +6,46 @@ using Terraria;
 
 namespace CrystalMoon.Systems.Shaders
 {
-    internal class MagicSparkleWaterShader : BaseShader
+    internal class PixelMagicNaturalShader : BaseShader
     {
-        private static MagicSparkleWaterShader _instance;
-        public MagicSparkleWaterShader()
+        private static PixelMagicNaturalShader _instance;
+        public PixelMagicNaturalShader()
         {
-            Data = ShaderRegistry.MagicTrailWater;
-            PrimaryTexture = TextureRegistry.DottedTrail;
+            Data = ShaderRegistry.PixelMagicNatural;
             NoiseTexture = TextureRegistry.NoiseTextureClouds3;
-            OutlineTexture = TextureRegistry.DottedTrailOutline;
+            ShapeTexture = TextureRegistry.DottedTrail;
             PrimaryColor = Color.White;
             NoiseColor = Color.White;
-            OutlineColor = Color.White;
             Speed = 5;
             Distortion = 0.2f;
-            Power = 1.5f;
+            Threshold = 0.3f;
         }
 
-        public static MagicSparkleWaterShader Instance
+        public static PixelMagicNaturalShader Instance
         {
             get
             {
                 if (_instance == null)
-                    _instance = new MagicSparkleWaterShader();
+                    _instance = new PixelMagicNaturalShader();
                 return _instance;
             }
         }
 
-        public Asset<Texture2D> PrimaryTexture { get; set; }
         public Asset<Texture2D> NoiseTexture { get; set; }
-        public Asset<Texture2D> OutlineTexture { get; set; }
+        public Asset<Texture2D> ShapeTexture { get; set; }
         public Color PrimaryColor { get; set; }
         public Color NoiseColor { get; set; }
-        public Color OutlineColor { get; set; }
         public float Speed { get; set; }
         public float Distortion { get; set; }
-        public float Power { get; set; }
         public float Threshold { get; set; }
         public override void Apply()
         {
-            Data = ShaderRegistry.MagicTrailWater;
-            Effect.Parameters["transformMatrix"].SetValue(TrailDrawer.WorldViewPoint2);
+            Data.UseImage1(NoiseTexture);
+            Data.UseImage2(ShapeTexture);
             Effect.Parameters["primaryColor"].SetValue(PrimaryColor.ToVector3());
             Effect.Parameters["noiseColor"].SetValue(NoiseColor.ToVector3());
-            Effect.Parameters["outlineColor"].SetValue(OutlineColor.ToVector3());
-            Effect.Parameters["primaryTexture"].SetValue(PrimaryTexture.Value);
-            Effect.Parameters["noiseTexture"].SetValue(NoiseTexture.Value);
-            Effect.Parameters["outlineTexture"].SetValue(OutlineTexture.Value);
             Effect.Parameters["time"].SetValue(Main.GlobalTimeWrappedHourly * Speed);
             Effect.Parameters["distortion"].SetValue(Distortion);
-            Effect.Parameters["power"].SetValue(Power);
             Effect.Parameters["threshold"].SetValue(Threshold);
         }
     }

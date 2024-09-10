@@ -6,13 +6,12 @@ using Terraria;
 
 namespace CrystalMoon.Systems.Shaders
 {
-    internal class MagicSparkleWaterShader : BaseShader
+    internal class PixelMagicSparkleWaterShader : BaseShader
     {
-        private static MagicSparkleWaterShader _instance;
-        public MagicSparkleWaterShader()
+        private static PixelMagicSparkleWaterShader _instance;
+        public PixelMagicSparkleWaterShader()
         {
-            Data = ShaderRegistry.MagicTrailWater;
-            PrimaryTexture = TextureRegistry.DottedTrail;
+            Data = ShaderRegistry.PixelMagicWater;
             NoiseTexture = TextureRegistry.NoiseTextureClouds3;
             OutlineTexture = TextureRegistry.DottedTrailOutline;
             PrimaryColor = Color.White;
@@ -23,17 +22,16 @@ namespace CrystalMoon.Systems.Shaders
             Power = 1.5f;
         }
 
-        public static MagicSparkleWaterShader Instance
+        public static PixelMagicSparkleWaterShader Instance
         {
             get
             {
                 if (_instance == null)
-                    _instance = new MagicSparkleWaterShader();
+                    _instance = new PixelMagicSparkleWaterShader();
                 return _instance;
             }
         }
 
-        public Asset<Texture2D> PrimaryTexture { get; set; }
         public Asset<Texture2D> NoiseTexture { get; set; }
         public Asset<Texture2D> OutlineTexture { get; set; }
         public Color PrimaryColor { get; set; }
@@ -45,14 +43,11 @@ namespace CrystalMoon.Systems.Shaders
         public float Threshold { get; set; }
         public override void Apply()
         {
-            Data = ShaderRegistry.MagicTrailWater;
-            Effect.Parameters["transformMatrix"].SetValue(TrailDrawer.WorldViewPoint2);
+            Data.UseImage1(NoiseTexture);
+            Data.UseImage2(OutlineTexture);
             Effect.Parameters["primaryColor"].SetValue(PrimaryColor.ToVector3());
             Effect.Parameters["noiseColor"].SetValue(NoiseColor.ToVector3());
             Effect.Parameters["outlineColor"].SetValue(OutlineColor.ToVector3());
-            Effect.Parameters["primaryTexture"].SetValue(PrimaryTexture.Value);
-            Effect.Parameters["noiseTexture"].SetValue(NoiseTexture.Value);
-            Effect.Parameters["outlineTexture"].SetValue(OutlineTexture.Value);
             Effect.Parameters["time"].SetValue(Main.GlobalTimeWrappedHourly * Speed);
             Effect.Parameters["distortion"].SetValue(Distortion);
             Effect.Parameters["power"].SetValue(Power);
