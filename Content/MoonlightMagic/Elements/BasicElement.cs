@@ -58,6 +58,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 
         public override void DrawForm(SpriteBatch spriteBatch, Texture2D formTexture, Vector2 drawPos, Color drawColor, Color lightColor, float drawRotation, float drawScale)
         {
+            /*
             var shader = PixelMagicNormalShader.Instance;
             shader.NoiseTexture = TextureRegistry.SpikyTrail;
             shader.BlendState = BlendState.Additive;
@@ -71,6 +72,8 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 
             spriteBatch.End();
             spriteBatch.Begin();
+            */
+            base.DrawForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale);
         }
 
         public override void DrawTrail()
