@@ -44,9 +44,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Basic
 
         public override void SetMagicDefaults()
         {
-            float damage = Projectile.damage;
-            damage *= 1.1f;
-            Projectile.damage = (int)damage;
+            Projectile.penetrate += 1;
             MagicProj.Form = FormRegistry.Crescent.Value;
             
             

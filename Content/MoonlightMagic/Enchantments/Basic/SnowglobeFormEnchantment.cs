@@ -44,12 +44,10 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Basic
 
         public override void SetMagicDefaults()
         {
-            float damage = Projectile.damage;
-            damage *= 1.1f;
-            Projectile.damage = (int)damage;
+            
             MagicProj.Form = FormRegistry.Snowglobe.Value;
-            
-            
+            MagicProj.Size *= 1.5f;
+
         }
 
 

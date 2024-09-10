@@ -19,7 +19,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Guuts
        
         public override float GetStaffManaModifier()
         {
-            return 0.5f;
+            return 1.2f;
         }
 
         public override int GetElementType()

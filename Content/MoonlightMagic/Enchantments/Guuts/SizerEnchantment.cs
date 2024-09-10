@@ -19,13 +19,13 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Guuts
 {
     internal class SizerEnchantment : BaseEnchantment
     {
-        private int _timer;
+        
         public override void SetDefaults()
         {
             base.SetDefaults();
             time = 30;
         }
-    
+        private int _timer;
         public override void AI()
         {
             base.AI();

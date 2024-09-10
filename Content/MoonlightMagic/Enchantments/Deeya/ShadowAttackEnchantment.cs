@@ -20,7 +20,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Deeya
         int Attagain = 14;
         public override float GetStaffManaModifier()
         {
-            return 0.6f;
+            return 0.8f;
         }
 
         public override int GetElementType()

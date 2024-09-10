@@ -149,3 +149,73 @@ TreeSplitEnchantment: {
 	DisplayName: Tree Split Enchantment
 	Tooltip: Splits your projectile in 3 doing 33% less damage!
 }
+
+ArrowFormEnchantment: {
+	DisplayName: Arrow Form Enchantment
+	Tooltip: Changes the form of the spell to an arrow and +10% Spell damage!
+}
+
+BowArrowFormEnchantment: {
+	DisplayName: Bow Arrow Form Enchantment
+	Tooltip: Changes the form of the spell to a bow's arrow and +10% Spell damage!
+}
+
+CrescentFormEnchantment: {
+	DisplayName: Crescent Form Enchantment
+	Tooltip: Changes the form of the spell to a crescent moon and +1 Penetration!
+}
+
+FairyFormEnchantment: {
+	DisplayName: Fairy Form Enchantment
+	Tooltip: Changes the form of the spell to a fairy and +50% Spell speed!
+}
+
+HammerFormEnchantment: {
+	DisplayName: Hammer Form Enchantment
+	Tooltip: Changes the form of the spell to a hammer and +10% Spell damage!
+}
+
+KnifeFormEnchantment: {
+	DisplayName: Knife Form Enchantment
+	Tooltip: Changes the form of the spell to a knife and +1 Penetration!
+}
+
+OctopusFormEnchantment: {
+	DisplayName: Octopus Form Enchantment
+	Tooltip: Changes the form of the spell to an octopus and +50% Spell size!
+}
+
+RunicFormEnchantment: {
+	DisplayName: Runic Form Enchantment
+	Tooltip: Changes the form of the spell to a rune and +50% Spell speed!
+}
+
+SnakeFormEnchantment: {
+	DisplayName: Snake Form Enchantment
+	Tooltip: Changes the form of the spell to a snake and +50% Spell speed!
+}
+
+SnowglobeFormEnchantment: {
+	DisplayName: Snowglobe Form Enchantment
+	Tooltip: Changes the form of the spell to a snowglobe and +50% Spell size!
+}
+
+SpineFormEnchantment: {
+	DisplayName: Spine Form Enchantment
+	Tooltip: Changes the form of the spell to a fish spine and +1 Penetration!
+}
+
+StarFormEnchantment: {
+	DisplayName: Star Form Enchantment
+	Tooltip: Changes the form of the spell to a 4-pointed star and +1 Penetration!
+}
+
+TriangleFormEnchantment: {
+	DisplayName: Triangle Form Enchantment
+	Tooltip: Changes the form of the spell to a triangle and +1 Penetration!
+}
+
+VaseFormEnchantment: {
+	DisplayName: Vase Form Enchantment
+	Tooltip: Changes the form of the spell to a vase and +10% Spell damage!
+}
