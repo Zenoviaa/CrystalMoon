@@ -261,3 +261,8 @@ Ghettingberg: {
 	DisplayName: Ghettingberg
 	Tooltip: ""
 }
+
+MothwingStaff: {
+	DisplayName: Mothwing Staff
+	Tooltip: ""
+}

@@ -13,7 +13,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Weapons
             Item.useAnimation = 21;
             Size = 10;
             TrailLength = 32;
-            Form = FormRegistry.FourPointedStar.Value;
+            Form = FormRegistry.Vase.Value;
         }
 
 
