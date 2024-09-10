@@ -102,5 +102,15 @@ RadioSilenceEnchantment: {
 
 SecondWindEnchantment: {
 	DisplayName: Second Wind Enchantment
-	Tooltip: ""
+	Tooltip: Makes your spell return back to you when hiting enemies!
+}
+
+MoonlightSwirlEnchantment: {
+	DisplayName: Moonlight Swirl Enchantment
+	Tooltip: Makes your spell have an extreme swirl around the moonlight!
+}
+
+ReverseMoonEnchantment: {
+	DisplayName: Reverse Moon Enchantment
+	Tooltip: Misplaces your spell after hitting an enemy!
 }
