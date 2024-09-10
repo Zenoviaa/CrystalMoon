@@ -50,9 +50,21 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Nature
         public override void OnTileCollide(Vector2 oldVelocity)
         {
             base.OnTileCollide(oldVelocity);
-            Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero);
-            direction = direction.RotatedByRandom(MathHelper.ToRadians(30));
-            Projectile.velocity = -direction * 20;
+          
+            Projectile.penetrate--;
+            if (Projectile.penetrate <= 0)
+            {
+                Projectile.Kill();
+                
+            }
+            else
+            {
+                if (Projectile.velocity.X != oldVelocity.X)
+                    Projectile.velocity.X = -oldVelocity.X;
+
+                if (Projectile.velocity.Y != oldVelocity.Y)
+                    Projectile.velocity.Y = -oldVelocity.Y;
+            }
             HitOnce = true;
             Attagain = 0;
 

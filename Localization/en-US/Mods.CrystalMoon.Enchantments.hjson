@@ -74,3 +74,8 @@ FlowerfallEnchantment: {
 	DisplayName: Flowerfall Enchantment
 	Tooltip: Make that spell have gravity! Totally not a Diari reference.
 }
+
+WorldToucherEnchantment: {
+	DisplayName: World Toucher Enchantment
+	Tooltip: ""
+}
