@@ -82,6 +82,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Guuts
                 float damage = Projectile.damage;
                 damage *= 1.1f;
                 Projectile.damage = (int)damage;
+                HitOnce = false;
             }
           
         }
