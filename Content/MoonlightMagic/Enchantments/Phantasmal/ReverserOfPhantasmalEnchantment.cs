@@ -32,9 +32,9 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Phantasmal
 
             //Count up
             Countertimer++;
-
-            //If greater than time then start homing, we'll just swap the movement type of the projectile
-
+            if(Countertimer >= time)
+            {
+                //If greater than time then start homing, we'll just swap the movement type of the projectile
                 foreach (var enchantment in MagicProj.Enchantments)
                 {
                     //do a thing here
@@ -42,8 +42,10 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Phantasmal
                     {
                         enchantment.Countertimer = 0;
                     }
-
                 }
+                Countertimer = 0;
+            }
+     
             
 
         }

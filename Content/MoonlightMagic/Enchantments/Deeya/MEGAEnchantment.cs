@@ -158,6 +158,11 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Deeya
             //How wide the trail is going to be
             float trailWidth = MathHelper.Lerp(125, 13, p);
             float fadeWidth = MathHelper.Lerp(0, trailWidth, Easing.OutExpo(p)) * Main.rand.NextFloat(0.85f, 1.0f);
+
+            int projectileID = (int)Projectile.ai[1];
+            Projectile projectile = Main.projectile[projectileID];
+            var magicProj = projectile.ModProjectile as AdvancedMagicProjectile;
+            fadeWidth *= magicProj.ScaleMultiplier;
             return fadeWidth;
         }
 

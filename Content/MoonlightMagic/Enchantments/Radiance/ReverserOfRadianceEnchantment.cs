@@ -32,8 +32,10 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Radiance
 
             //Count up
             Countertimer++;
+            if (Countertimer >= time)
+            {
 
-            //If greater than time then start homing, we'll just swap the movement type of the projectile
+                //If greater than time then start homing, we'll just swap the movement type of the projectile
 
                 foreach (var enchantment in MagicProj.Enchantments)
                 {
@@ -44,8 +46,8 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Radiance
                     }
 
                 }
-            
 
+            }
         }
 
         public override float GetStaffManaModifier()
