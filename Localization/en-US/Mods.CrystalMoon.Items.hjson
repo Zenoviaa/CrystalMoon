@@ -271,3 +271,8 @@ RainsyStaff: {
 	DisplayName: Rainsy Staff
 	Tooltip: ""
 }
+
+BloodletSepter: {
+	DisplayName: Bloodlet Septer
+	Tooltip: ""
+}

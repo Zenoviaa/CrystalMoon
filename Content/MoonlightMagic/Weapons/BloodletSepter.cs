@@ -7,7 +7,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Weapons
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.damage = 14;
+            Item.damage = 18;
             Item.shootSpeed = 10;
             Item.useTime = 18;
             Item.useAnimation = 36;
