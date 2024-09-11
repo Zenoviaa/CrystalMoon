@@ -227,7 +227,7 @@ HallowPurpleEnchantment: {
 
 TsunamiEnchantment: {
 	DisplayName: Tsunami Enchantment
-	Tooltip: ""
+	Tooltip: When hitting an enemy or tile, your spell with turn into a swirling water explosion and hits enemies!
 }
 
 WaterDrillEnchantment: {
@@ -257,7 +257,7 @@ MEGAEnchantment: {
 
 BloodVesselEnchantment: {
 	DisplayName: Blood Vessel Enchantment
-	Tooltip: ""
+	Tooltip: Your spell erupts upward from the ground underneath your cursor!
 }
 
 HeatSeakerEnchantment: {

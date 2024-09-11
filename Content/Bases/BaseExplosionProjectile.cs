@@ -60,7 +60,7 @@ namespace CrystalMoon.Content.Bases
             return _beamWidth;
         }
 
-        protected float WidthFunction(float p)
+        protected virtual float WidthFunction(float p)
         {
             return _beamWidth;
         }
