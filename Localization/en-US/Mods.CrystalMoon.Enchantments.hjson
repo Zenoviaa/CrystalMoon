@@ -304,3 +304,8 @@ UvilisSwitcherEnchantment: {
 	DisplayName: Uvilis Switcher Enchantment
 	Tooltip: Spells switch their element to Uvilis!
 }
+
+SlothEnchantment: {
+	DisplayName: Sloth Enchantment
+	Tooltip: Your spell will start moving after a short time
+}

@@ -121,7 +121,14 @@ namespace CrystalMoon.Content.MoonlightMagic
  
             Projectile.width = (int)Size;
             Projectile.height = (int)Size;
-            PrimaryElement?.AI();
+
+
+            if(PrimaryElement != null)
+            {
+                PrimaryElement.MagicProj = this;
+                PrimaryElement.AI();
+            }
+      
             if(Movement != null)
             {
                 Movement.MagicProj = this;
