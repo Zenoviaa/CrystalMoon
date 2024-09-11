@@ -367,5 +367,30 @@ SharpTurnEnchantment: {
 
 ReverserOfGuutsEnchantment: {
 	DisplayName: Reverser Of Guuts Enchantment
-	Tooltip: ""
+	Tooltip: Takes the timer for your spells and resets it back to 0!
+}
+
+ReverserOfBloodletEnchantment: {
+	DisplayName: Reverser Of Bloodlet Enchantment
+	Tooltip: Takes the timer for your spells and resets it back to 0!
+}
+
+ReverserOfDeeyaEnchantment: {
+	DisplayName: Reverser Of Deeya Enchantment
+	Tooltip: Takes the timer for your spells and resets it back to 0!
+}
+
+ReverserOfHexEnchantment: {
+	DisplayName: Reverser Of Hex Enchantment
+	Tooltip: Takes the timer for your spells and resets it back to 0!
+}
+
+ReverserOfNatureEnchantment: {
+	DisplayName: Reverser Of Nature Enchantment
+	Tooltip: Takes the timer for your spells and resets it back to 0!
+}
+
+ReverserOfRadianceEnchantment: {
+	DisplayName: Reverser Of Radiance Enchantment
+	Tooltip: Takes the timer for your spells and resets it back to 0!
 }
