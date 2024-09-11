@@ -15,7 +15,7 @@ using CrystalMoon.Systems.Particles;
 using CrystalMoon.Visual.Particles;
 using System.Threading;
 
-namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Bloolet
+namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Bloodlet
 {
     internal class FlowingBloodEnchantment : BaseEnchantment
     {
