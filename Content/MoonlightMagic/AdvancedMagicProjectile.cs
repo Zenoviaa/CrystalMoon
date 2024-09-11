@@ -147,12 +147,13 @@ namespace CrystalMoon.Content.MoonlightMagic
             {
                 OldPos[i] = OldPos[i - 1];
             }
-            OldPos[0] = Projectile.position;
+            if(OldPos.Length > 0)
+                OldPos[0] = Projectile.position;
 
             if(TrailLength != OldPos.Length)
             {
                 Vector2[] newTrail = new Vector2[TrailLength];
-                for(int i = 0; i < OldPos.Length; i++)
+                for(int i = 0; i < OldPos.Length && i < newTrail.Length; i++)
                 {
                     newTrail[i] = OldPos[i];
                 }
