@@ -35,6 +35,7 @@ Mods: {
 			HallowPurpleEnchantmentExplosion.DisplayName: Hallow Purple Enchantment Explosion
 			TsunamiEnchantmentExplosion.DisplayName: Tsunami Enchantment Explosion
 			WaterDrillEnchantmentExplosion.DisplayName: Water Drill Enchantment Explosion
+			MetalForceEnchantmentExplosion.DisplayName: Metal Force Enchantment Explosion
 		}
 
 		Buffs: {

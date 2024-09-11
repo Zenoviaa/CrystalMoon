@@ -1,5 +1,6 @@
 ﻿using CrystalMoon.Content.Bases;
 using CrystalMoon.Content.MoonlightMagic.Elements;
+using CrystalMoon.Content.MoonlightMagic.Enchantments.Nature;
 using CrystalMoon.Content.MoonlightMagic.Enchantments.Radiance;
 using CrystalMoon.Content.MoonlightMagic.Movements;
 using CrystalMoon.Registries;
@@ -16,50 +17,39 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
 
-namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
+namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Guuts
 {
-    internal class HallowPurpleEnchantment : BaseEnchantment
+    internal class MetalForceEnchantment : BaseEnchantment
     {
         public override float GetStaffManaModifier()
         {
-            return 1f;
+            return 0.5f;
         }
 
-        private int _timer;
-        public override void SetDefaults()
+        public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            base.SetDefaults();
-            time = 60;
-        }
-
-        public override void AI()
-        {
-            base.AI();
-
-            //Count up
-            _timer++;
-
-            //If greater than time then start homing, we'll just swap the movement type of the projectile
-            if (_timer == time)
+            //Spawn the explosion
+            for (int i = 0; i < 4; i++)
             {
-                for (int i = 0; i < 4; i++)
-                {
-                    Vector2 spawnPoint = Projectile.Center + Main.rand.NextVector2Circular(8, 8);
-                    Vector2 velocity = Main.rand.NextVector2Circular(8, 8);
-                    Particle.NewParticle<SparkleHexParticle>(spawnPoint, velocity, Color.White);
+                Vector2 spawnPoint = Projectile.Center + Main.rand.NextVector2Circular(8, 8);
+                Vector2 velocity = Main.rand.NextVector2Circular(8, 8);
 
-                }
 
-               
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity / 2, ModContent.ProjectileType<HallowPurpleEnchantmentExplosion>(),
-                Projectile.damage, Projectile.knockBack, Projectile.owner);
+                // Particle.NewParticle<SparkleHexParticle>(spawnPoint, velocity, Color.White);
 
-                Projectile.Kill();
             }
+
+
+            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity / 2, ModContent.ProjectileType<MetalForceEnchantmentExplosion>(),
+               Projectile.damage, Projectile.knockBack, Projectile.owner);
+
+            return true;
         }
+
+
         public override int GetElementType()
         {
-            return ModContent.ItemType<HexElement>();
+            return ModContent.ItemType<GuutElement>();
         }
 
 
@@ -78,7 +68,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
       
     }
 
-    internal class HallowPurpleEnchantmentExplosion : BaseExplosionProjectile
+    internal class MetalForceEnchantmentExplosion : BaseExplosionProjectile
     {
         int trailMode;
         int rStart = 4;
@@ -92,63 +82,31 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
             Projectile.penetrate = -1;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 20;
-            Projectile.timeLeft = 240;
-            rStart = Main.rand.Next(60, 64);
-            rEnd = Main.rand.Next(120, 120);
+            Projectile.timeLeft = 60;
+            rStart = Main.rand.Next(60 / 2, 64 / 2);
+            rEnd = Main.rand.Next(120 / 2, 120 / 2);
         }
        
-        public override void AI()
-        {
-            base.AI();
 
-
-            for (int i = 0; i < Main.maxNPCs; i++)
-            {
-                NPC npc = Main.npc[i];
-
-                if (npc.active && !npc.friendly && !npc.boss)
-                {
-                    float distance = Vector2.Distance(Projectile.Center, npc.Center);
-                    if (distance <= 400)
-                    {
-                        Vector2 direction = npc.Center - Projectile.Center;
-                        direction.Normalize();
-                        npc.velocity -= direction * 0.5f;
-                    }
-                }
-            }
-        }
         public override void OnKill(int timeLeft)
         {
-            SoundEngine.PlaySound(SoundID.DD2_EtherianPortalOpen, Projectile.position);
-            Projectile.ownerHitCheck = true;
+           
 
-            int radius = 250;
-
-            // Damage enemies within the splash radius
-            for (int i = 0; i < Main.npc.Length; i++)
-            {
-                NPC target = Main.npc[i];
-                if (target.active && !target.friendly && Vector2.Distance(Projectile.Center, target.Center) < radius)
-                {
-                    int damage = Projectile.damage * 2;
-                    target.SimpleStrikeNPC(damage: 12, 0);
-                }
-            }
-
+            /*
             for (int i = 0; i < 50; i++)
             {
                 Vector2 spawnPoint = Projectile.Center + Main.rand.NextVector2Circular(8, 8);
                 Vector2 speed = Main.rand.NextVector2CircularEdge(4f, 4f);
                 Particle.NewParticle<SparkleHexParticle>(spawnPoint, speed, Color.White);
             }
+            */
         }
 
         protected override float BeamWidthFunction(float p)
         {
 
             //How wide the trail is going to be
-            float trailWidth = MathHelper.Lerp(125, 13, p);
+            float trailWidth = MathHelper.Lerp(125 / 2, 13 / 2, p);
             float fadeWidth = MathHelper.Lerp(0, trailWidth, Easing.OutExpo(p)) * Main.rand.NextFloat(0.85f, 1.0f);
             return fadeWidth;
         }
@@ -209,17 +167,18 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
         {
             //Trail
             trailMode = 0;
-            var shader = MagicRadianceShader.Instance;
-
-            shader.PrimaryTexture = TextureRegistry.NoiseTextureClouds;
-            shader.NoiseTexture = TextureRegistry.NoiseTextureCloudsSmall;
-            shader.PrimaryColor = new Color(195, 158, 255);
-            shader.NoiseColor = new Color(78, 76, 180);//new Color(78, 76, 180);
-            shader.OutlineColor = Color.Purple;
+            var shader = MagicGuutShader.Instance;
+            shader.PrimaryTexture = TextureRegistry.DottedTrail;
+            shader.NoiseTexture = TextureRegistry.CrystalTrail;
+            shader.OutlineTexture = TextureRegistry.DottedTrailOutline;
+            shader.PrimaryColor = Color.White;
+            shader.NoiseColor = Color.Black;
+            shader.OutlineColor = Color.Lerp(Color.Black, Color.DarkGray, 0.3f);
             shader.BlendState = BlendState.Additive;
             shader.SamplerState = SamplerState.PointWrap;
-            shader.Speed = 15.2f;
-            shader.Distortion = 2f;
+            shader.Speed = 2.2f;
+            shader.Distortion = 0.05f;
+            shader.Power = 0.1f;
 
             //This just applis the shader changes
             TrailDrawer.Draw(Main.spriteBatch, _circlePos, Projectile.oldRot, ColorFunction, WidthFunction, shader, offset: Projectile.Size / 2);
