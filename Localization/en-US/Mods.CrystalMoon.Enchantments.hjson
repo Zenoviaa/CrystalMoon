@@ -354,3 +354,13 @@ CoagulateEnchantment: {
 	DisplayName: Coagulate Enchantment
 	Tooltip: When your spell hits an enemy or tile, it bursts into blood and knocks enemies upward!
 }
+
+HeavyMetalEnchantment: {
+	DisplayName: Heavy Metal Enchantment
+	Tooltip: Your spell will rain down from above! +12% Spell damage!
+}
+
+SharpTurnEnchantment: {
+	DisplayName: Sharp Turn Enchantment
+	Tooltip: Your spell will instantly turn 90 degrees after a short time
+}

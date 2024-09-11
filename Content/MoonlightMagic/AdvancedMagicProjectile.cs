@@ -67,7 +67,7 @@ namespace CrystalMoon.Content.MoonlightMagic
         public void SetMoonlightDefaults(AdvancedMagicProjectile item)
         {
             Projectile.width = Projectile.height = (int)item.Size;
-            if (item.PrimaryElement == null || item.PrimaryElement is not BaseElement || item.PrimaryElement.Item.IsAir)
+            if (item.PrimaryElement == null || item.PrimaryElement is not BaseElement)
                 PrimaryElement = new BasicElement();
             else
                 PrimaryElement = (item.PrimaryElement as BaseElement).Instantiate();
