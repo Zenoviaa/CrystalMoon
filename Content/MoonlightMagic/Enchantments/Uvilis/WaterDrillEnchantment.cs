@@ -24,7 +24,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Uvilis
     {
         public override float GetStaffManaModifier()
         {
-            return 0.2f;
+            return 0.4f;
         }
 
         public override int GetElementType()
