@@ -249,3 +249,8 @@ ExplosiveMordorEnchantment: {
 	DisplayName: Explosive Mordor Enchantment
 	Tooltip: Makes tiles explode when your spell hits them! May be a bad idea.
 }
+
+MEGAEnchantment: {
+	DisplayName: M E G A Enchantment
+	Tooltip: Your Spell casts a giant MEGA Deeya ball on startup and sucks in enemies as they hurt them!
+}

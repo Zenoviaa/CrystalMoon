@@ -37,6 +37,7 @@ Mods: {
 			WaterDrillEnchantmentExplosion.DisplayName: Water Drill Enchantment Explosion
 			MetalForceEnchantmentExplosion.DisplayName: Metal Force Enchantment Explosion
 			ExplosiveMordorEnchantmentExplosion.DisplayName: Explosive Mordor Enchantment Explosion
+			MEGAEnchantmentExplosion.DisplayName: M E G A Enchantment Explosion
 		}
 
 		Buffs: {
