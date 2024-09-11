@@ -25,24 +25,28 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Deeya
             base.SetDefaults();
           
         }
-        
+        private bool Decreased = false;
         public override void AI()
         {
             base.AI();
 
             //Count up
-           
+
 
             //If greater than time then start homing, we'll just swap the movement type of the projectile
-
+            if (!Decreased)
+            {
                 foreach (var enchantment in MagicProj.Enchantments)
                 {
-                //do a thing here
+                    //do a thing here
 
-                enchantment.Countertimer++; 
-                  
+                    enchantment.time /= 2;
+
 
                 }
+
+            }
+                
             
 
         }

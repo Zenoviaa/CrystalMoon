@@ -404,3 +404,33 @@ ReverserOfUvilisEnchantment: {
 	DisplayName: Reverser Of Uvilis Enchantment
 	Tooltip: Takes the timer for your spells and resets it back to 0!
 }
+
+RechargingShadowsEnchantment: {
+	DisplayName: Recharging Shadows Enchantment
+	Tooltip: Makes timers for your timed spells move 2x as fast!
+}
+
+AdditorGuutsEnchantment: {
+	DisplayName: Additor Guuts Enchantment
+	Tooltip: Makes every timed enchantment active 15 ticks later!
+}
+
+PhaseTurnEnchantment: {
+	DisplayName: Phase Turn Enchantment
+	Tooltip: Your spell will instantly turn 45 degrees after a short time
+}
+
+SubtractorMoonEnchantment: {
+	DisplayName: Subtractor Moon Enchantment
+	Tooltip: Makes every timed enchantment active 15 ticks earlier!
+}
+
+OppositeFlamesEnchantment: {
+	DisplayName: Opposite Flames Enchantment
+	Tooltip: Reverses the velocity of your spell!
+}
+
+StarTurnEnchantment: {
+	DisplayName: Star Turn Enchantment
+	Tooltip: Your spell will instantly turn 135 degrees after a short time
+}
