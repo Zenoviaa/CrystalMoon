@@ -148,6 +148,16 @@ namespace CrystalMoon.Content.MoonlightMagic
                 OldPos[i] = OldPos[i - 1];
             }
             OldPos[0] = Projectile.position;
+
+            if(TrailLength != OldPos.Length)
+            {
+                Vector2[] newTrail = new Vector2[TrailLength];
+                for(int i = 0; i < OldPos.Length; i++)
+                {
+                    newTrail[i] = OldPos[i];
+                }
+                OldPos = newTrail;
+            }
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
