@@ -31,8 +31,8 @@ namespace CrystalMoon.Tiles.MothlightTiles
             //MineResist = 1f;
             //MinPick = 25;
         }
-
-            public override void RandomUpdate(int i, int j)
+      
+        public override void RandomUpdate(int i, int j)
             {
                 Tile tile = Framing.GetTileSafely(i, j);
                 Tile tileBelow = Framing.GetTileSafely(i, j + 1);

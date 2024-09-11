@@ -78,7 +78,7 @@ namespace CrystalMoon.Tiles
             Vector2 drawOrigin = new Vector2(textureWidth / 2, textureHeight / 2);
             spriteBatch.Draw(texture, position, null, drawColor, 0, drawOrigin, scale * 0.5f, SpriteEffects.None, 0);
         }
-
+        public override bool CanExplode(int i, int j) => false;
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             base.PostDraw(i, j, spriteBatch);
