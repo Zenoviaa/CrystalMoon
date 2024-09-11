@@ -40,7 +40,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Guuts
             }
 
 
-            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity / 2, ModContent.ProjectileType<MetalForceEnchantmentExplosion>(),
+            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity * 0, ModContent.ProjectileType<MetalForceEnchantmentExplosion>(),
                Projectile.damage, Projectile.knockBack, Projectile.owner);
 
             return true;
