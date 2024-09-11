@@ -239,3 +239,8 @@ MetalForceEnchantment: {
 	DisplayName: Metal Force Enchantment
 	Tooltip: When your spell hits a tile, it creates metal-like wind to saw through enemies!
 }
+
+MagicMissileEnchantment: {
+	DisplayName: Magic Missile Enchantment
+	Tooltip: ""
+}

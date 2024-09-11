@@ -23,7 +23,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Guuts
     {
         public override float GetStaffManaModifier()
         {
-            return 0.5f;
+            return 0.1f;
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
