@@ -259,3 +259,8 @@ BloodVesselEnchantment: {
 	DisplayName: Blood Vessel Enchantment
 	Tooltip: ""
 }
+
+HeatSeakerEnchantment: {
+	DisplayName: Heat Seaker Enchantment
+	Tooltip: Spells with speed up exponentially as well as get bigger while homing in onto enemies!
+}
