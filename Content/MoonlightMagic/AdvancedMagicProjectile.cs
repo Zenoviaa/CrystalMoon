@@ -11,6 +11,8 @@ namespace CrystalMoon.Content.MoonlightMagic
 {
     internal class AdvancedMagicProjectile : ModProjectile
     {
+        private BaseElement _baseElement;
+        private BaseMovement _movement;
         public override string Texture => TextureRegistry.EmptyTexturePath;
 
         public Vector2[] OldPos { get; private set; }
@@ -30,8 +32,27 @@ namespace CrystalMoon.Content.MoonlightMagic
         }
         public bool IsClone { get; set; }
         public Texture2D Form { get; set; }
-        public BaseMovement Movement { get; set; }
-        public BaseElement PrimaryElement { get; set; }
+        public BaseMovement Movement
+        {
+            get => _movement;
+            set
+            {
+                _movement = value;
+                if (_movement != null)
+                    _movement.MagicProj = this;
+            }
+        }
+
+        public BaseElement PrimaryElement
+        {
+            get => _baseElement;
+            set
+            {
+                _baseElement = value;
+                if(_baseElement != null)
+                    _baseElement.MagicProj = this;
+            }
+        }
         public List<BaseEnchantment> Enchantments { get; private set; } = new List<BaseEnchantment>();
 
         public override void SetDefaults()
@@ -71,11 +92,6 @@ namespace CrystalMoon.Content.MoonlightMagic
                 }
             }
 
-
-            if (PrimaryElement != null)
-                PrimaryElement.MagicProj = this;
-            if (Movement != null)
-                Movement.MagicProj = this;
             OldPos = new Vector2[TrailLength];
         }
 
@@ -107,11 +123,6 @@ namespace CrystalMoon.Content.MoonlightMagic
                 }
             }
 
-         
-            if(PrimaryElement != null)
-                PrimaryElement.MagicProj = this;
-            if (Movement != null)
-                Movement.MagicProj = this;
             OldPos = new Vector2[TrailLength];
         }
 
@@ -122,19 +133,9 @@ namespace CrystalMoon.Content.MoonlightMagic
             Projectile.width = (int)Size;
             Projectile.height = (int)Size;
 
+            PrimaryElement?.AI();
+            Movement?.AI();
 
-            if(PrimaryElement != null)
-            {
-                PrimaryElement.MagicProj = this;
-                PrimaryElement.AI();
-            }
-      
-            if(Movement != null)
-            {
-                Movement.MagicProj = this;
-                Movement.AI();
-            }
-      
             GlobalTimer++;
             for (int i = 0; i < Enchantments.Count; i++)
             {
@@ -188,7 +189,7 @@ namespace CrystalMoon.Content.MoonlightMagic
         public override bool PreDraw(ref Color lightColor)
         {
             PrimaryElement?.DrawTrail();
-            if(Form != null)
+            if (Form != null)
             {
                 SpriteBatch spriteBatch = Main.spriteBatch;
                 Color drawColor = Color.White.MultiplyRGB(lightColor);
