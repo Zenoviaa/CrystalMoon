@@ -49,7 +49,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Uvilis
         {
             //Spawn the explosion
             Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center,
-                Projectile.velocity.SafeNormalize(Vector2.Zero), ModContent.ProjectileType<TsunamiEnchantmentExplosion>(),
+                Projectile.velocity.SafeNormalize(Vector2.Zero), ModContent.ProjectileType<WaterDrillEnchantmentExplosion>(),
               Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
             return true;
         }
