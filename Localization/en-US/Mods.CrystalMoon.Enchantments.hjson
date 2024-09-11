@@ -264,3 +264,43 @@ HeatSeakerEnchantment: {
 	DisplayName: Heat Seaker Enchantment
 	Tooltip: Spells with speed up exponentially as well as get bigger while homing in onto enemies!
 }
+
+BloodletSwitcherEnchantment: {
+	DisplayName: Bloodlet Switcher Enchantment
+	Tooltip: Spells switch their element to Bloodlet!
+}
+
+DeeyaSwitcherEnchantment: {
+	DisplayName: Deeya Switcher Enchantment
+	Tooltip: Spells switch their element to Deeya!
+}
+
+GuutsSwitcherEnchantment: {
+	DisplayName: Guuts Switcher Enchantment
+	Tooltip: Spells switch their element to Guuts!
+}
+
+HexSwitcherEnchantment: {
+	DisplayName: Hex Switcher Enchantment
+	Tooltip: Spells switch their element to Hex!
+}
+
+NaturalSwitcherEnchantment: {
+	DisplayName: Natural Switcher Enchantment
+	Tooltip: Spells switch their element to Nature!
+}
+
+PhantasmalSwitcherEnchantment: {
+	DisplayName: Phantasmal Switcher Enchantment
+	Tooltip: Spells switch their element to Phantasmal!
+}
+
+RadianceSwitcherEnchantment: {
+	DisplayName: Radiance Switcher Enchantment
+	Tooltip: Spells switch their element to Radiance!
+}
+
+UvilisSwitcherEnchantment: {
+	DisplayName: Uvilis Switcher Enchantment
+	Tooltip: Spells switch their element to Uvilis!
+}
