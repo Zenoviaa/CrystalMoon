@@ -309,3 +309,8 @@ SlothEnchantment: {
 	DisplayName: Sloth Enchantment
 	Tooltip: Your spell will start moving after a short time
 }
+
+SpinbackEnchantment: {
+	DisplayName: Spinback Enchantment
+	Tooltip: Doubles your spell's knockback!
+}
