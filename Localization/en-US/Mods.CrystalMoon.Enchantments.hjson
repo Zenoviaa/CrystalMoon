@@ -237,5 +237,5 @@ WaterDrillEnchantment: {
 
 MetalForceEnchantment: {
 	DisplayName: Metal Force Enchantment
-	Tooltip: ""
+	Tooltip: When your spell hits a tile, it creates metal-like wind to saw through enemies!
 }
