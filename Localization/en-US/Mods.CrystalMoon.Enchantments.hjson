@@ -229,3 +229,8 @@ TsunamiEnchantment: {
 	DisplayName: Tsunami Enchantment
 	Tooltip: ""
 }
+
+WaterDrillEnchantment: {
+	DisplayName: Water Drill Enchantment
+	Tooltip: When hitting an enemy or tile, your spell with turn into a water drill and hit enemies!
+}
