@@ -28,7 +28,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Deeya
 
         public override void SetMagicDefaults()
         {
-            float range = MagicProj.Size;
+            float range = MagicProj.Size * 8;
             Projectile.velocity = Projectile.velocity.RotatedByRandom(MathHelper.PiOver4/2);
             Projectile.position.X += Main.rand.NextFloat(-range, range);
             Projectile.position.Y += Main.rand.NextFloat(-range, range);
