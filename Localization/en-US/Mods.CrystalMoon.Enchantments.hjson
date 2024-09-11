@@ -352,5 +352,5 @@ SquidFormEnchantment: {
 
 CoagulateEnchantment: {
 	DisplayName: Coagulate Enchantment
-	Tooltip:  When your spell hits an enemy or tile, it bursts into blood and knocks enemies upward!
+	Tooltip: When your spell hits an enemy or tile, it bursts into blood and knocks enemies upward!
 }
