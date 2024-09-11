@@ -394,3 +394,13 @@ ReverserOfRadianceEnchantment: {
 	DisplayName: Reverser Of Radiance Enchantment
 	Tooltip: Takes the timer for your spells and resets it back to 0!
 }
+
+ReverserOfPhantasmalEnchantment: {
+	DisplayName: Reverser Of Phantasmal Enchantment
+	Tooltip: Takes the timer for your spells and resets it back to 0!
+}
+
+ReverserOfUvilisEnchantment: {
+	DisplayName: Reverser Of Uvilis Enchantment
+	Tooltip: Takes the timer for your spells and resets it back to 0!
+}
