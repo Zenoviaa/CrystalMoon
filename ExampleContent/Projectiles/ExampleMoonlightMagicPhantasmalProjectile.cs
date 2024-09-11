@@ -14,7 +14,7 @@ namespace CrystalMoon.ExampleContent.Projectiles
     internal class ExampleMoonlightMagicPhantasmalProjectile : ModProjectile
     {
         int trailingMode = 0;
-        private ref float _timer => ref Projectile.ai[0];
+        private ref float Countertimer => ref Projectile.ai[0];
         public override string Texture => TextureRegistry.EmptyTexturePath;
         public override void SetStaticDefaults()
         {
@@ -38,7 +38,7 @@ namespace CrystalMoon.ExampleContent.Projectiles
         public override void AI()
         {
             base.AI();
-            _timer++;
+            Countertimer++;
             ProjectileID.Sets.TrailCacheLength[Type] = 36;
             AI_Particles();
             Projectile.velocity = Vector2.Lerp(

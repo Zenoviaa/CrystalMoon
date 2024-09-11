@@ -23,7 +23,7 @@ namespace CrystalMoon.Content.MoonlightMagic
 
         private Asset<Texture2D> _texture;
 
-        private ref float _timer => ref Projectile.ai[0];
+        private ref float Countertimer => ref Projectile.ai[0];
         private ref float _swingDirection => ref Projectile.ai[1];
         private ref float _swingTime => ref Projectile.ai[2];
         private Player Owner => Main.player[Projectile.owner];
@@ -77,7 +77,7 @@ namespace CrystalMoon.Content.MoonlightMagic
         public override void AI()
         {
             base.AI();
-            if (_timer == 0)
+            if (Countertimer == 0)
             {
                 SwingTime = (int)(_swingTime / Owner.GetAttackSpeed(Projectile.DamageType));
                 Projectile.timeLeft = SwingTime;
@@ -113,8 +113,8 @@ namespace CrystalMoon.Content.MoonlightMagic
             float swingYRadius = 128;
             float swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4;
 
-            _timer++;
-            float lerpValue = _timer / SwingTime;
+            Countertimer++;
+            float lerpValue = Countertimer / SwingTime;
             float swingProgress = lerpValue;
             float targetRotation = Projectile.velocity.ToRotation();
 

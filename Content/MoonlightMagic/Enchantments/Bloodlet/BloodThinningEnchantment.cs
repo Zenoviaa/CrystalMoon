@@ -19,7 +19,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Bloodlet
 {
     internal class BloodThinningEnchantment : BaseEnchantment
     {
-        private int _timer;
+        
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -31,10 +31,10 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Bloodlet
             base.AI();
 
             //Count up
-            _timer++;
+            Countertimer++;
 
             //If greater than time then start homing, we'll just swap the movement type of the projectile
-            if (_timer == time)
+            if (Countertimer == time)
             {
                 for (int i = 0; i < 4; i++)
                 {
@@ -50,7 +50,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Bloodlet
                 Projectile.damage = (int)damage;
             }
 
-            if (_timer < time)
+            if (Countertimer < time)
             {
                 MagicProj.Size *= 0.98f;
             }

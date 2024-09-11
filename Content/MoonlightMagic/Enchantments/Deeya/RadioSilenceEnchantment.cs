@@ -19,14 +19,14 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Deeya
 {
     internal class RadioSilenceEnchantment : BaseEnchantment
     {
-        private float _timer;
+        private float Countertimer;
 
         public override void AI()
         {
             base.AI();
 
             //Count up
-            _timer++ ;
+            Countertimer++ ;
             float oscSpeed = 0.05f;
             float xAmp = 5;
             float yAmp = 5;
@@ -35,7 +35,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Deeya
                 MathF.Cos(Projectile.position.Y * oscSpeed) * yAmp);
 
 
-            /*float p = MathF.Sin(_timer * 0.05f);
+            /*float p = MathF.Sin(Countertimer * 0.05f);
             float ep = Easing.SpikeOutExpo(p);
             float radiansRange = 3;
             float radiansToRotateBy = MathHelper.Lerp(-radiansRange, radiansRange, ep);

@@ -12,7 +12,7 @@ namespace CrystalMoon.Content.Bases
     internal abstract class BaseExplosionProjectile : ModProjectile
     {
         protected Vector2[] _circlePos = new Vector2[64];
-        private ref float _timer => ref Projectile.ai[0];
+        private ref float Countertimer => ref Projectile.ai[0];
         private float _duration;
         private float _beamWidth;
         private Color _beamColor;
@@ -29,13 +29,13 @@ namespace CrystalMoon.Content.Bases
         public override void AI()
         {
             base.AI();
-            _timer++;
-            if(_timer == 1)
+            Countertimer++;
+            if(Countertimer == 1)
             {
                 _duration = Projectile.timeLeft;
             }
  
-            float progress = _timer / _duration;
+            float progress = Countertimer / _duration;
             float r = RadiusFunction(progress);
             _beamWidth = BeamWidthFunction(progress);
             _beamColor = ColorFunction(progress);

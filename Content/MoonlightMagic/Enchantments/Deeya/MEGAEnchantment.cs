@@ -25,7 +25,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Deeya
             return 2f;
         }
 
-        private int _timer;
+        
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -37,15 +37,15 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Deeya
             base.AI();
 
             //Count up
-            _timer++;
+            Countertimer++;
 
-            if(_timer == 1)
+            if(Countertimer == 1)
             {
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<MEGAEnchantmentExplosion>(),
                 Projectile.damage, Projectile.knockBack, ai1: Projectile.whoAmI);
             }
             //If greater than time then start homing, we'll just swap the movement type of the projectile
-            if (_timer == time)
+            if (Countertimer == time)
             {
                 for (int i = 0; i < 4; i++)
                 {

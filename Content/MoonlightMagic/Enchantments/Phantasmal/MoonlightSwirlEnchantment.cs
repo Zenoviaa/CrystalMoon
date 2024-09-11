@@ -15,21 +15,21 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Phantasmal
 {
     internal class MoonlightSwirlEnchantment : BaseEnchantment
     {
-        private float _timer;
+        private float Countertimer;
 
         public override void AI()
         {
             base.AI();
 
             //Count up
-            _timer++;
+            Countertimer++;
             float oscSpeed = 0.01f;
             float xAmp = 15f;
             float yAmp = 15f;
 
             Vector2 circleVelocity = new Vector2(
-                MathF.Sin(_timer * oscSpeed) * xAmp,
-                MathF.Cos(_timer * oscSpeed) * yAmp);
+                MathF.Sin(Countertimer * oscSpeed) * xAmp,
+                MathF.Cos(Countertimer * oscSpeed) * yAmp);
             circleVelocity = circleVelocity.RotatedBy(Projectile.velocity.ToRotation());
             Projectile.velocity = Vector2.Lerp(Projectile.velocity, circleVelocity, 0.5f);
             //If greater than time then start homing, we'll just swap the movement type of the projectile

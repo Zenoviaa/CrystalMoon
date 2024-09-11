@@ -16,7 +16,7 @@ namespace CrystalMoon.Content.Bases
         public static int ExtraUpdateMult => 6;
 
         private bool _init;
-        protected float _timer;
+        protected float Countertimer;
         private bool _hashit;
         private bool _hasMissed;
         protected float _smoothedLerpValue;
@@ -105,13 +105,13 @@ namespace CrystalMoon.Content.Bases
 
             if(hitstopTimer > 0)
             {
-                _timer--;
+                Countertimer--;
                 Projectile.timeLeft++;
                 hitstopTimer--;
             } 
             else if(bounceTimer > 0)
             {
-                _timer-=2;
+                Countertimer-=2;
          
                 bounceTimer--;
                 if (bounceTimer <= 0)
@@ -151,8 +151,8 @@ namespace CrystalMoon.Content.Bases
             float swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4;
 
 
-            _timer++;
-            float lerpValue = _timer / SwingTime;
+            Countertimer++;
+            float lerpValue = Countertimer / SwingTime;
             float swingProgress = lerpValue;
             float targetRotation = Projectile.velocity.ToRotation();
             ModifyOvalSwingAI(targetRotation, lerpValue, ref swingXRadius, ref swingYRadius, ref swingRange, ref swingProgress);
@@ -238,8 +238,8 @@ namespace CrystalMoon.Content.Bases
 
             int dir = (int)Projectile.ai[1];
 
-            _timer++;
-            float lerpValue = _timer / SwingTime;
+            Countertimer++;
+            float lerpValue = Countertimer / SwingTime;
 
             //Smooth it some more
             float swingProgress = lerpValue;

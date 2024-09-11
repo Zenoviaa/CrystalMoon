@@ -12,7 +12,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Guuts
 {
     internal class HeavyMetalEnchantment : BaseEnchantment
     {
-        private int _timer;
+        
         public override void SetMagicDefaults()
         {
             base.SetMagicDefaults();
@@ -25,8 +25,8 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Guuts
             base.AI();
 
             //Count up
-            _timer++;
-            if (_timer == 1 && Main.myPlayer == Projectile.owner)
+            Countertimer++;
+            if (Countertimer == 1 && Main.myPlayer == Projectile.owner)
             {
                 MagicProj.OldPos[0] = Vector2.Zero;
                 Vector2 center = Main.MouseWorld;

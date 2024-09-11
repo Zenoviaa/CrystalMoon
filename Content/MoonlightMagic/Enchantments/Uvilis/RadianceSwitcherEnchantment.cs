@@ -18,7 +18,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Uvilis
 {
     internal class UvilisSwitcherEnchantment : BaseEnchantment
     {
-        private int _timer;
+        
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -30,10 +30,10 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Uvilis
             base.AI();
 
             //Count up
-            _timer++;
+            Countertimer++;
 
             //If greater than time then start homing, we'll just swap the movement type of the projectile
-            if (_timer == time)
+            if (Countertimer == time)
             {
                 for (int i = 0; i < 4; i++)
                 {
@@ -60,7 +60,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Uvilis
 
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
-           // Projectile.velocity += (Projectile.velocity.SafeNormalize(Vector2.Zero) * 4).RotatedBy(MathHelper.ToRadians(15 * MathF.Sin(_timer)));
+           // Projectile.velocity += (Projectile.velocity.SafeNormalize(Vector2.Zero) * 4).RotatedBy(MathHelper.ToRadians(15 * MathF.Sin(Countertimer)));
             return true;
         }
 

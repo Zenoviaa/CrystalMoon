@@ -25,16 +25,16 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Guuts
             base.SetDefaults();
             time = 30;
         }
-        private int _timer;
+        
         public override void AI()
         {
             base.AI();
 
             //Count up
-            _timer++;
+            Countertimer++;
 
             //If greater than time then start homing, we'll just swap the movement type of the projectile
-            if (_timer == time)
+            if (Countertimer == time)
             {
                 for (int i = 0; i < 4; i++)
                 {
@@ -50,7 +50,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Guuts
                 Projectile.damage = (int)damage;
             }
 
-            if (_timer < time)
+            if (Countertimer < time)
             {
                 MagicProj.Size *= 1.02f;
             }

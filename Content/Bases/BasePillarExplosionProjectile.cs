@@ -15,7 +15,7 @@ namespace CrystalMoon.Content.Bases
         public override string Texture => TextureRegistry.EmptyTexturePath;
         private Vector2[] _primPos = new Vector2[32];
 
-        private ref float _timer => ref Projectile.ai[0];
+        private ref float Countertimer => ref Projectile.ai[0];
         private float _duration;
 
         public override void SetDefaults()
@@ -37,13 +37,13 @@ namespace CrystalMoon.Content.Bases
         public override void AI()
         {
             base.AI();
-            _timer++;
-            if(_timer == 1)
+            Countertimer++;
+            if(Countertimer == 1)
             {
                 _duration = Projectile.timeLeft;
             }
 
-            float progress = _timer / _duration;
+            float progress = Countertimer / _duration;
             GlobalWidth = GlobalWidthFunction(progress);
             GlobalColor = GlobalColorFunction(progress);
 

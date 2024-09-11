@@ -15,7 +15,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Phantasmal
 {
     internal class PhasingMoonEnchantment : BaseEnchantment
     {
-        private float _timer;
+        private float Countertimer;
 
 
 

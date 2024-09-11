@@ -18,7 +18,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Nature
 {
     internal class SlothEnchantment : BaseEnchantment
     {
-        private int _timer;
+        
         private Vector2 _spawnPos;
         public override void SetDefaults()
         {
@@ -38,17 +38,17 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Nature
             base.AI();
 
             //Count up
-            _timer++;
+            Countertimer++;
 
             //If greater than time then start homing, we'll just swap the movement type of the projectile
-            if (_timer < time)
+            if (Countertimer < time)
             {
        
 
                 Projectile.Center = _spawnPos;
             }
 
-            if (_timer == time)
+            if (Countertimer == time)
             {
                 for (int i = 0; i < 4; i++)
                 {

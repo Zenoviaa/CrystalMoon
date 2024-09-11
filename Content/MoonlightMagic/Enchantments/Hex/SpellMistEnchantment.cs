@@ -18,7 +18,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
 {
     internal class SpellMistEnchantment : BaseEnchantment
     {
-        private float _timer;
+        private float Countertimer;
 
 
         public override void AI()

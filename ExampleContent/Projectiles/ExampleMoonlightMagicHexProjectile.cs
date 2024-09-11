@@ -12,7 +12,7 @@ namespace CrystalMoon.ExampleContent.Projectiles
 {
     internal class ExampleMoonlightMagicHexProjectile : ModProjectile
     {
-        private ref float _timer => ref Projectile.ai[0];
+        private ref float Countertimer => ref Projectile.ai[0];
         public override string Texture => TextureRegistry.EmptyTexturePath;
         public override void SetStaticDefaults()
         {
@@ -37,13 +37,13 @@ namespace CrystalMoon.ExampleContent.Projectiles
         {
             base.AI();
        
-            _timer++;
+            Countertimer++;
             AI_Particles();
         }
 
         private void AI_Particles()
         {
-            if (_timer % 8 == 0)
+            if (Countertimer % 8 == 0)
             {
                 for(int i = 0; i < Projectile.oldPos.Length - 1; i++)
                 {

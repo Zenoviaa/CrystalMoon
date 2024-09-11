@@ -10,7 +10,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Bloodlet
 {
     internal class BloodVesselEnchantment : BaseEnchantment
     {
-        private int _timer;
+        
         public Vector2 FindBottomTile(Vector2 position)
         {
             int i = (int)(position.X / 16f);
@@ -32,8 +32,8 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Bloodlet
             base.AI();
 
             //Count up
-            _timer++;
-            if (_timer == 1 && Main.myPlayer == Projectile.owner)
+            Countertimer++;
+            if (Countertimer == 1 && Main.myPlayer == Projectile.owner)
             {
                 MagicProj.OldPos[0] = Vector2.Zero;
                 Vector2 center = Main.MouseWorld;

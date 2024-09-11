@@ -10,7 +10,7 @@ namespace CrystalMoon.Content.Bases
     {
         private float _duration;
         protected Vector2[] _primPos = new Vector2[32];
-        private ref float _timer => ref Projectile.ai[0];
+        private ref float Countertimer => ref Projectile.ai[0];
 
         public override string Texture => TextureRegistry.EmptyTexturePath;
         public float Progress { get; private set; }
@@ -30,13 +30,13 @@ namespace CrystalMoon.Content.Bases
         public override void AI()
         {
             base.AI();
-            _timer++;
-            if (_timer == 1)
+            Countertimer++;
+            if (Countertimer == 1)
             {
                 _duration = Projectile.timeLeft;
             }
 
-            Progress = _timer / _duration;
+            Progress = Countertimer / _duration;
             float r = RadiusFunction(Progress);
             for (int i = 0; i < _primPos.Length; i++)
             {
@@ -44,7 +44,7 @@ namespace CrystalMoon.Content.Bases
                 float length = _primPos.Length;
                 float progress = f / length;
                 float offset = progress * MathHelper.TwoPi *  2;
-                Vector2 rotatedOffset = Vector2.UnitY.RotatedBy(offset + (_timer / 20f)).RotatedByRandom(MathHelper.PiOver4 / 24f);
+                Vector2 rotatedOffset = Vector2.UnitY.RotatedBy(offset + (Countertimer / 20f)).RotatedByRandom(MathHelper.PiOver4 / 24f);
                 Vector2 rotatedVector = (rotatedOffset * r * VectorHelper.Osc(0.9f, 1f, 9));
                 if (i % 2 == 0)
                 {

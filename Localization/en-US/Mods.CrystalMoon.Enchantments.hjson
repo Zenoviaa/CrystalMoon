@@ -364,3 +364,8 @@ SharpTurnEnchantment: {
 	DisplayName: Sharp Turn Enchantment
 	Tooltip: Your spell will instantly turn 90 degrees after a short time
 }
+
+ReverserOfGuutsEnchantment: {
+	DisplayName: Reverser Of Guuts Enchantment
+	Tooltip: ""
+}

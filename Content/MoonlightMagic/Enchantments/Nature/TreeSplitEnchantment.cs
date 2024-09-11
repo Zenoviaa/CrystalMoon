@@ -10,7 +10,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Nature
 {
     internal class TreeSplitEnchantment : BaseEnchantment
     {
-        private int _timer;
+        
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -23,10 +23,10 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Nature
             if (!MagicProj.IsClone)
             {
                 //Count up
-                _timer++;
+                Countertimer++;
 
                 //If greater than time then start homing, we'll just swap the movement type of the projectile
-                if (_timer == time)
+                if (Countertimer == time)
                 {
                     int count = 3;
                     for (float i = 0; i < count; i++)

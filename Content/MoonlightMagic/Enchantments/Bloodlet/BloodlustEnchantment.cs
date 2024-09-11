@@ -9,7 +9,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Bloodlet
 {
     internal class BloodlustEnchantment : BaseEnchantment
     {
-        private int _timer;
+        
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -19,8 +19,8 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Bloodlet
         public override void AI()
         {
             base.AI();
-            _timer++;
-            if(_timer == time)
+            Countertimer++;
+            if(Countertimer == time)
             {
                 for (int i = 0; i < 6; i++)
                 {

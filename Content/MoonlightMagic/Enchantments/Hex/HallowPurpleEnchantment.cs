@@ -25,7 +25,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
             return 1f;
         }
 
-        private int _timer;
+        
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -37,10 +37,10 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
             base.AI();
 
             //Count up
-            _timer++;
+            Countertimer++;
 
             //If greater than time then start homing, we'll just swap the movement type of the projectile
-            if (_timer == time)
+            if (Countertimer == time)
             {
                 for (int i = 0; i < 4; i++)
                 {

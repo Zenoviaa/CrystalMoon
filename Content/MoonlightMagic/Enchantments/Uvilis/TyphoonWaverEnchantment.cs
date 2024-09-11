@@ -19,15 +19,15 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Uvilis
 {
     internal class TyphoonWaverEnchantment : BaseEnchantment
     {
-        private float _timer;
+        private float Countertimer;
         private Vector2 _velocity;
         public override void AI()
         {
             base.AI();
 
             //Count up
-            _timer++ ;
-            if(_timer == 1)
+            Countertimer++ ;
+            if(Countertimer == 1)
             {
                 _velocity = Projectile.velocity;
             }

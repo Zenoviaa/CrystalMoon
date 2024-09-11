@@ -22,6 +22,8 @@ namespace CrystalMoon.Content.MoonlightMagic
         public override string LocalizationCategory => "Enchantments";
 
         public int time;
+
+        public int Countertimer;
         public bool isTimedEnchantment => time > 0;
         public virtual float GetStaffManaModifier() { return 0.2f; }
 

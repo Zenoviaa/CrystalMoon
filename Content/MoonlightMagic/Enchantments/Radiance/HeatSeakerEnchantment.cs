@@ -18,7 +18,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Radiance
 {
     internal class HeatSeakerEnchantment : BaseEnchantment
     {
-        private int _timer;
+        
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -30,10 +30,10 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Radiance
             base.AI();
 
             //Count up
-            _timer++;
+            Countertimer++;
 
             //If greater than time then start homing, we'll just swap the movement type of the projectile
-            if (_timer == 1)
+            if (Countertimer == 1)
             {
 
                 MagicProj.Movement = new HomingLongMovement();

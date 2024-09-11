@@ -13,10 +13,11 @@ using CrystalMoon.Registries;
 using CrystalMoon.Content.MoonlightMagic.Movements;
 using CrystalMoon.Systems.Particles;
 using CrystalMoon.Visual.Particles;
+using System.Threading;
 
-namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
+namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Deeya
 {
-    internal class HexSwitcherEnchantment : BaseEnchantment
+    internal class ReverserOfDeeyaEnchantment : BaseEnchantment
     {
         
         public override void SetDefaults()
@@ -24,7 +25,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
             base.SetDefaults();
             time = 45;
         }
-
+        
         public override void AI()
         {
             base.AI();
@@ -33,41 +34,41 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
             Countertimer++;
 
             //If greater than time then start homing, we'll just swap the movement type of the projectile
-            if (Countertimer == time)
-            {
-                for (int i = 0; i < 4; i++)
-                {
-                    Vector2 spawnPoint = Projectile.Center + Main.rand.NextVector2Circular(8, 8);
-                    Vector2 velocity = Main.rand.NextVector2Circular(8, 8);
-                    Particle.NewParticle<GlowParticle>(spawnPoint, velocity, Color.HotPink);
-                }
-               
-                MagicProj.PrimaryElement = new HexElement();
 
-            }
+                foreach (var enchantment in MagicProj.Enchantments)
+                {
+                    //do a thing here
+                    if (enchantment.Countertimer > enchantment.time)
+                    {
+                        enchantment.Countertimer = 0;
+                    }
+
+                }
+            
+
         }
 
         public override float GetStaffManaModifier()
         {
-            return 0.2f;
+            return 1f;
         }
 
         public override int GetElementType()
         {
-            return ModContent.ItemType<HexElement>();
+            return ModContent.ItemType<DeeyaElement>();
         }
 
 
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
-           // Projectile.velocity += (Projectile.velocity.SafeNormalize(Vector2.Zero) * 4).RotatedBy(MathHelper.ToRadians(15 * MathF.Sin(Countertimer)));
+
             return true;
         }
 
         public override void SpecialInventoryDraw(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             base.SpecialInventoryDraw(item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
-            DrawHelper.DrawGlowInInventory(item, spriteBatch, position, ColorUtil.HexPurple);
+            DrawHelper.DrawGlowInInventory(item, spriteBatch, position, ColorUtil.DeeyaPink);
         }
     }
 }
