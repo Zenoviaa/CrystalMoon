@@ -39,6 +39,7 @@ Mods: {
 			ExplosiveMordorEnchantmentExplosion.DisplayName: Explosive Mordor Enchantment Explosion
 			MEGAEnchantmentExplosion.DisplayName: M E G A Enchantment Explosion
 			BruteForceEnchantmentExplosion.DisplayName: Brute Force Enchantment Explosion
+			CoagulateEnchantmentExplosion.DisplayName: Coagulate Enchantment Explosion
 		}
 
 		Buffs: {

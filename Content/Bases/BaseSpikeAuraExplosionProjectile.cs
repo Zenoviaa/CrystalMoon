@@ -9,7 +9,7 @@ namespace CrystalMoon.Content.Bases
     internal abstract class BaseSpikeAuraExplosionProjectile : ModProjectile
     {
         private float _duration;
-        private Vector2[] _primPos = new Vector2[32];
+        protected Vector2[] _primPos = new Vector2[32];
         private ref float _timer => ref Projectile.ai[0];
 
         public override string Texture => TextureRegistry.EmptyTexturePath;
