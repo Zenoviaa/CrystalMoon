@@ -319,3 +319,8 @@ ShadowStepEnchantment: {
 	DisplayName: Shadow Step Enchantment
 	Tooltip: Slightly randomizes the starting position and velocity of your spell!
 }
+
+BruteForceEnchantment: {
+	DisplayName: Brute Force Enchantment
+	Tooltip:  When your spell hits an enemy or tile, it explodes violently and pushes enemies back quite far!
+}
