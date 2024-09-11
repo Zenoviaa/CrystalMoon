@@ -36,6 +36,7 @@ Mods: {
 			TsunamiEnchantmentExplosion.DisplayName: Tsunami Enchantment Explosion
 			WaterDrillEnchantmentExplosion.DisplayName: Water Drill Enchantment Explosion
 			MetalForceEnchantmentExplosion.DisplayName: Metal Force Enchantment Explosion
+			ExplosiveMordorEnchantmentExplosion.DisplayName: Explosive Mordor Enchantment Explosion
 		}
 
 		Buffs: {

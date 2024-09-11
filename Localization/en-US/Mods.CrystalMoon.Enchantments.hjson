@@ -242,5 +242,10 @@ MetalForceEnchantment: {
 
 MagicMissileEnchantment: {
 	DisplayName: Magic Missile Enchantment
-	Tooltip: ""
+	Tooltip: Sends your spell to your cursor!
+}
+
+ExplosiveMordorEnchantment: {
+	DisplayName: Explosive Mordor Enchantment
+	Tooltip: Makes tiles explode when your spell hits them! May be a bad idea.
 }
