@@ -434,3 +434,8 @@ StarTurnEnchantment: {
 	DisplayName: Star Turn Enchantment
 	Tooltip: Your spell will instantly turn 135 degrees after a short time
 }
+
+FlowingBloodEnchantment: {
+	DisplayName: Flowing Blood Enchantment
+	Tooltip: Makes timers for your timed spells move 2x slower!
+}
