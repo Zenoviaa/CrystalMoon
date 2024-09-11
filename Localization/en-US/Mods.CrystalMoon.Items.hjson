@@ -276,3 +276,8 @@ BloodletSepter: {
 	DisplayName: Bloodlet Septer
 	Tooltip: ""
 }
+
+RewinderStaff: {
+	DisplayName: Rewinder Staff
+	Tooltip: The staff of all time.
+}
