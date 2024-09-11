@@ -47,9 +47,9 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
                     Vector2 spawnPoint = Projectile.Center + Main.rand.NextVector2Circular(8, 8);
                     Vector2 velocity = Main.rand.NextVector2Circular(8, 8);
                     Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity / 2, ModContent.ProjectileType<HallowPurpleEnchantmentExplosion>(),
-                    Projectile.damage * 2, Projectile.knockBack, Projectile.owner);
+                    Projectile.damage, Projectile.knockBack, Projectile.owner);
 
-
+                    Projectile.Kill();
                     Particle.NewParticle<SparkleHexParticle>(spawnPoint, velocity, Color.White);
 
                 }
@@ -94,12 +94,12 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
             Projectile.localNPCHitCooldown = 20;
             Projectile.timeLeft = 240;
             rStart = Main.rand.Next(60, 64);
-            rEnd = Main.rand.Next(400, 428);
+            rEnd = Main.rand.Next(120, 120);
         }
        
         public override void AI()
         {
-           
+            base.AI();
 
 
             for (int i = 0; i < Main.maxNPCs; i++)
@@ -147,8 +147,8 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
         protected override float BeamWidthFunction(float p)
         {
             //How wide the trail is going to be
-            float trailWidth = MathHelper.Lerp(64, 8, p);
-            float fadeWidth = MathHelper.Lerp(0, trailWidth, Easing.SpikeOutCirc(p)) * Main.rand.NextFloat(0.75f, 1.0f);
+            float trailWidth = MathHelper.Lerp(125, 13, p);
+            float fadeWidth = MathHelper.Lerp(0, trailWidth, Easing.OutExpo(p)) * Main.rand.NextFloat(0.85f, 1.0f);
             return fadeWidth;
         }
 
@@ -177,7 +177,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
         protected override float RadiusFunction(float p)
         {
             //How large the circle is going to be
-            return MathHelper.Lerp(rStart, rEnd, Easing.OutQuint(p));
+            return MathHelper.Lerp(rStart, rEnd, Easing.InQuint(p));
         }
 
         protected override BaseShader ReadyShader()
@@ -208,17 +208,17 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
         {
             //Trail
             trailMode = 0;
-            var shader = MagicHexShader.Instance;
+            var shader = MagicRadianceShader.Instance;
 
-            shader.PrimaryTexture = TextureRegistry.GlowTrail;
+            shader.PrimaryTexture = TextureRegistry.NoiseTextureClouds;
             shader.NoiseTexture = TextureRegistry.NoiseTextureCloudsSmall;
             shader.PrimaryColor = new Color(195, 158, 255);
             shader.NoiseColor = new Color(78, 76, 180);//new Color(78, 76, 180);
-            shader.OutlineColor = Color.White;
+            shader.OutlineColor = Color.Purple;
             shader.BlendState = BlendState.Additive;
             shader.SamplerState = SamplerState.PointWrap;
-            shader.Speed = 5.2f;
-            shader.Distortion = 0.1f;
+            shader.Speed = 15.2f;
+            shader.Distortion = 2f;
 
             //This just applis the shader changes
             TrailDrawer.Draw(Main.spriteBatch, _circlePos, Projectile.oldRot, ColorFunction, WidthFunction, shader, offset: Projectile.Size / 2);

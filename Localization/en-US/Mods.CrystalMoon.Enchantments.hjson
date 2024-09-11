@@ -222,5 +222,5 @@ VaseFormEnchantment: {
 
 HallowPurpleEnchantment: {
 	DisplayName: Hallow Purple Enchantment
-	Tooltip: ""
+	Tooltip: Turns your spell into a giant sphere of damage.
 }
