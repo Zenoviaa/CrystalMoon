@@ -56,7 +56,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 
                     Color color = Color.Lerp(Color.White, Color.Turquoise, 0.5f);
                     color.A = 0;
-                    Particle.NewBlackParticle<GlowParticle>(spawnPoint, velocity, color, Scale: 0.33f);
+                    Particle.NewBlackParticle<GlowParticle>(spawnPoint, velocity, color, Scale: 0.33f * MagicProj.ScaleMultiplier);
                 }
             }
         }
@@ -79,7 +79,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 
                 Color color = Color.Lerp(Color.White, Color.Turquoise, 0.5f);
                 color.A = 0;
-                Particle.NewBlackParticle<GlowParticle>(spawnPoint, velocity, color, Scale: 0.5f);
+                Particle.NewBlackParticle<GlowParticle>(spawnPoint, velocity, color, Scale: 0.5f * MagicProj.ScaleMultiplier);
             }
 
             for (float f = 0f; f < 1f; f += 0.2f)
@@ -90,7 +90,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 
                 Color color = Color.Lerp(Color.White, Color.Turquoise, 0.5f);
                 color.A = 0;
-                Particle.NewBlackParticle<GlowParticle>(spawnPoint, velocity, color, Scale: 0.5f);
+                Particle.NewBlackParticle<GlowParticle>(spawnPoint, velocity, color, Scale: 0.5f * MagicProj.ScaleMultiplier);
             }
         }
 
