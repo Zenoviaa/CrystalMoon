@@ -439,3 +439,13 @@ FlowingBloodEnchantment: {
 	DisplayName: Flowing Blood Enchantment
 	Tooltip: Makes timers for your timed spells move 2x slower!
 }
+
+TrailerEnchantment: {
+	DisplayName: Trailer Enchantment
+	Tooltip: Your Spell gains a longer trail while time is active!
+}
+
+GroundEaterEnchantment: {
+	DisplayName: Ground Eater Enchantment
+	Tooltip: Your Spell has a shorter trail while time is active!
+}
