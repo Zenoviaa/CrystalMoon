@@ -52,7 +52,7 @@ TentaclingHoneEnchantment: {
 
 BloodlustEnchantment: {
 	DisplayName: Bloodlust Enchantment
-	Tooltip: Your spell doubles in damage, but hurts you if you miss...
+	Tooltip: Your spell increases in damage by 25%, but hurts you if you miss...
 }
 
 SizerEnchantment: {

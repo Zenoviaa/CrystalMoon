@@ -13,7 +13,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Bloodlet
         public override void SetDefaults()
         {
             base.SetDefaults();
-            time = 15;
+            time = 45;
         }
 
         public override void AI()
@@ -32,7 +32,9 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Bloodlet
                     Particle.NewBlackParticle<BloodSparkleParticle>(spawnPoint, velocity, color);
                 }
 
-                Projectile.damage *= 2;
+                float damage = Projectile.damage;
+                damage *= 1.25f;
+                Projectile.damage = (int)damage;
             }
         }
 
