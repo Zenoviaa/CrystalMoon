@@ -86,8 +86,8 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Deeya
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 48;
-            Projectile.height = 48;
+            Projectile.width = 140;
+            Projectile.height = 140;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.usesLocalNPCImmunity = true;
