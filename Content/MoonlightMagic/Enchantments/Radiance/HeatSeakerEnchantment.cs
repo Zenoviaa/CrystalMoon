@@ -36,7 +36,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Radiance
             if (_timer == 1)
             {
 
-                MagicProj.Movement = new HomingMovement();
+                MagicProj.Movement = new HomingLongMovement();
             }
             MagicProj.Size *= 1.005f;
             Projectile.velocity *= 1.005f;
