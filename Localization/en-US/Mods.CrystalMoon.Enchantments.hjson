@@ -314,3 +314,8 @@ SpinbackEnchantment: {
 	DisplayName: Spinback Enchantment
 	Tooltip: Doubles your spell's knockback!
 }
+
+ShadowStepEnchantment: {
+	DisplayName: Shadow Step Enchantment
+	Tooltip: Slightly randomizes the starting position and velocity of your spell!
+}
