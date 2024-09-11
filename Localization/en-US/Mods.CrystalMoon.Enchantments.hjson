@@ -224,3 +224,8 @@ HallowPurpleEnchantment: {
 	DisplayName: Hallow Purple Enchantment
 	Tooltip: Turns your spell into a giant sphere of damage.
 }
+
+TsunamiEnchantment: {
+	DisplayName: Tsunami Enchantment
+	Tooltip: ""
+}

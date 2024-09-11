@@ -146,6 +146,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Hex
 
         protected override float BeamWidthFunction(float p)
         {
+
             //How wide the trail is going to be
             float trailWidth = MathHelper.Lerp(125, 13, p);
             float fadeWidth = MathHelper.Lerp(0, trailWidth, Easing.OutExpo(p)) * Main.rand.NextFloat(0.85f, 1.0f);
