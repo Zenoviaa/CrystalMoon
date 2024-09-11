@@ -12,6 +12,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Forms
 
         public static Asset<Texture2D> FourPointedDiamond => ModContent.Request<Texture2D>(AssetDirectory + "FourPointedDiamond");
 
+        public static Asset<Texture2D> Squid => ModContent.Request<Texture2D>(AssetDirectory + "Squid");
         public static Asset<Texture2D> BowingArrow => ModContent.Request<Texture2D>(AssetDirectory + "BowingArrow");
         public static Asset<Texture2D> FourPointedClover => ModContent.Request<Texture2D>(AssetDirectory + "FourPointedClover");
 
