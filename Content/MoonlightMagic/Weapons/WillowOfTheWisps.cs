@@ -7,8 +7,8 @@ namespace CrystalMoon.Content.MoonlightMagic.Weapons
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.damage = 12;
-            Item.shootSpeed = 5;
+            Item.damage = 16;
+            Item.shootSpeed = 7;
             Size = 24;
             TrailLength = 55;
             Form = FormRegistry.Crescent.Value;
