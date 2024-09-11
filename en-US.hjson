@@ -32,6 +32,7 @@ Mods: {
 			AdvancedMagicStaffProjectile.DisplayName: Advanced Magic Staff Projectile
 			HexCloudEnchantmentExplosion.DisplayName: Hex Cloud Enchantment Explosion
 			FloralBlastEnchantmentExplosion.DisplayName: Floral Blast Enchantment Explosion
+			HallowPurpleEnchantmentExplosion.DisplayName: Hallow Purple Enchantment Explosion
 		}
 
 		Buffs: {

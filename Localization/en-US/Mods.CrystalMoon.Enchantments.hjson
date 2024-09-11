@@ -219,3 +219,8 @@ VaseFormEnchantment: {
 	DisplayName: Vase Form Enchantment
 	Tooltip: Changes the form of the spell to a vase and +10% Spell damage!
 }
+
+HallowPurpleEnchantment: {
+	DisplayName: Hallow Purple Enchantment
+	Tooltip: ""
+}
