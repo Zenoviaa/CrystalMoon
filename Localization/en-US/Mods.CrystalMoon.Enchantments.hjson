@@ -324,3 +324,28 @@ BruteForceEnchantment: {
 	DisplayName: Brute Force Enchantment
 	Tooltip: When your spell hits an enemy or tile, it explodes violently and pushes enemies back quite far!
 }
+
+BowFormEnchantment: {
+	DisplayName: Bow Form Enchantment
+	Tooltip: Changes the form of the spell to a bow and double Spell knockback!
+}
+
+CoinFormEnchantment: {
+	DisplayName: Coin Form Enchantment
+	Tooltip: Changes the form of the spell to a coin and double Spell knockback!
+}
+
+LanternFormEnchantment: {
+	DisplayName: Lantern Form Enchantment
+	Tooltip: Changes the form of the spell to a lantern and +1 Penetration!
+}
+
+SkullFormEnchantment: {
+	DisplayName: Skull Form Enchantment
+	Tooltip: Changes the form of the spell to a skull and triple Spell knockback!
+}
+
+SquidFormEnchantment: {
+	DisplayName: Squid Form Enchantment
+	Tooltip: Changes the form of the spell to a squid and double Spell knockback!
+}
