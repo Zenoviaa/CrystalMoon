@@ -136,7 +136,7 @@ SpellMistEnchantment: {
 }
 
 PheonixSwirlEnchantment: {
-	DisplayName: Pheonix Swirl Enchantment
+	DisplayName: Phoenix Swirl Enchantment
 	Tooltip: Swirl your projectiles in a large oval!
 }
 
@@ -253,4 +253,9 @@ ExplosiveMordorEnchantment: {
 MEGAEnchantment: {
 	DisplayName: M E G A Enchantment
 	Tooltip: Your Spell casts a giant MEGA Deeya ball on startup and sucks in enemies as they hurt them!
+}
+
+BloodVesselEnchantment: {
+	DisplayName: Blood Vessel Enchantment
+	Tooltip: ""
 }
