@@ -322,5 +322,5 @@ ShadowStepEnchantment: {
 
 BruteForceEnchantment: {
 	DisplayName: Brute Force Enchantment
-	Tooltip:  When your spell hits an enemy or tile, it explodes violently and pushes enemies back quite far!
+	Tooltip: When your spell hits an enemy or tile, it explodes violently and pushes enemies back quite far!
 }
