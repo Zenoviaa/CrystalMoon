@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CrystalMoon.Content.MoonlightMagic.Elements;
+using Microsoft.Xna.Framework;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -6,11 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Phantasmal
 {
     internal class MagicMissileEnchantment : BaseEnchantment
     {
+        public override int GetElementType()
+        {
+            return ModContent.ItemType<PhantasmalElement>();
+        }
+
         public override void AI()
         {
             base.AI();
