@@ -77,8 +77,5 @@ UvilisElement: {
 
 PrismaticElement: {
 	DisplayName: Prismatic Element
-	Tooltip:
-		'''
-		Transforms your spell with the power of prisma!
-		'''
+	Tooltip: Transforms your spell with the power of prisma!
 }

@@ -40,6 +40,7 @@ Mods: {
 			MEGAEnchantmentExplosion.DisplayName: M E G A Enchantment Explosion
 			BruteForceEnchantmentExplosion.DisplayName: Brute Force Enchantment Explosion
 			CoagulateEnchantmentExplosion.DisplayName: Coagulate Enchantment Explosion
+			ShriekerEnchantmentExplosion.DisplayName: Shrieker Enchantment Explosion
 		}
 
 		Buffs: {

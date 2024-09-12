@@ -464,3 +464,8 @@ SwirlerBwirlerEnchantment: {
 	DisplayName: Swirler Bwirler Enchantment
 	Tooltip: Your spell will instantly turn a random amount of degrees after a short time
 }
+
+ShriekerEnchantment: {
+	DisplayName: Shrieker Enchantment
+	Tooltip: When your spell hits an enemy or tile, it bursts into phantasmal energy and knocks enemies upward!
+}
