@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Graphics.Shaders;
 
 namespace CrystalMoon.Systems.Shaders
 {
@@ -192,6 +193,24 @@ namespace CrystalMoon.Systems.Shaders
         }
 
 
+        public static void DrawWithMiscShader(SpriteBatch spriteBatch, 
+            Vector2[] oldPos,
+            float[] oldRot,
+            Func<float, Color> colorFunc,
+            Func<float, float> widthFunc,
+            MiscShaderData shader,
+            Vector2? offset = null)
+        {
+            spriteBatch.End();
+            spriteBatch.Begin();
+            shader.Apply();
+            var vertices = CalculateVertices(
+                oldPos, oldRot, colorFunc, widthFunc, offset);
+            DrawPrimsTriangles(vertices, null);
+            spriteBatch.End();
+            spriteBatch.Begin();
+        }
+
         public static void Draw(SpriteBatch spriteBatch,
             Vector2[] oldPos,
             float[] oldRot,
@@ -201,22 +220,32 @@ namespace CrystalMoon.Systems.Shaders
             Vector2? offset = null)
         {
             //Apply passes
-            shader.Apply();
-            ApplyPasses(shader.Effect);
-            if (shader.FillShape)
+            if(shader != null)
             {
-                Vector2[] filledPos = new Vector2[oldPos.Length + 1];
-                for (int i = 0; i < oldPos.Length; i++)
+                shader.Apply();
+                ApplyPasses(shader.Effect);
+                if (shader.FillShape)
                 {
-                    filledPos[i] = oldPos[i];
+                    Vector2[] filledPos = new Vector2[oldPos.Length + 1];
+                    for (int i = 0; i < oldPos.Length; i++)
+                    {
+                        filledPos[i] = oldPos[i];
+                    }
+                    filledPos[filledPos.Length - 1] = oldPos[0];
+                    oldPos = filledPos;
                 }
-                filledPos[filledPos.Length - 1] = oldPos[0];
-                oldPos = filledPos;
             }
+     
 
             var vertices = CalculateVertices(oldPos, oldRot, colorFunc, widthFunc, offset);
             DrawPrimsTriangles(vertices, shader);
-            shader.FillShape = false;
+           
+            if(shader != null)
+            {
+                shader.FillShape = false;
+
+            }
+       
         }
 
 
@@ -231,8 +260,12 @@ namespace CrystalMoon.Systems.Shaders
             SamplerState originalSamplerState = graphicsDevice.SamplerStates[0];
 
             graphicsDevice.RasterizerState.CullMode = CullMode.None;
-            graphicsDevice.BlendState = shader.BlendState;
-            graphicsDevice.SamplerStates[0] = shader.SamplerState;
+
+            if(shader != null)
+            {
+                graphicsDevice.BlendState = shader.BlendState;
+                graphicsDevice.SamplerStates[0] = shader.SamplerState;
+            }
 
             graphicsDevice.DrawUserPrimitives(
               PrimitiveType.TriangleList, vertices.ToArray(), 0, vertices.Count / 3);

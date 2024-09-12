@@ -74,3 +74,11 @@ UvilisElement: {
 		Uvilis magic can cause splash damage
 		'''
 }
+
+PrismaticElement: {
+	DisplayName: Prismatic Element
+	Tooltip:
+		'''
+		Transforms your spell with the power of prisma!
+		'''
+}

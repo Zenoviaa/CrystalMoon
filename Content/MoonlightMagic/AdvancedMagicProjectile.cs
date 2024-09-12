@@ -16,6 +16,7 @@ namespace CrystalMoon.Content.MoonlightMagic
         public override string Texture => TextureRegistry.EmptyTexturePath;
 
         public Vector2[] OldPos { get; private set; }
+        public float[] OldRot { get; private set; }
         public float Size { get; set; } = 16;
         public float ScaleMultiplier => Size / 16f;
         public int TrailLength { get; set; }
@@ -138,6 +139,7 @@ namespace CrystalMoon.Content.MoonlightMagic
             }
 
             OldPos = new Vector2[TrailLength];
+            OldRot = new float[TrailLength];
         }
 
         public override void AI()
@@ -160,18 +162,23 @@ namespace CrystalMoon.Content.MoonlightMagic
             for(int i = OldPos.Length - 1; i > 0; i--)
             {
                 OldPos[i] = OldPos[i - 1];
+                OldRot[i] = OldRot[i - 1];
             }
             if(OldPos.Length > 0)
                 OldPos[0] = Projectile.position;
-
+            if (OldRot.Length > 0)
+                OldRot[0] = Projectile.rotation;
             if(TrailLength != OldPos.Length)
             {
+                float[] newRot = new float[TrailLength];
                 Vector2[] newTrail = new Vector2[TrailLength];
                 for(int i = 0; i < OldPos.Length && i < newTrail.Length; i++)
                 {
                     newTrail[i] = OldPos[i];
+                    newRot[i] = OldRot[i];
                 }
                 OldPos = newTrail;
+                OldRot = newRot;
             }
         }
 
