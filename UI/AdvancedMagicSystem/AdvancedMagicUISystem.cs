@@ -34,6 +34,7 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             itemUIState = new ItemUIState();
             buttonUIState = new ButtonUIState();
 
+          
             staffUIState.Activate();
             itemUIState.Activate();
             buttonUIState.Activate();

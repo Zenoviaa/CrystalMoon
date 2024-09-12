@@ -469,3 +469,8 @@ ShriekerEnchantment: {
 	DisplayName: Shrieker Enchantment
 	Tooltip: When your spell hits an enemy or tile, it bursts into phantasmal energy and knocks enemies upward!
 }
+
+FlameWheelEnchantment: {
+	DisplayName: Flame Wheel Enchantment
+	Tooltip: Your spell summons in a circle of 8 projectiles around you! Each of these projectiles do an 8th of the original damage
+}

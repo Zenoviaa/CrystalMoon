@@ -106,8 +106,9 @@ namespace CrystalMoon.Content.MoonlightMagic
                     Enchantments.Add(instance);
                 }
             }
-
+   
             OldPos = new Vector2[TrailLength];
+            OldRot = new float[TrailLength];
         }
 
         public void SetMoonlightDefaults(BaseStaff item)
@@ -156,7 +157,7 @@ namespace CrystalMoon.Content.MoonlightMagic
             for (int i = 0; i < Enchantments.Count; i++)
             {
                 var enchantment = Enchantments[i];
-                enchantment.AI();
+                enchantment?.AI();
             }
 
             for(int i = OldPos.Length - 1; i > 0; i--)

@@ -17,7 +17,7 @@ using Terraria.UI.Chat;
 
 namespace CrystalMoon.Content.MoonlightMagic
 {
-    internal abstract class BaseEnchantment : BaseMagicItem, 
+        internal abstract class BaseEnchantment : BaseMagicItem, 
         IAdvancedMagicAddon,
         ICloneable
     {
