@@ -11,9 +11,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
 
-namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Radiance
+namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Nature
 {
-    internal class FlameWheelEnchantment : BaseEnchantment
+    internal class DichotamyEnchantment : BaseEnchantment
     {
         private bool _summonedCircle;
         private float _shootDelay;
@@ -22,8 +22,8 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Radiance
         public override void SetMagicDefaults()
         {
             base.SetMagicDefaults();
-            float minWaitTime = 20;
-            float maxWaitTime = 80;
+            float minWaitTime = 10;
+            float maxWaitTime = 40;
 
             Player player = Main.player[Projectile.owner];
             _spawnOffset = Projectile.Center - player.Center;
@@ -35,7 +35,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Radiance
 
         public override int GetElementType()
         {
-            return ModContent.ItemType<RadianceElement>();
+            return ModContent.ItemType<NaturalElement>();
         }
 
         public override float GetStaffManaModifier()
@@ -48,8 +48,8 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Radiance
             base.AI();
             if(!_summonedCircle && !MagicProj.IsClone)
             {
-                float count = 8;
-                float spawnRadius = 64;
+                float count = 2;
+                float spawnRadius = 40;
                 Player player = Main.player[Projectile.owner];
                 for(float f = 0; f < count; f++)
                 {

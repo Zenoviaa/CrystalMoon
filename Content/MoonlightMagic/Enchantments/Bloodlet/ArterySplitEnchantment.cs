@@ -11,9 +11,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
 
-namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Radiance
+namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Bloodlet
 {
-    internal class FlameWheelEnchantment : BaseEnchantment
+    internal class ArterySplitEnchantment : BaseEnchantment
     {
         private bool _summonedCircle;
         private float _shootDelay;
@@ -23,7 +23,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Radiance
         {
             base.SetMagicDefaults();
             float minWaitTime = 20;
-            float maxWaitTime = 80;
+            float maxWaitTime = 160;
 
             Player player = Main.player[Projectile.owner];
             _spawnOffset = Projectile.Center - player.Center;
@@ -35,7 +35,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Radiance
 
         public override int GetElementType()
         {
-            return ModContent.ItemType<RadianceElement>();
+            return ModContent.ItemType<BloodletElement>();
         }
 
         public override float GetStaffManaModifier()
@@ -48,8 +48,8 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Radiance
             base.AI();
             if(!_summonedCircle && !MagicProj.IsClone)
             {
-                float count = 8;
-                float spawnRadius = 64;
+                float count = 16;
+                float spawnRadius = 128;
                 Player player = Main.player[Projectile.owner];
                 for(float f = 0; f < count; f++)
                 {
