@@ -1,13 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CrystalMoon.Content.MoonlightMagic.Elements;
+using CrystalMoon.Registries;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using Terraria.ModLoader;
-using static System.Net.Mime.MediaTypeNames;
-using Terraria.UI.Chat;
-using CrystalMoon.Systems.Shaders;
-using CrystalMoon.Content.MoonlightMagic.Elements;
-using CrystalMoon.Registries;
 
 namespace CrystalMoon.Content.MoonlightMagic
 {
@@ -49,6 +45,7 @@ namespace CrystalMoon.Content.MoonlightMagic
             }
             bool isItemName = line.Mod == "Terraria" && line.Name == "ItemName";
             bool isEnchantTooltip = line.Mod == "CrystalMoon" && line.Name == "EnchantmentTooltip";
+            bool isSynergyTooltip = line.Mod == "CrystalMoon" && line.Name == "SynergyHelp";
             if (isItemName || isEnchantTooltip) 
             {
                 if (isEnchantTooltip)
@@ -68,6 +65,17 @@ namespace CrystalMoon.Content.MoonlightMagic
                 if(item.ModItem is BaseElement ele)
                 {
                     if (ele.DrawTextShader(spriteBatch, item, line, ref yOffset))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            if (isSynergyTooltip)
+            {
+                if (item.ModItem is SynergyTooltipItem t)
+                {
+                    if (t.PrimaryElement.DrawTextShader(spriteBatch, item, line, ref yOffset))
                     {
                         return false;
                     }

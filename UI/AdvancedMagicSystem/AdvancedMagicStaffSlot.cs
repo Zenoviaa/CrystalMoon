@@ -34,14 +34,24 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             Item = new Item();
             Item.SetDefaults(0);
 
-            var asset = ModContent.Request<Texture2D>("CrystalMoon/UI/AdvancedMagicSystem/EnchantmentCard");
+            var asset = ModContent.Request<Texture2D>(
+                "CrystalMoon/UI/AdvancedMagicSystem/EnchantmentCard");
             Width.Set(asset.Width() * scale, 0f);
             Height.Set(asset.Height() * scale, 0f);
-    
         }
 
         public int index;
         public bool isTimedSlot;
+        public bool HasSynergy()
+        {
+            if(Item.ModItem is BaseEnchantment enchantment)
+            {
+                return _staff.primaryElement.type == enchantment.GetElementType();
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Returns true if this item can be placed into the slot (either empty or a pet item)
         /// </summary>
@@ -99,6 +109,7 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
                 Main.LocalPlayer.mouseInterface = true;
                 HandleMouseItem();
             }
+
 
             //Draw Backing
             bool isMatch = false;
@@ -180,7 +191,33 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
 
             ItemSlot.DrawItemIcon(Item, _context, spriteBatch, centerPos, _scale, 32, Color.White);
 
-     
+            //Draw Orb Thingy
+            cardTexture = ModContent.Request<Texture2D>("CrystalMoon/UI/AdvancedMagicSystem/EnchantmentOrb").Value;
+
+            Vector2 orbDrawPos = rectangle.TopLeft() + 
+                new Vector2((rectangle.Width/2) - (cardTexture.Width / 2), 96);
+            spriteBatch.Draw(cardTexture, orbDrawPos, null, color2, 0f, default(Vector2), _scale, SpriteEffects.None, 0f);
+            Rectangle orbRectangle = cardTexture.Bounds;
+            orbRectangle.Location = orbDrawPos.ToPoint();
+            bool isHovering = orbRectangle.Contains(Main.MouseScreen.ToPoint());
+            if (isHovering)
+            {
+                SynergyTooltipItem t = ModContent.GetModItem(ModContent.ItemType<SynergyTooltipItem>()) as SynergyTooltipItem;
+                t.PrimaryElement = null;
+                t.Enchantment = null;
+                if(elementItem.ModItem is BaseElement element)
+                {
+                    t.PrimaryElement = element;
+                }
+                if(Item.ModItem is BaseEnchantment e)
+                {
+                   t.Enchantment = e;
+                }
+
+                Main.hoverItemName = "Testing Testing 123";
+                Main.HoverItem = t.Item; 
+            }
+
             if (contains && Item.IsAir)
             {
                 timer++;

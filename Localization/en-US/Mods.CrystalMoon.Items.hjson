@@ -291,3 +291,8 @@ WillowOfTheWisps: {
 	DisplayName: Willow Of The Wisps
 	Tooltip: ""
 }
+
+SynergyTooltipItem: {
+	DisplayName: Synergy Tooltip Item
+	Tooltip: ""
+}
