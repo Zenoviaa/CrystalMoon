@@ -286,3 +286,8 @@ ChalicemanSepter: {
 	DisplayName: Chaliceman Septer
 	Tooltip: ""
 }
+
+WillowOfTheWisps: {
+	DisplayName: Willow Of The Wisps
+	Tooltip: ""
+}

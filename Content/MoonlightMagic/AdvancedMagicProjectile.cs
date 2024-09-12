@@ -55,6 +55,19 @@ namespace CrystalMoon.Content.MoonlightMagic
         }
         public List<BaseEnchantment> Enchantments { get; private set; } = new List<BaseEnchantment>();
 
+        public void ReplaceEnchantment(BaseEnchantment enchantmentPrefab, int index)
+        {
+            var instance = (ModContent.GetModItem(enchantmentPrefab.Type) as BaseEnchantment).Instantiate();
+            instance.MagicProj = this;
+            instance.SetMagicDefaults();
+            Enchantments[index] = instance;
+        }
+
+        public int IndexOfEnchantment(BaseEnchantment enchantment)
+        {
+            return Enchantments.IndexOf(enchantment);
+        }
+
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -64,6 +77,7 @@ namespace CrystalMoon.Content.MoonlightMagic
             Projectile.timeLeft = 360;
             Projectile.light = 0.78f;
         }
+
         public void SetMoonlightDefaults(AdvancedMagicProjectile item)
         {
             Projectile.width = Projectile.height = (int)item.Size;

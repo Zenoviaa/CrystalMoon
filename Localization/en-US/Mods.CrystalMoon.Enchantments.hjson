@@ -449,3 +449,18 @@ GroundEaterEnchantment: {
 	DisplayName: Ground Eater Enchantment
 	Tooltip: Your Spell has a shorter trail while time is active!
 }
+
+GamblerEnchantment: {
+	DisplayName: Gambler Enchantment
+	Tooltip: Adds the effect of ANY random enchantment to your spell, it's different on each cast!
+}
+
+MimicryEnchantment: {
+	DisplayName: Mimicry Enchantment
+	Tooltip: Mimics the effect of the enchantment to the left of this one!
+}
+
+SwirlerBwirlerEnchantment: {
+	DisplayName: Swirler Bwirler Enchantment
+	Tooltip: Your spell will instantly turn a random amount of degrees after a short time
+}

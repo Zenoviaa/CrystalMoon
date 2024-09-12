@@ -31,5 +31,10 @@ namespace CrystalMoon
         public float StaminaMeterX = 50;
         [Range(0f, 100f)]
         public float StaminaMeterY = 3;
+
+        [Range(0f, 100f)]
+        public float EnchantMenuX = 50;
+        [Range(0f, 100f)]
+        public float EnchantMenuY = 50;
     }
 }

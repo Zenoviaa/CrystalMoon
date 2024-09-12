@@ -40,3 +40,13 @@ StaminaMeterY: {
 	Label: Stamina Meter Y
 	Tooltip: ""
 }
+
+EnchantMenuX: {
+	Label: Enchant Menu X
+	Tooltip: ""
+}
+
+EnchantMenuY: {
+	Label: Enchant Menu Y
+	Tooltip: ""
+}

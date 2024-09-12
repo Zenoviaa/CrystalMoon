@@ -1,5 +1,13 @@
 ﻿using CrystalMoon.Content.MoonlightMagic;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using System.Reflection;
+using System;
+using Terraria.ModLoader.Config;
+using Terraria.ModLoader;
+using Terraria;
 using Terraria.UI;
+using Microsoft.Xna.Framework;
 
 namespace CrystalMoon.UI.AdvancedMagicSystem
 {
@@ -25,6 +33,7 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
         {
             elementUI.ElementSlot.Refresh();
         }
+
     }
 
     internal class ItemUIState : UIState

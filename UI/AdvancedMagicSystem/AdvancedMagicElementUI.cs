@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
+using Terraria.ModLoader;
 
 namespace CrystalMoon.UI.AdvancedMagicSystem
 {
@@ -9,9 +10,6 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
     {
         internal const int width = 480;
         internal const int height = 155;
-
-        internal int RelativeLeft => Main.screenWidth - 614;
-        internal int RelativeTop => Main.screenHeight / 2 - 314;
 
         public AdvancedMagicElementSlot ElementSlot { get; private set; }
         public AdvancedMagicElementUI() : base()
@@ -25,8 +23,7 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
 
             Width.Pixels = width;
             Height.Pixels = height;
-            Left.Pixels = RelativeLeft;
-            Top.Pixels = RelativeTop;
+            SetPos();
             BackgroundColor = Color.Transparent;
             BorderColor = Color.Transparent;
             ElementSlot = new();
@@ -38,8 +35,30 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             base.Update(gameTime);
 
             //Constantly lock the UI in the position regardless of resolution changes
-            Left.Pixels = RelativeLeft;
-            Top.Pixels = RelativeTop;
+            SetPos();
+        }
+
+
+        private void SetPos()
+        {
+            var config = ModContent.GetInstance<CrystalMoonClientConfig>();
+            Vector2 ratioPos = new Vector2(config.EnchantMenuX, config.EnchantMenuY);
+            if (ratioPos.X < 0f || ratioPos.X > 100f)
+            {
+                ratioPos.X = 50;
+            }
+
+            if (ratioPos.Y < 0f || ratioPos.Y > 100f)
+            {
+                ratioPos.Y = 3;
+            }
+
+            Vector2 drawPos = ratioPos;
+            drawPos.X = (int)(drawPos.X * 0.01f * Main.screenWidth);
+            drawPos.Y = (int)(drawPos.Y * 0.01f * Main.screenHeight);
+
+            Left.Pixels = drawPos.X - 64;
+            Top.Pixels = drawPos.Y - 64;
         }
     }
 }

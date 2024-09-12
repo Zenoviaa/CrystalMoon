@@ -1,14 +1,18 @@
 ﻿using CrystalMoon.Content.MoonlightMagic.Elements;
 using CrystalMoon.Registries;
+using CrystalMoon.Systems.LoadingSystems;
 using CrystalMoon.Systems.ScreenSystems;
 using CrystalMoon.Systems.Shaders;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Core;
 using Terraria.UI.Chat;
 
 namespace CrystalMoon.Content.MoonlightMagic
@@ -17,6 +21,17 @@ namespace CrystalMoon.Content.MoonlightMagic
         IAdvancedMagicAddon,
         ICloneable
     {
+        private static BaseEnchantment[] _enchantments;
+        public static BaseEnchantment[] AllEnchantments
+        {
+            get
+            {
+                if(_enchantments == null)
+                    _enchantments = CrystalMoon.Instance.GetContent<BaseEnchantment>().ToArray();
+                return _enchantments;
+            }
+        }
+
         public AdvancedMagicProjectile MagicProj { get; set; }
         public Projectile Projectile => MagicProj.Projectile;
         public override string LocalizationCategory => "Enchantments";
@@ -89,6 +104,7 @@ namespace CrystalMoon.Content.MoonlightMagic
         public virtual void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) { }
         public virtual void OnKill(int timeLeft) { }
         public virtual bool OnTileCollide(Vector2 oldVelocity) { return true; }
+
     }
     
 }
