@@ -474,3 +474,18 @@ FlameWheelEnchantment: {
 	DisplayName: Flame Wheel Enchantment
 	Tooltip: Your spell summons in a circle of 8 projectiles around you! Each of these projectiles do an 8th of the original damage
 }
+
+ArterySplitEnchantment: {
+	DisplayName: Artery Split Enchantment
+	Tooltip: Your spell summons in a circle of 16 projectiles around you! Each of these projectiles do an 16th of the original damage
+}
+
+The4MistsEnchantment: {
+	DisplayName: The 4 Mists Enchantment
+	Tooltip: Your spell summons in a circle of 4 projectiles around you! Each of these projectiles do an 4th of the original damage
+}
+
+DichotamyEnchantment: {
+	DisplayName: Dichotamy Enchantment
+	Tooltip: Your spell summons in 2 projectiles around you! Each of these projectiles do half of the original damage
+}
