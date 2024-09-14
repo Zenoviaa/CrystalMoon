@@ -496,3 +496,8 @@ HeartBurnBlastEnchantment: {
 	DisplayName: Heart Burn Blast Enchantment
 	Tooltip: Splits your projectile in 4 doing 50% less damage!
 }
+
+SparksSplitEnchantment: {
+	DisplayName: Sparks Split Enchantment
+	Tooltip: Splits your projectile into 6 when hitting the ground and bounces backwards!
+}
