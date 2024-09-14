@@ -84,3 +84,8 @@ MothlightElement: {
 	DisplayName: Mothlight Element
 	Tooltip: Transforms your spell with the power of mothlight!
 }
+
+WindElement: {
+	DisplayName: Wind Element
+	Tooltip: Transforms your spell with the power of wind!
+}
