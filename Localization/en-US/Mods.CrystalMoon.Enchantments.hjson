@@ -501,3 +501,8 @@ SparksSplitEnchantment: {
 	DisplayName: Sparks Split Enchantment
 	Tooltip: Splits your projectile into 6 when hitting the ground and bounces backwards!
 }
+
+ShitgunEnchantment: {
+	DisplayName: Shitgun Enchantment
+	Tooltip: Turns your spells into shotgun blasts with half of your original spell damage!
+}
