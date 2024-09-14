@@ -491,3 +491,8 @@ DichotamyEnchantment: {
 	DisplayName: Dichotamy Enchantment
 	Tooltip: Your spell summons in 2 projectiles around you! Each of these projectiles do half of the original damage
 }
+
+HeartBurnBlastEnchantment: {
+	DisplayName: Heart Burn Blast Enchantment
+	Tooltip: ""
+}

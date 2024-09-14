@@ -32,7 +32,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Bloodlet
                     for (float i = 0; i < count; i++)
                     {
                         float progress = i / count;
-                        float angle = MathHelper.PiOver2;
+                        float angle = MathHelper.TwoPi;
                         float fireRot = progress * angle;
                         Vector2 fireDirection = Projectile.velocity.SafeNormalize(Vector2.Zero);
                         Vector2 firePoint = Projectile.Center;
