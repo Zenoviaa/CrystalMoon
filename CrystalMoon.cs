@@ -185,7 +185,8 @@ namespace CrystalMoon
                 TextureAssets.ScrollLeftButton = ModContent.Request<Texture2D>("CrystalMoon/Assets/Textures/UI/BackButton");
                 TextureAssets.ScrollRightButton = ModContent.Request<Texture2D>("CrystalMoon/Assets/Textures/UI/ForwardButton");
 
-                On_UIWorldListItem.DrawSelf += DrawWorldSelecItemOverlayUI;
+                On_UIScrollbar.DrawSelf += DrawScrollbarUI;
+                 On_UIWorldListItem.DrawSelf += DrawWorldSelecItemOverlayUI;
                 On_UIWorldCreationPreview.DrawSelf += DrawWorldPreviewUI;
             }
 
@@ -196,6 +197,16 @@ namespace CrystalMoon
         {
             orig(self, spriteBatch);
             DrawWorldPreview(self, spriteBatch);
+        }
+
+        private void DrawScrollbarUI(On_UIScrollbar.orig_DrawSelf orig, UIScrollbar self, SpriteBatch spriteBatch)
+        {
+            typeof(UIScrollbar).GetField("_texture", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(self, ModContent.Request<Texture2D>("CrystalMoon/Assets/Textures/UI/ScrollBarOuter"));
+            typeof(UIScrollbar).GetField("_innerTexture", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(self, ModContent.Request<Texture2D>("CrystalMoon/Assets/Textures/UI/ScrollBarIn"));
+
+
+
+            orig(self, spriteBatch);
         }
 
         private void DrawWorldSelecItemOverlayUI(On_UIWorldListItem.orig_DrawSelf orig, UIWorldListItem self, SpriteBatch spriteBatch)
