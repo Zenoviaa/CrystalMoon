@@ -494,5 +494,5 @@ DichotamyEnchantment: {
 
 HeartBurnBlastEnchantment: {
 	DisplayName: Heart Burn Blast Enchantment
-	Tooltip: ""
+	Tooltip: Splits your projectile in 4 doing 50% less damage!
 }
