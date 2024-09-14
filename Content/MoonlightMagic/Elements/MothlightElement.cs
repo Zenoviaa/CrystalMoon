@@ -95,7 +95,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 
         private float StripWidth(float progressOnStrip)
         {
-            return MathHelper.Lerp(26f, 32f, Utils.GetLerpValue(0f, 0.2f, progressOnStrip, clamped: true)) * Utils.GetLerpValue(0f, 0.07f, progressOnStrip, clamped: true);
+            return MathHelper.Lerp(26f, 32f, Utils.GetLerpValue(0f, 0.2f, progressOnStrip, clamped: true)) * Utils.GetLerpValue(0f, 0.07f, progressOnStrip, clamped: true) * MagicProj.ScaleMultiplier;
         }
 
         #endregion

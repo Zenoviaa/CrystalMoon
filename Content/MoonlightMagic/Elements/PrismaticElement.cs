@@ -106,7 +106,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             float num = 1f;
             float lerpValue = Utils.GetLerpValue(0f, 0.2f, progressOnStrip, clamped: true);
             num *= 1f - (1f - lerpValue) * (1f - lerpValue);
-            return MathHelper.Lerp(0f, 32f, num);
+            return MathHelper.Lerp(0f, 32f, num) * MagicProj.ScaleMultiplier; ;
         }
 
         #endregion
