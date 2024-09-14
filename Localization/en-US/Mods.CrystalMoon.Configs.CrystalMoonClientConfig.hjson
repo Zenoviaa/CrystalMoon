@@ -16,6 +16,11 @@ WatersToggle: {
 	Tooltip: Toggles new water effects on and off.
 }
 
+LowDetailShadersToggle: {
+	Label: Low Detail Shaders
+	Tooltip: Uses a few less detailed shaders and draw functions for higher performance.
+}
+
 VanillaRespritesToggle: {
 	Label: Vanilla Resprites
 	Tooltip: Makes the vanilla textures look a bit different.

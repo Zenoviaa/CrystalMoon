@@ -51,6 +51,7 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             _scrollbar.Height.Set(340, 0);
             _scrollbar.Left.Set(0, 0.9f);
             _scrollbar.Top.Set(0, 0.1f);
+         
             float maxViewSize = 48 * 8f;
             _scrollbar.SetView(0, maxViewSize);
             Append(_scrollbar);

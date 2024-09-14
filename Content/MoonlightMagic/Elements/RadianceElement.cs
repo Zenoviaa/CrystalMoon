@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
 
@@ -39,6 +40,24 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
         }
 
         public override void DrawForm(SpriteBatch spriteBatch, Texture2D formTexture, Vector2 drawPos, Color drawColor, Color lightColor, float drawRotation, float drawScale)
+        {
+            var config = ModContent.GetInstance<CrystalMoonClientConfig>();
+            if (!config.LowDetailShadersToggle)
+            {
+                DrawHighDetailForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale);
+            }
+            else
+            {
+                DrawLowDetailForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale);
+            }
+        }
+        
+        private void DrawLowDetailForm(SpriteBatch spriteBatch, Texture2D formTexture, Vector2 drawPos, Color drawColor, Color lightColor, float drawRotation, float drawScale)
+        {
+            base.DrawForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale);
+        }
+
+        private void DrawHighDetailForm(SpriteBatch spriteBatch, Texture2D formTexture, Vector2 drawPos, Color drawColor, Color lightColor, float drawRotation, float drawScale)
         {
             float p = MathUtil.Osc(0f, 1f, speed: 3);
             drawColor = Color.Lerp(Color.White, Color.Red, p);
@@ -88,7 +107,6 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             spriteBatch.End();
             spriteBatch.Begin();
         }
-
         public override void AI()
         {
             AI_Particles();

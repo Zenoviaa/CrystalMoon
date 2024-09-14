@@ -164,30 +164,6 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             drawColor = Color.Lerp(ColorUtil.NaturalGreen, Color.RosyBrown, p);
             drawScale *= MathUtil.Osc(0.8f, 1f);
             base.DrawForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale);
-
-            /*
-            var shader = PixelMagicSparkleWaterShader.Instance;
-            shader.NoiseTexture = TextureRegistry.NoiseTextureCloudsSmall;
-            shader.OutlineTexture = TextureRegistry.NoiseTextureCloudsSmall;
-            shader.PrimaryColor = Color.White;
-            shader.NoiseColor = Color.White;
-            shader.OutlineColor = Color.White;
-            shader.BlendState = BlendState.Additive;
-            shader.SamplerState = SamplerState.PointWrap;
-            shader.Speed = 0.8f;
-            shader.Distortion = 0.85f;
-            shader.Power = 0.5f;
-            shader.Threshold = 0.75f;
-            shader.Apply();
-
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, default, default, default, 
-                shader.Effect, Main.GameViewMatrix.ZoomMatrix);
-
-            base.DrawForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale);
-        
-            spriteBatch.End();
-            spriteBatch.Begin();*/
         }
 
         public override void DrawTrail()
