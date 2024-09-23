@@ -72,5 +72,10 @@
 	  <Folder Include="Systems\Primitives\" />
 	  <Folder Include="Systems\WaterSystsems\" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Reference Include="SubworldLibrary">
+	    <HintPath>SubworldLibrary.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
 
 </Project>
