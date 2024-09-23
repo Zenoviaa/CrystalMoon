@@ -1,25 +1,19 @@
-﻿using System;
+﻿using CrystalMoon.Systems.TileSystems;
+using CrystalMoon.Tiles.IceTiles;
+using CrystalMoon.Tiles.MothlightTiles;
+using CrystalMoon.Tiles.RainforestTiles;
+using CrystalMoon.WorldGeneration.StructureManager;
+using Microsoft.Xna.Framework;
+using ReLogic.Utilities;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.Generation;
+using Terraria.ID;
+using Terraria.IO;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
-using Terraria;
-using Terraria.Localization;
-using Terraria.IO;
-using static tModPorter.ProgressUpdate;
-using Microsoft.Xna.Framework;
-using Terraria.ID;
-using Terraria.DataStructures;
-using CrystalMoon.Systems.TileSystems;
-using ReLogic.Utilities;
-using CrystalMoon.WorldGeneration.StructureManager;
-using CrystalMoon.Tiles.IceTiles;
-using CrystalMoon.Tiles.RainforestTiles;
-using CrystalMoon.Tiles.AbysmTiles;
-using CrystalMoon.Tiles.MothlightTiles;
 
 
 
@@ -28,7 +22,6 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
     public class CrystalMoonWorldBase : ModSystem
     {
-
         private void DoNothing(GenerationProgress progress, GameConfiguration configuration) { }
         private void ReplacePassLegacy(List<GenPass> tasks, string name, WorldGenLegacyMethod method)
         {
@@ -82,6 +75,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                 tasks[i] = new PassLegacy(tasks[i].Name, DoNothing);
                
             }
+
         }
 
         private void RemovePass(List<GenPass> tasks, string name)
@@ -108,8 +102,6 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
         {
-
-           
             //This completely replaces the vanilla pass
 
             // ReplacePassLegacy(tasks, "Terrain", NewSurfacing);
@@ -503,9 +495,9 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                         RainCircles = true;
 
                         int CirclesY = smy + Main.rand.Next(200, 1000);
-                        float x = (float)RFCenter.X + (float)Main.rand.Next(-900, 900);
+                        float x = RFCenter.X + (float)Main.rand.Next(-900, 900);
                         float targetX = RFCenter.X;
-                        float lerpValue = (float)CirclesY / ((float)RFCenter.Y + 1500);
+                        float lerpValue = CirclesY / ((float)RFCenter.Y + 1500);
                         lerpValue = MathHelper.Clamp(lerpValue, 0, 1);
                         int CirclesX = (int)MathHelper.Lerp(x, targetX, lerpValue);
 
@@ -755,7 +747,6 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
             progress.Message = "Ice biome mounding";
             int smx = 0;
             int smy = 0;
-            bool placed;
             int contdown = 0;
             int contdownx = 0;
             if (jungleNIce == 2)
@@ -822,8 +813,6 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     WorldGen.digTunnel(smx - 300 - contdownx, smy + 1500, 0, 1, 1, Main.rand.Next(40) + 10, true);
 
                     WorldGen.digTunnel(smx - 300 - contdownx, smy + 1800, 0, 1, 1, Main.rand.Next(40) + 10, true);
-                    placed = true;
-
                     AbysmStart = new Point(smx, smy - 250 - contdown);
                     AbysmStart2 = new Point(smx, smy - 250 - contdown);
                 }
@@ -877,11 +866,6 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                         new Actions.PlaceWall(WallID.SnowWallUnsafe),
                         new Actions.Smooth(true)
                     }));
-
-                    // Dig big chasm at top
-                    // WorldGen.digTunnel(smx, smy - 250, 0, 1, 1000, 15, false);
-
-                    placed = true;
                 }
 
                 for (int daa = 0; daa < 30; daa++)
@@ -896,8 +880,6 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     WorldGen.digTunnel(smx - 300 - contdownx, smy + 1500, 0, 1, 1, Main.rand.Next(40) + 10, true);
 
                     WorldGen.digTunnel(smx - 300 - contdownx, smy + 1800, 0, 1, 1, Main.rand.Next(40) + 10, true);
-                    placed = true;
-
                     AbysmStart = new Point(smx, smy - 250 - contdown);
                     AbysmStart2 = new Point(smx, smy - 250 - contdown);
                 }
@@ -939,7 +921,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
             for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY * 8.2f) * 6E-04); k++)
             {
                 int X = WorldGen.genRand.Next(1000, Main.maxTilesX - 1000);
-                int Y = WorldGen.genRand.Next((int)AbysmStart2.Y - 90, AbysmStart2.Y + 90);
+                int Y = WorldGen.genRand.Next(AbysmStart2.Y - 90, AbysmStart2.Y + 90);
                 int yBelow = Y + 1;
                 Vector2 WallPosition = new Vector2(X, yBelow);
                 if (!WorldGen.SolidTile(X, yBelow))
@@ -992,7 +974,6 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
                 int caveSteps = 200; // How many carves
                 int Blockwidth = 9; //Block width for how far
-                int Blockwidth2 = 12;
                 int Blockwidth3 = 15;
 
                 Vector2 baseCaveDirection = Vector2.UnitY.RotatedBy(WorldGen.genRand.NextFloatDirection() * (i * 0.04f));
@@ -1465,7 +1446,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
             for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY * 13.2f) * 6E-05); k++)
             {
                 int X = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
-                int Y = WorldGen.genRand.Next((int)Main.worldSurface, (int)Main.UnderworldLayer);
+                int Y = WorldGen.genRand.Next((int)Main.worldSurface, Main.UnderworldLayer);
                 int yBelow = Y;
                 Vector2 WallPosition = new Vector2(X, yBelow);
                 Vector2D WallPosition2 = new Vector2D(WorldGen.genRand.Next(-40, 40), WorldGen.genRand.Next(-70, -3));
@@ -1497,7 +1478,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
             for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY * 9.2f) * 6E-04); k++)
             {
                 int X = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
-                int Y = WorldGen.genRand.Next((int)0, (int)Main.UnderworldLayer);
+                int Y = WorldGen.genRand.Next(0, Main.UnderworldLayer);
                 int yBelow = Y + 1;
                 Vector2 WallPosition = new Vector2(X, yBelow + 2);
                 if (!WorldGen.SolidTile(X, yBelow))
@@ -1562,7 +1543,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
             progress.Message = "The frozen folk making village homes";
 
             StructureMap circleStructures = new StructureMap();
-            for (int k = 0; k < (int)(5); k++)
+            for (int k = 0; k < 5; k++)
             {
                 bool placed = false;
                 int attempts = 0;
@@ -2160,7 +2141,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
                 if (Main.tile[X, yBelow].TileType == TileID.SnowBlock)
                 {
-                    WorldGen.digTunnel(WallPosition.X, WallPosition.Y, 0, 0, 1, (int)(10), true);
+                    WorldGen.digTunnel(WallPosition.X, WallPosition.Y, 0, 0, 1, 10, true);
                     WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.HalfCircle(WorldGen.genRand.Next(30) + 5), Actions.Chain(new GenAction[]
                        {
                           // new Actions.ClearWall(true),
@@ -2185,7 +2166,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
             for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY * 13.2f) * 6E-06); k++)
             {
                 int X = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
-                int Y = WorldGen.genRand.Next((int)Main.worldSurface, (int)Main.UnderworldLayer);
+                int Y = WorldGen.genRand.Next((int)Main.worldSurface, Main.UnderworldLayer);
                 int yBelow = Y + 1;
                 Vector2 WallPosition = new Vector2(X, yBelow);
 
@@ -2194,7 +2175,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
                 if (Main.tile[X, yBelow].TileType == TileID.IceBlock)
                 {
-                    WorldGen.digTunnel(WallPosition.X, WallPosition.Y, 0, 0, 1, (int)(20), true);
+                    WorldGen.digTunnel(WallPosition.X, WallPosition.Y, 0, 0, 1, 20, true);
                     WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.HalfCircle(WorldGen.genRand.Next(15) + 5), Actions.Chain(new GenAction[]
                        {
                           // new Actions.ClearWall(true),
@@ -2221,7 +2202,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
             progress.Message = "The frozen folk creating bridges";
 
 
-            for (int k = 0; k < (int)(25); k++)
+            for (int k = 0; k < 25; k++)
             {
                 bool placed = false;
                 int attempts = 0;
@@ -3167,7 +3148,6 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
             progress.Message = "Mothlight awareness month";
             int smx = 0;
             int smy = 0;
-            bool placed;
             int contdown = 0;
             int contdownx = 0;
            
@@ -3280,11 +3260,6 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
                         //    WorldGen.digTunnel(smx - Main.rand.Next(10), smy - 250 - contdown, 0, 1, 1, 15, false);
                     }
-                    // Dig big chasm at top
-
-
-
-                    placed = true;
 
                     //AbysmStart = new Point(smx, smy - 250 - contdown);
                     // AbysmStart2 = new Point(smx, smy - 250 - contdown);
@@ -3403,7 +3378,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
                 if (Main.tile[X, yBelow].TileType == ModContent.TileType<MothlightMushroom>())
                 {
-                    WorldGen.digTunnel(WallPosition.X, WallPosition.Y, 0, 0, 1, (int)(WorldGen.genRand.Next(3, 15)), true);
+                    WorldGen.digTunnel(WallPosition.X, WallPosition.Y, 0, 0, 1, WorldGen.genRand.Next(3, 15), true);
                     WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Circle(WorldGen.genRand.Next(1, 5)), Actions.Chain(new GenAction[]
                        {
                            new Actions.ClearTile(true),

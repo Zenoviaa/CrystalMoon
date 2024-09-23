@@ -10,87 +10,14 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Biomes;
 using Terraria.GameContent.Generation;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
-using static tModPorter.ProgressUpdate;
 
 namespace CrystalMoon.WorldGeneration
 {
-    public class StandardWorldGenPass : GenPass
-    {
-        //TODO: remove this once tML changes generation passes
-        public StandardWorldGenPass() : base("Standard World", 100) { }
-
-        protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
-        {
-            GenerationProgress cache = WorldGenerator.CurrentGenerationProgress; // Cache generation progress...
-            WorldGen.GenerateWorld(Main.ActiveWorldFileData.Seed);
-            WorldGenerator.CurrentGenerationProgress = cache; // ...because GenerateWorld sets it to null when it ends, and it must be set back
-        }
-    }
-
-    public class SeedGenPass : GenPass
-    {
-        //TODO: remove this once tML changes generation passes
-        public SeedGenPass() : base("Set Seed", 0.01f) { }
-
-        protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
-        {
-            progress.Message = "Setting subworld seed"; // Sets the text displayed for this pass
-            Main.ActiveWorldFileData.SetSeedToRandom(); // Randomizes the subworld seed
-                                                        //Main.ActiveWorldFileData.SetSeed(100.ToString()); // Sets the subworld seed to 100
-
-            // You can do other things in this pass as long as they don't make RNG calls! Having specific passes is cleaner though.
-        }
-    }
-
-    public class TerrainGenPass : GenPass
-    {
-        //TODO: remove this once tML changes generation passes
-        public TerrainGenPass() : base("Terrain", 1) { }
-
-        protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
-        {
-            progress.Message = "Generating terrain"; // Sets the text displayed for this pass
-            Main.worldSurface = Main.maxTilesY / 2; // Hides the underground layer just out of bounds
-            GenVars.worldSurface = Main.worldSurface;
-            GenVars.worldSurfaceHigh = Main.worldSurface - 100;
-            Main.rockLayer = Main.maxTilesY; // Hides the cavern layer way out of bounds
-            for (int i = 0; i < Main.maxTilesX; i++)
-            {
-                for (int j = 0; j < Main.maxTilesY; j++)
-                {
-                    progress.Set((j + i * Main.maxTilesY) / (float)(Main.maxTilesX * Main.maxTilesY)); // Controls the progress bar, should only be set between 0f and 1f
-                    Tile tile = Main.tile[i, j];
-                    if(j > Main.maxTilesY / 2)
-                    {
-                        tile.HasTile = true;
-                        tile.TileType = TileID.Dirt;
-                    }
-              
-                }
-            }
-        }
-    }
-
-    public static class Extensions
-    {
-        public static void Active(this Tile tile, bool active)
-        {
-         
-            tile.HasTile = active;
-        }
-        public static void SetSlope(this Tile tile, int slope)
-        {
-
-            tile.Slope = (SlopeType)slope;
-        }
-    }
-
     public class CrystalMoonSubworld : Subworld
     {
         public override int Width => 9400;
@@ -99,10 +26,16 @@ namespace CrystalMoon.WorldGeneration
         public override bool ShouldSave => false;
         public override bool NoPlayerSaving => true;
 
+        //Here are the gen passes
         public override List<GenPass> Tasks => new List<GenPass>()
-        {       
+        {     
+            //This makes it actually random
             new SeedGenPass(),
-            new TerrainGenPass(),
+
+            //Terrain
+            new VanillaTerrainPass(),
+
+            //Most modded passes
             new PassLegacy("Gintze Eating Sand", NewDunes),
             new PassLegacy("Rain Clump", RainforestClump),
             new PassLegacy("Rain Deeps", RainforestDeeps),
@@ -127,6 +60,8 @@ namespace CrystalMoon.WorldGeneration
             new PassLegacy("Mothlight mushy sides", MakingMushySpikes),
             new PassLegacy("Mothlight Randomness", MakingMothRandomness),
             new PassLegacy("Mothlight Trees!", MothlightTreeSpawning),
+
+            //Some more vanilla passes
             new PassLegacy("Quick Cleanup", QuickCleanup),
             new PassLegacy("Cleanup Dirt", CleanupDirt)
         };
@@ -139,7 +74,7 @@ namespace CrystalMoon.WorldGeneration
             Main.time = 27000;
         }
 
-
+        Point RFCenter;
         Point AbysmStart;
         Point AbysmStart2;
         int desertNForest = 0;
@@ -151,10 +86,10 @@ namespace CrystalMoon.WorldGeneration
 
         private void Grass(GenerationProgress progress, GameConfiguration configuration)
         {
-            double num971 = (double)(Main.maxTilesX * Main.maxTilesY) * 0.002;
-            for (int num972 = 0; (double)num972 < num971; num972++)
+            double num971 = Main.maxTilesX * Main.maxTilesY * 0.002;
+            for (int num972 = 0; num972 < num971; num972++)
             {
-                progress.Set((double)num972 / num971);
+                progress.Set(num972 / num971);
                 int num973 = WorldGen.genRand.Next(1, Main.maxTilesX - 1);
                 int num974 = WorldGen.genRand.Next((int)GenVars.worldSurfaceLow, (int)GenVars.worldSurfaceHigh);
                 if (num974 >= Main.maxTilesY)
@@ -196,7 +131,7 @@ namespace CrystalMoon.WorldGeneration
             {
                 for (int num454 = 20; num454 < Main.maxTilesY - 20; num454++)
                 {
-                    if ((double)num454 < Main.worldSurface && WorldGen.oceanDepths(num453, num454) && Main.tile[num453, num454].TileType == 53 && Main.tile[num453, num454].HasTile)
+                    if (num454 < Main.worldSurface && WorldGen.oceanDepths(num453, num454) && Main.tile[num453, num454].TileType == 53 && Main.tile[num453, num454].HasTile)
                     {
                         if (Main.tile[num453, num454].BottomSlope)
                             Main.tile[num453, num454].SetSlope(0);
@@ -219,7 +154,7 @@ namespace CrystalMoon.WorldGeneration
                         if (Main.tile[num453, num454].TileType == 368 || Main.tile[num453, num454].TileType == 367)
                             Main.tile[num453, num454].TileType = 397;
 
-                        if ((double)num454 <= Main.rockLayer)
+                        if (num454 <= Main.rockLayer)
                         {
                             Main.tile[num453, num454].LiquidAmount = 0;
                         }
@@ -232,7 +167,7 @@ namespace CrystalMoon.WorldGeneration
                         }
                     }
 
-                    if ((double)num454 < Main.worldSurface && Main.tile[num453, num454].HasTile && Main.tile[num453, num454].TileType == 53 && Main.tile[num453, num454 + 1].WallType == 0 && !WorldGen.SolidTile(num453, num454 + 1))
+                    if (num454 < Main.worldSurface && Main.tile[num453, num454].HasTile && Main.tile[num453, num454].TileType == 53 && Main.tile[num453, num454 + 1].WallType == 0 && !WorldGen.SolidTile(num453, num454 + 1))
                     {
                         ushort num456 = 0;
                         int num457 = 3;
@@ -293,10 +228,10 @@ namespace CrystalMoon.WorldGeneration
             progress.Message = Lang.gen[25].Value;
             for (int num696 = 3; num696 < Main.maxTilesX - 3; num696++)
             {
-                double num697 = (double)num696 / (double)Main.maxTilesX;
+                double num697 = num696 / (double)Main.maxTilesX;
                 progress.Set(0.5 * num697);
                 bool flag43 = true;
-                for (int num698 = 0; (double)num698 < Main.worldSurface; num698++)
+                for (int num698 = 0; num698 < Main.worldSurface; num698++)
                 {
                     if (flag43)
                     {
@@ -336,10 +271,10 @@ namespace CrystalMoon.WorldGeneration
 
             for (int num699 = Main.maxTilesX - 5; num699 >= 5; num699--)
             {
-                double num700 = (double)num699 / (double)Main.maxTilesX;
+                double num700 = num699 / (double)Main.maxTilesX;
                 progress.Set(1.0 - 0.5 * num700);
                 bool flag44 = true;
-                for (int num701 = 0; (double)num701 < Main.worldSurface; num701++)
+                for (int num701 = 0; num701 < Main.worldSurface; num701++)
                 {
                     if (flag44)
                     {
@@ -527,7 +462,7 @@ namespace CrystalMoon.WorldGeneration
 
         #endregion
 
-        Point RFCenter;
+
 
         #region RainforestGeneration
         private void RainforestClump(GenerationProgress progress, GameConfiguration configuration)
@@ -667,9 +602,9 @@ namespace CrystalMoon.WorldGeneration
                         RainCircles = true;
 
                         int CirclesY = smy + Main.rand.Next(200, 1000);
-                        float x = (float)RFCenter.X + (float)Main.rand.Next(-900, 900);
+                        float x = RFCenter.X + (float)Main.rand.Next(-900, 900);
                         float targetX = RFCenter.X;
-                        float lerpValue = (float)CirclesY / ((float)RFCenter.Y + 1500);
+                        float lerpValue = CirclesY / ((float)RFCenter.Y + 1500);
                         lerpValue = MathHelper.Clamp(lerpValue, 0, 1);
                         int CirclesX = (int)MathHelper.Lerp(x, targetX, lerpValue);
 
@@ -919,7 +854,6 @@ namespace CrystalMoon.WorldGeneration
             progress.Message = "Ice biome mounding";
             int smx = 0;
             int smy = 0;
-            bool placed;
             int contdown = 0;
             int contdownx = 0;
             if (jungleNIce == 2)
@@ -986,8 +920,6 @@ namespace CrystalMoon.WorldGeneration
                     WorldGen.digTunnel(smx - 300 - contdownx, smy + 1500, 0, 1, 1, Main.rand.Next(40) + 10, true);
 
                     WorldGen.digTunnel(smx - 300 - contdownx, smy + 1800, 0, 1, 1, Main.rand.Next(40) + 10, true);
-                    placed = true;
-
                     AbysmStart = new Point(smx, smy - 250 - contdown);
                     AbysmStart2 = new Point(smx, smy - 250 - contdown);
                 }
@@ -1041,11 +973,6 @@ namespace CrystalMoon.WorldGeneration
                         new Actions.PlaceWall(WallID.SnowWallUnsafe),
                         new Actions.Smooth(true)
                     }));
-
-                    // Dig big chasm at top
-                    // WorldGen.digTunnel(smx, smy - 250, 0, 1, 1000, 15, false);
-
-                    placed = true;
                 }
 
                 for (int daa = 0; daa < 30; daa++)
@@ -1060,8 +987,6 @@ namespace CrystalMoon.WorldGeneration
                     WorldGen.digTunnel(smx - 300 - contdownx, smy + 1500, 0, 1, 1, Main.rand.Next(40) + 10, true);
 
                     WorldGen.digTunnel(smx - 300 - contdownx, smy + 1800, 0, 1, 1, Main.rand.Next(40) + 10, true);
-                    placed = true;
-
                     AbysmStart = new Point(smx, smy - 250 - contdown);
                     AbysmStart2 = new Point(smx, smy - 250 - contdown);
                 }
@@ -1103,7 +1028,7 @@ namespace CrystalMoon.WorldGeneration
             for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY * 8.2f) * 6E-04); k++)
             {
                 int X = WorldGen.genRand.Next(1000, Main.maxTilesX - 1000);
-                int Y = WorldGen.genRand.Next((int)AbysmStart2.Y - 90, AbysmStart2.Y + 90);
+                int Y = WorldGen.genRand.Next(AbysmStart2.Y - 90, AbysmStart2.Y + 90);
                 int yBelow = Y + 1;
                 Vector2 WallPosition = new Vector2(X, yBelow);
                 if (!WorldGen.SolidTile(X, yBelow))
@@ -1156,7 +1081,6 @@ namespace CrystalMoon.WorldGeneration
 
                 int caveSteps = 200; // How many carves
                 int Blockwidth = 9; //Block width for how far
-                int Blockwidth2 = 12;
                 int Blockwidth3 = 15;
 
                 Vector2 baseCaveDirection = Vector2.UnitY.RotatedBy(WorldGen.genRand.NextFloatDirection() * (i * 0.04f));
@@ -1629,7 +1553,7 @@ namespace CrystalMoon.WorldGeneration
             for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY * 13.2f) * 6E-05); k++)
             {
                 int X = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
-                int Y = WorldGen.genRand.Next((int)Main.worldSurface, (int)Main.UnderworldLayer);
+                int Y = WorldGen.genRand.Next((int)Main.worldSurface, Main.UnderworldLayer);
                 int yBelow = Y;
                 Vector2 WallPosition = new Vector2(X, yBelow);
                 Vector2D WallPosition2 = new Vector2D(WorldGen.genRand.Next(-40, 40), WorldGen.genRand.Next(-70, -3));
@@ -1661,7 +1585,7 @@ namespace CrystalMoon.WorldGeneration
             for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY * 9.2f) * 6E-04); k++)
             {
                 int X = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
-                int Y = WorldGen.genRand.Next((int)0, (int)Main.UnderworldLayer);
+                int Y = WorldGen.genRand.Next(0, Main.UnderworldLayer);
                 int yBelow = Y + 1;
                 Vector2 WallPosition = new Vector2(X, yBelow + 2);
                 if (!WorldGen.SolidTile(X, yBelow))
@@ -1726,7 +1650,7 @@ namespace CrystalMoon.WorldGeneration
             progress.Message = "The frozen folk making village homes";
 
             StructureMap circleStructures = new StructureMap();
-            for (int k = 0; k < (int)(5); k++)
+            for (int k = 0; k < 5; k++)
             {
                 bool placed = false;
                 int attempts = 0;
@@ -2324,7 +2248,7 @@ namespace CrystalMoon.WorldGeneration
 
                 if (Main.tile[X, yBelow].TileType == TileID.SnowBlock)
                 {
-                    WorldGen.digTunnel(WallPosition.X, WallPosition.Y, 0, 0, 1, (int)(10), true);
+                    WorldGen.digTunnel(WallPosition.X, WallPosition.Y, 0, 0, 1, 10, true);
                     WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.HalfCircle(WorldGen.genRand.Next(30) + 5), Actions.Chain(new GenAction[]
                        {
                           // new Actions.ClearWall(true),
@@ -2349,7 +2273,7 @@ namespace CrystalMoon.WorldGeneration
             for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY * 13.2f) * 6E-06); k++)
             {
                 int X = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
-                int Y = WorldGen.genRand.Next((int)Main.worldSurface, (int)Main.UnderworldLayer);
+                int Y = WorldGen.genRand.Next((int)Main.worldSurface, Main.UnderworldLayer);
                 int yBelow = Y + 1;
                 Vector2 WallPosition = new Vector2(X, yBelow);
 
@@ -2358,7 +2282,7 @@ namespace CrystalMoon.WorldGeneration
 
                 if (Main.tile[X, yBelow].TileType == TileID.IceBlock)
                 {
-                    WorldGen.digTunnel(WallPosition.X, WallPosition.Y, 0, 0, 1, (int)(20), true);
+                    WorldGen.digTunnel(WallPosition.X, WallPosition.Y, 0, 0, 1, 20, true);
                     WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.HalfCircle(WorldGen.genRand.Next(15) + 5), Actions.Chain(new GenAction[]
                        {
                           // new Actions.ClearWall(true),
@@ -2385,7 +2309,7 @@ namespace CrystalMoon.WorldGeneration
             progress.Message = "The frozen folk creating bridges";
 
 
-            for (int k = 0; k < (int)(25); k++)
+            for (int k = 0; k < 25; k++)
             {
                 bool placed = false;
                 int attempts = 0;
@@ -3331,7 +3255,6 @@ namespace CrystalMoon.WorldGeneration
             progress.Message = "Mothlight awareness month";
             int smx = 0;
             int smy = 0;
-            bool placed;
             int contdown = 0;
             int contdownx = 0;
 
@@ -3444,11 +3367,6 @@ namespace CrystalMoon.WorldGeneration
 
                         //    WorldGen.digTunnel(smx - Main.rand.Next(10), smy - 250 - contdown, 0, 1, 1, 15, false);
                     }
-                    // Dig big chasm at top
-
-
-
-                    placed = true;
 
                     //AbysmStart = new Point(smx, smy - 250 - contdown);
                     // AbysmStart2 = new Point(smx, smy - 250 - contdown);
@@ -3567,7 +3485,7 @@ namespace CrystalMoon.WorldGeneration
 
                 if (Main.tile[X, yBelow].TileType == ModContent.TileType<MothlightMushroom>())
                 {
-                    WorldGen.digTunnel(WallPosition.X, WallPosition.Y, 0, 0, 1, (int)(WorldGen.genRand.Next(3, 15)), true);
+                    WorldGen.digTunnel(WallPosition.X, WallPosition.Y, 0, 0, 1, WorldGen.genRand.Next(3, 15), true);
                     WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Circle(WorldGen.genRand.Next(1, 5)), Actions.Chain(new GenAction[]
                        {
                            new Actions.ClearTile(true),
@@ -3755,11 +3673,6 @@ namespace CrystalMoon.WorldGeneration
             }
         }
         #endregion
-
-
-
-
-
 
         #region CavesGeneration
         private void NewCaveFormationMiddle(GenerationProgress progress, GameConfiguration configuration)
