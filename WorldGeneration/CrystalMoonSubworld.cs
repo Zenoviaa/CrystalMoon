@@ -86,6 +86,7 @@ namespace CrystalMoon.WorldGeneration
         }
         public static void SetSlope(this Tile tile, int slope)
         {
+
             tile.Slope = (SlopeType)slope;
         }
     }
@@ -99,10 +100,9 @@ namespace CrystalMoon.WorldGeneration
         public override bool NoPlayerSaving => true;
 
         public override List<GenPass> Tasks => new List<GenPass>()
-        {
-            new StandardWorldGenPass()
-            /*new SeedGenPass(),
-            new TerrainPass(),
+        {          
+            new SeedGenPass(),
+            new TerrainGenPass(),
             new PassLegacy("Gintze Eating Sand", NewDunes),
             new PassLegacy("Rain Clump", RainforestClump),
             new PassLegacy("Rain Deeps", RainforestDeeps),
@@ -127,7 +127,7 @@ namespace CrystalMoon.WorldGeneration
             new PassLegacy("Mothlight Randomness", MakingMothRandomness),
             new PassLegacy("Mothlight Trees!", MothlightTreeSpawning),
             new PassLegacy("Quick Cleanup", QuickCleanup),
-            new PassLegacy("Cleanup Dirt", CleanupDirt)*/
+            new PassLegacy("Cleanup Dirt", CleanupDirt)
         };
 
    
