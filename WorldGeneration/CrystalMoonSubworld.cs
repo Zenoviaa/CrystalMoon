@@ -492,7 +492,9 @@ namespace CrystalMoon.WorldGeneration
 
 
         #endregion
+
         Point RFCenter;
+
         #region RainforestGeneration
         private void RainforestClump(GenerationProgress progress, GameConfiguration configuration)
         {
