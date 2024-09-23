@@ -100,7 +100,7 @@ namespace CrystalMoon.WorldGeneration
         public override bool NoPlayerSaving => true;
 
         public override List<GenPass> Tasks => new List<GenPass>()
-        {          
+        {       
             new SeedGenPass(),
             new TerrainGenPass(),
             new PassLegacy("Gintze Eating Sand", NewDunes),
@@ -111,6 +111,7 @@ namespace CrystalMoon.WorldGeneration
             new PassLegacy("Ice Clump", IceClump),
             new PassLegacy("Ice Caves Surface", IceyCaves),
             new PassLegacy("Mothlight Clump", MothlightClump),
+            new PassLegacy("Grass", Grass),
             new PassLegacy("Ice Bridges", RuneBridges),
             new PassLegacy("Abysm Clumping", AbysmClump),
             new PassLegacy("Icy Waters", MakingIcyPonds),
@@ -147,6 +148,39 @@ namespace CrystalMoon.WorldGeneration
         int noxNDread = 0;
 
         #region  Vanilla Gen Passes
+
+        private void Grass(GenerationProgress progress, GameConfiguration configuration)
+        {
+            double num971 = (double)(Main.maxTilesX * Main.maxTilesY) * 0.002;
+            for (int num972 = 0; (double)num972 < num971; num972++)
+            {
+                progress.Set((double)num972 / num971);
+                int num973 = WorldGen.genRand.Next(1, Main.maxTilesX - 1);
+                int num974 = WorldGen.genRand.Next((int)GenVars.worldSurfaceLow, (int)GenVars.worldSurfaceHigh);
+                if (num974 >= Main.maxTilesY)
+                    num974 = Main.maxTilesY - 2;
+
+                if (Main.tile[num973 - 1, num974].HasTile && Main.tile[num973 - 1, num974].TileType == 0 && Main.tile[num973 + 1, num974].HasTile && Main.tile[num973 + 1, num974].TileType == 0 && Main.tile[num973, num974 - 1].HasTile && Main.tile[num973, num974 - 1].TileType == 0 && Main.tile[num973, num974 + 1].HasTile && Main.tile[num973, num974 + 1].TileType == 0)
+                {
+                    Tile tile = Main.tile[num973, num974];
+                    tile.HasTile = true;
+                    Main.tile[num973, num974].TileType = 2;
+                }
+
+                num973 = WorldGen.genRand.Next(1, Main.maxTilesX - 1);
+                num974 = WorldGen.genRand.Next(0, (int)GenVars.worldSurfaceLow);
+                if (num974 >= Main.maxTilesY)
+                    num974 = Main.maxTilesY - 2;
+
+                if (Main.tile[num973 - 1, num974].HasTile && Main.tile[num973 - 1, num974].TileType == 0 && Main.tile[num973 + 1, num974].HasTile && Main.tile[num973 + 1, num974].TileType == 0 && Main.tile[num973, num974 - 1].HasTile && Main.tile[num973, num974 - 1].TileType == 0 && Main.tile[num973, num974 + 1].HasTile && Main.tile[num973, num974 + 1].TileType == 0)
+                {
+                    Tile tile = Main.tile[num973, num974];
+                    tile.HasTile = true;
+
+                    Main.tile[num973, num974].TileType = 2;
+                }
+            }
+        }
 
         private void TileCleanuRp(GenerationProgress progress, GameConfiguration configuration)
         {
