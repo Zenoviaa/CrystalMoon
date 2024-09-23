@@ -462,8 +462,6 @@ namespace CrystalMoon.WorldGeneration
 
         #endregion
 
-
-
         #region RainforestGeneration
         private void RainforestClump(GenerationProgress progress, GameConfiguration configuration)
         {
@@ -3246,7 +3244,6 @@ namespace CrystalMoon.WorldGeneration
 
 
         #endregion
-
 
         #region MothlightGeneration
 
