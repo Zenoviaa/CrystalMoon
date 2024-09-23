@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -466,6 +467,22 @@ namespace CrystalMoon.WorldGeneration.StructureManager
             writer.Write(tModTile.GetType().Name);
         }
     }
+    public class SubworldEnterer : ModItem
+    {
+        public override string Texture => "CrystalMoon/WorldGeneration/StructureManager/WandSaver"; //I do not do spriting
+        public override void SetDefaults()
+        {
+            Item.CloneDefaults(ItemID.MagicConch);
+            Item.useTime = Item.useAnimation = 15;
+        }
+
+        public override bool? UseItem(Player player)
+        {
+            SubworldSystem.Enter<CrystalMoonSubworld>();//.Enter(SubworldManager.mySubworldID);
+            return true;
+        }
+    }
+
 
     public class ModelizingSaver : ModItem
     {

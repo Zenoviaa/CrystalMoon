@@ -1,216 +1,143 @@
-﻿using System;
+﻿using CrystalMoon.Systems.TileSystems;
+using CrystalMoon.Tiles.IceTiles;
+using CrystalMoon.Tiles.MothlightTiles;
+using CrystalMoon.Tiles.RainforestTiles;
+using CrystalMoon.WorldGeneration.StructureManager;
+using Microsoft.Xna.Framework;
+using ReLogic.Utilities;
+using SubworldLibrary;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent.Biomes;
 using Terraria.GameContent.Generation;
+using Terraria.ID;
+using Terraria.IO;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
-using Terraria;
-using Terraria.Localization;
-using Terraria.IO;
 using static tModPorter.ProgressUpdate;
-using Microsoft.Xna.Framework;
-using Terraria.ID;
-using Terraria.DataStructures;
-using CrystalMoon.Systems.TileSystems;
-using ReLogic.Utilities;
-using CrystalMoon.WorldGeneration.StructureManager;
-using CrystalMoon.Tiles.IceTiles;
-using CrystalMoon.Tiles.RainforestTiles;
-using CrystalMoon.Tiles.AbysmTiles;
-using CrystalMoon.Tiles.MothlightTiles;
 
-
-
-namespace CrystalMoon.WorldGeneration.BaseEdits
+namespace CrystalMoon.WorldGeneration
 {
-
-    public class CrystalMoonWorldBase : ModSystem
+    public class StandardWorldGenPass : GenPass
     {
+        //TODO: remove this once tML changes generation passes
+        public StandardWorldGenPass() : base("Standard World", 100) { }
 
-        private void DoNothing(GenerationProgress progress, GameConfiguration configuration) { }
-        private void ReplacePassLegacy(List<GenPass> tasks, string name, WorldGenLegacyMethod method)
+        protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
-            var pass = new PassLegacy(name, method);
-            int index = tasks.FindIndex(genpass => genpass.Name.Equals(name));
-            if (index != -1)
-            {
-                tasks[index] = pass;
-            }
+            GenerationProgress cache = WorldGenerator.CurrentGenerationProgress; // Cache generation progress...
+            WorldGen.GenerateWorld(Main.ActiveWorldFileData.Seed);
+            WorldGenerator.CurrentGenerationProgress = cache; // ...because GenerateWorld sets it to null when it ends, and it must be set back
         }
+    }
 
-        private void RemoveMostPasses(List<GenPass> tasks)
-        {       
-            for (int i = 2; i < tasks.Count; i++)
-            {
-                //Bring back an older pass
-                if (tasks[i].Name == "Spawn Point")
-                    continue;
+    public class SeedGenPass : GenPass
+    {
+        //TODO: remove this once tML changes generation passes
+        public SeedGenPass() : base("Set Seed", 0.01f) { }
 
-                if (tasks[i].Name == "Quick Cleanup")
-                    continue;
-                
-                if (tasks[i].Name == "Clean Up Dirt")
-                    continue;
-
-                if (tasks[i].Name == "Smooth World")
-                    continue;
-
-                if (tasks[i].Name == "Grass")
-                    continue;
-
-                if (tasks[i].Name == "Lakes")
-                    continue;
-
-                if (tasks[i].Name == "Spreading Grass")
-                    continue;
-
-                if (tasks[i].Name == "Gems In Ice Biome")
-                    continue;
-
-                if (tasks[i].Name == "Pots")
-                    continue;
-
-                if (tasks[i].Name == "Tile Cleanup")
-                    continue;
-
-                if (tasks[i].Name == "Cave Walls")
-                    continue;
-
-
-                tasks[i] = new PassLegacy(tasks[i].Name, DoNothing);
-               
-            }
-        }
-
-        private void RemovePass(List<GenPass> tasks, string name)
+        protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
-            int caveIndex = tasks.FindIndex(genpass => genpass.Name.Equals(name));
-            if (caveIndex != -1)
-            {
-                tasks[caveIndex] = new PassLegacy(name, DoNothing);
-            }
+            progress.Message = "Setting subworld seed"; // Sets the text displayed for this pass
+            Main.ActiveWorldFileData.SetSeedToRandom(); // Randomizes the subworld seed
+                                                        //Main.ActiveWorldFileData.SetSeed(100.ToString()); // Sets the subworld seed to 100
+
+            // You can do other things in this pass as long as they don't make RNG calls! Having specific passes is cleaner though.
         }
-      
-        private void InsertNewPass(List<GenPass> tasks, string name, WorldGenLegacyMethod method, int index = -1)
+    }
+
+    public class TerrainGenPass : GenPass
+    {
+        //TODO: remove this once tML changes generation passes
+        public TerrainGenPass() : base("Terrain", 1) { }
+
+        protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
-            if (index != -1)
+            progress.Message = "Generating terrain"; // Sets the text displayed for this pass
+            Main.worldSurface = Main.maxTilesY / 2; // Hides the underground layer just out of bounds
+            GenVars.worldSurface = Main.worldSurface;
+            GenVars.worldSurfaceHigh = Main.worldSurface - 100;
+            Main.rockLayer = Main.maxTilesY; // Hides the cavern layer way out of bounds
+            for (int i = 0; i < Main.maxTilesX; i++)
             {
-                tasks.Insert(index, new PassLegacy(name, method));
-            }
-            else
-            {
-                tasks.Add(new PassLegacy(name, method));
-            }
-        }
-
-
-        public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
-        {
-
-           
-            //This completely replaces the vanilla pass
-
-            // ReplacePassLegacy(tasks, "Terrain", NewSurfacing);
-
-            //This function would remove every single pass except reset/terrain ones
-            RemoveMostPasses(tasks);
-
-
-
-            int SurfaceLeveling = tasks.FindIndex(genpass => genpass.Name.Equals("Tunnels"));
-            tasks[SurfaceLeveling] = new PassLegacy("LunarDiggin", (progress, config) =>
-            {
-                progress.Message = "Gintzia Digging Dunes in the ground and sands";
-                NewCaveFormationMiddle(progress, config);
-            });
-
-
-
-            int Dune = tasks.FindIndex(genpass => genpass.Name.Equals("Dunes"));
-            tasks[Dune] = new PassLegacy("Lunar Sands", (progress, config) =>
-            {
-                progress.Message = "Gintze eating sand";
-                NewDunes(progress, config);
-            });
-
-            int RainforestingGen = tasks.FindIndex(genpass => genpass.Name.Equals("Lunar Sands"));
-            if (RainforestingGen != -1)
-            {
-                tasks.Insert(RainforestingGen + 1, new PassLegacy("Rain Clump", RainforestClump));
-                tasks.Insert(RainforestingGen + 2, new PassLegacy("Rain Deeps", RainforestDeeps));
-                tasks.Insert(RainforestingGen + 3, new PassLegacy("Rain Trees", RainforestTreeSpawning));
-
-            }
-
-
-            int JungleGen = tasks.FindIndex(genpass => genpass.Name.Equals("Rain Deeps"));
-            if (JungleGen != -1)
-            {
-                tasks.Insert(JungleGen + 1, new PassLegacy("Jungle Clump", JungleClump));
-                //tasks.Insert(JungleGen + 2, new PassLegacy("RainDeeps", RainforestDeeps));
-            }
-
-            int IceClumping = tasks.FindIndex(genpass => genpass.Name.Equals("Jungle Clump"));
-            if (IceClumping != -1)
-            {
-                tasks.Insert(IceClumping + 1, new PassLegacy("Ice Clump", IceClump));
-                tasks.Insert(IceClumping + 2, new PassLegacy("Ice Caves Surface", IceyCaves));
-                //tasks.Insert(JungleGen + 2, new PassLegacy("RainDeeps", RainforestDeeps));
-            }
-
-            int MothlightClumping = tasks.FindIndex(genpass => genpass.Name.Equals("Ice Clump"));
-            if (MothlightClumping != -1)
-            {
-                tasks.Insert(MothlightClumping + 1, new PassLegacy("Mothlight Clump", MothlightClump));
-        
+                for (int j = 0; j < Main.maxTilesY; j++)
+                {
+                    progress.Set((j + i * Main.maxTilesY) / (float)(Main.maxTilesX * Main.maxTilesY)); // Controls the progress bar, should only be set between 0f and 1f
+                    Tile tile = Main.tile[i, j];
+                    if(j > Main.maxTilesY / 2)
+                    {
+                        tile.HasTile = true;
+                        tile.TileType = TileID.Dirt;
+                    }
               
-                // tasks.Insert(MothlightClumping + 2, new PassLegacy("Ice Caves Surface", IceyCaves));
-
+                }
             }
-          
-
-            int IceGen = tasks.FindIndex(genpass => genpass.Name.Equals("Clean Up Dirt"));
-            if (IceGen != -1)
-            {
-                tasks.Insert(IceGen + 2, new PassLegacy("Ice Bridges", RuneBridges));
-                tasks.Insert(IceGen + 3, new PassLegacy("Abysm Clumping", AbysmClump));               
-                tasks.Insert(IceGen + 4, new PassLegacy("Icy Waters", MakingIcyPonds));
-                tasks.Insert(IceGen + 5, new PassLegacy("Icy Surface Gremlins", SurfaceIceHouses));
-             
-                tasks.Insert(IceGen + 6, new PassLegacy("The icy spook", MakingIcySnows));
-                tasks.Insert(IceGen + 7, new PassLegacy("Walls ice underground", MakingIcyWalls));
-                tasks.Insert(IceGen + 8, new PassLegacy("Icy Pikes Underground", MakingIcyUndergroundSpikes));
-                tasks.Insert(IceGen + 9, new PassLegacy("Icy Pikes Overground", MakingIcyRandomness));
-                tasks.Insert(IceGen + 10, new PassLegacy("Ice Caves Underground", IceyUndergroundCaves));
-                tasks.Insert(IceGen + 11, new PassLegacy("Ice Crystals Spwning", IceCrystalsSpawning));
-                tasks.Insert(IceGen + 12, new PassLegacy("Ice Fog", IceFog));
-                tasks.Insert(IceGen + 13, new PassLegacy("Boreal Trees!", BorealTreeSpawning));
-
-                //tasks.Insert(JungleGen + 2, new PassLegacy("RainDeeps", RainforestDeeps));
-            }
-
-            int MothlightDeeps = tasks.FindIndex(genpass => genpass.Name.Equals("Boreal Trees!"));
-            if (MothlightDeeps != -1)
-            {
-                tasks.Insert(MothlightDeeps + 1, new PassLegacy("Mothlight mushy sides", MakingMushySpikes));
-                tasks.Insert(MothlightDeeps + 2, new PassLegacy("Mothlight Randomness", MakingMothRandomness));
-                tasks.Insert(MothlightDeeps + 3, new PassLegacy("Mothlight Trees!", MothlightTreeSpawning));
-                //tasks.Insert(JungleGen + 2, new PassLegacy("RainDeeps", RainforestDeeps));
-            }
-
-            /*
-
-            int PerlinGen = tasks.FindIndex(genpass => genpass.Name.Equals("IceClump"));
-            if (PerlinGen != -1)
-            {
-                tasks.Insert(IceGen + 1, new PassLegacy("PerlinNoiseCave", PerlinNoiseCave));
-                //tasks.Insert(JungleGen + 2, new PassLegacy("RainDeeps", RainforestDeeps));
-            }
-
-            */
         }
+    }
+
+    public static class Extensions
+    {
+        public static void Active(this Tile tile, bool active)
+        {
+         
+            tile.HasTile = active;
+        }
+        public static void SetSlope(this Tile tile, int slope)
+        {
+            tile.Slope = (SlopeType)slope;
+        }
+    }
+
+    public class CrystalMoonSubworld : Subworld
+    {
+        public override int Width => 9400;
+        public override int Height => 4800;
+
+        public override bool ShouldSave => false;
+        public override bool NoPlayerSaving => true;
+
+        public override List<GenPass> Tasks => new List<GenPass>()
+        {
+            new StandardWorldGenPass()
+            /*new SeedGenPass(),
+            new TerrainPass(),
+            new PassLegacy("Gintze Eating Sand", NewDunes),
+            new PassLegacy("Rain Clump", RainforestClump),
+            new PassLegacy("Rain Deeps", RainforestDeeps),
+            new PassLegacy("Rain Trees", RainforestTreeSpawning),
+            new PassLegacy("Jungle Clump", JungleClump),
+            new PassLegacy("Ice Clump", IceClump),
+            new PassLegacy("Ice Caves Surface", IceyCaves),
+            new PassLegacy("Mothlight Clump", MothlightClump),
+            new PassLegacy("Ice Bridges", RuneBridges),
+            new PassLegacy("Abysm Clumping", AbysmClump),
+            new PassLegacy("Icy Waters", MakingIcyPonds),
+            new PassLegacy("Icy Surface Gremlins", SurfaceIceHouses),
+            new PassLegacy("The icy spook", MakingIcySnows),
+            new PassLegacy("Walls ice underground", MakingIcyWalls),
+            new PassLegacy("Icy Pikes Underground", MakingIcyUndergroundSpikes),
+            new PassLegacy("Icy Pikes Overground", MakingIcyRandomness),
+            new PassLegacy("Ice Caves Underground", IceyUndergroundCaves),
+            new PassLegacy("Ice Crystals Spwning", IceCrystalsSpawning),
+            new PassLegacy("Ice Fog", IceFog),
+            new PassLegacy("Boreal Trees!", BorealTreeSpawning),
+            new PassLegacy("Mothlight mushy sides", MakingMushySpikes),
+            new PassLegacy("Mothlight Randomness", MakingMothRandomness),
+            new PassLegacy("Mothlight Trees!", MothlightTreeSpawning),
+            new PassLegacy("Quick Cleanup", QuickCleanup),
+            new PassLegacy("Cleanup Dirt", CleanupDirt)*/
+        };
+
+   
+        // Sets the time to the middle of the day whenever the subworld loads
+        public override void OnLoad()
+        {
+            Main.dayTime = true;
+            Main.time = 27000;
+        }
+
 
         Point AbysmStart;
         Point AbysmStart2;
@@ -218,6 +145,207 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
         int jungleNIce = 0;
         int cinderNGovheilia = 0;
         int noxNDread = 0;
+
+        #region  Vanilla Gen Passes
+
+        private void TileCleanuRp(GenerationProgress progress, GameConfiguration configuration)
+        {
+
+        }
+
+        private void QuickCleanup(GenerationProgress progress, GameConfiguration configuration)
+        {
+            progress.Set(1.0);
+            Main.tileSolid[137] = false;
+            Main.tileSolid[130] = false;
+            for (int num453 = 20; num453 < Main.maxTilesX - 20; num453++)
+            {
+                for (int num454 = 20; num454 < Main.maxTilesY - 20; num454++)
+                {
+                    if ((double)num454 < Main.worldSurface && WorldGen.oceanDepths(num453, num454) && Main.tile[num453, num454].TileType == 53 && Main.tile[num453, num454].HasTile)
+                    {
+                        if (Main.tile[num453, num454].BottomSlope)
+                            Main.tile[num453, num454].SetSlope(0);
+
+                        for (int num455 = num454 + 1; num455 < num454 + WorldGen.genRand.Next(4, 7) && (!Main.tile[num453, num455].HasTile || (Main.tile[num453, num455].TileType != 397 && Main.tile[num453, num455].TileType != 53)) && (!Main.tile[num453, num455 + 1].HasTile|| (Main.tile[num453, num455 + 1].TileType != 397 && Main.tile[num453, num455 + 1].TileType != 53 && Main.tile[num453, num455 + 1].TileType != 495)) && (!Main.tile[num453, num455 + 2].HasTile || (Main.tile[num453, num455 + 2].TileType != 397 && Main.tile[num453, num455 + 2].TileType != 53 && Main.tile[num453, num455 + 2].TileType != 495)); num455++)
+                        {
+                            Tile tile = Main.tile[num453, num455];
+                            tile.TileType = 0;
+                            tile.HasTile = true;
+                            tile.IsHalfBlock = false;
+                            tile.Slope = 0;
+                        }
+                    }
+
+                    if (Main.tile[num453, num454].WallType == 187 || Main.tile[num453, num454].WallType == 216)
+                    {
+                        if (Main.tile[num453, num454].TileType == 59 || Main.tile[num453, num454].TileType == 123 || Main.tile[num453, num454].TileType == 224)
+                            Main.tile[num453, num454].TileType = 397;
+
+                        if (Main.tile[num453, num454].TileType == 368 || Main.tile[num453, num454].TileType == 367)
+                            Main.tile[num453, num454].TileType = 397;
+
+                        if ((double)num454 <= Main.rockLayer)
+                        {
+                            Main.tile[num453, num454].LiquidAmount = 0;
+                        }
+                        else if (Main.tile[num453, num454].LiquidAmount > 0)
+                        {
+                            Main.tile[num453, num454].LiquidAmount = byte.MaxValue;
+
+                            Tile tile = Main.tile[num453, num454];
+                            tile.LiquidType = LiquidID.Lava;
+                        }
+                    }
+
+                    if ((double)num454 < Main.worldSurface && Main.tile[num453, num454].HasTile && Main.tile[num453, num454].TileType == 53 && Main.tile[num453, num454 + 1].WallType == 0 && !WorldGen.SolidTile(num453, num454 + 1))
+                    {
+                        ushort num456 = 0;
+                        int num457 = 3;
+                        for (int num458 = num453 - num457; num458 <= num453 + num457; num458++)
+                        {
+                            for (int num459 = num454 - num457; num459 <= num454 + num457; num459++)
+                            {
+                                if (Main.tile[num458, num459].WallType > 0)
+                                {
+                                    num456 = Main.tile[num458, num459].WallType;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (num456 > 0)
+                        {
+                            Main.tile[num453, num454 + 1].WallType = num456;
+                            if (Main.tile[num453, num454].WallType == 0)
+                                Main.tile[num453, num454].WallType = num456;
+                        }
+                    }
+
+                    if (Main.tile[num453, num454].TileType != 19 && TileID.Sets.CanBeClearedDuringGeneration[Main.tile[num453, num454].TileType])
+                    {
+                        if (Main.tile[num453, num454].TopSlope || Main.tile[num453, num454].IsHalfBlock)
+                        {
+                            if (Main.tile[num453, num454].TileType != 225 || !Main.tile[num453, num454].IsHalfBlock)
+                            {
+                                if (!WorldGen.SolidTile(num453, num454 + 1))
+                                {
+                                    Tile tile = Main.tile[num453, num454];
+                                    tile.HasTile = false;// (active: false);
+                                }                              
+
+                                if (Main.tile[num453 + 1, num454].TileType == 137 || Main.tile[num453 - 1, num454].TileType == 137)
+                                {
+                                    Tile tile = Main.tile[num453, num454];
+                                    tile.HasTile = false;
+                                }
+                            }
+                        }
+                        else if (Main.tile[num453, num454].BottomSlope)
+                        {
+                            if (!WorldGen.SolidTile(num453, num454 - 1))
+                                Main.tile[num453, num454].Active(false);
+
+                            if (Main.tile[num453 + 1, num454].TileType == 137 || Main.tile[num453 - 1, num454].TileType == 137)
+                                Main.tile[num453, num454].Active(false);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void CleanupDirt(GenerationProgress progress, GameConfiguration configuration)
+        {
+            progress.Message = Lang.gen[25].Value;
+            for (int num696 = 3; num696 < Main.maxTilesX - 3; num696++)
+            {
+                double num697 = (double)num696 / (double)Main.maxTilesX;
+                progress.Set(0.5 * num697);
+                bool flag43 = true;
+                for (int num698 = 0; (double)num698 < Main.worldSurface; num698++)
+                {
+                    if (flag43)
+                    {
+                        if (Main.tile[num696, num698].WallType == 2 || Main.tile[num696, num698].WallType == 40 || Main.tile[num696, num698].WallType == 64 || Main.tile[num696, num698].WallType == 86)
+                            Main.tile[num696, num698].WallType = 0;
+
+                        if (Main.tile[num696, num698].TileType != 53 && Main.tile[num696, num698].TileType != 112 && Main.tile[num696, num698].TileType != 234)
+                        {
+                            if (Main.tile[num696 - 1, num698].WallType == 2 || Main.tile[num696 - 1, num698].WallType == 40 || Main.tile[num696 - 1, num698].WallType == 40)
+                                Main.tile[num696 - 1, num698].WallType = 0;
+
+                            if ((Main.tile[num696 - 2, num698].WallType == 2 || Main.tile[num696 - 2, num698].WallType == 40 || Main.tile[num696 - 2, num698].WallType == 40) && WorldGen.genRand.Next(2) == 0)
+                                Main.tile[num696 - 2, num698].WallType = 0;
+
+                            if ((Main.tile[num696 - 3, num698].WallType == 2 || Main.tile[num696 - 3, num698].WallType == 40 || Main.tile[num696 - 3, num698].WallType == 40) && WorldGen.genRand.Next(2) == 0)
+                                Main.tile[num696 - 3, num698].WallType = 0;
+
+                            if (Main.tile[num696 + 1, num698].WallType == 2 || Main.tile[num696 + 1, num698].WallType == 40 || Main.tile[num696 + 1, num698].WallType == 40)
+                                Main.tile[num696 + 1, num698].WallType = 0;
+
+                            if ((Main.tile[num696 + 2, num698].WallType == 2 || Main.tile[num696 + 2, num698].WallType == 40 || Main.tile[num696 + 2, num698].WallType == 40) && WorldGen.genRand.Next(2) == 0)
+                                Main.tile[num696 + 2, num698].WallType = 0;
+
+                            if ((Main.tile[num696 + 3, num698].WallType == 2 || Main.tile[num696 + 3, num698].WallType == 40 || Main.tile[num696 + 3, num698].WallType == 40) && WorldGen.genRand.Next(2) == 0)
+                                Main.tile[num696 + 3, num698].WallType = 0;
+
+                            if (Main.tile[num696, num698].HasTile)
+                                flag43 = false;
+                        }
+                    }
+                    else if (Main.tile[num696, num698].WallType == 0 && Main.tile[num696, num698 + 1].WallType == 0 && Main.tile[num696, num698 + 2].WallType == 0 && Main.tile[num696, num698 + 3].WallType == 0 && Main.tile[num696, num698 + 4].WallType == 0 && Main.tile[num696 - 1, num698].WallType == 0 && Main.tile[num696 + 1, num698].WallType == 0 && Main.tile[num696 - 2, num698].WallType == 0 && Main.tile[num696 + 2, num698].WallType == 0 && !Main.tile[num696, num698].HasTile && !Main.tile[num696, num698 + 1].HasTile && !Main.tile[num696, num698 + 2].HasTile && !Main.tile[num696, num698 + 3].HasTile)
+                    {
+                        flag43 = true;
+                    }
+                }
+            }
+
+            for (int num699 = Main.maxTilesX - 5; num699 >= 5; num699--)
+            {
+                double num700 = (double)num699 / (double)Main.maxTilesX;
+                progress.Set(1.0 - 0.5 * num700);
+                bool flag44 = true;
+                for (int num701 = 0; (double)num701 < Main.worldSurface; num701++)
+                {
+                    if (flag44)
+                    {
+                        if (Main.tile[num699, num701].WallType == 2 || Main.tile[num699, num701].WallType == 40 || Main.tile[num699, num701].WallType == 64)
+                            Main.tile[num699, num701].WallType = 0;
+
+                        if (Main.tile[num699, num701].TileType != 53)
+                        {
+                            if (Main.tile[num699 - 1, num701].WallType == 2 || Main.tile[num699 - 1, num701].WallType == 40 || Main.tile[num699 - 1, num701].WallType == 40)
+                                Main.tile[num699 - 1, num701].WallType = 0;
+
+                            if ((Main.tile[num699 - 2, num701].WallType == 2 || Main.tile[num699 - 2, num701].WallType == 40 || Main.tile[num699 - 2, num701].WallType == 40) && WorldGen.genRand.Next(2) == 0)
+                                Main.tile[num699 - 2, num701].WallType = 0;
+
+                            if ((Main.tile[num699 - 3, num701].WallType == 2 || Main.tile[num699 - 3, num701].WallType == 40 || Main.tile[num699 - 3, num701].WallType == 40) && WorldGen.genRand.Next(2) == 0)
+                                Main.tile[num699 - 3, num701].WallType = 0;
+
+                            if (Main.tile[num699 + 1, num701].WallType == 2 || Main.tile[num699 + 1, num701].WallType == 40 || Main.tile[num699 + 1, num701].WallType == 40)
+                                Main.tile[num699 + 1, num701].WallType = 0;
+
+                            if ((Main.tile[num699 + 2, num701].WallType == 2 || Main.tile[num699 + 2, num701].WallType == 40 || Main.tile[num699 + 2, num701].WallType == 40) && WorldGen.genRand.Next(2) == 0)
+                                Main.tile[num699 + 2, num701].WallType = 0;
+
+                            if ((Main.tile[num699 + 3, num701].WallType == 2 || Main.tile[num699 + 3, num701].WallType == 40 || Main.tile[num699 + 3, num701].WallType == 40) && WorldGen.genRand.Next(2) == 0)
+                                Main.tile[num699 + 3, num701].WallType = 0;
+
+                            if (Main.tile[num699, num701].HasTile)
+                                flag44 = false;
+                        }
+                    }
+                    else if (Main.tile[num699, num701].WallType == 0 && Main.tile[num699, num701 + 1].WallType == 0 && Main.tile[num699, num701 + 2].WallType == 0 && Main.tile[num699, num701 + 3].WallType == 0 && Main.tile[num699, num701 + 4].WallType == 0 && Main.tile[num699 - 1, num701].WallType == 0 && Main.tile[num699 + 1, num701].WallType == 0 && Main.tile[num699 - 2, num701].WallType == 0 && Main.tile[num699 + 2, num701].WallType == 0 && !Main.tile[num699, num701].HasTile && !Main.tile[num699, num701 + 1].HasTile && !Main.tile[num699, num701 + 2].HasTile && !Main.tile[num699, num701 + 3].HasTile)
+                    {
+                        flag44 = true;
+                    }
+                }
+            }
+        }
+
+        #endregion
+       
         #region  PerlinNoiseTest
 
 
@@ -270,7 +398,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
             int steps = 100;
             int duneX = 0;
-            int duneY = (int)GenVars.worldSurfaceHigh - 100;;
+            int duneY = (int)GenVars.worldSurfaceHigh - 100; ;
             int newDuneY = duneY;
             switch (Main.rand.Next(2))
             {
@@ -285,14 +413,14 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     desertNForest = 2;
                     break;
             }
-            
+
             int originalDuneX = duneX;
             for (int i = 0; i < steps; i++)
             {
-                
+
                 //A bit of randomness
                 duneX += Main.rand.Next(45, 90);
-                if((duneX - originalDuneX) > 900)
+                if ((duneX - originalDuneX) > 900)
                 {
                     duneX = originalDuneX + Main.rand.Next(50);
                 }
@@ -303,7 +431,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     //seperation
                     duneY += 1;
                 }
-              
+
 
                 for (int daa = 0; daa < 1; daa++)
                 {
@@ -376,8 +504,8 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
             {
 
 
-                 smx = ((Main.maxTilesX) / 2) - 925;
-                smy = (int)GenVars.worldSurfaceHigh - 600;;
+                smx = ((Main.maxTilesX) / 2) - 925;
+                smy = (int)GenVars.worldSurfaceHigh - 600; ;
                 while (!WorldGen.SolidTile(smx, smy) && smy <= Main.UnderworldLayer)
                 {
                     //seperation
@@ -404,8 +532,8 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
             if (desertNForest == 1)
             {
 
-                 smx = ((Main.maxTilesX) / 2) + 925;
-                smy = (int)GenVars.worldSurfaceHigh - 600;;
+                smx = ((Main.maxTilesX) / 2) + 925;
+                smy = (int)GenVars.worldSurfaceHigh - 600; ;
                 while (!WorldGen.SolidTile(smx, smy) && smy <= Main.UnderworldLayer)
                 {
                     //seperation
@@ -431,7 +559,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
 
 
-           
+
 
 
 
@@ -455,7 +583,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
             while (attempts++ < 1500)
             {
                 int smx = WorldGen.genRand.Next(((Main.maxTilesX) / 4), ((Main.maxTilesX / 2) + (Main.maxTilesX) / 4));
-                
+
 
                 // Select a place // from 50 since there's a unaccessible area at the world's borders
                 // 50% of choosing the last 6th of the world
@@ -466,7 +594,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                 ///}
 
                 //Start at 200 tiles above the surface instead of 0, to exclude floating islands
-                int smy = (int)GenVars.worldSurfaceHigh - 600;;
+                int smy = (int)GenVars.worldSurfaceHigh - 600; ;
                 while (!WorldGen.SolidTile(smx, smy) && smy <= Main.UnderworldLayer)
                 {
                     //seperation
@@ -560,7 +688,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
         }
 
-     
+
 
         private void RainforestTreeSpawning(GenerationProgress progress, GameConfiguration configuration)
         {
@@ -667,7 +795,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
 
                         smx = ((Main.maxTilesX) / 2) - 1825;
-                        smy = (int)GenVars.worldSurfaceHigh - 600;;
+                        smy = (int)GenVars.worldSurfaceHigh - 600; ;
                         while (!WorldGen.SolidTile(smx, smy) && smy <= Main.UnderworldLayer)
                         {
                             //seperation
@@ -701,7 +829,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
 
                         smx = ((Main.maxTilesX) / 2) + 1825;
-                        smy = (int)GenVars.worldSurfaceHigh - 600;;
+                        smy = (int)GenVars.worldSurfaceHigh - 600; ;
                         while (!WorldGen.SolidTile(smx, smy) && smy <= Main.UnderworldLayer)
                         {
                             //seperation
@@ -749,7 +877,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
         #endregion
 
         #region IceBiomeGeneration
-     
+
         private void IceClump(GenerationProgress progress, GameConfiguration configuration)
         {
             progress.Message = "Ice biome mounding";
@@ -759,7 +887,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
             int contdown = 0;
             int contdownx = 0;
             if (jungleNIce == 2)
-                   
+
             {
                 //
 
@@ -773,9 +901,9 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
 
                 for (int da = 0; da < 1; da++)
-                        {
-                            Point Loc7 = new Point(smx, smy);
-                            Point Loc8 = new Point(smx, smy + 100);
+                {
+                    Point Loc7 = new Point(smx, smy);
+                    Point Loc8 = new Point(smx, smy + 100);
 
                     WorldUtils.Gen(Loc8, new Shapes.Mound(450, 300), Actions.Chain(new GenAction[]
                         {
@@ -798,7 +926,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
 
 
-                    WorldUtils.Gen(Loc7, new Shapes.Circle(500,300), Actions.Chain(new GenAction[]
+                    WorldUtils.Gen(Loc7, new Shapes.Circle(500, 300), Actions.Chain(new GenAction[]
                     {
                         new Actions.ClearWall(true),
                         new Actions.PlaceWall(WallID.SnowWallUnsafe),
@@ -833,13 +961,13 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                 AbysmStart2 = new Point(smx, smy - 250 - contdown);
 
             }
-          
-
-                if (jungleNIce == 1)
-                    {
 
 
-                        smx = ((Main.maxTilesX) / 2) + 1825;
+            if (jungleNIce == 1)
+            {
+
+
+                smx = ((Main.maxTilesX) / 2) + 1825;
                 smy = (int)GenVars.worldSurfaceHigh - 100;
                 while (!WorldGen.SolidTile(smx, smy) && smy <= Main.UnderworldLayer)
                 {
@@ -851,8 +979,8 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
                 for (int da = 0; da < 1; da++)
                 {
-                            Point Loc7 = new Point(smx, smy);
-                            Point Loc8 = new Point(smx, smy + 50);
+                    Point Loc7 = new Point(smx, smy);
+                    Point Loc8 = new Point(smx, smy + 50);
                     WorldUtils.Gen(Loc8, new Shapes.Mound(450, 300), Actions.Chain(new GenAction[]
                      {
                                         new Actions.ClearWall(true),
@@ -983,12 +1111,12 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
         {
             int contdown = 0;
             int contdownx = 0;
-  
+
             int caveSeed = WorldGen.genRand.Next();
-            
+
             for (int i = 0; i < 12; i++)
             {
-                
+
 
                 int caveSteps = 200; // How many carves
                 int Blockwidth = 9; //Block width for how far
@@ -997,7 +1125,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
                 Vector2 baseCaveDirection = Vector2.UnitY.RotatedBy(WorldGen.genRand.NextFloatDirection() * (i * 0.04f));
                 Vector2 AbysmPosition = new Vector2(AbysmStart.X, AbysmStart.Y + contdown + 500);
-               
+
 
                 for (int j = 0; j < caveSteps; j++)
                 {
@@ -1007,8 +1135,8 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
                     // Carve out at the current position.
                     //Makes sure it doesn't go out of bouds
-                  //  Vector2 AbysmPosition = new Vector2(AbysmStart.X, AbysmStart.Y + contdown);
-                  
+                    //  Vector2 AbysmPosition = new Vector2(AbysmStart.X, AbysmStart.Y + contdown);
+
                     if (AbysmStart.X < Main.maxTilesX - 15 && AbysmStart.X >= 15)
                     {
                         WorldUtils.Gen(AbysmPosition.ToPoint(), new Shapes.Circle(Blockwidth3), Actions.Chain(new GenAction[]
@@ -1022,7 +1150,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
 
                     }
-                  
+
                     /*
                     if(AbysmStart.X < Main.maxTilesX - 15 && AbysmStart.X >= 15)
                     {
@@ -1061,21 +1189,21 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
             }
 
-           
+
             for (int i = 0; i < 15; i++)
             {
 
                 int caveWidth = 1 + WorldGen.genRand.Next(1, 3); // Width
                 int caveSteps = 1000; // How many carves
-                //
-          
+                                      //
+
                 Vector2 baseCaveDirection = Vector2.UnitY.RotatedBy(WorldGen.genRand.NextFloatDirection() * (i * 0.035f));
                 Vector2 AbysmPosition = new Vector2(AbysmStart.X, AbysmStart.Y + contdown);
 
 
-               
 
-           
+
+
 
 
 
@@ -1162,7 +1290,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                   }));
 
 
-          
+
 
         }
         private void MakingIcyWalls(GenerationProgress progress, GameConfiguration configuration)
@@ -1171,31 +1299,31 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
 
 
-          
-                // Select a place in the first 6th of the world, avoiding the oceans
-                for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY * 8.2f) * 6E-03); k++)
+
+            // Select a place in the first 6th of the world, avoiding the oceans
+            for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY * 8.2f) * 6E-03); k++)
+            {
+                int X = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
+                int Y = WorldGen.genRand.Next((int)Main.worldSurface, Main.UnderworldLayer);
+                int yBelow = Y + 1;
+                Vector2 WallPosition = new Vector2(X, yBelow);
+                if (!WorldGen.SolidTile(X, yBelow))
+                    continue;
+
+                if (Main.tile[X, yBelow].TileType == TileID.SnowBlock ||
+                    Main.tile[X, yBelow].TileType == TileID.IceBlock)
                 {
-                    int X = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
-                    int Y = WorldGen.genRand.Next((int)Main.worldSurface, Main.UnderworldLayer);
-                    int yBelow = Y + 1;
-                     Vector2 WallPosition = new Vector2(X, yBelow);
-                    if (!WorldGen.SolidTile(X, yBelow))
-                        continue;
 
-                    if (Main.tile[X, yBelow].TileType == TileID.SnowBlock ||
-                        Main.tile[X, yBelow].TileType == TileID.IceBlock)
-                    {
-
-                     WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Circle(WorldGen.genRand.Next(1, 7)), Actions.Chain(new GenAction[]
-                        {
+                    WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Circle(WorldGen.genRand.Next(1, 7)), Actions.Chain(new GenAction[]
+                       {
                             new Actions.PlaceWall(WallID.SnowWallUnsafe),
                             new Actions.Smooth(true)
-                        }));
+                       }));
 
 
 
-                    }
-                
+                }
+
 
 
 
@@ -1460,7 +1588,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
 
 
-            
+
             // Select a place in the first 6th of the world, avoiding the oceans
             for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY * 13.2f) * 6E-05); k++)
             {
@@ -1517,15 +1645,15 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                             //new Modifiers.Dither(.2),// Dithering
                           //  new Actions.ClearWall()
 
-                 })) ;
+                 }));
 
-                        //    WorldGen.PlaceWall(X, yBelow + 3, (ushort)ModContent.WallType<LargeIceyStone>());
+                            //    WorldGen.PlaceWall(X, yBelow + 3, (ushort)ModContent.WallType<LargeIceyStone>());
                             break;
 
 
                         case 1:
                             //Start Right
-                            
+
 
                             WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Circle(3), Actions.Chain(new GenAction[]
                  {
@@ -1534,14 +1662,14 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                             //new Modifiers.Dither(.2),// Dithering
                             }));
 
-                         //   WorldGen.PlaceWall(X, yBelow + 1, (ushort)ModContent.WallType<MediumIceyStone>());
+                            //   WorldGen.PlaceWall(X, yBelow + 1, (ushort)ModContent.WallType<MediumIceyStone>());
                             break;
 
 
                     }
 
 
-                   
+
 
 
 
@@ -1554,8 +1682,8 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
 
             }
-            
-           
+
+
         }
         private void SurfaceIceHouses(GenerationProgress progress, GameConfiguration configuration)
         {
@@ -1583,7 +1711,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     // We go down until we hit a solid tile or go under the world's surface
                     Tile tile = Main.tile[smx, smy];
 
-                    while (!WorldGen.SolidTile(smx, smy) && smy <= Main.UnderworldLayer 
+                    while (!WorldGen.SolidTile(smx, smy) && smy <= Main.UnderworldLayer
                         || (!(tile.TileType == TileID.SnowBlock) && !(tile.TileType == ModContent.TileType<RunicIceCathedralTile>()) && WorldGen.SolidTile(smx, smy)))
                     {
                         smy++;
@@ -1615,7 +1743,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
                         if (Main.tile[smx, smy].TileType == TileID.SnowBlock || (Main.tile[smx, smy].TileType == ModContent.TileType<RunicIceCathedralTile>()))
                         {
-                            
+
                             WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Circle(12), Actions.Chain(new GenAction[]
                                {
 
@@ -1633,20 +1761,20 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                             circleStructures.AddProtectedStructure(areaToPlaceIn);
                         }
 
-                        
-                        
+
+
                         switch (Main.rand.Next(2))
                         {
                             case 0:
                                 //Start Left
                                 for (int da = 0; da < 1; da++)
                                 {
-                                    Point Loc = new Point(smx, smy -5);
+                                    Point Loc = new Point(smx, smy - 5);
                                     string path = "WorldGeneration/STRUCT/IceStruct/HouseSurfaceIce1";//
-              
+
                                     StructureLoader.ProtectStructure(Loc, path);
                                     int[] ChestIndexs = StructureLoader.ReadStruct(Loc, path);
-                      
+
                                     foreach (int chestIndex in ChestIndexs)
                                     {
                                         var chest = Main.chest[chestIndex];
@@ -1755,10 +1883,10 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                                 {
                                     Point Loc = new Point(smx, smy - 8);
                                     string path = "WorldGeneration/STRUCT/IceStruct/HouseSurfaceIce2";//
-         
+
                                     StructureLoader.ProtectStructure(Loc, path);
                                     int[] ChestIndexs = StructureLoader.ReadStruct(Loc, path);
-                  
+
                                     foreach (int chestIndex in ChestIndexs)
                                     {
                                         var chest = Main.chest[chestIndex];
@@ -1865,7 +1993,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
 
 
-                               
+
 
                         }
 
@@ -2010,7 +2138,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                                 // GenVars.structures.AddProtectedStructure(new Rectangle(smx, smy, 433, 100));
 
 
-                              
+
                             }
                             break;
                         case 1:
@@ -2121,10 +2249,10 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                                 // GenVars.structures.AddProtectedStructure(new Rectangle(smx, smy, 433, 100));
 
 
-                             
+
                             }
                             break;
-                    
+
                     }
 
 
@@ -2154,7 +2282,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                 int Y = WorldGen.genRand.Next(0, (int)Main.worldSurface);
                 int yBelow = Y + 1;
                 Vector2 WallPosition = new Vector2(X, yBelow);
-            
+
                 if (!WorldGen.SolidTile(X, yBelow))
                     continue;
 
@@ -2242,7 +2370,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     // We go down until we hit a solid tile or go under the world's surface
                     Tile tile = Main.tile[smx, smy];
 
-                    while (!WorldGen.SolidTile(smx, smy) && smy <= Main.UnderworldLayer || (!(tile.TileType == TileID.SnowBlock) && WorldGen.SolidTile(smx,smy)))
+                    while (!WorldGen.SolidTile(smx, smy) && smy <= Main.UnderworldLayer || (!(tile.TileType == TileID.SnowBlock) && WorldGen.SolidTile(smx, smy)))
                     {
                         smy++;
                         tile = Main.tile[smx, smy];
@@ -2276,7 +2404,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                                     //StructureLoader.ReadStruct(Loc, "Struct/Underground/Manor", tileBlend);
                                     string path = "WorldGeneration/STRUCT/IceStruct/BridgeIce1";//
 
-                                    
+
                                     int[] ChestIndexs = StructureLoader.ReadStruct(Loc, path);
                                     //StructureLoader.ProtectStructure(Loc, path);
                                     foreach (int chestIndex in ChestIndexs)
@@ -2375,7 +2503,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                                     //StructureLoader.ReadStruct(Loc, "Struct/Underground/Manor", tileBlend);
                                     string path = "WorldGeneration/STRUCT/IceStruct/BridgeIce2";//
 
-        
+
                                     int[] ChestIndexs = StructureLoader.ReadStruct(Loc, path);
                                     //StructureLoader.ProtectStructure(Loc, path);
                                     foreach (int chestIndex in ChestIndexs)
@@ -2673,90 +2801,90 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
         private void IceyCaves(GenerationProgress progress, GameConfiguration configuration)
         {
 
-           
-                for (int id = 0; id < 10; id++)
+
+            for (int id = 0; id < 10; id++)
+            {
+                bool placed = false;
+                int attempts = 0;
+                while (!placed && attempts++ < 1000000)
                 {
-                    bool placed = false;
-                    int attempts = 0;
-                    while (!placed && attempts++ < 1000000)
+                    // Select a place in the first 6th of the world, avoiding the oceans
+                    int smx = WorldGen.genRand.Next(1000, (Main.maxTilesX - 1000)); // from 50 since there's a unaccessible area at the world's borders
+                                                                                    // 50% of choosing the last 6th of the world
+                                                                                    // Choose which side of the world to be on randomly
+                    ///if (WorldGen.genRand.NextBool())
+                    ///{
+                    ///	towerX = Main.maxTilesX - towerX;
+                    ///}
+
+                    //Start at 200 tiles above the surface instead of 0, to exclude floating islands
+                    int smy = (int)GenVars.worldSurfaceHigh - 500;
+
+                    // We go down until we hit a solid tile or go under the world's surface
+                    Tile tile = Main.tile[smx, smy];
+
+                    while (!WorldGen.SolidTile(smx, smy) && smy <= Main.UnderworldLayer || (!(tile.TileType == TileID.SnowBlock) && WorldGen.SolidTile(smx, smy)))
                     {
-                        // Select a place in the first 6th of the world, avoiding the oceans
-                        int smx = WorldGen.genRand.Next(1000, (Main.maxTilesX - 1000)); // from 50 since there's a unaccessible area at the world's borders
-                                                                                        // 50% of choosing the last 6th of the world
-                                                                                        // Choose which side of the world to be on randomly
-                        ///if (WorldGen.genRand.NextBool())
-                        ///{
-                        ///	towerX = Main.maxTilesX - towerX;
-                        ///}
+                        smy++;
+                        tile = Main.tile[smx, smy];
+                    }
 
-                        //Start at 200 tiles above the surface instead of 0, to exclude floating islands
-                        int smy = (int)GenVars.worldSurfaceHigh - 500;
+                    // If we went under the world's surface, try again
+                    if (smy > Main.worldSurface + 500)
+                    {
+                        continue;
+                    }
 
-                        // We go down until we hit a solid tile or go under the world's surface
-                        Tile tile = Main.tile[smx, smy];
+                    // If the type of the tile we are placing the tower on doesn't match what we want, try again
 
-                        while (!WorldGen.SolidTile(smx, smy) && smy <= Main.UnderworldLayer || (!(tile.TileType == TileID.SnowBlock) && WorldGen.SolidTile(smx, smy)))
+
+
+                    // place the Rogue
+                    //	int num = NPC.NewNPC(NPC.GetSource_NaturalSpawn(), (towerX + 12) * 16, (towerY - 24) * 16, ModContent.NPCType<BoundGambler>(), 0, 0f, 0f, 0f, 0f, 255);
+                    //Main.npc[num].homeTileX = -1;
+                    //	Main.npc[num].homeTileY = -1;
+                    //	Main.npc[num].direction = 1;
+                    //	Main.npc[num].homeless = true;
+                    if (Main.tile[smx, smy].TileType == TileID.SnowBlock)
+                    {
+                        int caveWidth = WorldGen.genRand.Next(2, 4 + id); // Width
+                        int caveSteps = WorldGen.genRand.Next(50, 120 + id); // How many carves
+
+                        int caveSeed = WorldGen.genRand.Next();
+                        Vector2 baseCaveDirection = Vector2.UnitY.RotatedBy(WorldGen.genRand.NextFloatDirection() * 0.54f);
+                        Vector2 cavePosition = new Vector2(smx, smy);
+
+                        for (int j = 0; j < caveSteps; j++)
                         {
-                            smy++;
-                            tile = Main.tile[smx, smy];
-                        }
+                            float caveOffsetAngleAtStep = WorldMath.PerlinNoise2D(1 / 50f, j / 50f, 4, caveSeed) * MathHelper.Pi * 1.9f;
+                            Vector2 caveDirection = baseCaveDirection.RotatedBy(caveOffsetAngleAtStep);
 
-                        // If we went under the world's surface, try again
-                        if (smy > Main.worldSurface + 500)
-                        {
-                            continue;
-                        }
-
-                        // If the type of the tile we are placing the tower on doesn't match what we want, try again
-
-
-
-                        // place the Rogue
-                        //	int num = NPC.NewNPC(NPC.GetSource_NaturalSpawn(), (towerX + 12) * 16, (towerY - 24) * 16, ModContent.NPCType<BoundGambler>(), 0, 0f, 0f, 0f, 0f, 255);
-                        //Main.npc[num].homeTileX = -1;
-                        //	Main.npc[num].homeTileY = -1;
-                        //	Main.npc[num].direction = 1;
-                        //	Main.npc[num].homeless = true;
-                        if (Main.tile[smx, smy].TileType == TileID.SnowBlock)
-                        {
-                            int caveWidth = WorldGen.genRand.Next(2, 4 + id); // Width
-                            int caveSteps = WorldGen.genRand.Next(50, 120 + id); // How many carves
-
-                            int caveSeed = WorldGen.genRand.Next();
-                            Vector2 baseCaveDirection = Vector2.UnitY.RotatedBy(WorldGen.genRand.NextFloatDirection() * 0.54f);
-                            Vector2 cavePosition = new Vector2(smx, smy);
-
-                            for (int j = 0; j < caveSteps; j++)
+                            // Carve out at the current position.
+                            if (cavePosition.X < Main.maxTilesX - 15 && cavePosition.X >= 15)
                             {
-                                float caveOffsetAngleAtStep = WorldMath.PerlinNoise2D(1 / 50f, j / 50f, 4, caveSeed) * MathHelper.Pi * 1.9f;
-                                Vector2 caveDirection = baseCaveDirection.RotatedBy(caveOffsetAngleAtStep);
+                                //digging 
 
-                                // Carve out at the current position.
-                                if (cavePosition.X < Main.maxTilesX - 15 && cavePosition.X >= 15)
+                                WorldGen.digTunnel(cavePosition.X, cavePosition.Y, caveDirection.X, caveDirection.Y, 1, (int)(caveWidth * 1.18f), false);
+                                WorldUtils.Gen(cavePosition.ToPoint(), new Shapes.Circle(caveWidth), Actions.Chain(new GenAction[]
                                 {
-                                    //digging 
-
-                                    WorldGen.digTunnel(cavePosition.X, cavePosition.Y, caveDirection.X, caveDirection.Y, 1, (int)(caveWidth * 1.18f), false);
-                                    WorldUtils.Gen(cavePosition.ToPoint(), new Shapes.Circle(caveWidth), Actions.Chain(new GenAction[]
-                                    {
                                      new Actions.ClearTile(true),
                                      new Actions.Smooth(true)
-                                    }));
-                                }
-
-                                // Update the cave position.
-                                cavePosition += caveDirection * caveWidth;
+                                }));
                             }
+
+                            // Update the cave position.
+                            cavePosition += caveDirection * caveWidth;
+                        }
                         placed = true;
 
-                        }
-
-
-                       
                     }
-                }
 
-            
+
+
+                }
+            }
+
+
         }
         private void IceyUndergroundCaves(GenerationProgress progress, GameConfiguration configuration)
         {
@@ -2777,7 +2905,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     // We go down until we hit a solid tile or go under the world's surface
                     Tile tile = Main.tile[smx, smy];
 
-                    if (!WorldGen.SolidTile(smx, smy)  ||
+                    if (!WorldGen.SolidTile(smx, smy) ||
                         (tile.TileType != TileID.IceBlock && tile.TileType != TileID.SnowBlock))
                     {
                         continue;
@@ -2787,7 +2915,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     if (genRand.NextBool(25))
                     {
                         //Make Open Area
-                        for(int i =0; i < 2; i++)
+                        for (int i = 0; i < 2; i++)
                         {
                             WorldGen.Caverer(smx, smy);
                         }
@@ -2849,7 +2977,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                             cavePosition += caveDirection * caveWidth * 0.5f;
                         }
                     }
-               
+
                     placed = true;
                     /*
                     int caveWidth = WorldGen.genRand.Next(1, 6); // Width
@@ -2899,7 +3027,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     {
                         if (IsGroundIce(k, y, 8))
                         {
-                            PlaceIcyCrystals(k, y,1);
+                            PlaceIcyCrystals(k, y, 1);
                             k += 1;
 
                             break;
@@ -3054,7 +3182,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     WorldGen.KillWall(treex + x, treey - y);
                 }
             }
-           
+
             // MultitileHelper.PlaceMultitile(new Point16(treex, treey - 1), ModContent.TileType<RainforestTreeBase>());
             switch (Main.rand.Next(3))
             {
@@ -3098,13 +3226,13 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                 }
             }
 
-           // MultitileHelper.PlaceMultitile(new Point16(treex, treey - 1), ModContent.TileType<RainforestTreeBase>());
+            // MultitileHelper.PlaceMultitile(new Point16(treex, treey - 1), ModContent.TileType<RainforestTreeBase>());
 
             for (int x = 0; x < 1; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
-                    
+
                     WorldGen.PlaceTile(treex + x, treey - (y), TileID.Saplings, true, true);
                     WorldGen.GrowTree(treex + x, treey - (y));
                 }
@@ -3158,7 +3286,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
 
         #endregion
-       
+
 
         #region MothlightGeneration
 
@@ -3170,22 +3298,22 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
             bool placed;
             int contdown = 0;
             int contdownx = 0;
-           
-                //
 
-                smx = ((Main.maxTilesX) / 2);
-                smy = (int)GenVars.worldSurfaceHigh - 600;
-                while (!WorldGen.SolidTile(smx, smy) && smy <= Main.UnderworldLayer)
-                {
-                    //seperation
-                    smy += 1;
-                }
+            //
+
+            smx = ((Main.maxTilesX) / 2);
+            smy = (int)GenVars.worldSurfaceHigh - 600;
+            while (!WorldGen.SolidTile(smx, smy) && smy <= Main.UnderworldLayer)
+            {
+                //seperation
+                smy += 1;
+            }
 
 
-                for (int da = 0; da < 1; da++)
-                {
-                    Point Loc7 = new Point(smx, smy);
-                    Point Loc8 = new Point(smx, smy + 100);
+            for (int da = 0; da < 1; da++)
+            {
+                Point Loc7 = new Point(smx, smy);
+                Point Loc8 = new Point(smx, smy + 100);
 
                 /*
                     WorldUtils.Gen(Loc8, new Shapes.Mound(450, 300), Actions.Chain(new GenAction[]
@@ -3196,15 +3324,15 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                         }));
 
                 */
-                    // Spawn in Ice Chunks
-                    WorldGen.TileRunner(Loc7.X, Loc7.Y, 1000, 6, ModContent.TileType<MothlightMushroom>(), false, 0f, 0f, true, true);
-                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 300, 1200, 7, ModContent.TileType<MothlightMushroom>(), false, 0f, 0f, true, true);
-                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 600, 1000, 2, ModContent.TileType<MothlightMushroom>(), false, 0f, 0f, true, true);
-                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 900, 500, 2, TileID.Stone, false, 0f, 0f, true, true);
-                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1200, 500, 2, TileID.Stone, false, 0f, 0f, true, true);
-                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1500, 500, 2, TileID.Stone, false, 0f, 0f, true, true);
-                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1800, 500, 2, TileID.Stone, false, 0f, 0f, true, true);
-                    WorldGen.TileRunner(Loc7.X, Loc7.Y + 1800, 700, 2, TileID.Stone, false, 0f, 0f, true, true);
+                // Spawn in Ice Chunks
+                WorldGen.TileRunner(Loc7.X, Loc7.Y, 1000, 6, ModContent.TileType<MothlightMushroom>(), false, 0f, 0f, true, true);
+                WorldGen.TileRunner(Loc7.X, Loc7.Y + 300, 1200, 7, ModContent.TileType<MothlightMushroom>(), false, 0f, 0f, true, true);
+                WorldGen.TileRunner(Loc7.X, Loc7.Y + 600, 1000, 2, ModContent.TileType<MothlightMushroom>(), false, 0f, 0f, true, true);
+                WorldGen.TileRunner(Loc7.X, Loc7.Y + 900, 500, 2, TileID.Stone, false, 0f, 0f, true, true);
+                WorldGen.TileRunner(Loc7.X, Loc7.Y + 1200, 500, 2, TileID.Stone, false, 0f, 0f, true, true);
+                WorldGen.TileRunner(Loc7.X, Loc7.Y + 1500, 500, 2, TileID.Stone, false, 0f, 0f, true, true);
+                WorldGen.TileRunner(Loc7.X, Loc7.Y + 1800, 500, 2, TileID.Stone, false, 0f, 0f, true, true);
+                WorldGen.TileRunner(Loc7.X, Loc7.Y + 1800, 700, 2, TileID.Stone, false, 0f, 0f, true, true);
 
 
                 /*
@@ -3219,7 +3347,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     // Dig big chasm at top
 
                 */
-                }
+            }
             for (int daaa = 0; daaa < 10; daaa++)
             {
                 smx = ((Main.maxTilesX) / 2 + Main.rand.Next(-325, 325));
@@ -3248,13 +3376,13 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
 
 
-                    //    WorldGen.digTunnel(smx - Main.rand.Next(10), smy - 250 - contdown, 0, 1, 1, 15, false);
+                        //    WorldGen.digTunnel(smx - Main.rand.Next(10), smy - 250 - contdown, 0, 1, 1, 15, false);
                     }
 
                     if (daa >= 10 && daa < 14)
                     {
 
-                   
+
                         WorldUtils.Gen(HillPosition.ToPoint(), new Shapes.Circle(Main.rand.Next(30, 55)), new Actions.SetTile((ushort)ModContent.TileType<MothlightMushroom>()));
 
 
@@ -3265,10 +3393,10 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     if (daa == 14)
                     {
 
-                       // WorldUtils.Gen(HillPosition.ToPoint(), new UpsideDownMound(Main.rand.Next(10, 30), Main.rand.Next(10, 20)), new Actions.SetTile((ushort)ModContent.TileType<MothlightMushroom>()));
+                        // WorldUtils.Gen(HillPosition.ToPoint(), new UpsideDownMound(Main.rand.Next(10, 30), Main.rand.Next(10, 20)), new Actions.SetTile((ushort)ModContent.TileType<MothlightMushroom>()));
 
                         WorldUtils.Gen(HillPosition.ToPoint(), new Shapes.Circle(Main.rand.Next(80, 90), Main.rand.Next(80, 90)), new Actions.SetTile((ushort)ModContent.TileType<MothlightMushroom>()));
-                       
+
                         WorldUtils.Gen(HillPosition.ToPoint(), new Shapes.HalfCircle(90), Actions.Chain(new GenAction[]
                                     {
                                      new Actions.ClearTile(true),
@@ -3291,8 +3419,8 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                 }
             }
 
-               // AbysmStart = new Point(smx, smy - 250 - contdown);
-               // AbysmStart2 = new Point(smx, smy - 250 - contdown);
+            // AbysmStart = new Point(smx, smy - 250 - contdown);
+            // AbysmStart2 = new Point(smx, smy - 250 - contdown);
 
 
         }
@@ -3304,7 +3432,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
 
             // Select a place in the first 6th of the world, avoiding the oceans
-           
+
 
             for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY * 2.2f) * 6E-03); k++)
             {
@@ -3328,7 +3456,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                        {
                             //new Actions.ClearWall(true),
                             new Actions.SetTile(TileID.Stone),
-                           
+
                        }));
 
 
@@ -3352,7 +3480,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
                     WorldUtils.Gen(WallPosition.ToPoint(), new Shapes.Circle(WorldGen.genRand.Next(1, 4)), Actions.Chain(new GenAction[]
                        {
                             new Actions.SetTile(TileID.Stone),
-                           
+
                        }));
 
 
@@ -3506,7 +3634,6 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
             }
 
-           
 
 
 
@@ -3514,7 +3641,8 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
 
 
-            }
+
+        }
         private void MothlightTreeSpawning(GenerationProgress progress, GameConfiguration configuration)
         {
             progress.Message = "Mothy trees!";
@@ -3522,7 +3650,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
             {
                 if (k > 200 && k < Main.maxTilesX - 200 && WorldGen.genRand.NextBool(1)) //inner part of the world
                 {
-                    for (int y = 10; y < Main.worldSurface; y++)
+                    for (int y = 10; y < Main.worldSurface + 10; y++)
                     {
                         if (IsGroundMoth(k, y, 1))
                         {
@@ -3600,17 +3728,17 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
         #region CavesGeneration
         private void NewCaveFormationMiddle(GenerationProgress progress, GameConfiguration configuration)
         {
-          
 
 
-         
+
+
             int attempts = 0;
             while (attempts++ < 100000)
             {
                 // Select a place 
                 int smx = WorldGen.genRand.Next(((Main.maxTilesX) / 2) - 500, (Main.maxTilesX / 2) + 500); // from 50 since there's a unaccessible area at the world's borders
-                                                                                                          // 50% of choosing the last 6th of the world
-                                                                                                          // Choose which side of the world to be on randomly
+                                                                                                           // 50% of choosing the last 6th of the world
+                                                                                                           // Choose which side of the world to be on randomly
                 ///if (WorldGen.genRand.NextBool())
                 ///{
                 ///	towerX = Main.maxTilesX - towerX;
@@ -3647,7 +3775,7 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
                     WorldGen.digTunnel(smx, smy, 2, 1, 10, 2, false);
 
-                   // WorldGen.digTunnel(smx, smy - 300, 3, 1, 50, 2, true);
+                    // WorldGen.digTunnel(smx, smy - 300, 3, 1, 50, 2, true);
 
 
 
@@ -3667,7 +3795,6 @@ namespace CrystalMoon.WorldGeneration.BaseEdits
 
 
 
-#endregion
-
+        #endregion
     }
 }

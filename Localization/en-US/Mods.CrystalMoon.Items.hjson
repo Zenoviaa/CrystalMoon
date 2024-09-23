@@ -296,3 +296,13 @@ SynergyTooltipItem: {
 	DisplayName: Synergy Tooltip Item
 	Tooltip: ""
 }
+
+HexxingStaff: {
+	DisplayName: Hexxing Staff
+	Tooltip: ""
+}
+
+SubworldEnterer: {
+	DisplayName: Subworld Enterer
+	Tooltip: ""
+}

@@ -1,3 +1,4 @@
 displayName = Crystal Moon
 author = Zenovia N Scolon
 version = 0.1
+modReferences = SubworldLibrary
