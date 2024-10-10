@@ -8,6 +8,17 @@ namespace CrystalMoon.Systems
 {
     internal static class CrystalMoonFXUtil
     {
+        public static void FocusCamera(Vector2 position, float duration, string uniqueIdentity = null)
+        {
+            FocusCameraModifier focusCameraModifier = new FocusCameraModifier(position, duration, uniqueIdentity);
+            Main.instance.CameraModifiers.Add(focusCameraModifier);
+        }
+
+        public static void FocusCamera(Entity entity, float duration, string uniqueIdentity = null)
+        {
+            FocusCameraModifier focusCameraModifier = new FocusCameraModifier(entity, duration, uniqueIdentity);
+            Main.instance.CameraModifiers.Add(focusCameraModifier);
+        }
         public static void ShakeCamera(Vector2 position, float distance, float strength, string uniqueIdentity = null)
         {
             ScreenshakeCameraModifier screenshakeCameraModifier = new ScreenshakeCameraModifier(

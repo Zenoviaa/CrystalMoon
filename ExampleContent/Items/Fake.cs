@@ -74,6 +74,34 @@ namespace CrystalMoon.ExampleContent.Items
         private void CameraModifierExamples()
         {
 
+            /*
+             startPosition is the starting position of the screen shake
+             direction is which way it is going to move
+             strength is how far it moves
+             vibrationCyclesPerSecond is how many times it shakes in a single second, the higher, the more erratic
+             frames is how many ticks it lasts
+             */
+
+
+            //Passing in velocity to the direction variable is cool for like recoil effects
+            CrystalMoonFXUtil.PunchCamera(
+                startPosition: Main.LocalPlayer.position,
+                direction: Vector2.UnitY * 8,
+                strength: 4,
+                vibrationCyclesPerSecond: 2,
+                frames: 30,
+                distanceFallOff: -1);
+
+            //The normal screenshake we all know, variables are self-explanatory
+            //Distance is how much falloff the shake has based on how far you are from it
+            CrystalMoonFXUtil.ShakeCamera(position: Main.LocalPlayer.position, distance: 1024, strength: 80);
+
+            //Camera focus system
+            //You can focus NPCs/Players/Entities directly like this
+            CrystalMoonFXUtil.FocusCamera(Main.LocalPlayer, duration: 120);
+
+            //You can also focus a specific position
+            CrystalMoonFXUtil.FocusCamera(Vector2.Zero, duration: 120);
         }
 
 
@@ -91,29 +119,7 @@ namespace CrystalMoon.ExampleContent.Items
                 CombatText.NewText(player.getRect(), Color.White, name, true);
             }
 
-           /*
-            startPosition is the starting position of the screen shake
-            direction is which way it is going to move
-            strength is how far it moves
-            vibrationCyclesPerSecond is how many times it shakes in a single second, the higher, the more erratic
-            frames is how many ticks it lasts
-            */
-            
-            
-            CrystalMoonFXUtil.PunchCamera(
-                startPosition: position,
-                direction: velocity,
-                strength: 4,
-                vibrationCyclesPerSecond: 2,
-                frames: 30, 
-                distanceFallOff: -1);
-            
-            
-
-            //The normal screenshake we all know, variables are self-explanatory
-            //Distance is how much falloff the shake has based on how far you are from it
-            CrystalMoonFXUtil.ShakeCamera(position: position, distance: 1024, strength: 80);
-
+ 
             Projectile.NewProjectile(source, position, velocity, _projectilesToShoot[_index], damage, knockback, player.whoAmI);
             return false;
         }
