@@ -25,9 +25,12 @@ namespace CrystalMoon
         [ReloadRequired]
         public bool VanillaUIRespritesToggle;
 
-        [Header("Screenshake")]
+        [Header("Camera")]
         [DefaultValue(true)]
         public bool ShakeToggle;
+
+        [Range(0f, 100f)]
+        public float CameraSmoothness = 50;
 
         [Header("UI")]
         [Range(0f, 100f)]

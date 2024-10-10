@@ -1,7 +1,8 @@
 Headers: {
 	Visuals: Visuals
-	Screenshake: Screenshake Header
-	UI: U I Header
+	Screenshake: Screenshake
+	Camera: Camera
+	UI: UI
 }
 
 DisplayName: Crystal Moon Client Config
@@ -33,6 +34,11 @@ VanillaUIRespritesToggle: {
 
 ShakeToggle: {
 	Label: Shake Toggle
+	Tooltip: ""
+}
+
+CameraSmoothness: {
+	Label: Camera Smoothness
 	Tooltip: ""
 }
 

@@ -1,0 +1,34 @@
+﻿using CrystalMoon.Systems.Camera;
+using Microsoft.Xna.Framework;
+using System;
+using Terraria;
+using Terraria.Graphics.CameraModifiers;
+
+namespace CrystalMoon.Systems
+{
+    internal static class CrystalMoonFXUtil
+    {
+        public static void ShakeCamera(Vector2 position, float distance, float strength, string uniqueIdentity = null)
+        {
+            ScreenshakeCameraModifier screenshakeCameraModifier = new ScreenshakeCameraModifier(
+                position,
+                distance,
+                strength,
+                uniqueIdentity);
+            Main.instance.CameraModifiers.Add(screenshakeCameraModifier);
+        }
+
+        public static void PunchCamera(Vector2 startPosition, Vector2 direction, float strength, float vibrationCyclesPerSecond, int frames, float distanceFallOff = -1, string uniqueIdentity = null)
+        {
+            PunchCameraModifier punchCameraModifier = new PunchCameraModifier(
+                startPosition,
+                direction,
+                strength,
+                vibrationCyclesPerSecond,
+                frames,
+                distanceFallOff,
+                uniqueIdentity);
+            Main.instance.CameraModifiers.Add(punchCameraModifier);
+        }
+    }
+}

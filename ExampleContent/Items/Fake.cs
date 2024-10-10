@@ -1,7 +1,9 @@
 using CrystalMoon.ExampleContent.Projectiles;
+using CrystalMoon.Systems;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -69,6 +71,12 @@ namespace CrystalMoon.ExampleContent.Items
             return true;
         }
 
+        private void CameraModifierExamples()
+        {
+
+        }
+
+
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if(player.altFunctionUse == 2)
@@ -82,7 +90,30 @@ namespace CrystalMoon.ExampleContent.Items
                 string name = ModContent.GetModProjectile(typeToShoot).Name;
                 CombatText.NewText(player.getRect(), Color.White, name, true);
             }
-      
+
+           /*
+            startPosition is the starting position of the screen shake
+            direction is which way it is going to move
+            strength is how far it moves
+            vibrationCyclesPerSecond is how many times it shakes in a single second, the higher, the more erratic
+            frames is how many ticks it lasts
+            */
+            
+            
+            CrystalMoonFXUtil.PunchCamera(
+                startPosition: position,
+                direction: velocity,
+                strength: 4,
+                vibrationCyclesPerSecond: 2,
+                frames: 30, 
+                distanceFallOff: -1);
+            
+            
+
+            //The normal screenshake we all know, variables are self-explanatory
+            //Distance is how much falloff the shake has based on how far you are from it
+            CrystalMoonFXUtil.ShakeCamera(position: position, distance: 1024, strength: 80);
+
             Projectile.NewProjectile(source, position, velocity, _projectilesToShoot[_index], damage, knockback, player.whoAmI);
             return false;
         }
