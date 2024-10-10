@@ -39,7 +39,7 @@ ShakeToggle: {
 
 CameraSmoothness: {
 	Label: Camera Smoothness
-	Tooltip: Adjusts how smoothly the camera follows the player, set to zero for the default terraria movement.
+	Tooltip: Adjusts how smoothly the camera follows the player, set to 0 for the default terraria movement, 100 for intended movement!
 }
 
 StaminaMeterX: {

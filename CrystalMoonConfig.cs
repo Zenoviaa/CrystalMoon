@@ -28,9 +28,9 @@ namespace CrystalMoon
         [Header("Camera")]
         [DefaultValue(true)]
         public bool ShakeToggle;
-
+        
         [Range(0f, 100f)]
-        public float CameraSmoothness = 50;
+        public float CameraSmoothness = 100;
 
         [Header("UI")]
         [Range(0f, 100f)]
