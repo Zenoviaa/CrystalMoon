@@ -34,30 +34,30 @@ VanillaUIRespritesToggle: {
 
 ShakeToggle: {
 	Label: Shake Toggle
-	Tooltip: ""
+	Tooltip: Toggles screenshake effects on and off.
 }
 
 CameraSmoothness: {
 	Label: Camera Smoothness
-	Tooltip: ""
+	Tooltip: Adjusts how smoothly the camera follows the player, set to zero for the default terraria movement.
 }
 
 StaminaMeterX: {
 	Label: Stamina Meter X
-	Tooltip: ""
+	Tooltip: X Position of the Stamina Meter.
 }
 
 StaminaMeterY: {
 	Label: Stamina Meter Y
-	Tooltip: ""
+	Tooltip: Y Position of the Stamina Meter.
 }
 
 EnchantMenuX: {
 	Label: Enchant Menu X
-	Tooltip: ""
+	Tooltip: X Position of the Enchantment Menu.
 }
 
 EnchantMenuY: {
 	Label: Enchant Menu Y
-	Tooltip: ""
+	Tooltip: Y Position of the Enchantment Menu.
 }
