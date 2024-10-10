@@ -75,12 +75,6 @@ namespace CrystalMoon.Systems.Particles
                     if (particle.ShouldUpdateCenter())
                         particle.Center += particle.Velocity;
 
-                    if (!particle.active)
-                    {
-                        particle.oldCenter = null;
-                        particle.oldRot = null;
-                    }
-
                     if (particle.shouldKilledOutScreen && !CrystalMoonUtils.OnScreen(particle.Center - Main.screenPosition))
                         particle.active = false;
 
@@ -109,12 +103,6 @@ namespace CrystalMoon.Systems.Particles
                     particle.Update();
                     if (particle.ShouldUpdateCenter())
                         particle.Center += particle.Velocity;
-
-                    if (!particle.active)
-                    {
-                        particle.oldCenter = null;
-                        particle.oldRot = null;
-                    }
 
                     if (particle.shouldKilledOutScreen && !CrystalMoonUtils.OnScreen(particle.Center - Main.screenPosition))
                         particle.active = false;
