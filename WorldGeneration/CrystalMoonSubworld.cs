@@ -23,7 +23,7 @@ namespace CrystalMoon.WorldGeneration
         public override int Width => 9400;
         public override int Height => 4800;
 
-        public override bool ShouldSave => false;
+        public override bool ShouldSave => true;
         public override bool NoPlayerSaving => true;
 
         //Here are the gen passes
