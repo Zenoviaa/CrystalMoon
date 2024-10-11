@@ -205,12 +205,12 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Spears
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             base.ModifyHitNPC(target, ref modifiers);
-            if (ComboAtt == 8)
+            if (ComboAtt == 7)
             {
                 modifiers.FinalDamage *= 2;
             }
 
-            if (ComboAtt == 9)
+            if (ComboAtt == 8)
             {
                 modifiers.FinalDamage *= 3;
             }
