@@ -196,10 +196,10 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             base.ModifyHitNPC(target, ref modifiers);
-
-            SoundStyle spearHit = SoundRegistry.NSwordHit1;
-            spearHit.PitchVariance = 0.2f;
+            SoundStyle spearHit = SoundRegistry.SpearHit1;
+            spearHit.PitchVariance = 0.5f;
             SoundEngine.PlaySound(spearHit, Projectile.position);
+
 
             if (ComboAtt == 5)
             {
@@ -362,6 +362,10 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             SoundStyle spearHit = SoundRegistry.CrystalHit1;
             spearHit.PitchVariance = 0.5f;
             SoundEngine.PlaySound(spearHit, Projectile.position);
+
+            SoundStyle spearHit2 = SoundRegistry.NSwordHit1;
+            spearHit2.PitchVariance = 0.2f;
+            SoundEngine.PlaySound(spearHit2, Projectile.position);
 
             modifiers.FinalDamage *= 2;
             modifiers.Knockback *= 4;
