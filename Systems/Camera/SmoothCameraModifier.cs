@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ModLoader;
 
@@ -13,10 +14,19 @@ namespace CrystalMoon.Systems.Camera
         public void Update(ref CameraInfo cameraPosition)
         {
             _oldCameraPosition ??= cameraPosition.OriginalCameraPosition;
-            float maxSmoothValue = 0.05f;
+            float maxSmoothValue = 0.03f;
             var config = ModContent.GetInstance<CrystalMoonClientConfig>();
             float smoothValue = MathHelper.Lerp(1f, maxSmoothValue, config.CameraSmoothness / 100f);
-            cameraPosition.CameraPosition = Vector2.Lerp(_oldCameraPosition.Value, cameraPosition.CameraPosition, smoothValue);
+            float distance = Vector2.Distance(_oldCameraPosition.Value, cameraPosition.CameraPosition);
+            if (distance >= Main.screenWidth)
+            {
+
+            }
+            else
+            {
+                cameraPosition.CameraPosition = Vector2.Lerp(_oldCameraPosition.Value, cameraPosition.CameraPosition, smoothValue);
+            }
+
             _oldCameraPosition = cameraPosition.CameraPosition;
         }
     }

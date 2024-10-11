@@ -1,6 +1,8 @@
 ﻿using CrystalMoon.Systems.ScreenSystems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Diagnostics;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
@@ -14,6 +16,7 @@ namespace CrystalMoon.Systems.Waters
             get
             {
                 CrystalMoonClientConfig clientConfig = ModContent.GetInstance<CrystalMoonClientConfig>();
+
                 if (!clientConfig.WatersToggle)
                     return false;
 

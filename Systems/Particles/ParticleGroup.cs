@@ -87,12 +87,6 @@ namespace CrystalMoon.Systems.Particles
                 if (particle.ShouldUpdateCenter())
                     particle.Center += particle.Velocity;
 
-                if (!particle.active)
-                {
-                    particle.oldCenter = null;
-                    particle.oldRot = null;
-                }
-
                 if (particle.Scale < 0.001f)
                     particle.active = false;
 

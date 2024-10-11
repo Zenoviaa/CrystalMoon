@@ -15,7 +15,7 @@ namespace CrystalMoon.Systems.Waters
             && !Main.LocalPlayer.ZoneCrimson
             && !Main.LocalPlayer.ZoneCorrupt
             && !Main.LocalPlayer.ZoneShimmer
-            ;
+            && ModContent.GetInstance<CrystalMoonClientConfig>().WatersToggle;
 
         public static ScreenTarget BackTarget = new(RenderFront, () => Biomes, 1, (a) => Main.waterTarget.Size());
         public static ScreenTarget FrontTarget = new(RenderBack, () => Biomes, 1, (a) => Main.instance.backWaterTarget.Size());

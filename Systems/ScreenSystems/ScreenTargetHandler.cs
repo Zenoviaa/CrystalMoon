@@ -115,6 +115,7 @@ namespace CrystalMoon.Systems.ScreenSystems
 
                 targetSem.WaitOne();
 
+                
                 foreach (ScreenTarget target in targets)
                 {
                     if (target.drawFunct is null) //allows for RTs which dont draw in the default loop, like the lighting tile buffers
