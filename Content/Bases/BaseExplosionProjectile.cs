@@ -44,7 +44,7 @@ namespace CrystalMoon.Content.Bases
             for (int f = 0; f < _circlePos.Length; f++)
             {
                 float p = f / (float)_circlePos.Length;
-                Vector2 circlePos = Projectile.position + Vector2.UnitY.RotatedBy(p * MathHelper.TwoPi * 3) * r;
+                Vector2 circlePos = Projectile.Center + Vector2.UnitY.RotatedBy(p * MathHelper.TwoPi * 3) * r;
                 _circlePos[f] = circlePos;
             }
          
