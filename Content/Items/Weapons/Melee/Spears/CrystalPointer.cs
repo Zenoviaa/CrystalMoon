@@ -119,6 +119,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Spears
             {
                 swingTime = 12,
                 stabRange = 90,
+                thrustSpeed = 5,
                 easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue)
             });
 
@@ -126,6 +127,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Spears
             {
                 swingTime = 12,
                 stabRange = 90,
+                thrustSpeed=5,
                 easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue)
             });
 
@@ -164,6 +166,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Spears
             {
                 swingTime = 30,
                 stabRange = 128,
+                thrustSpeed = 5,
                 easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue)
             });
 
@@ -171,6 +174,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Spears
             {
                 swingTime = 60,
                 stabRange = 200,
+                thrustSpeed = 5,
                 easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue)
             });
         }
