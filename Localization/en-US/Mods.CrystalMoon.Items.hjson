@@ -311,3 +311,8 @@ MirrorStaff: {
 	DisplayName: Mirror Staff
 	Tooltip: ""
 }
+
+BurningDye: {
+	DisplayName: Burning Dye
+	Tooltip: ""
+}
