@@ -326,3 +326,8 @@ FakeDye: {
 	DisplayName: Fake Dye
 	Tooltip: ""
 }
+
+StaminaBrew: {
+	DisplayName: Stamina Brew
+	Tooltip: ""
+}

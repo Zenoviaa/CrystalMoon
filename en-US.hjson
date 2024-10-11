@@ -44,6 +44,7 @@ Mods: {
 			BaseHitEffect.DisplayName: Base Hit Effect
 			CrystalPointerStab.DisplayName: Crystal Pointer Stab
 			CrystallineSwordStaminaSlash.DisplayName: Crystalline Sword Stamina Slash
+			BasicStaminaExplosion.DisplayName: Basic Stamina Explosion
 		}
 
 		Buffs: {

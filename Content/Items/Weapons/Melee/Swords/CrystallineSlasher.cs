@@ -384,10 +384,10 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             var shader = SimpleTrailShader.Instance;
 
             //Main trailing texture
-            shader.TrailingTexture = TextureRegistry.GlowTrail;
+            shader.TrailingTexture = TextureRegistry.CrystalTrail2;
 
             //Blends with the main texture
-            shader.SecondaryTrailingTexture = TextureRegistry.CrystalTrail2;
+            shader.SecondaryTrailingTexture = TextureRegistry.GlowTrail;
 
             //Used for blending the trail colors
             //Set it to any noise texture

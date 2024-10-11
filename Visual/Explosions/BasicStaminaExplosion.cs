@@ -26,7 +26,7 @@ namespace CrystalMoon.Visual.Explosions
         protected override float BeamWidthFunction(float p)
         {
             //How wide the trail is going to be
-            float trailWidth = MathHelper.Lerp(64, 32, p);
+            float trailWidth = MathHelper.Lerp(32, 16, p);
             float fadeWidth = MathHelper.Lerp(0, trailWidth, Easing.SpikeOutCirc(p)) * Main.rand.NextFloat(0.75f, 1.0f);
             return fadeWidth;
         }
@@ -58,8 +58,8 @@ namespace CrystalMoon.Visual.Explosions
             //Used for blending the trail colors
             //Set it to any noise texture
             shader.TertiaryTrailingTexture = TextureRegistry.CrystalTrail;
-            shader.PrimaryColor = Color.DarkGoldenrod;
-            shader.SecondaryColor = Color.Purple;
+            shader.PrimaryColor = Color.White;
+            shader.SecondaryColor = Color.DarkGreen;
             shader.Speed = 20;
 
             //Alpha Blend/Additive
