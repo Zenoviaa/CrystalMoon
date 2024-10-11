@@ -253,7 +253,7 @@ namespace CrystalMoon.Content.Bases
             Vector2 swingVelocity = swingDirection * stabRange;
             if (!thrust)
             {
-                Owner.velocity += swingDirection * 3;
+                Owner.velocity += swingDirection * 5;
                 thrust = true;
             }
 

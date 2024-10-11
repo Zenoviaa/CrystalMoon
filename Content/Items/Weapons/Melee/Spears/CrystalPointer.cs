@@ -41,13 +41,13 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Spears
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             ComboPlayer comboPlayer = player.GetModPlayer<ComboPlayer>();
-            comboPlayer.ComboWaitTime = 60;
+            comboPlayer.ComboWaitTime = 70;
 
             int combo = comboPlayer.ComboCounter;
             int dir = comboPlayer.ComboDirection;
             Projectile.NewProjectile(source, position, velocity, type, damage, knockback,
                 player.whoAmI, combo, dir);
-            comboPlayer.IncreaseCombo(maxCombo: 7);
+            comboPlayer.IncreaseCombo(maxCombo: 9);
             return false;
         }
     }
@@ -103,20 +103,24 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Spears
             {
                 default:
                 case 0:
-                    return 20;
+                    return 28;
                 case 1:
-                    return 20;
+                    return 28;
                 case 2:
                     return 12;
                 case 3:
                     return 12;
                 case 4:
-                    return 18;
+                    return 24;
                 case 5:
                     return 24;
                 case 6:
                     return 60;
-                    
+                case 7:
+                    return 30;
+                case 8:
+                    return 60;
+
             }
         }
 
@@ -154,10 +158,10 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Spears
                     {
                         OvalRotOffset = MathHelper.Pi + MathHelper.PiOver2;
                     }
-                    swingXRadius = 128;
-                    swingYRadius = 64; 
+                    swingXRadius = 100;
+                    swingYRadius = 50; 
                     swingRange = MathHelper.Pi / 2f;
-                    swingProgress = Easing.InOutExpo(lerpValue, 7);
+                    swingProgress = Easing.InOutExpo(lerpValue, 10);
                     break;
                 case 1:
                     if (ComboDirection == 1)
@@ -168,10 +172,10 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Spears
                     {
                         OvalRotOffset = MathHelper.Pi + MathHelper.PiOver2;
                     }
-                    swingXRadius = 128 ;
-                    swingYRadius = 64 ;
+                    swingXRadius = 100 ;
+                    swingYRadius = 50 ;
                     swingRange = MathHelper.Pi / 2f;
-                    swingProgress = Easing.InOutExpo(lerpValue, 7);
+                    swingProgress = Easing.InOutExpo(lerpValue, 10);
                     break;
                 case 4:
                     if (ComboDirection == 1)
@@ -182,10 +186,25 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Spears
                     {
                         OvalRotOffset = MathHelper.Pi + MathHelper.PiOver2;
                     }
-                    swingXRadius = 128;
-                    swingYRadius = 64 ;
+                    swingXRadius = 100;
+                    swingYRadius = 50 ;
                     swingRange = MathHelper.Pi / 2f;
-                    swingProgress = Easing.InOutExpo(lerpValue, 7);
+                    swingProgress = Easing.InOutExpo(lerpValue, 10);
+                    break;
+
+                case 5:
+                    if (ComboDirection == 1)
+                    {
+                        OvalRotOffset = 0;
+                    }
+                    else
+                    {
+                        OvalRotOffset = MathHelper.Pi + MathHelper.PiOver2;
+                    }
+                    swingXRadius = 100;
+                    swingYRadius = 50;
+                    swingRange = MathHelper.Pi / 2f;
+                    swingProgress = Easing.InOutExpo(lerpValue, 10);
                     break;
             }
         }
@@ -197,15 +216,20 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Spears
             switch (ComboAtt)
             {
                 case 2:
-                    stabRange = 184;
+                    stabRange = 90;
                     swingProgress = Easing.SpikeOutExpo(lerpValue);
                     break;
                 case 3:
-                    stabRange = 184;
+                    stabRange = 90;
                     swingProgress = Easing.SpikeOutExpo(lerpValue);
                     break;
-                case 5:
-                    stabRange = 252;
+                case 7:
+                    stabRange = 128;
+                    swingProgress = Easing.SpikeOutExpo(lerpValue);
+                    break;
+
+                case 8:
+                    stabRange = 200;
                     swingProgress = Easing.SpikeOutExpo(lerpValue);
                     break;
             }
@@ -237,11 +261,19 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Spears
                     break;
 
                 case 5:
-                    StabSwingEasedAI();
+                    OvalEasedSwingAI();
                     break;
 
                 case 6:
                     SimpleEasedSwingAI();
+                    break;
+
+                case 7:
+                    StabSwingEasedAI();
+                    break;
+
+                case 8:
+                    StabSwingEasedAI();
                     break;
             }
         }
