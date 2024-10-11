@@ -9,6 +9,7 @@ namespace CrystalMoon.Systems.Players
         public int ComboWaitTime;
         public int ComboDirection = 1;
         public int Stamina;
+        public int StaminaComboCounter;
         public int MaxStamina = 3;
         public override void ResetEffects()
         {
@@ -51,6 +52,17 @@ namespace CrystalMoon.Systems.Players
             if(ComboCounter >= maxCombo)
             {
                 ComboCounter = 0;
+            }
+            ComboDirection = -ComboDirection;
+        }
+
+        public void IncreaseStaminaCombo(int maxStaminaCombo)
+        {
+            _comboWaitTimer = 0;
+            StaminaComboCounter++;
+            if (StaminaComboCounter >= maxStaminaCombo)
+            {
+                StaminaComboCounter = 0;
             }
             ComboDirection = -ComboDirection;
         }

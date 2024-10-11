@@ -15,6 +15,7 @@ namespace CrystalMoon.Content.Bases
     {
         public int comboWaitTime = 60;
         public int maxCombo;
+        public int maxStaminaCombo;
         public int staminaProjectileShoot;
         public int staminaToUse;
         public virtual void ShootSwing(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -35,11 +36,11 @@ namespace CrystalMoon.Content.Bases
             comboPlayer.ComboWaitTime = comboWaitTime;
             comboPlayer.ConsumeStamina(staminaToUse);
         
-            int combo = comboPlayer.ComboCounter;
+            int combo = comboPlayer.StaminaComboCounter;
             int dir = comboPlayer.ComboDirection;
             Projectile.NewProjectile(source, position, velocity, type, damage, knockback,
                 player.whoAmI, combo, dir);
-            comboPlayer.IncreaseCombo(maxCombo: maxCombo);
+            comboPlayer.IncreaseStaminaCombo(maxStaminaCombo: maxStaminaCombo);
         }
 
         public override bool AltFunctionUse(Player player)
