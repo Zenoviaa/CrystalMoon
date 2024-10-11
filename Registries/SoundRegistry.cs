@@ -21,6 +21,14 @@ namespace CrystalMoon.Registries
         public static SoundStyle NSwordSpin1 => new SoundStyle($"{RootAssetPath}SwordSpin1");
 
         public static SoundStyle CurveSwordSlash1 => new SoundStyle($"{RootAssetPath}CurveSwordSlash1");
+
+        public static SoundStyle SpearSlash1 => new SoundStyle($"{RootAssetPath}SpearSlash1");
+
+        public static SoundStyle SpearSlash2 => new SoundStyle($"{RootAssetPath}SpearSlash2");
+
+        public static SoundStyle SpearHit1 => new SoundStyle($"{RootAssetPath}SpearHit1");
+
+
         /*
         public static SoundStyle BowCharge => new SoundStyle($"{RootAssetPath}BowCharge",
             variantSuffixesStart: 1,
