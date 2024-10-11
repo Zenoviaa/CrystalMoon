@@ -24,7 +24,7 @@ namespace CrystalMoon.Content.Bases
             Projectile.timeLeft = 900;
             Projectile.tileCollide = false;
             Projectile.aiStyle = -1;
-            Projectile.scale = 0.5f;
+            Projectile.scale = 0.4f;
         }
 
         public override bool PreAI()
