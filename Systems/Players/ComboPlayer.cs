@@ -29,6 +29,7 @@ namespace CrystalMoon.Systems.Players
             _comboWaitTimer++;
             if(_comboWaitTimer >= ComboWaitTime)
             {
+                StaminaComboCounter = 0;
                 ComboCounter = 0;
                 _comboWaitTimer = 0;
             }

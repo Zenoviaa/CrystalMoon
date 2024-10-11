@@ -57,7 +57,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             //set staminacombo
             maxStaminaCombo = 2;
             //Set stamina projectile
-            staminaProjectileShoot = ModContent.ProjectileType<CrystallineSwordSlash>();
+            staminaProjectileShoot = ModContent.ProjectileType<CrystallineSwordStaminaSlash>();
         }
     }
     public class CrystallineSwordSlash : BaseSwingProjectile
@@ -250,13 +250,29 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             Projectile.height = 38;
             Projectile.width = 38;
             Projectile.friendly = true;
-            Projectile.scale = 1.5f;
+            Projectile.scale = 1.3f;
 
             Projectile.extraUpdates = ExtraUpdateMult - 1;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 10000;
         }
 
+        private bool _thrust;
+        public float thrustSpeed = 5;
+        public float stabRange;
+        public override void AI()
+        {
+            base.AI();
+
+            Vector2 swingDirection = Projectile.velocity.SafeNormalize(Vector2.Zero);
+            if (!_thrust && Countertimer > 62 * ExtraUpdateMult)
+            {
+                Owner.velocity += swingDirection * thrustSpeed;
+                _thrust = true;
+            }
+
+
+        }
         public override void SetComboDefaults(List<BaseSwingStyle> swings)
         {
             base.SetComboDefaults(swings);
@@ -313,7 +329,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             int dir = comboPlayer.ComboDirection;
 
 
-            if (ComboAtt > 1)
+            if (ComboAtt < 1)
             {
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position, Projectile.velocity, Projectile.type, Projectile.damage, Projectile.knockBack,
                             Owner.whoAmI, combo, dir);
@@ -356,10 +372,10 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             var shader = SimpleTrailShader.Instance;
 
             //Main trailing texture
-            shader.TrailingTexture = TextureRegistry.CrystalTrail;
+            shader.TrailingTexture = TextureRegistry.GlowTrail;
 
             //Blends with the main texture
-            shader.SecondaryTrailingTexture = TextureRegistry.GlowTrail;
+            shader.SecondaryTrailingTexture = TextureRegistry.CrystalTrail;
 
             //Used for blending the trail colors
             //Set it to any noise texture
