@@ -306,3 +306,8 @@ SubworldEnterer: {
 	DisplayName: Subworld Enterer
 	Tooltip: ""
 }
+
+MirrorStaff: {
+	DisplayName: Mirror Staff
+	Tooltip: ""
+}
