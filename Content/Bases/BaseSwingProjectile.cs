@@ -126,7 +126,7 @@ namespace CrystalMoon.Content.Bases
             {
                 SetComboDefaults(_swingStyles);
                 var sw = _swingStyles[(int)Projectile.ai[0]];
-                if(sw != null) 
+                if(sw.swingSound != null) 
                     SoundEngine.PlaySound(sw.swingSound, Projectile.position);
                 Projectile.timeLeft = (int)GetSwingTime(sw.swingTime);
             
