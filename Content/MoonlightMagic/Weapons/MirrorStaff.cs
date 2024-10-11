@@ -8,10 +8,10 @@ namespace CrystalMoon.Content.MoonlightMagic.Weapons
         {
             base.SetDefaults();
             Item.damage = 35;
-            Item.shootSpeed = 16;
+            Item.shootSpeed = 19;
             Item.useTime = 40;
             Item.useAnimation = 40;
-            Size = 8;
+            Size = 10;
             TrailLength = 50;
             Form = FormRegistry.Snowglobe.Value;
         }
