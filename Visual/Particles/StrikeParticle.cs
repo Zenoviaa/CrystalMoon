@@ -20,6 +20,7 @@ namespace CrystalMoon.Visual.Particles
         {
             Rotation += Main.rand.NextFloat(-MathHelper.TwoPi, MathHelper.TwoPi);
             Frame = new Rectangle(0, 0, FrameWidth, FrameHeight);
+            Scale *= 0.7f;
         }
 
         public override void Update()
