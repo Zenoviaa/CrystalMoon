@@ -23,7 +23,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
     // https://github.com/tModLoader/tModLoader/tree/stable/ExampleMod
 
 
-    public class RuneSmasher : ModItem
+    public class RuneSmasher : BaseSwingItem
     {
         // The Display Name and Tooltip of this item can be edited in the 'Localization/en-US_Mods.LunarVeil.hjson' file.
         public override void SetDefaults()
@@ -43,20 +43,9 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
             Item.shootSpeed = 10;
             Item.shoot = ModContent.ProjectileType<RuneHammerSlash>();
             Item.autoReuse = true;
-        }
 
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-            ComboPlayer comboPlayer = player.GetModPlayer<ComboPlayer>();
-            comboPlayer.ComboWaitTime = 121;
-
-            int combo = comboPlayer.ComboCounter;
-            int dir = comboPlayer.ComboDirection;
-            Projectile.NewProjectile(source, position, velocity, type, damage, knockback,
-                player.whoAmI, combo, dir);
-
-            comboPlayer.IncreaseCombo(maxCombo: 9);
-            return false;
+            comboWaitTime = 121;
+            maxCombo = 9;
         }
     }
 

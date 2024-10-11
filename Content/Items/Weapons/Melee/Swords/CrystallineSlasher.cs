@@ -19,7 +19,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
     // https://github.com/tModLoader/tModLoader/tree/stable/ExampleMod
 
 
-    public class CrystallineSlasher : ModItem
+    public class CrystallineSlasher : BaseSwingItem
     {
         // The Display Name and Tooltip of this item can be edited in the 'Localization/en-US_Mods.CrystalMoon.hjson' file.
         public override void SetDefaults()
@@ -39,19 +39,19 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             Item.shootSpeed = 10;
             Item.shoot = ModContent.ProjectileType<CrystallineSwordSlash>();
             Item.autoReuse = true;
-        }
 
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-            ComboPlayer comboPlayer = player.GetModPlayer<ComboPlayer>();
-            comboPlayer.ComboWaitTime = 60;
+            //Combo variables
+            //Set combo wait time
+            comboWaitTime = 60;
 
-            int combo = comboPlayer.ComboCounter;
-            int dir = comboPlayer.ComboDirection;
-            Projectile.NewProjectile(source, position, velocity, type, damage, knockback,
-                player.whoAmI, combo, dir);
-            comboPlayer.IncreaseCombo(maxCombo: 6);
-            return false;
+            //Set max combo
+            maxCombo = 6;
+
+            //Set stamina to use
+            staminaToUse = 1;
+
+            //Set stamina projectile
+            staminaProjectileShoot = ModContent.ProjectileType<CrystallineSwordSlash>();
         }
     }
 
