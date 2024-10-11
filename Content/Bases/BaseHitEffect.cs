@@ -99,7 +99,7 @@ namespace CrystalMoon.Content.Bases
             SpriteBatch spriteBatch = Main.spriteBatch;
             spriteBatch.Draw(texture, drawPosition,
                 texture.AnimationFrame(ref _frameCounter, ref _frameTick, frameSpeed, frameCount, false),
-                Color.White, Projectile.rotation, origin, 0.4f, SpriteEffects.None, 0f);
+                Color.White, Projectile.rotation, origin, 0.3f, SpriteEffects.None, 0f);
             return false;
         }
 
