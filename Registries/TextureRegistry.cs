@@ -51,6 +51,9 @@ namespace CrystalMoon.Registries
             ModContent.Request<Texture2D>($"{AssetDirectory}CausticTrail");
         public static Asset<Texture2D> CrystalTrail =>
             ModContent.Request<Texture2D>($"{AssetDirectory}CrystalTrail");
+
+        public static Asset<Texture2D> CrystalTrail2 =>
+           ModContent.Request<Texture2D>($"{AssetDirectory}CrystalTrail2");
         public static Asset<Texture2D> TerraTrail =>
             ModContent.Request<Texture2D>($"{AssetDirectory}TerraTrail");
 

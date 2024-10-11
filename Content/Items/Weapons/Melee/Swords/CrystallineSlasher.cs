@@ -265,11 +265,15 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             base.AI();
 
             Vector2 swingDirection = Projectile.velocity.SafeNormalize(Vector2.Zero);
-            if (!_thrust && Countertimer > 62 * ExtraUpdateMult)
+              if (_smoothedLerpValue > 0.5f)
             {
-                Owner.velocity += swingDirection * thrustSpeed;
-                _thrust = true;
+                if (!_thrust)
+                {
+                    Owner.velocity += swingDirection * thrustSpeed;
+                    _thrust = true;
+                }
             }
+           
 
 
         }
@@ -375,11 +379,11 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             shader.TrailingTexture = TextureRegistry.GlowTrail;
 
             //Blends with the main texture
-            shader.SecondaryTrailingTexture = TextureRegistry.CrystalTrail;
+            shader.SecondaryTrailingTexture = TextureRegistry.CrystalTrail2;
 
             //Used for blending the trail colors
             //Set it to any noise texture
-            shader.TertiaryTrailingTexture = TextureRegistry.CrystalTrail;
+            shader.TertiaryTrailingTexture = TextureRegistry.CrystalTrail2;
             shader.PrimaryColor = Color.White;
             shader.SecondaryColor = Color.DarkSlateBlue;
             shader.BlendState = BlendState.Additive;
