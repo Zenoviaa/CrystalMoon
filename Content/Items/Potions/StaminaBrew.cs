@@ -35,11 +35,11 @@ namespace CrystalMoon.Content.Items.Potions
 
             Item.useTime = 17;
             Item.useAnimation = 17;
-            Item.maxStack = 1;
+            Item.maxStack = 9999;
             Item.useStyle = ItemUseStyleID.DrinkLong;
             Item.value = Item.buyPrice(0, 3, 3, 40);
             Item.rare = ItemRarityID.Green;
-            Item.consumable = false;
+            Item.consumable = true;
             Item.UseSound = SoundID.Item3;
 
 
