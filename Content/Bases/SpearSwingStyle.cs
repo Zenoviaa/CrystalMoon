@@ -17,6 +17,8 @@ namespace CrystalMoon.Content.Bases
             float targetRotation = Projectile.velocity.ToRotation();
             swingProgress = easingFunc(swingProgress);
             SwingProjectile._smoothedLerpValue = swingProgress;
+            PlaySwingSound(swingProgress);
+
             float dir2 = (int)Projectile.ai[1];
 
             Vector2 swingDirection = Projectile.velocity.SafeNormalize(Vector2.Zero);

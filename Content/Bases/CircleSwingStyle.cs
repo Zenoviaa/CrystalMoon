@@ -38,6 +38,7 @@ namespace CrystalMoon.Content.Bases
             float end = targetRotation + endSwingRotOffset;
             swingProgress = easingFunc(swingProgress);
             SwingProjectile._smoothedLerpValue = swingProgress;
+            PlaySwingSound(swingProgress);
 
             // current rotation obv
             // angle lerp causes some weird things here, so just use a normal lerp

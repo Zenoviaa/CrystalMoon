@@ -6,6 +6,7 @@ namespace CrystalMoon.Content.Bases
 {
     public abstract class BaseSwingStyle
     {
+        private bool _playSound;
         public BaseSwingStyle()
         {
 
@@ -16,7 +17,18 @@ namespace CrystalMoon.Content.Bases
         public Player Owner => SwingProjectile.Owner;
         public float swingTime;
         public SoundStyle? swingSound;
+        public float swingSoundLerpValue;
         public Func<float, float> easingFunc;
         public abstract void AI();
+        protected void PlaySwingSound(float smoothedLerpValue)
+        {
+            if (_playSound)
+                return;
+            if(smoothedLerpValue >= swingSoundLerpValue)
+            {
+                SoundEngine.PlaySound(swingSound, SwingProjectile.Projectile.position);
+                _playSound = true;
+            }
+        }
     }
 }

@@ -101,7 +101,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Spears
                 swingRange = MathHelper.Pi / 2f,
                 easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
                 ovalRotOffset = ovalRotOffset,
-                swingSound = spearSlash1
+                swingSound = spearSlash1,
+                swingSoundLerpValue=0.5f
             });
 
             swings.Add(new OvalSwingStyle
@@ -112,7 +113,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Spears
                 swingRange = MathHelper.Pi / 2f,
                 easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
                 ovalRotOffset = ovalRotOffset,
-                swingSound = spearSlash1
+                swingSound = spearSlash1,
+                swingSoundLerpValue = 0.5f
             });
 
             swings.Add(new SpearSwingStyle
@@ -141,7 +143,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Spears
                 swingRange = MathHelper.Pi / 2f,
                 easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
                 ovalRotOffset = ovalRotOffset,
-                swingSound = spearSlash1
+                swingSound = spearSlash1,
+                swingSoundLerpValue = 0.5f
             });
 
             swings.Add(new OvalSwingStyle
@@ -152,7 +155,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Spears
                 swingRange = MathHelper.Pi / 2f,
                 easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
                 ovalRotOffset = ovalRotOffset,
-                swingSound = spearSlash1
+                swingSound = spearSlash1,
+                swingSoundLerpValue = 0.5f
             });
 
             float circleRange = MathHelper.TwoPi * 4;

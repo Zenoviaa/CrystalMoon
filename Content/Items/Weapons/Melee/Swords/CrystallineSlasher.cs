@@ -129,7 +129,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                 swingYRadius = 64 / 1.5f,
                 swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4,
                 easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
-                 swingSound = swingSound2
+                 swingSound = swingSound2,
+                swingSoundLerpValue = 0.5f
             });
 
             swings.Add(new OvalSwingStyle
@@ -139,7 +140,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                 swingYRadius = 64 / 1.5f,
                 swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4,
                 easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
-                swingSound = swingSound2
+                swingSound = swingSound2,
+                swingSoundLerpValue = 0.5f
             });
 
             swings.Add(new CircleSwingStyle
