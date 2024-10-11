@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -124,7 +125,9 @@ namespace CrystalMoon.Content.Bases
             if (!_init)
             {
                 SetComboDefaults(_swingStyles);
-                Projectile.timeLeft = (int)GetSwingTime(_swingStyles[(int)Projectile.ai[0]].swingTime);
+                var sw = _swingStyles[(int)Projectile.ai[0]];
+                SoundEngine.PlaySound(sw.swingSound, Projectile.position);
+                Projectile.timeLeft = (int)GetSwingTime(sw.swingTime);
             
                 InitSwingAI();
                 _init = true;

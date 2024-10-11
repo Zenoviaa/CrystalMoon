@@ -1,10 +1,6 @@
-﻿using CrystalMoon.Systems.MiscellaneousMath;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using Terraria;
+using Terraria.Audio;
 
 namespace CrystalMoon.Content.Bases
 {
@@ -19,6 +15,7 @@ namespace CrystalMoon.Content.Bases
         public Projectile Projectile => SwingProjectile.Projectile;
         public Player Owner => SwingProjectile.Owner;
         public float swingTime;
+        public SoundStyle swingSound;
         public Func<float, float> easingFunc;
         public abstract void AI();
     }

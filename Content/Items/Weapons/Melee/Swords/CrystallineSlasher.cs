@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -61,6 +62,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             staminaProjectileShoot = ModContent.ProjectileType<CrystallineSwordStaminaSlash>();
         }
 
+
         public override void ShootSwingStamina(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             base.ShootSwingStamina(player, source, position, velocity, type, damage, knockback);
@@ -101,12 +103,16 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
         public override void SetComboDefaults(List<BaseSwingStyle> swings)
         {
             base.SetComboDefaults(swings);
+
+            SoundStyle swingSound1 = SoundRegistry.NSwordHit1;
+            swingSound1.PitchVariance = 0.5f;
             swings.Add(new CircleSwingStyle
             {
                 swingTime = 24,
                 startSwingRotOffset = -MathHelper.ToRadians(135),
                 endSwingRotOffset = MathHelper.ToRadians(135),
                 easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
+                swingSound = swingSound1
             });
 
             swings.Add(new OvalSwingStyle
