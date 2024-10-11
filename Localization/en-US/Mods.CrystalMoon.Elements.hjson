@@ -89,3 +89,8 @@ WindElement: {
 	DisplayName: Wind Element
 	Tooltip: Transforms your spell with the power of wind!
 }
+
+HolinessElement: {
+	DisplayName: Holiness Element
+	Tooltip: Transforms your spell with the power of the holy!
+}
