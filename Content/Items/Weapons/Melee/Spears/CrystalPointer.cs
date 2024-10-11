@@ -441,14 +441,14 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Spears
             var shader = SimpleTrailShader.Instance;
 
             //Main trailing texture
-            shader.TrailingTexture = TextureRegistry.GlowTrail;
+            shader.TrailingTexture = TextureRegistry.CrystalTrail2;
 
             //Blends with the main texture
             shader.SecondaryTrailingTexture = TextureRegistry.GlowTrail;
 
             //Used for blending the trail colors
             //Set it to any noise texture
-            shader.TertiaryTrailingTexture = TextureRegistry.CrystalTrail;
+            shader.TertiaryTrailingTexture = TextureRegistry.CrystalTrail2;
             shader.PrimaryColor = Color.White;
             shader.SecondaryColor = Color.DarkSlateBlue;
             shader.BlendState = BlendState.Additive;
