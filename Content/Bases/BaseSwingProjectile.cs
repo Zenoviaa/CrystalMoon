@@ -117,7 +117,7 @@ namespace CrystalMoon.Content.Bases
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), start, end, Projectile.scale, ref collisionPoint);
         }
 
-        public sealed override void AI()
+        public override void AI()
         {
             base.AI();
  
