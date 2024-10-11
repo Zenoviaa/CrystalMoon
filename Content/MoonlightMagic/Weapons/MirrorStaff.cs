@@ -13,7 +13,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Weapons
             Item.useAnimation = 40;
             Size = 10;
             TrailLength = 50;
-            Form = FormRegistry.Snowglobe.Value;
+            Form = FormRegistry.Lantern.Value;
         }
 
 
