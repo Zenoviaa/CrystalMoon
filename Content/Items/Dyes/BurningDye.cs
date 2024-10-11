@@ -8,16 +8,18 @@ namespace CrystalMoon.Content.Items.Dyes
 {
     public class BurningDye : ModItem
     {
+        private static BurningDyeArmorShaderData _armorShader;
         public override void SetStaticDefaults()
         {
             // Avoid loading assets on dedicated servers. They don't use graphics cards.
             if (!Main.dedServ)
             {
                 // The following code creates an effect (shader) reference and associates it with this item's type Id.
-                GameShaders.Armor.BindShader(
+                _armorShader = GameShaders.Armor.BindShader(
                     Item.type,
-                    new ArmorShaderData(Mod.Assets.Request<Effect>("Assets/Effects/FirePixel"), "FireShader") // Be sure to update the effect path and pass name here.
+                    new BurningDyeArmorShaderData(Mod.Assets.Request<Effect>("Assets/Effects/DyeFirePixel"), "PixelPass") // Be sure to update the effect path and pass name here.
                 );
+
             }
 
             Item.ResearchUnlockCount = 3;

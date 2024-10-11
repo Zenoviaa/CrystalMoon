@@ -24,9 +24,10 @@ namespace CrystalMoon.Registries
         public static MiscShaderData MagicTrailGuut => GameShaders.Misc["CrystalMoon:MagicGuut"];
         public static MiscShaderData MagicTrailNatural => GameShaders.Misc["CrystalMoon:MagicNatural"];
         public static MiscShaderData MagicTrailNormal => GameShaders.Misc["CrystalMoon:MagicNormal"];
-        
-        
+
+
         //Pixel Shaders
+        public static MiscShaderData DyePixelMagicFire => GameShaders.Misc["CrystalMoon:DyeFirePixel"];
         public static MiscShaderData PixelMagicFire => GameShaders.Misc["CrystalMoon:FirePixel"];
         public static MiscShaderData PixelMagicPhantasmal => GameShaders.Misc["CrystalMoon:PixelMagicPhantasmal"];
         public static MiscShaderData PixelMagicNormal => GameShaders.Misc["CrystalMoon:PixelMagicNormal"];
@@ -84,6 +85,7 @@ namespace CrystalMoon.Registries
 
             //Magic Pixel
             RegisterMiscShader("FirePixel", "PixelPass");
+            RegisterMiscShader("DyeFirePixel", "PixelPass");
             RegisterMiscShader("PixelMagicPhantasmal", "PixelPass");
             RegisterMiscShader("PixelMagicNormal", "PixelPass");
             RegisterMiscShader("PixelMagicBloodlet", "PixelPass");

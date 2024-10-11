@@ -3,7 +3,9 @@ using CrystalMoon.Registries;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CrystalMoon.Content.MoonlightMagic
 {
@@ -43,6 +45,9 @@ namespace CrystalMoon.Content.MoonlightMagic
                     }
                 }
             }
+
+
+
             bool isItemName = line.Mod == "Terraria" && line.Name == "ItemName";
             bool isEnchantTooltip = line.Mod == "CrystalMoon" && line.Name == "EnchantmentTooltip";
             bool isSynergyTooltip = line.Mod == "CrystalMoon" && line.Name == "SynergyHelp";
