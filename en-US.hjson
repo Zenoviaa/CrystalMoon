@@ -45,6 +45,7 @@ Mods: {
 			CrystalPointerStab.DisplayName: Crystal Pointer Stab
 			CrystallineSwordStaminaSlash.DisplayName: Crystalline Sword Stamina Slash
 			BasicStaminaExplosion.DisplayName: Basic Stamina Explosion
+			CrystalPointerStaminaStab.DisplayName: Crystal Pointer Stamina Stab
 		}
 
 		Buffs: {

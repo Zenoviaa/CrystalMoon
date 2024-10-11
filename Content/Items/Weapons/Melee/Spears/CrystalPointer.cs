@@ -1,4 +1,5 @@
 ﻿using CrystalMoon.Content.Bases;
+using CrystalMoon.Content.Items.Weapons.Melee.Swords;
 using CrystalMoon.Registries;
 using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Systems.Particles;
@@ -39,7 +40,13 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Spears
 
             comboWaitTime = 70;
             maxCombo = 9;
-            
+
+            //Set stamina to use
+            staminaToUse = 1;
+            //set staminacombo
+            maxStaminaCombo = 2;
+            //Set stamina projectile
+            staminaProjectileShoot = ModContent.ProjectileType<CrystalPointerStaminaStab>();
         }
     }
 
@@ -227,6 +234,176 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Spears
 
             if (ComboAtt == 8)
             {
+                modifiers.FinalDamage *= 3;
+            }
+        }
+
+        //TRAIL VISUALS
+        public override Vector2 GetFramingSize()
+        {
+            //Set this to the width and height of the sword sprite
+            return new Vector2(68, 72);
+        }
+
+        public override Vector2 GetTrailOffset()
+        {
+            //Moves the trail along the blade, negative goes towards the player, positive goes away the player
+            return Vector2.One * 80;
+        }
+
+        protected override float WidthFunction(float p)
+        {
+            float trailWidth = MathHelper.Lerp(0, 252, p);
+            float fadeWidth = MathHelper.Lerp(trailWidth, 0, _smoothedLerpValue) * Easing.OutExpo(_smoothedLerpValue, 4);
+            return fadeWidth;
+        }
+
+        protected override Color ColorFunction(float p)
+        {
+            Color trailColor = Color.Lerp(Color.White, Color.LightCyan, p);
+            Color fadeColor = Color.Lerp(trailColor, Color.DeepSkyBlue, _smoothedLerpValue);
+            //This will make it fade out near the end
+            return fadeColor;
+        }
+
+        protected override BaseShader ReadyShader()
+        {
+            var shader = SimpleTrailShader.Instance;
+
+            //Main trailing texture
+            shader.TrailingTexture = TextureRegistry.GlowTrail;
+
+            //Blends with the main texture
+            shader.SecondaryTrailingTexture = TextureRegistry.GlowTrail;
+
+            //Used for blending the trail colors
+            //Set it to any noise texture
+            shader.TertiaryTrailingTexture = TextureRegistry.CrystalTrail;
+            shader.PrimaryColor = Color.White;
+            shader.SecondaryColor = Color.DarkSlateBlue;
+            shader.BlendState = BlendState.Additive;
+            shader.Speed = 25;
+            return shader;
+        }
+    }
+
+    public class CrystalPointerStaminaStab : BaseSwingProjectile
+    {
+        public override string Texture => "CrystalMoon/Content/Items/Weapons/Melee/Spears/CrystalPointer";
+        ref float ComboAtt => ref Projectile.ai[0];
+        public bool Hit;
+
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.TrailCacheLength[Type] = 64;
+            ProjectileID.Sets.TrailingMode[Type] = 2;
+        }
+
+        public override void SetDefaults()
+        {
+
+            holdOffset = 40;
+            trailStartOffset = 0.2f;
+            Projectile.penetrate = -1;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.height = 38;
+            Projectile.width = 38;
+            Projectile.friendly = true;
+            Projectile.scale = 1f;
+
+            Projectile.extraUpdates = ExtraUpdateMult - 1;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 10000;
+        }
+
+        public override void SetComboDefaults(List<BaseSwingStyle> swings)
+        {
+            base.SetComboDefaults(swings);
+
+            SoundStyle spearSlash1 = SoundRegistry.SpearSlash1;
+            SoundStyle spearSlash2 = SoundRegistry.SpearSlash2;
+            SoundStyle nSpin = SoundRegistry.NSwordSpin1;
+            spearSlash1.PitchVariance = 0.25f;
+            spearSlash2.PitchVariance = 0.25f;
+            nSpin.PitchVariance = 0.2f;
+            swings.Add(new OvalSwingStyle
+            {
+                swingTime = 60,
+                swingXRadius = 128,
+                swingYRadius = 48,
+                swingRange = MathHelper.ToRadians(2100),
+                easingFunc = (float lerpValue) => lerpValue,
+                swingSound = nSpin,
+                swingSoundLerpValue = 0.15f
+            });
+
+            swings.Add(new SpearSwingStyle
+            {
+                swingTime = 20,
+                stabRange = 164,
+                thrustSpeed = 15,
+                easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue),
+                swingSound = spearSlash2
+            });
+        }
+
+        public override void OnKill(int timeLeft)
+        {
+            base.OnKill(timeLeft);
+            ComboPlayer comboPlayer = Owner.GetModPlayer<ComboPlayer>();
+            int combo = (int)(ComboAtt + 1);
+            int dir = comboPlayer.ComboDirection;
+
+
+            if (ComboAtt < 1)
+            {
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position, (Main.MouseWorld - Owner.Center), Projectile.type, Projectile.damage, Projectile.knockBack,
+                            Owner.whoAmI, combo, dir);
+            }
+        }
+
+        protected override void InitSwingAI()
+        {
+            base.InitSwingAI();
+            if (ComboAtt == 0)
+            {
+                //This npc local hit cooldown time makes it hit multiple times
+                Projectile.localNPCHitCooldown = 3 * ExtraUpdateMult;
+            }
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            base.OnHitNPC(target, hit, damageDone);
+            if (!Hit)
+            {
+                Main.LocalPlayer.GetModPlayer<EffectsPlayer>().ShakeAtPosition(target.Center, 1024f, 8f);
+                Particle.NewParticle<IceStrikeParticle>(target.Center, Vector2.Zero, Color.White);
+
+                Hit = true;
+                hitstopTimer = 4 * ExtraUpdateMult;
+            }
+        }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            base.ModifyHitNPC(target, ref modifiers);
+
+            if (ComboAtt == 0)
+            {
+                SoundStyle spearHit = SoundRegistry.SpearHit1;
+                spearHit.PitchVariance = 0.1f;
+                SoundEngine.PlaySound(spearHit, Projectile.position);
+                modifiers.FinalDamage *= 2;
+            }
+
+            if (ComboAtt == 1)
+            {
+                SoundStyle spearHit2 = SoundRegistry.NSwordHit1;
+                spearHit2.PitchVariance = 0.2f;
+                SoundEngine.PlaySound(spearHit2, Projectile.position);
                 modifiers.FinalDamage *= 3;
             }
         }
