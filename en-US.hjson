@@ -41,6 +41,7 @@ Mods: {
 			BruteForceEnchantmentExplosion.DisplayName: Brute Force Enchantment Explosion
 			CoagulateEnchantmentExplosion.DisplayName: Coagulate Enchantment Explosion
 			ShriekerEnchantmentExplosion.DisplayName: Shrieker Enchantment Explosion
+			BaseHitEffect.DisplayName: Base Hit Effect
 		}
 
 		Buffs: {

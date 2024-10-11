@@ -1,6 +1,8 @@
 ﻿using CrystalMoon.Systems.Particles;
+using CrystalMoon.Visual.Animation;
 using CrystalMoon.Visual.Particles;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -10,6 +12,9 @@ namespace CrystalMoon.Content.Bases
 {
     public class BaseHitEffect : ModProjectile
     {
+        private int _frameCounter;
+        private int _frameTick;
+
         public override void SetStaticDefaults()
         {
             Main.projFrames[Projectile.type] = 7;
@@ -24,7 +29,7 @@ namespace CrystalMoon.Content.Bases
             Projectile.timeLeft = 900;
             Projectile.tileCollide = false;
             Projectile.aiStyle = -1;
-            Projectile.scale = 0.4f;
+            Projectile.scale = 1f;
         }
 
         public override bool PreAI()
@@ -36,13 +41,29 @@ namespace CrystalMoon.Content.Bases
 
             if (Projectile.ai[0] <= 1)
             {
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     Vector2 spawnPoint = Projectile.Center + Main.rand.NextVector2Circular(8, 8);
                     Vector2 velocity = Main.rand.NextVector2Circular(8, 8);
                     Particle.NewParticle<GlowParticle>(spawnPoint, velocity, Color.White);
+
+                  
+                       
+                    
                 }
 
+                for (int i = 0; i < 1; i++)
+                {
+                    Vector2 spawnPoint = Projectile.Center + Main.rand.NextVector2Circular(8, 8);
+                    Vector2 velocity = Main.rand.NextVector2Circular(0, 1);
+                    Particle.NewParticle<StrikeParticle>(spawnPoint, velocity, Color.White);
+                    Particle.NewParticle<Strike2Particle>(spawnPoint, velocity, Color.White);
+
+
+
+                }
+
+                Projectile.rotation = Main.rand.Next(0, 360);
                 /*
                 SoundStyle soundStyle = new SoundStyle("Stellamod/Assets/Sounds/RipperSlash2");
                 soundStyle.PitchVariance = 0.5f;
@@ -50,20 +71,36 @@ namespace CrystalMoon.Content.Bases
                 */
             }
 
-            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45);
+            
             Projectile.frameCounter++;
-            if (Projectile.frameCounter >= 2)
+
+
+            if (++_frameTick >= 3)
             {
-                Projectile.frame++;
-                Projectile.frameCounter = 0;
-                if (Projectile.frame >= 7)
+                _frameTick = 0;
+                if (++_frameCounter >= 7)
                 {
                     Projectile.active = false;
+                    _frameCounter = 0;
                 }
-
-
             }
             return true;
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = ModContent.Request<Texture2D>(Texture).Value;
+            Vector2 drawPosition = Projectile.Center - Main.screenPosition;
+
+            float width = 192 * 2;
+            float height = 192 * 2;
+            Vector2 origin = new Vector2(width / 2, height / 2);
+            int frameSpeed = 3;
+            int frameCount = 7;
+            SpriteBatch spriteBatch = Main.spriteBatch;
+            spriteBatch.Draw(texture, drawPosition,
+                texture.AnimationFrame(ref _frameCounter, ref _frameTick, frameSpeed, frameCount, false),
+                Color.White, Projectile.rotation, origin, 0.4f, SpriteEffects.None, 0f);
+            return false;
         }
 
         public override void OnKill(int timeLeft)

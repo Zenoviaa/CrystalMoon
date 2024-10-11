@@ -213,7 +213,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             if (!Hit)
             {
                 Main.LocalPlayer.GetModPlayer<EffectsPlayer>().ShakeAtPosition(target.Center, 1024f, 8f);
-                Particle.NewParticle<IceStrikeParticle>(target.Center, Vector2.Zero, Color.White);
+             //   Particle.NewParticle<IceStrikeParticle>(target.Center, Vector2.Zero, Color.White);
 
                 Hit = true;
                 hitstopTimer = 4 * ExtraUpdateMult;
