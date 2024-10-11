@@ -325,7 +325,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                 swingYRadius = 80 / 1.5f,
                 swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4 + MathHelper.PiOver4 + MathHelper.Pi,
                 easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
-                swingSound = swingSound1
+                swingSound = swingSound1,
+                swingSoundLerpValue = 0.5f
 
             }); 
 
@@ -336,7 +337,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                 swingYRadius = 80 / 1.5f,
                 swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4 + MathHelper.PiOver4 + MathHelper.Pi,
                 easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
-                swingSound = swingSound1
+                swingSound = swingSound1,
+                swingSoundLerpValue = 0.5f
             });
 
             
@@ -369,7 +371,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             spearHit2.PitchVariance = 0.2f;
             SoundEngine.PlaySound(spearHit2, Projectile.position);
 
-            modifiers.FinalDamage *= 2;
+            modifiers.FinalDamage *= 3;
             modifiers.Knockback *= 4;
             
         }
