@@ -11,7 +11,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Weapons
             Item.shootSpeed = 19;
             Item.useTime = 40;
             Item.useAnimation = 40;
-            Size = 10;
+            Size = 20;
             TrailLength = 50;
             Form = FormRegistry.Lantern.Value;
         }
