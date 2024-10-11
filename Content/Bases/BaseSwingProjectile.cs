@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -25,12 +26,17 @@ namespace CrystalMoon.Content.Bases
         public float bounceTimer = 0;
         public Player Owner => Main.player[Projectile.owner];
 
+        protected int ComboDirection => (int)Projectile.ai[1];
         protected int SwingTime => (int)((((SwingTimeFunction()) * ExtraUpdateMult) / Owner.GetAttackSpeed(Projectile.DamageType)));
         public float holdOffset = 60f;
         public float trailStartOffset = 0.15f;
         public float missTimeIncrease = 12;
         public float extraSwingTime = 0;
-        
+        public float hitboxLengthMult = 1;
+        public bool thrust;
+        public float OvalRotOffset;
+        public bool spinCenter;
+        public float spinCenterOffset;
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
@@ -85,10 +91,18 @@ namespace CrystalMoon.Content.Bases
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
+            /*
             Vector2 start = Owner.MountedCenter;
             Vector2 dir = (Projectile.Center - start).SafeNormalize(Vector2.Zero);
-            Vector2 end = start + dir * holdOffset * Projectile.scale * 1.8f;
+            Vector2 end = start + dir * holdOffset * Projectile.scale * 1.8f * hitboxLengthMult;
+            */
+            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>(Texture);
+            float length = texture.Width / 2 + texture.Height / 2;
+
+            Vector2 start = Projectile.Center - Projectile.rotation.ToRotationVector2() * length;
+            Vector2 end = Projectile.Center + Projectile.rotation.ToRotationVector2() * length;
             float collisionPoint = 0f;
+         
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), start, end, Projectile.scale, ref collisionPoint);
         }
 
@@ -144,6 +158,7 @@ namespace CrystalMoon.Content.Bases
             return 16;
         }
 
+
         protected void OvalEasedSwingAI()
         {
             float swingXRadius = 32;
@@ -162,17 +177,19 @@ namespace CrystalMoon.Content.Bases
             float yOffset;
             if (dir2 == -1)
             {
-                xOffset = swingXRadius * MathF.Sin(swingProgress * swingRange + swingRange);
-                yOffset = swingYRadius * MathF.Cos(swingProgress * swingRange + swingRange);
+                xOffset = swingXRadius * MathF.Sin(swingProgress * swingRange + swingRange + OvalRotOffset);
+                yOffset = swingYRadius * MathF.Cos(swingProgress * swingRange + swingRange + OvalRotOffset);
             }
             else
             {
-                xOffset = swingXRadius * MathF.Sin((1f - swingProgress) * swingRange + swingRange);
-                yOffset = swingYRadius * MathF.Cos((1f - swingProgress) * swingRange + swingRange);
+                xOffset = swingXRadius * MathF.Sin((1f - swingProgress) * swingRange + swingRange + OvalRotOffset);
+                yOffset = swingYRadius * MathF.Cos((1f - swingProgress) * swingRange + swingRange + OvalRotOffset);
             }
           
 
             Projectile.Center = Owner.Center + new Vector2(xOffset, yOffset).RotatedBy(targetRotation);
+
+
             Projectile.rotation = (Projectile.Center - Owner.Center).ToRotation() + MathHelper.PiOver4;
             OrientHand();
 
@@ -202,13 +219,13 @@ namespace CrystalMoon.Content.Bases
                 float yOffset2;
                 if (dir2 == -1)
                 {
-                    xOffset2 = swingXRadius * MathF.Sin(smoothedTrailProgress * swingRange + swingRange);
-                    yOffset2 = swingYRadius * MathF.Cos(smoothedTrailProgress * swingRange + swingRange);
+                    xOffset2 = swingXRadius * MathF.Sin(smoothedTrailProgress * swingRange + swingRange + OvalRotOffset);
+                    yOffset2 = swingYRadius * MathF.Cos(smoothedTrailProgress * swingRange + swingRange + OvalRotOffset);
                 }
                 else
                 {
-                    xOffset2 = swingXRadius * MathF.Sin((1f - smoothedTrailProgress) * swingRange + swingRange);
-                    yOffset2 = swingYRadius * MathF.Cos((1f - smoothedTrailProgress) * swingRange + swingRange);
+                    xOffset2 = swingXRadius * MathF.Sin((1f - smoothedTrailProgress) * swingRange + swingRange + OvalRotOffset);
+                    yOffset2 = swingYRadius * MathF.Cos((1f - smoothedTrailProgress) * swingRange + swingRange + OvalRotOffset);
                 }
 
 
@@ -216,6 +233,68 @@ namespace CrystalMoon.Content.Bases
                 points[i] = pos - (GetFramingSize() / 2);// + GetTrailOffset().RotatedBy(targetRotation);
             }
             _trailPoints = points;
+        }
+
+        protected void StabSwingEasedAI()
+        {
+            Countertimer++;
+
+            float lerpValue = Countertimer / SwingTime;
+
+            float swingProgress = lerpValue;
+            float targetRotation = Projectile.velocity.ToRotation();
+            float stabRange = 1;
+
+            ModifyStabSwingAI(targetRotation, lerpValue, ref stabRange, ref swingProgress);
+            _smoothedLerpValue = swingProgress;
+            float dir2 = (int)Projectile.ai[1];
+
+            Vector2 swingDirection = Projectile.velocity.SafeNormalize(Vector2.Zero);
+            Vector2 swingVelocity = swingDirection * stabRange;
+            if (!thrust)
+            {
+                Owner.velocity += swingDirection * 3;
+                thrust = true;
+            }
+
+            Projectile.Center = Owner.Center +
+                Vector2.Lerp(Vector2.Zero, swingVelocity, swingProgress) + swingDirection * holdOffset;
+
+            Projectile.rotation = (Projectile.Center - Owner.Center).ToRotation() + MathHelper.PiOver4;
+            OrientHand();
+
+            Vector2[] points = new Vector2[ProjectileID.Sets.TrailCacheLength[Type]];
+            for (int i = 0; i < points.Length; i++)
+            {
+                float l = points.Length;
+                //Lerp between the points
+                float progressOnTrail = i / l;
+
+                //Calculate starting lerp value
+                float startTrailLerpValue = MathHelper.Clamp(lerpValue - trailStartOffset, 0, 1);
+                float startTrailProgress = startTrailLerpValue;
+                ModifyStabSwingAI(targetRotation, startTrailLerpValue, ref stabRange, ref startTrailProgress);
+
+                //Calculate ending lerp value
+                float endTrailLerpValue = lerpValue;
+                float endTrailProgress = endTrailLerpValue;
+                ModifyStabSwingAI(targetRotation, endTrailLerpValue, ref stabRange, ref endTrailProgress);
+
+
+                //Lerp in between points
+                float smoothedTrailProgress = MathHelper.Lerp(startTrailProgress, endTrailProgress, progressOnTrail);
+                Vector2 pos = Owner.Center +
+                    Vector2.Lerp(Vector2.Zero, swingVelocity, smoothedTrailProgress) + swingDirection * holdOffset;
+                points[i] = pos - (GetFramingSize() / 2); //+ (pos - Owner.RenderPosition).SafeNormalize(Vector2.Zero) * HoldOffset;// - (GetFramingSize() / 2);// + GetTrailOffset().RotatedBy(targetRotation);
+            };
+            _trailPoints = points;
+        }
+
+
+        protected virtual void ModifyStabSwingAI(float targetRotation, float lerpValue, ref float stabRange, ref float swingProgress)
+        {
+            stabRange = 32;
+            swingProgress = Easing.SpikeOutCirc(lerpValue);
         }
 
         protected virtual Vector2 GetFramingSize()
@@ -262,6 +341,11 @@ namespace CrystalMoon.Content.Bases
             position += rotation.ToRotationVector2() * holdOffset;
             Projectile.Center = position;
             Projectile.rotation = (position - Owner.Center).ToRotation() + MathHelper.PiOver4;
+            if (spinCenter)
+            {
+                Projectile.Center -= rotation.ToRotationVector2() * holdOffset;
+                Projectile.Center -= rotation.ToRotationVector2() * spinCenterOffset;
+            }
             OrientHand();
 
             //Calculate Trail Points
@@ -289,6 +373,11 @@ namespace CrystalMoon.Content.Bases
 
                 Vector2 pos = Owner.RotatedRelativePoint(Owner.MountedCenter);
                 pos += rot.ToRotationVector2() * GetTrailOffset();
+                if (spinCenter)
+                {
+                    Vector2 d = (Owner.RotatedRelativePoint(Owner.MountedCenter) - pos).SafeNormalize(Vector2.Zero);
+                    pos += d * spinCenterOffset;
+                }
                 points[i] = pos - GetFramingSize() / 2;
             }
             _trailPoints = points;

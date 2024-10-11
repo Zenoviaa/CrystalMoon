@@ -316,3 +316,13 @@ BurningDye: {
 	DisplayName: Burning Dye
 	Tooltip: ""
 }
+
+CrystalPointer: {
+	DisplayName: Crystal Pointer
+	Tooltip: ""
+}
+
+FakeDye: {
+	DisplayName: Fake Dye
+	Tooltip: ""
+}

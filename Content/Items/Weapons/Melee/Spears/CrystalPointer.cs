@@ -1,23 +1,22 @@
 ﻿using CrystalMoon.Content.Bases;
 using CrystalMoon.Registries;
 using CrystalMoon.Systems.MiscellaneousMath;
+using CrystalMoon.Systems.Particles;
 using CrystalMoon.Systems.Players;
 using CrystalMoon.Systems.Shaders;
+using CrystalMoon.Visual.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Diagnostics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
+namespace CrystalMoon.Content.Items.Weapons.Melee.Spears
 {
-    // This is a basic item template.
-    // Please see tModLoader's ExampleMod for every other example:
-    // https://github.com/tModLoader/tModLoader/tree/stable/ExampleMod
-
-
-    public class CrystallineSlasher : ModItem
+    public class CrystalPointer : ModItem
     {
         // The Display Name and Tooltip of this item can be edited in the 'Localization/en-US_Mods.CrystalMoon.hjson' file.
         public override void SetDefaults()
@@ -28,14 +27,14 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             Item.height = 40;
             Item.noUseGraphic = true;
             Item.noMelee = true;
-            Item.useTime = 126;
-            Item.useAnimation = 126;
+            Item.useTime = 60;
+            Item.useAnimation = 60;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.knockBack = 6;
             Item.value = Item.buyPrice(silver: 1);
             Item.rare = ItemRarityID.Blue;
             Item.shootSpeed = 10;
-            Item.shoot = ModContent.ProjectileType<CrystallineSwordSlash>();
+            Item.shoot = ModContent.ProjectileType<CrystalPointerStab>();
             Item.autoReuse = true;
         }
 
@@ -48,14 +47,14 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             int dir = comboPlayer.ComboDirection;
             Projectile.NewProjectile(source, position, velocity, type, damage, knockback,
                 player.whoAmI, combo, dir);
-            comboPlayer.IncreaseCombo(maxCombo: 6);
+            comboPlayer.IncreaseCombo(maxCombo: 7);
             return false;
         }
     }
 
-    public class CrystallineSwordSlash : BaseSwingProjectile
+    public class CrystalPointerStab : BaseSwingProjectile
     {
-        public override string Texture => "CrystalMoon/Content/Items/Weapons/Melee/Swords/CrystallineSlasher";
+        public override string Texture => "CrystalMoon/Content/Items/Weapons/Melee/Spears/CrystalPointer";
         ref float ComboAtt => ref Projectile.ai[0];
         public bool Hit;
 
@@ -63,11 +62,11 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
         {
             ProjectileID.Sets.TrailCacheLength[Type] = 64;
             ProjectileID.Sets.TrailingMode[Type] = 2;
-
         }
 
         public override void SetDefaults()
         {
+
             holdOffset = 40;
             trailStartOffset = 0.2f;
             Projectile.timeLeft = SwingTime;
@@ -85,54 +84,54 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             Projectile.localNPCHitCooldown = 10000;
         }
 
-        protected override float SwingTimeFunction()
+        protected override void InitSwingAI()
         {
+            base.InitSwingAI();
             switch (ComboAtt)
             {
-                default:
-                case 0:
-                    return 24;
-                case 1:
-                    return 24;
-                case 2:
-                    return 24;
-                case 3:
-                    return 24;
-                case 4:
-                    return 24;
-                case 5:
-                    return 48;
+                case 6:
+                    //This npc local hit cooldown time makes it hit multiple times
+                    Projectile.localNPCHitCooldown = 3 * ExtraUpdateMult;
+                    break;
             }
         }
 
-        protected override void ModifySimpleSwingAI(float targetRotation, float lerpValue,
-            ref float startSwingRot,
-            ref float endSwingRot,
-            ref float swingProgress)
+        protected override float SwingTimeFunction()
         {
+            //How long the swing is
             switch (ComboAtt)
             {
                 default:
                 case 0:
-                    startSwingRot = targetRotation - MathHelper.ToRadians(135);
-                    endSwingRot = targetRotation + MathHelper.ToRadians(135);
-                    swingProgress = Easing.InOutExpo(lerpValue, 10);
-                    break;
+                    return 20;
+                case 1:
+                    return 20;
+                case 2:
+                    return 12;
                 case 3:
-                    startSwingRot = targetRotation - MathHelper.ToRadians(135);
-                    endSwingRot = targetRotation + MathHelper.ToRadians(135);
-                    swingProgress = Easing.InOutExpo(lerpValue, 7);
-                    break;
+                    return 12;
                 case 4:
-                    startSwingRot = targetRotation - MathHelper.ToRadians(135);
-                    endSwingRot = targetRotation + MathHelper.ToRadians(135);
-                    swingProgress = Easing.InOutExpo(lerpValue, 7);
-                    break;
+                    return 18;
                 case 5:
-                    float circleRange = MathHelper.PiOver2 + MathHelper.PiOver4 + MathHelper.TwoPi;
+                    return 24;
+                case 6:
+                    return 60;
+                    
+            }
+        }
+
+        protected override void ModifySimpleSwingAI(float targetRotation, float lerpValue, ref float startSwingRot, ref float endSwingRot, ref float swingProgress)
+        {
+            base.ModifySimpleSwingAI(targetRotation, lerpValue, ref startSwingRot, ref endSwingRot, ref swingProgress);
+            switch (ComboAtt)
+            {
+                case 6:
+                    spinCenter = true;
+                    spinCenterOffset = 12;
+                    float circleRange = MathHelper.TwoPi * 4;
                     startSwingRot = targetRotation - circleRange;
                     endSwingRot = targetRotation + circleRange;
-                    swingProgress = Easing.InOutExpo(lerpValue, 7);
+                    swingProgress = lerpValue;
                     break;
             }
         }
@@ -146,29 +145,68 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
 
             switch (ComboAtt)
             {
-                case 1:
-                    swingXRadius = 128 / 1.5f;
-                    swingYRadius = 64 / 1.5f;
-                    swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4;
-                    swingProgress = Easing.InOutExpo(lerpValue, 10);
-
+                case 0:
+                    if(ComboDirection == 1)
+                    {
+                        OvalRotOffset = 0;       
+                    }
+                    else
+                    {
+                        OvalRotOffset = MathHelper.Pi + MathHelper.PiOver2;
+                    }
+                    swingXRadius = 128;
+                    swingYRadius = 64; 
+                    swingRange = MathHelper.Pi / 2f;
+                    swingProgress = Easing.InOutExpo(lerpValue, 7);
                     break;
-                case 2:
-                    swingXRadius = 128 / 1.5f;
-                    swingYRadius = 64 / 1.5f;
-                    swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4;
-                    swingProgress = Easing.InOutExpo(lerpValue, 10);
+                case 1:
+                    if (ComboDirection == 1)
+                    {
+                        OvalRotOffset = 0;
+                    }
+                    else
+                    {
+                        OvalRotOffset = MathHelper.Pi + MathHelper.PiOver2;
+                    }
+                    swingXRadius = 128 ;
+                    swingYRadius = 64 ;
+                    swingRange = MathHelper.Pi / 2f;
+                    swingProgress = Easing.InOutExpo(lerpValue, 7);
+                    break;
+                case 4:
+                    if (ComboDirection == 1)
+                    {
+                        OvalRotOffset = 0;
+                    }
+                    else
+                    {
+                        OvalRotOffset = MathHelper.Pi + MathHelper.PiOver2;
+                    }
+                    swingXRadius = 128;
+                    swingYRadius = 64 ;
+                    swingRange = MathHelper.Pi / 2f;
+                    swingProgress = Easing.InOutExpo(lerpValue, 7);
                     break;
             }
         }
 
-        protected override void InitSwingAI()
+        protected override void ModifyStabSwingAI(float targetRotation, float lerpValue, ref float stabRange, ref float swingProgress)
         {
-            base.InitSwingAI();
+            base.ModifyStabSwingAI(targetRotation, lerpValue, ref stabRange, ref swingProgress);
+         
             switch (ComboAtt)
             {
+                case 2:
+                    stabRange = 184;
+                    swingProgress = Easing.SpikeOutExpo(lerpValue);
+                    break;
+                case 3:
+                    stabRange = 184;
+                    swingProgress = Easing.SpikeOutExpo(lerpValue);
+                    break;
                 case 5:
-                    Projectile.localNPCHitCooldown = 2 * ExtraUpdateMult;
+                    stabRange = 252;
+                    swingProgress = Easing.SpikeOutExpo(lerpValue);
                     break;
             }
         }
@@ -179,7 +217,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             switch (ComboAtt)
             {
                 case 0:
-                    SimpleEasedSwingAI();
+                    OvalEasedSwingAI();
                     break;
 
                 case 1:
@@ -187,18 +225,22 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                     break;
 
                 case 2:
-                    OvalEasedSwingAI();
+                    StabSwingEasedAI();
                     break;
 
                 case 3:
-                    SimpleEasedSwingAI();
+                    StabSwingEasedAI();
                     break;
 
                 case 4:
-                    SimpleEasedSwingAI();
+                    OvalEasedSwingAI();
                     break;
 
                 case 5:
+                    StabSwingEasedAI();
+                    break;
+
+                case 6:
                     SimpleEasedSwingAI();
                     break;
             }
@@ -210,7 +252,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             if (!Hit)
             {
                 Main.LocalPlayer.GetModPlayer<EffectsPlayer>().ShakeAtPosition(target.Center, 1024f, 8f);
-                //   Particle.NewParticle<IceStrikeParticle>(target.Center, Vector2.Zero, Color.White);
+                Particle.NewParticle<IceStrikeParticle>(target.Center, Vector2.Zero, Color.White);
 
                 Hit = true;
                 hitstopTimer = 4 * ExtraUpdateMult;
@@ -232,7 +274,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
 
         protected override float WidthFunction(float p)
         {
-            float trailWidth = MathHelper.Lerp(0, 384, p);
+            float trailWidth = MathHelper.Lerp(0, 252, p);
             float fadeWidth = MathHelper.Lerp(trailWidth, 0, _smoothedLerpValue) * Easing.OutExpo(_smoothedLerpValue, 4);
             return fadeWidth;
         }
@@ -247,7 +289,6 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
 
         protected override BaseShader ReadyShader()
         {
-
             var shader = SimpleTrailShader.Instance;
 
             //Main trailing texture
