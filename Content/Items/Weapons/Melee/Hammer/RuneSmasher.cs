@@ -13,6 +13,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using System.Collections.Generic;
 
 
 namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
@@ -80,7 +81,6 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
         {
             holdOffset = 70;
             trailStartOffset = 0.2f;
-            Projectile.timeLeft = SwingTime;
             Projectile.penetrate = -1;
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
@@ -104,174 +104,81 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
             BounceTimer = reader.ReadInt32();
             BounceDelay = reader.ReadInt32();
         }
-        protected override float SwingTimeFunction()
+
+        public override void SetComboDefaults(List<BaseSwingStyle> swings)
         {
-            switch (ComboAtt)
+            base.SetComboDefaults(swings);
+            swings.Add(new CircleSwingStyle
             {
-                default:
-                case 0:
-                    return 90;
-                case 1:
-                    return 90;
-                case 2:
-                    return 90;
-                case 3:
-                    return 78;
-                case 4:
-                    return 78;
-                case 5:
-                    return 78;
-                case 6:
-                    return 80;
-                case 7:
-                    return 100;
-                case 8:
-                    return 120;
-            }
-        }
+                swingTime=90,
+                startSwingRotOffset = -MathHelper.ToRadians(155),
+                endSwingRotOffset = MathHelper.ToRadians(155),
+                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue)
+            });
 
-        protected override void ModifySimpleSwingAI(float targetRotation, float lerpValue,
-            ref float startSwingRot,
-            ref float endSwingRot,
-            ref float swingProgress)
-        {
-            switch (ComboAtt)
+            swings.Add(new CircleSwingStyle
             {
-                default:
-                case 0:
-                    startSwingRot = targetRotation - MathHelper.ToRadians(155);
-                    endSwingRot = targetRotation + MathHelper.ToRadians(155);
-                    swingProgress = Easing.InOutBack(lerpValue);
-                    break;
-                case 1:
-                    startSwingRot = targetRotation - MathHelper.ToRadians(155);
-                    endSwingRot = targetRotation + MathHelper.ToRadians(175);
-                    swingProgress = Easing.InOutBack(lerpValue);
-                    break;
+                swingTime = 90,
+                startSwingRotOffset = -MathHelper.ToRadians(155),
+                endSwingRotOffset = MathHelper.ToRadians(175),
+                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue)
+            });
 
-                case 2:
-                    startSwingRot = targetRotation - MathHelper.ToRadians(175);
-                    endSwingRot = targetRotation + MathHelper.ToRadians(225);
-                    swingProgress = Easing.InOutBack(lerpValue);
-                    break;
-
-                case 3:
-                    startSwingRot = targetRotation - MathHelper.ToRadians(225);
-                    endSwingRot = targetRotation + MathHelper.ToRadians(135);
-                    swingProgress = Easing.InOutBack(lerpValue);
-                    break;
-                case 4:
-                    startSwingRot = targetRotation - MathHelper.ToRadians(135);
-                    endSwingRot = targetRotation + MathHelper.ToRadians(135);
-                    swingProgress = Easing.InOutBack(lerpValue);
-                    break;
-                case 5:
-                    startSwingRot = targetRotation - MathHelper.ToRadians(135);
-                    endSwingRot = targetRotation + MathHelper.ToRadians(435);
-                    swingProgress = Easing.InOutBack(lerpValue);
-                    break;
-
-                case 6:
-                    startSwingRot = targetRotation - MathHelper.ToRadians(435);
-                    endSwingRot = targetRotation + MathHelper.ToRadians(135);
-                    swingProgress = Easing.InOutBack(lerpValue);
-                    break;
-
-                case 7:
-                    startSwingRot = targetRotation - MathHelper.ToRadians(135);
-                    endSwingRot = targetRotation + MathHelper.ToRadians(435);
-                    swingProgress = Easing.InOutBack(lerpValue);
-                    break;
-
-                case 8:
-                    startSwingRot = targetRotation - MathHelper.ToRadians(435);
-                    endSwingRot = targetRotation + MathHelper.ToRadians(235);
-                    swingProgress = Easing.InOutBack(lerpValue);
-                    break;
-            }
-        }
-
-        protected override void ModifyOvalSwingAI(float targetRotation, float lerpValue,
-            ref float swingXRadius,
-            ref float swingYRadius,
-            ref float swingRange,
-            ref float swingProgress)
-        {
-            /*
-            switch (ComboAtt)
+            swings.Add(new CircleSwingStyle
             {
-                case 1:
-                    swingXRadius = 128 / 1.5f;
-                    swingYRadius = 64 / 1.5f;
-                    swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4;
-                    swingProgress = Easing.InOutExpo(lerpValue, 10);
+                swingTime = 90,
+                startSwingRotOffset = -MathHelper.ToRadians(175),
+                endSwingRotOffset = MathHelper.ToRadians(225),
+                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue)
+            });
 
-                    break;
-                case 2:
-                    swingXRadius = 128 / 1.5f;
-                    swingYRadius = 64 / 1.5f;
-                    swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4;
-                    swingProgress = Easing.InOutExpo(lerpValue, 10);
-                    break;
-            }
-            */
-        }
-
-        protected override void InitSwingAI()
-        {
-            base.InitSwingAI();
-            switch (ComboAtt)
+            swings.Add(new CircleSwingStyle
             {
-                /*
-                case 5:
-                    Projectile.localNPCHitCooldown = 2 * ExtraUpdateMult;
-                    break;
-                */
-            }
-        }
+                swingTime = 78,
+                startSwingRotOffset = -MathHelper.ToRadians(225),
+                endSwingRotOffset = MathHelper.ToRadians(135),
+                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue)
+            });
 
-        protected override void SwingAI()
-        {
-
-            switch (ComboAtt)
+            swings.Add(new CircleSwingStyle
             {
-                case 0:
-                    SimpleEasedSwingAI();
-                    break;
+                swingTime = 78,
+                startSwingRotOffset = -MathHelper.ToRadians(135),
+                endSwingRotOffset = MathHelper.ToRadians(135),
+                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue)
+            });
 
-                case 1:
-                    SimpleEasedSwingAI();
-                    break;
+            swings.Add(new CircleSwingStyle
+            {
+                swingTime = 78,
+                startSwingRotOffset = -MathHelper.ToRadians(135),
+                endSwingRotOffset = MathHelper.ToRadians(435),
+                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue)
+            });
 
-                case 2:
-                    SimpleEasedSwingAI();
-                   // OvalEasedSwingAI();
-                    break;
+            swings.Add(new CircleSwingStyle
+            {
+                swingTime = 80,
+                startSwingRotOffset = -MathHelper.ToRadians(435),
+                endSwingRotOffset = MathHelper.ToRadians(135),
+                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue)
+            });
 
-                case 3:
-                    SimpleEasedSwingAI();
-                    break;
+            swings.Add(new CircleSwingStyle
+            {
+                swingTime = 100,
+                startSwingRotOffset = -MathHelper.ToRadians(135),
+                endSwingRotOffset = MathHelper.ToRadians(435),
+                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue)
+            });
 
-                case 4:
-                    SimpleEasedSwingAI();
-                    break;
-
-                case 5:
-                    SimpleEasedSwingAI();
-                    break;
-
-                case 6:
-                    SimpleEasedSwingAI();
-                    break;
-
-                case 7:
-                    SimpleEasedSwingAI();
-                    break;
-
-                case 8:
-                    SimpleEasedSwingAI();
-                    break;
-            }
+            swings.Add(new CircleSwingStyle
+            {
+                swingTime = 120,
+                startSwingRotOffset = -MathHelper.ToRadians(435),
+                endSwingRotOffset = MathHelper.ToRadians(235),
+                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue)
+            });
         }
 
         private float _hitCount;
@@ -283,33 +190,6 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
             _hitCount++;
             float pitch = MathHelper.Clamp(_hitCount * 0.05f, 0f, 1f);
 
-            /*
-            SoundStyle jugglerHit = SoundRegistry.JugglerHit;
-            jugglerHit.Pitch = pitch;
-            jugglerHit.PitchVariance = 0.1f;
-            jugglerHit.Volume = 0.5f;
-            SoundEngine.PlaySound(jugglerHit, Projectile.position);
-
-            if (_hitCount >= 7)
-            {
-                SoundStyle jugglerHitMax = SoundRegistry.JugglerHitMax;
-                pitch = MathHelper.Clamp(_hitCount * 0.02f, 0f, 1f);
-                jugglerHitMax.Pitch = pitch;
-                jugglerHitMax.PitchVariance = 0.1f;
-                SoundEngine.PlaySound(jugglerHitMax, Projectile.position);
-            }
-            
-
-            for (int i = 0; i < 8; i++)
-            {
-                //Get a random velocity
-                Vector2 velocity = Main.rand.NextVector2Circular(4, 4);
-
-                //Get a random
-                float randScale = Main.rand.NextFloat(0.5f, 1.5f);
-              //  ParticleManager.NewParticle<StarParticle2>(target.Center, velocity, Color.DarkGoldenrod, randScale);
-            }
-            */
             if (bounceTimer <= 0 && bounceCount < 1)
             {
                 if (Main.myPlayer == player.whoAmI)
@@ -337,13 +217,14 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
 
 
         //TRAIL VISUALS
-        protected override Vector2 GetFramingSize()
+        #region Trail Visuals
+        public override Vector2 GetFramingSize()
         {
             //Set this to the width and height of the sword sprite
             return new Vector2(80, 80);
         }
 
-        protected override Vector2 GetTrailOffset()
+        public override Vector2 GetTrailOffset()
         {
             //Moves the trail along the blade, negative goes towards the player, positive goes away the player
             return Vector2.One * 92;
@@ -384,5 +265,6 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
             shader.Speed = 25;
             return shader;
         }
+        #endregion
     }
 }

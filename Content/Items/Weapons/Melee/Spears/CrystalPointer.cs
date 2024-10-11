@@ -7,8 +7,7 @@ using CrystalMoon.Systems.Shaders;
 using CrystalMoon.Visual.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Diagnostics;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -69,7 +68,6 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Spears
 
             holdOffset = 40;
             trailStartOffset = 0.2f;
-            Projectile.timeLeft = SwingTime;
             Projectile.penetrate = -1;
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
@@ -84,197 +82,106 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Spears
             Projectile.localNPCHitCooldown = 10000;
         }
 
+        public override void SetComboDefaults(List<BaseSwingStyle> swings)
+        {
+            base.SetComboDefaults(swings);
+            float ovalRotOffset = 0;
+            if (ComboDirection == 1)
+            {
+                ovalRotOffset = 0;
+            }
+            else
+            {
+                ovalRotOffset = MathHelper.Pi + MathHelper.PiOver2;
+            }
+
+            swings.Add(new OvalSwingStyle
+            {
+                swingTime = 28,
+                swingXRadius = 100,
+                swingYRadius = 50,
+                swingRange = MathHelper.Pi / 2f,
+                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
+                ovalRotOffset = ovalRotOffset
+            });
+
+            swings.Add(new OvalSwingStyle
+            {
+                swingTime = 28,
+                swingXRadius = 100,
+                swingYRadius = 50,
+                swingRange = MathHelper.Pi / 2f,
+                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
+                ovalRotOffset = ovalRotOffset
+            });
+
+            swings.Add(new SpearSwingStyle
+            {
+                swingTime = 12,
+                stabRange = 90,
+                easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue)
+            });
+
+            swings.Add(new SpearSwingStyle
+            {
+                swingTime = 12,
+                stabRange = 90,
+                easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue)
+            });
+
+            swings.Add(new OvalSwingStyle
+            {
+                swingTime = 24,
+                swingXRadius = 100,
+                swingYRadius = 50,
+                swingRange = MathHelper.Pi / 2f,
+                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
+                ovalRotOffset = ovalRotOffset
+            });
+
+            swings.Add(new OvalSwingStyle
+            {
+                swingTime = 24,
+                swingXRadius = 100,
+                swingYRadius = 50,
+                swingRange = MathHelper.Pi / 2f,
+                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
+                ovalRotOffset = ovalRotOffset
+            });
+
+            float circleRange = MathHelper.TwoPi * 4;
+            swings.Add(new CircleSwingStyle
+            {
+                swingTime = 60,
+                spinCenter = true,
+                spinCenterOffset = 12,
+                startSwingRotOffset = -circleRange,
+                endSwingRotOffset = circleRange,
+                easingFunc = (float lerpValue) => lerpValue
+            });
+
+            swings.Add(new SpearSwingStyle
+            {
+                swingTime = 30,
+                stabRange = 128,
+                easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue)
+            });
+
+            swings.Add(new SpearSwingStyle
+            {
+                swingTime = 60,
+                stabRange = 200,
+                easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue)
+            });
+        }
+
         protected override void InitSwingAI()
         {
             base.InitSwingAI();
-            switch (ComboAtt)
+            if (ComboAtt == 6)
             {
-                case 6:
-                    //This npc local hit cooldown time makes it hit multiple times
-                    Projectile.localNPCHitCooldown = 3 * ExtraUpdateMult;
-                    break;
-            }
-        }
-
-        protected override float SwingTimeFunction()
-        {
-            //How long the swing is
-            switch (ComboAtt)
-            {
-                default:
-                case 0:
-                    return 28;
-                case 1:
-                    return 28;
-                case 2:
-                    return 12;
-                case 3:
-                    return 12;
-                case 4:
-                    return 24;
-                case 5:
-                    return 24;
-                case 6:
-                    return 60;
-                case 7:
-                    return 30;
-                case 8:
-                    return 60;
-
-            }
-        }
-
-        protected override void ModifySimpleSwingAI(float targetRotation, float lerpValue, ref float startSwingRot, ref float endSwingRot, ref float swingProgress)
-        {
-            base.ModifySimpleSwingAI(targetRotation, lerpValue, ref startSwingRot, ref endSwingRot, ref swingProgress);
-            switch (ComboAtt)
-            {
-                case 6:
-                    spinCenter = true;
-                    spinCenterOffset = 12;
-                    float circleRange = MathHelper.TwoPi * 4;
-                    startSwingRot = targetRotation - circleRange;
-                    endSwingRot = targetRotation + circleRange;
-                    swingProgress = lerpValue;
-                    break;
-            }
-        }
-
-        protected override void ModifyOvalSwingAI(float targetRotation, float lerpValue,
-            ref float swingXRadius,
-            ref float swingYRadius,
-            ref float swingRange,
-            ref float swingProgress)
-        {
-
-            switch (ComboAtt)
-            {
-                case 0:
-                    if(ComboDirection == 1)
-                    {
-                        OvalRotOffset = 0;       
-                    }
-                    else
-                    {
-                        OvalRotOffset = MathHelper.Pi + MathHelper.PiOver2;
-                    }
-                    swingXRadius = 100;
-                    swingYRadius = 50; 
-                    swingRange = MathHelper.Pi / 2f;
-                    swingProgress = Easing.InOutExpo(lerpValue, 10);
-                    break;
-                case 1:
-                    if (ComboDirection == 1)
-                    {
-                        OvalRotOffset = 0;
-                    }
-                    else
-                    {
-                        OvalRotOffset = MathHelper.Pi + MathHelper.PiOver2;
-                    }
-                    swingXRadius = 100 ;
-                    swingYRadius = 50 ;
-                    swingRange = MathHelper.Pi / 2f;
-                    swingProgress = Easing.InOutExpo(lerpValue, 10);
-                    break;
-                case 4:
-                    if (ComboDirection == 1)
-                    {
-                        OvalRotOffset = 0;
-                    }
-                    else
-                    {
-                        OvalRotOffset = MathHelper.Pi + MathHelper.PiOver2;
-                    }
-                    swingXRadius = 100;
-                    swingYRadius = 50 ;
-                    swingRange = MathHelper.Pi / 2f;
-                    swingProgress = Easing.InOutExpo(lerpValue, 10);
-                    break;
-
-                case 5:
-                    if (ComboDirection == 1)
-                    {
-                        OvalRotOffset = 0;
-                    }
-                    else
-                    {
-                        OvalRotOffset = MathHelper.Pi + MathHelper.PiOver2;
-                    }
-                    swingXRadius = 100;
-                    swingYRadius = 50;
-                    swingRange = MathHelper.Pi / 2f;
-                    swingProgress = Easing.InOutExpo(lerpValue, 10);
-                    break;
-            }
-        }
-
-        protected override void ModifyStabSwingAI(float targetRotation, float lerpValue, ref float stabRange, ref float swingProgress)
-        {
-            base.ModifyStabSwingAI(targetRotation, lerpValue, ref stabRange, ref swingProgress);
-         
-            switch (ComboAtt)
-            {
-                case 2:
-                    stabRange = 90;
-                    swingProgress = Easing.SpikeOutExpo(lerpValue);
-                    break;
-                case 3:
-                    stabRange = 90;
-                    swingProgress = Easing.SpikeOutExpo(lerpValue);
-                    break;
-                case 7:
-                    stabRange = 128;
-                    swingProgress = Easing.SpikeOutExpo(lerpValue);
-                    break;
-
-                case 8:
-                    stabRange = 200;
-                    swingProgress = Easing.SpikeOutExpo(lerpValue);
-                    break;
-            }
-        }
-
-        protected override void SwingAI()
-        {
-
-            switch (ComboAtt)
-            {
-                case 0:
-                    OvalEasedSwingAI();
-                    break;
-
-                case 1:
-                    OvalEasedSwingAI();
-                    break;
-
-                case 2:
-                    StabSwingEasedAI();
-                    break;
-
-                case 3:
-                    StabSwingEasedAI();
-                    break;
-
-                case 4:
-                    OvalEasedSwingAI();
-                    break;
-
-                case 5:
-                    OvalEasedSwingAI();
-                    break;
-
-                case 6:
-                    SimpleEasedSwingAI();
-                    break;
-
-                case 7:
-                    StabSwingEasedAI();
-                    break;
-
-                case 8:
-                    StabSwingEasedAI();
-                    break;
+                //This npc local hit cooldown time makes it hit multiple times
+                Projectile.localNPCHitCooldown = 3 * ExtraUpdateMult;
             }
         }
 
@@ -292,13 +199,13 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Spears
         }
 
         //TRAIL VISUALS
-        protected override Vector2 GetFramingSize()
+        public override Vector2 GetFramingSize()
         {
             //Set this to the width and height of the sword sprite
             return new Vector2(68, 72);
         }
 
-        protected override Vector2 GetTrailOffset()
+        public override Vector2 GetTrailOffset()
         {
             //Moves the trail along the blade, negative goes towards the player, positive goes away the player
             return Vector2.One * 80;

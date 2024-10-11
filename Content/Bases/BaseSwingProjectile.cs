@@ -4,6 +4,7 @@ using CrystalMoon.Systems.Shaders;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -12,27 +13,32 @@ using Terraria.ModLoader;
 namespace CrystalMoon.Content.Bases
 {
     public abstract class BaseSwingProjectile : ModProjectile
-    {       
-        //This is for smoothin the trail
-        public static int ExtraUpdateMult => 6;
-
+    {
         private bool _init;
-        protected float Countertimer;
         private bool _hashit;
         private bool _hasMissed;
-        protected float _smoothedLerpValue;
-        private Vector2[] _trailPoints = new Vector2[0];
+
+        //This is for smoothin the trail
+        public static int ExtraUpdateMult => 6;
+        public Vector2[] _trailPoints = new Vector2[0];
+        private List<BaseSwingStyle> _swingStyles = new();
+     
+        public float Countertimer;
+    
+        public float _smoothedLerpValue;
+
         public float hitstopTimer=0;
         public float bounceTimer = 0;
         public Player Owner => Main.player[Projectile.owner];
 
         protected int ComboDirection => (int)Projectile.ai[1];
-        protected int SwingTime => (int)((((SwingTimeFunction()) * ExtraUpdateMult) / Owner.GetAttackSpeed(Projectile.DamageType)));
+
         public float holdOffset = 60f;
         public float trailStartOffset = 0.15f;
         public float missTimeIncrease = 12;
         public float extraSwingTime = 0;
         public float hitboxLengthMult = 1;
+
         public bool thrust;
         public float OvalRotOffset;
         public bool spinCenter;
@@ -46,7 +52,8 @@ namespace CrystalMoon.Content.Bases
 
         public override void SetDefaults()
         {
-            Projectile.timeLeft = SwingTime;
+            _trailPoints = new Vector2[90];
+            Projectile.timeLeft = 10;
             Projectile.penetrate = -1;
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
@@ -57,6 +64,17 @@ namespace CrystalMoon.Content.Bases
             Projectile.extraUpdates = ExtraUpdateMult - 1;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 10000;
+        }
+
+        public virtual void SetComboDefaults(List<BaseSwingStyle> swings)
+        {
+
+        }
+
+        public float GetSwingTime(float baseSwingTime)
+        {
+            float swingTime = baseSwingTime * ExtraUpdateMult;
+            return (int)(swingTime / Owner.GetAttackSpeed(Projectile.DamageType));
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -81,21 +99,14 @@ namespace CrystalMoon.Content.Bases
 
 
         public override bool ShouldUpdatePosition() => false;
-        protected abstract void SwingAI();
 
         public override bool? CanDamage()
         {
             return _smoothedLerpValue > 0.1f && _smoothedLerpValue < 0.9f;
         }
 
-
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            /*
-            Vector2 start = Owner.MountedCenter;
-            Vector2 dir = (Projectile.Center - start).SafeNormalize(Vector2.Zero);
-            Vector2 end = start + dir * holdOffset * Projectile.scale * 1.8f * hitboxLengthMult;
-            */
             Texture2D texture = (Texture2D)ModContent.Request<Texture2D>(Texture);
             float length = texture.Width / 2 + texture.Height / 2;
 
@@ -109,15 +120,19 @@ namespace CrystalMoon.Content.Bases
         public sealed override void AI()
         {
             base.AI();
-          
+ 
             if (!_init)
             {
-                Projectile.timeLeft = SwingTime;
+                SetComboDefaults(_swingStyles);
+                Projectile.timeLeft = (int)GetSwingTime(_swingStyles[(int)Projectile.ai[0]].swingTime);
+            
                 InitSwingAI();
                 _init = true;
             }
 
-            if(hitstopTimer > 0)
+            BaseSwingStyle swingStyle = _swingStyles[(int)Projectile.ai[0]];
+            swingStyle.SwingProjectile = this;
+            if (hitstopTimer > 0)
             {
                 Countertimer--;
                 Projectile.timeLeft++;
@@ -135,16 +150,17 @@ namespace CrystalMoon.Content.Bases
                 extraSwingTime++;
                 Projectile.timeLeft++;
             }
+
             if(!_hashit && !_hasMissed && _smoothedLerpValue > 0.9f)
             {
                 Projectile.timeLeft += (int)(missTimeIncrease * ExtraUpdateMult);
                 _hasMissed = true;
             }
-            if(_hasMissed)
-            {
-      
-            }
-            SwingAI();
+
+            Countertimer++;
+
+            swingStyle.AI();
+            OrientHand();
         }
 
       
@@ -153,12 +169,7 @@ namespace CrystalMoon.Content.Bases
 
         }
 
-        protected virtual float SwingTimeFunction()
-        {
-            return 16;
-        }
-
-
+        /*
         protected void OvalEasedSwingAI()
         {
             float swingXRadius = 32;
@@ -295,17 +306,19 @@ namespace CrystalMoon.Content.Bases
         {
             stabRange = 32;
             swingProgress = Easing.SpikeOutCirc(lerpValue);
-        }
+        }*/
 
-        protected virtual Vector2 GetFramingSize()
+        public virtual Vector2 GetFramingSize()
         {
             return new Vector2(68, 72);
         }
 
-        protected virtual Vector2 GetTrailOffset()
+        public virtual Vector2 GetTrailOffset()
         {
             return Vector2.One * 30;
         }
+
+        /*
 
         protected void SimpleEasedSwingAI()
         {
@@ -383,7 +396,7 @@ namespace CrystalMoon.Content.Bases
             _trailPoints = points;
         }
 
-
+        */
         protected virtual void ModifyOvalSwingAI(float targetRotation, float lerpValue,
             ref float swingXRadius,
             ref float swingYRadius,
