@@ -326,7 +326,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                 swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4 + MathHelper.PiOver4 + MathHelper.Pi,
                 easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
                 swingSound = swingSound1,
-                swingSoundLerpValue = 0.7f
+                swingSoundLerpValue = 0.5f
 
             }); 
 
@@ -338,7 +338,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                 swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4 + MathHelper.PiOver4 + MathHelper.Pi,
                 easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
                 swingSound = swingSound1,
-                swingSoundLerpValue = 0.7f
+                swingSoundLerpValue = 0.5f
             });
 
             
