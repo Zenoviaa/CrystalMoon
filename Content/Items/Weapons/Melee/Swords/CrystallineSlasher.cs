@@ -4,6 +4,7 @@ using CrystalMoon.Systems;
 using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Systems.Players;
 using CrystalMoon.Systems.Shaders;
+using CrystalMoon.Visual.Explosions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil;
@@ -59,7 +60,14 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             //Set stamina projectile
             staminaProjectileShoot = ModContent.ProjectileType<CrystallineSwordStaminaSlash>();
         }
+
+        public override void ShootSwingStamina(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            base.ShootSwingStamina(player, source, position, velocity, type, damage, knockback);
+            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<BasicStaminaExplosion>(), damage, knockback);
+        }
     }
+
     public class CrystallineSwordSlash : BaseSwingProjectile
     {
         public override string Texture => "CrystalMoon/Content/Items/Weapons/Melee/Swords/CrystallineSlasher";
