@@ -104,8 +104,15 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
         {
             base.SetComboDefaults(swings);
 
-            SoundStyle swingSound1 = SoundRegistry.NSwordHit1;
+            SoundStyle swingSound1 = SoundRegistry.NSwordSlash1;
             swingSound1.PitchVariance = 0.5f;
+
+            SoundStyle swingSound2 = SoundRegistry.NSwordSlash2;
+            swingSound2.PitchVariance = 0.5f;
+
+            SoundStyle swingSound3 = SoundRegistry.NSwordSpin1;
+            swingSound3.PitchVariance = 0.5f;
+
             swings.Add(new CircleSwingStyle
             {
                 swingTime = 24,
@@ -121,7 +128,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                 swingXRadius = 128 / 1.5f,
                 swingYRadius = 64 / 1.5f,
                 swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4,
-                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10)
+                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
+                 swingSound = swingSound2
             });
 
             swings.Add(new OvalSwingStyle
@@ -130,7 +138,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                 swingXRadius = 128 / 1.5f,
                 swingYRadius = 64 / 1.5f,
                 swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4,
-                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10)
+                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
+                swingSound = swingSound2
             });
 
             swings.Add(new CircleSwingStyle
@@ -139,6 +148,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                 startSwingRotOffset = -MathHelper.ToRadians(135),
                 endSwingRotOffset = MathHelper.ToRadians(135),
                 easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 7),
+                swingSound = swingSound1
             });
 
             swings.Add(new CircleSwingStyle
@@ -147,6 +157,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                 startSwingRotOffset = -MathHelper.ToRadians(135),
                 endSwingRotOffset = MathHelper.ToRadians(135),
                 easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 7),
+                swingSound = swingSound1
             });
 
             float circleRange = MathHelper.PiOver2 + MathHelper.PiOver4 + MathHelper.TwoPi;
@@ -156,6 +167,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                 startSwingRotOffset = -circleRange,
                 endSwingRotOffset = circleRange,
                 easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
+                swingSound = swingSound3
             });
         }
 
@@ -293,6 +305,11 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
         }
         public override void SetComboDefaults(List<BaseSwingStyle> swings)
         {
+
+            SoundStyle swingSound1 = SoundRegistry.HeavySwordSlash1;
+            swingSound1.PitchVariance = 0.5f;
+
+
             base.SetComboDefaults(swings);
             swings.Add(new OvalSwingStyle
             {
@@ -300,8 +317,10 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                 swingXRadius = 160 / 1.5f,
                 swingYRadius = 80 / 1.5f,
                 swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4 + MathHelper.PiOver4 + MathHelper.Pi,
-                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10)
-            });
+                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
+                swingSound = swingSound1
+
+            }); 
 
             swings.Add(new OvalSwingStyle
             {
@@ -309,7 +328,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                 swingXRadius = 160 / 1.5f,
                 swingYRadius = 80 / 1.5f,
                 swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4 + MathHelper.PiOver4 + MathHelper.Pi,
-                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10)
+                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
+                swingSound = swingSound1
             });
 
             
