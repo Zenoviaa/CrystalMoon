@@ -159,6 +159,16 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                 Hit = true;
                 hitstopTimer = 4 * ExtraUpdateMult;
             }
+
+        
+    }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            base.ModifyHitNPC(target, ref modifiers);
+            if (ComboAtt == 5)
+            {
+                modifiers.FinalDamage *= 2;
+            }
         }
 
         //TRAIL VISUALS
