@@ -14,6 +14,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using System.Collections.Generic;
+using CrystalMoon.Systems;
 
 
 namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
@@ -97,12 +98,20 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
         public override void SetComboDefaults(List<BaseSwingStyle> swings)
         {
             base.SetComboDefaults(swings);
+
+            SoundStyle hammerSlash1 = SoundRegistry.HeavySwordSlash1;
+            hammerSlash1.PitchVariance = 0.2f;
+
+            SoundStyle hammerSlash2 = SoundRegistry.HeavySwordSlash2;
+            hammerSlash2.PitchVariance = 0.2f;
+
             swings.Add(new CircleSwingStyle
             {
                 swingTime=90,
                 startSwingRotOffset = -MathHelper.ToRadians(155),
                 endSwingRotOffset = MathHelper.ToRadians(155),
-                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue)
+                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue),
+                swingSound = hammerSlash1
             });
 
             swings.Add(new CircleSwingStyle
@@ -110,7 +119,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
                 swingTime = 90,
                 startSwingRotOffset = -MathHelper.ToRadians(155),
                 endSwingRotOffset = MathHelper.ToRadians(175),
-                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue)
+                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue),
+                swingSound = hammerSlash2
             });
 
             swings.Add(new CircleSwingStyle
@@ -118,7 +128,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
                 swingTime = 90,
                 startSwingRotOffset = -MathHelper.ToRadians(175),
                 endSwingRotOffset = MathHelper.ToRadians(225),
-                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue)
+                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue),
+                swingSound = hammerSlash1
             });
 
             swings.Add(new CircleSwingStyle
@@ -126,7 +137,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
                 swingTime = 78,
                 startSwingRotOffset = -MathHelper.ToRadians(225),
                 endSwingRotOffset = MathHelper.ToRadians(135),
-                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue)
+                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue),
+                swingSound = hammerSlash2
             });
 
             swings.Add(new CircleSwingStyle
@@ -134,7 +146,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
                 swingTime = 78,
                 startSwingRotOffset = -MathHelper.ToRadians(135),
                 endSwingRotOffset = MathHelper.ToRadians(135),
-                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue)
+                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue),
+                swingSound = hammerSlash1
             });
 
             swings.Add(new CircleSwingStyle
@@ -142,7 +155,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
                 swingTime = 78,
                 startSwingRotOffset = -MathHelper.ToRadians(135),
                 endSwingRotOffset = MathHelper.ToRadians(435),
-                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue)
+                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue),
+                swingSound = hammerSlash2
             });
 
             swings.Add(new CircleSwingStyle
@@ -150,7 +164,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
                 swingTime = 80,
                 startSwingRotOffset = -MathHelper.ToRadians(435),
                 endSwingRotOffset = MathHelper.ToRadians(135),
-                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue)
+                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue),
+                swingSound = hammerSlash1
             });
 
             swings.Add(new CircleSwingStyle
@@ -158,7 +173,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
                 swingTime = 100,
                 startSwingRotOffset = -MathHelper.ToRadians(135),
                 endSwingRotOffset = MathHelper.ToRadians(435),
-                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue)
+                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue),
+                swingSound = hammerSlash2
             });
 
             swings.Add(new CircleSwingStyle
@@ -166,7 +182,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
                 swingTime = 120,
                 startSwingRotOffset = -MathHelper.ToRadians(435),
                 endSwingRotOffset = MathHelper.ToRadians(235),
-                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue)
+                easingFunc = (float lerpValue) => Easing.InOutBack(lerpValue),
+                swingSound = hammerSlash1
             });
         }
 
@@ -178,9 +195,14 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
 
             _hitCount++;
             float pitch = MathHelper.Clamp(_hitCount * 0.05f, 0f, 1f);
-
+            SoundStyle smashSound = Main.rand.NextBool(2) ? SoundRegistry.HammerHit1 : SoundRegistry.HammerHit2;
+            smashSound.PitchVariance = 0.2f;
+            SoundEngine.PlaySound(smashSound, Projectile.position);
             if (bounceTimer <= 0 && bounceCount < 1)
             {
+
+
+
                 if (Main.myPlayer == player.whoAmI)
                 {
                     player.velocity = Projectile.DirectionTo(oldMouseWorld) * -3f;
@@ -195,7 +217,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
             base.OnHitNPC(target, hit, damageDone);
             if (!Hit)
             {
-                Main.LocalPlayer.GetModPlayer<EffectsPlayer>().ShakeAtPosition(target.Center, 1024f, 8f);
+                CrystalMoonFXUtil.ShakeCamera(target.Center, 1024, 16);
+                CrystalMoonFXUtil.PunchCamera(target.Center, Projectile.velocity, 0.5f, 2, 30);
                 //  Particle.NewParticle<IceStrikeParticle>(target.Center, Vector2.Zero, Color.White);
  
                 Hit = true;
@@ -204,6 +227,17 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
             bounceCount++;
         }
 
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            base.ModifyHitNPC(target, ref modifiers);
+            if (!Hit)
+            {
+                modifiers.Knockback *= 0.5f;
+            } else
+            {
+                modifiers.Knockback *= 2;
+            }
+        }
 
         //TRAIL VISUALS
         #region Trail Visuals
