@@ -129,8 +129,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
 
             swings.Add(new SpearSwingStyle
             {
-                swingTime = 60,
-                stabRange = 220,
+                swingTime = 90,
+                stabRange = 240,
                 thrustSpeed = 1,
                 easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue),
                 swingSound = swingSound3,
