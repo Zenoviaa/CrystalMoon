@@ -259,7 +259,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
            
             if (ComboAtt == 0)
             {
-                modifiers.Knockback *= 4;
+                modifiers.Knockback *= 2;
             }
           
             if(ComboAtt == 1 || ComboAtt == 6)
@@ -275,7 +275,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
 
             if (ComboAtt == 5)
             {
-                modifiers.Knockback *= 4;
+                modifiers.Knockback *= 3;
             }
 
             if (ComboAtt == 7)
