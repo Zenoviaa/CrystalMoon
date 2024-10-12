@@ -200,15 +200,16 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             });
         }
 
-
         protected override void InitSwingAI()
         {
             base.InitSwingAI();
-            if (ComboAtt == 5)
+            if (ComboAtt == 7)
             {
-                Projectile.localNPCHitCooldown = 2 * ExtraUpdateMult;
+                //This npc local hit cooldown time makes it hit multiple times
+                Projectile.localNPCHitCooldown = 3 * ExtraUpdateMult;
             }
         }
+
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
