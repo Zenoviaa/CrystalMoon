@@ -72,7 +72,7 @@ namespace CrystalMoon.Content.Bases
                     float smoothedTrailProgress = MathHelper.Lerp(startTrailProgress, endTrailProgress, progressOnTrail);
                     Vector2 pos = Owner.Center +
                         Vector2.Lerp(Vector2.Zero, swingVelocity, smoothedTrailProgress) + swingDirection * SwingProjectile.holdOffset;
-                    points[i] = pos; //+ (pos - Owner.RenderPosition).SafeNormalize(Vector2.Zero) * HoldOffset;// - (GetFramingSize() / 2);// + GetTrailOffset().RotatedBy(targetRotation);
+                    points[i] = pos - (SwingProjectile.GetFramingSize() / 2);
                 };
 
                 SwingProjectile._trailPoints = points;
