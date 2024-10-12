@@ -8,6 +8,7 @@ using CrystalMoon.Visual.Explosions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -115,6 +116,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
 
             swings.Add(new CircleSwingStyle
             {
+                swingDistance = 24,
                 swingTime = 48,
                 startSwingRotOffset = -MathHelper.ToRadians(175),
                 endSwingRotOffset = MathHelper.ToRadians(175),
@@ -156,7 +158,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
 
             swings.Add(new CircleSwingStyle
             {
-                
+                swingDistance = 24,
                 swingTime = 48,
                 startSwingRotOffset = -MathHelper.ToRadians(175),
                 endSwingRotOffset = MathHelper.ToRadians(175),
@@ -167,6 +169,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
 
             swings.Add(new CircleSwingStyle
             {
+                swingDistance = 32,
                 swingTime = 96,
                 startSwingRotOffset = -MathHelper.ToRadians(215),
                 endSwingRotOffset = MathHelper.ToRadians(215),
@@ -184,15 +187,16 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
                 swingSound = swingSound3
             });
 
-            float circleRange = MathHelper.PiOver2 + MathHelper.PiOver4 + MathHelper.TwoPi + MathHelper.TwoPi;
-            swings.Add(new CircleSwingStyle
+         
+            swings.Add(new OvalSwingStyle
             {
                 swingTime = 115,
-                startSwingRotOffset = -circleRange,
-                endSwingRotOffset = circleRange,
-                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
+                swingXRadius = 128,
+                swingYRadius = 48,
+                swingRange = MathHelper.ToRadians(1440),
+                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 7),
                 swingSound = swingSound3,
-                swingSoundLerpValue = 0.5f
+                swingSoundLerpValue = 0.15f
             });
         }
 
