@@ -312,8 +312,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             if(ComboAtt == 1 || ComboAtt == 6)
             {
                 float spinTrailWidth = MathHelper.Lerp(0, 128, p);
-                float spinFadeWidth = MathHelper.Lerp(spinTrailWidth, 0, _smoothedLerpValue);
-                return spinTrailWidth;
+                float spinFadeWidth = MathHelper.Lerp(0, spinTrailWidth, _smoothedLerpValue);
+                return spinFadeWidth;
             }
             float trailWidth = MathHelper.Lerp(0, 284, p);
             float fadeWidth = MathHelper.Lerp(trailWidth, 0, _smoothedLerpValue) * Easing.OutExpo(_smoothedLerpValue, 4);
