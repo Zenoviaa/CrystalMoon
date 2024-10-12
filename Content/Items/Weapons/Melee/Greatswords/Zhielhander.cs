@@ -265,6 +265,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             if(ComboAtt == 1 || ComboAtt == 6)
             {
                 modifiers.Knockback *= 0;
+                modifiers.FinalDamage *= 0.5f;
             }
 
             if (ComboAtt == 4)
