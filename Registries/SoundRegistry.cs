@@ -14,6 +14,8 @@ namespace CrystalMoon.Registries
 
         public static SoundStyle HeavySwordSlash1 => new SoundStyle($"{RootAssetPath}HeavySwordSlash1");
 
+        public static SoundStyle HeavySwordSlash2 => new SoundStyle($"{RootAssetPath}HeavySwordSlash2");
+
         public static SoundStyle NSwordSlash2 => new SoundStyle($"{RootAssetPath}NormalSwordSlash2");
 
         public static SoundStyle NSwordHit1 => new SoundStyle($"{RootAssetPath}NormalSwordHit1");
