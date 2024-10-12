@@ -12,6 +12,7 @@ namespace CrystalMoon.Content.Bases
         public float stabRange;
         public float spinRotationRange;
         public Func<float, float> spinRotationEasingFunc;
+        public float spinTrailOffset;
         public override void AI()
         {
             float lerpValue = SwingProjectile.Countertimer / SwingProjectile.GetSwingTime(swingTime);
@@ -107,7 +108,7 @@ namespace CrystalMoon.Content.Bases
                     float rot = dir2 == 1 ? MathHelper.Lerp(0, spinRotationRange, smoothedTrailProgress) : MathHelper.Lerp(spinRotationRange, 0, smoothedTrailProgress);
 
                     Vector2 pos = Projectile.Center;
-                    pos += rot.ToRotationVector2() * SwingProjectile.GetTrailOffset() / 2;
+                    pos += rot.ToRotationVector2() * (SwingProjectile.GetTrailOffset()*spinTrailOffset) / 2 ;
                     points[i] = pos - SwingProjectile.GetFramingSize() / 2;
                 }
                 SwingProjectile._trailPoints = points;

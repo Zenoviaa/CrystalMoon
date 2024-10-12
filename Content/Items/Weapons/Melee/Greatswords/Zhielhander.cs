@@ -134,7 +134,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
                 thrustSpeed = 1,
                 easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue),
                 swingSound = swingSound3,
-                spinRotationRange = MathHelper.ToRadians(2000)
+                spinRotationRange = MathHelper.ToRadians(2000),
+                spinTrailOffset = 1.15f
             });
 
             swings.Add(new OvalSwingStyle
@@ -188,7 +189,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
                 thrustSpeed = 2,
                 easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue),
                 swingSound = swingSound3,
-                spinRotationRange = MathHelper.ToRadians(2000)
+                spinRotationRange = MathHelper.ToRadians(2000),
+                spinTrailOffset = 1.15f
             });
 
          
@@ -307,6 +309,12 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
 
         protected override float WidthFunction(float p)
         {
+            if(ComboAtt == 1 || ComboAtt == 6)
+            {
+                float spinTrailWidth = MathHelper.Lerp(0, 128, p);
+                float spinFadeWidth = MathHelper.Lerp(spinTrailWidth, 0, _smoothedLerpValue);
+                return spinTrailWidth;
+            }
             float trailWidth = MathHelper.Lerp(0, 284, p);
             float fadeWidth = MathHelper.Lerp(trailWidth, 0, _smoothedLerpValue) * Easing.OutExpo(_smoothedLerpValue, 4);
             return fadeWidth;
@@ -324,20 +332,39 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
         {
 
             var shader = SimpleTrailShader.Instance;
+            if(ComboAtt == 1 || ComboAtt == 6)
+            {
+                //Main trailing texture
+                shader.TrailingTexture = TextureRegistry.GlowTrail;
 
-            //Main trailing texture
-            shader.TrailingTexture = TextureRegistry.GlowTrail;
+                //Blends with the main texture
+                shader.SecondaryTrailingTexture = TextureRegistry.WhispTrail;
 
-            //Blends with the main texture
-            shader.SecondaryTrailingTexture = TextureRegistry.WhispTrail;
+                //Used for blending the trail colors
+                //Set it to any noise texture
+                shader.TertiaryTrailingTexture = TextureRegistry.CausticTrail;
+                shader.PrimaryColor = Color.White;
+                shader.SecondaryColor = Color.DarkSlateBlue;
+                shader.BlendState = BlendState.Additive;
+                shader.Speed = 25;
+            }
+            else
+            {
+                //Main trailing texture
+                shader.TrailingTexture = TextureRegistry.GlowTrail;
 
-            //Used for blending the trail colors
-            //Set it to any noise texture
-            shader.TertiaryTrailingTexture = TextureRegistry.CausticTrail;
-            shader.PrimaryColor = Color.White;
-            shader.SecondaryColor = Color.DarkSlateBlue;
-            shader.BlendState = BlendState.Additive;
-            shader.Speed = 25;
+                //Blends with the main texture
+                shader.SecondaryTrailingTexture = TextureRegistry.WhispTrail;
+
+                //Used for blending the trail colors
+                //Set it to any noise texture
+                shader.TertiaryTrailingTexture = TextureRegistry.CausticTrail;
+                shader.PrimaryColor = Color.White;
+                shader.SecondaryColor = Color.DarkSlateBlue;
+                shader.BlendState = BlendState.Additive;
+                shader.Speed = 25;
+            }
+        
             return shader;
         }
         #endregion
