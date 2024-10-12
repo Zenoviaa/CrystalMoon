@@ -135,8 +135,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             swings.Add(new OvalSwingStyle
             {
                 swingTime = 70,
-                swingXRadius = 128 / 1.5f,
-                swingYRadius = 100 / 1.5f,
+                swingXRadius = 168 / 1.5f,
+                swingYRadius = 140 / 1.5f,
                 swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4,
                 easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
                 swingSound = swingSound2,
@@ -146,8 +146,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             swings.Add(new OvalSwingStyle
             {
                 swingTime = 70,
-                swingXRadius = 128 / 1.5f,
-                swingYRadius = 100 / 1.5f,
+                swingXRadius = 168 / 1.5f,
+                swingYRadius = 140 / 1.5f,
                 swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4,
                 easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
                 swingSound = swingSound2,
@@ -257,7 +257,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
         public override Vector2 GetTrailOffset()
         {
             //Moves the trail along the blade, negative goes towards the player, positive goes away the player
-            return Vector2.One * 80;
+            return Vector2.One * 100;
         }
 
         protected override float WidthFunction(float p)
