@@ -43,35 +43,77 @@ namespace CrystalMoon.Content.Bases
                     spinRotationProgress = spinRotationEasingFunc(swingProgress);
                 else
                     spinRotationProgress = lerpValue;
-                float spinRotation = MathHelper.Lerp(0, spinRotationRange, spinRotationProgress);
+                float spinRotation = dir2 == 1 ? MathHelper.Lerp(0, spinRotationRange, spinRotationProgress) : MathHelper.Lerp(spinRotationRange, 0, spinRotationProgress);
                 Projectile.rotation += spinRotation;
             }
 
-            Vector2[] points = new Vector2[ProjectileID.Sets.TrailCacheLength[Projectile.type]];
-            for (int i = 0; i < points.Length; i++)
+       
+
+            if (spinRotationRange == 0)
             {
-                float l = points.Length;
-                //Lerp between the points
-                float progressOnTrail = i / l;
+                Vector2[] points = new Vector2[ProjectileID.Sets.TrailCacheLength[Projectile.type]];
+                for (int i = 0; i < points.Length; i++)
+                {
+                    float l = points.Length;
+                    //Lerp between the points
+                    float progressOnTrail = i / l;
 
-                //Calculate starting lerp value
-                float startTrailLerpValue = MathHelper.Clamp(lerpValue - SwingProjectile.trailStartOffset, 0, 1);
-                float startTrailProgress = startTrailLerpValue;
-                startTrailProgress = easingFunc(startTrailLerpValue);
+                    //Calculate starting lerp value
+                    float startTrailLerpValue = MathHelper.Clamp(lerpValue - SwingProjectile.trailStartOffset, 0, 1);
+                    float startTrailProgress = startTrailLerpValue;
+                    startTrailProgress = easingFunc(startTrailLerpValue);
 
-                //Calculate ending lerp value
-                float endTrailLerpValue = lerpValue;
-                float endTrailProgress = endTrailLerpValue;
-                endTrailProgress = easingFunc(endTrailLerpValue);
+                    //Calculate ending lerp value
+                    float endTrailLerpValue = lerpValue;
+                    float endTrailProgress = endTrailLerpValue;
+                    endTrailProgress = easingFunc(endTrailLerpValue);
 
-                //Lerp in between points
-                float smoothedTrailProgress = MathHelper.Lerp(startTrailProgress, endTrailProgress, progressOnTrail);
-                Vector2 pos = Owner.Center +
-                    Vector2.Lerp(Vector2.Zero, swingVelocity, smoothedTrailProgress) + swingDirection * SwingProjectile.holdOffset;
-                points[i] = pos - (SwingProjectile.GetFramingSize() / 2); //+ (pos - Owner.RenderPosition).SafeNormalize(Vector2.Zero) * HoldOffset;// - (GetFramingSize() / 2);// + GetTrailOffset().RotatedBy(targetRotation);
-            };
+                    //Lerp in between points
+                    float smoothedTrailProgress = MathHelper.Lerp(startTrailProgress, endTrailProgress, progressOnTrail);
+                    Vector2 pos = Owner.Center +
+                        Vector2.Lerp(Vector2.Zero, swingVelocity, smoothedTrailProgress) + swingDirection * SwingProjectile.holdOffset;
+                    points[i] = pos; //+ (pos - Owner.RenderPosition).SafeNormalize(Vector2.Zero) * HoldOffset;// - (GetFramingSize() / 2);// + GetTrailOffset().RotatedBy(targetRotation);
+                };
 
-            SwingProjectile._trailPoints = points;
+                SwingProjectile._trailPoints = points;
+            }
+            else
+            {
+                Vector2[] points = new Vector2[ProjectileID.Sets.TrailCacheLength[Projectile.type]];
+                for (int i = 0; i < points.Length; i++)
+                {
+                    float l = points.Length;
+                    //Lerp between the points
+                    float progressOnTrail = i / l;
+
+                    //Calculate starting lerp value
+                    float startTrailLerpValue = MathHelper.Clamp(lerpValue - SwingProjectile.trailStartOffset, 0, 1);
+                    float startTrailProgress = startTrailLerpValue;
+                    if (spinRotationEasingFunc != null)
+                        startTrailProgress = spinRotationEasingFunc(startTrailLerpValue);
+                    else
+                        startTrailProgress = startTrailLerpValue;
+
+                    //Calculate ending lerp value
+                    float endTrailLerpValue = lerpValue;
+                    float endTrailProgress = endTrailLerpValue;
+                    if (spinRotationEasingFunc != null)
+                        endTrailProgress = spinRotationEasingFunc(endTrailLerpValue);
+                    else
+                        endTrailProgress = endTrailLerpValue;
+
+                    //Lerp in between points
+                    float smoothedTrailProgress = MathHelper.Lerp(startTrailProgress, endTrailProgress, progressOnTrail);
+                    float rot = dir2 == 1 ? MathHelper.Lerp(0, spinRotationRange, smoothedTrailProgress) : MathHelper.Lerp(spinRotationRange, 0, smoothedTrailProgress);
+
+                    Vector2 pos = Projectile.Center;
+                    pos += rot.ToRotationVector2() * SwingProjectile.GetTrailOffset() / 2;
+                    points[i] = pos - SwingProjectile.GetFramingSize() / 2;
+                }
+                SwingProjectile._trailPoints = points;
+            }
+
         }
     }
+
 }
