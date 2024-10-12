@@ -191,8 +191,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             swings.Add(new OvalSwingStyle
             {
                 swingTime = 115,
-                swingXRadius = 128,
-                swingYRadius = 48,
+                swingXRadius = 168 / 1.5f,
+                swingYRadius = 140 / 1.5f,
                 swingRange = MathHelper.ToRadians(1440),
                 easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 7),
                 swingSound = swingSound3,
