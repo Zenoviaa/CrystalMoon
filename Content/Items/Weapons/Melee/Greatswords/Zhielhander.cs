@@ -244,10 +244,6 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
                 modifiers.FinalDamage *= 3;
             }
 
-            if (ComboAtt == 7)
-            {
-                modifiers.FinalDamage *= 3;
-            }
         }
 
         //TRAIL VISUALS
