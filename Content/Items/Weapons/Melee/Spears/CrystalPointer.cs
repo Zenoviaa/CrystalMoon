@@ -396,7 +396,6 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Spears
                 SoundStyle spearHit = SoundRegistry.SpearHit1;
                 spearHit.PitchVariance = 0.1f;
                 SoundEngine.PlaySound(spearHit, Projectile.position);
-                modifiers.FinalDamage *= 2;
             }
 
             if (ComboAtt == 1)
