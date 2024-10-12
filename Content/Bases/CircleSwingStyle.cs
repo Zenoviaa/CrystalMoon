@@ -55,6 +55,7 @@ namespace CrystalMoon.Content.Bases
             if (spinCenter)
             {
                 Projectile.Center -= rotation.ToRotationVector2() * SwingProjectile.holdOffset;
+                Projectile.Center -= rotation.ToRotationVector2() * swingDistance;
                 Projectile.Center -= rotation.ToRotationVector2() * spinCenterOffset;
             }
 
@@ -83,6 +84,7 @@ namespace CrystalMoon.Content.Bases
 
                 Vector2 pos = Owner.RotatedRelativePoint(Owner.MountedCenter);
                 pos += rot.ToRotationVector2() * SwingProjectile.GetTrailOffset();
+       
                 if (spinCenter)
                 {
                     Vector2 d = (Owner.RotatedRelativePoint(Owner.MountedCenter) - pos).SafeNormalize(Vector2.Zero);
