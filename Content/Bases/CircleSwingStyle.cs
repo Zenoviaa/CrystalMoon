@@ -13,6 +13,7 @@ namespace CrystalMoon.Content.Bases
     {
         public float startSwingRotOffset;
         public float endSwingRotOffset;
+        public float swingDistance;
         public bool spinCenter;
         public float spinCenterOffset;
         public override void AI()
@@ -46,7 +47,9 @@ namespace CrystalMoon.Content.Bases
 
             // offsetted cuz sword sprite
             Vector2 position = Owner.RotatedRelativePoint(Owner.MountedCenter);
-            position += rotation.ToRotationVector2() * SwingProjectile.holdOffset;
+            Vector2 baseHoldOffset = rotation.ToRotationVector2() * SwingProjectile.holdOffset;
+            Vector2 extraHoldOffset = rotation.ToRotationVector2() * swingDistance;
+            position += baseHoldOffset + extraHoldOffset;
             Projectile.Center = position;
             Projectile.rotation = (position - Owner.Center).ToRotation() + MathHelper.PiOver4;
             if (spinCenter)
