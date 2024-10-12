@@ -140,8 +140,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             swings.Add(new OvalSwingStyle
             {
                 swingTime = 70,
-                swingXRadius = 168 / 1.5f,
-                swingYRadius = 140 / 1.5f,
+                swingXRadius = 84 / 1.5f,
+                swingYRadius = 70 / 1.5f,
                 swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4,
                 easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
                 swingSound = swingSound2,
@@ -261,8 +261,14 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             {
                 modifiers.Knockback *= 2;
             }
-          
-            if(ComboAtt == 1 || ComboAtt == 6)
+
+            if (ComboAtt == 2)
+            {
+                modifiers.Knockback *= 2;
+            }
+
+
+            if (ComboAtt == 1 || ComboAtt == 6)
             {
                 modifiers.Knockback *= 0;
                 modifiers.FinalDamage *= 0.5f;
