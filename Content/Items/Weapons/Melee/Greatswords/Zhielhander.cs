@@ -156,6 +156,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
 
             swings.Add(new CircleSwingStyle
             {
+                
                 swingTime = 48,
                 startSwingRotOffset = -MathHelper.ToRadians(175),
                 endSwingRotOffset = MathHelper.ToRadians(175),
