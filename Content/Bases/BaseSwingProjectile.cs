@@ -27,7 +27,7 @@ namespace CrystalMoon.Content.Bases
         public float Countertimer;
     
         public float _smoothedLerpValue;
-
+        public float uneasedLerpValue;
         public float hitstopTimer=0;
         public float bounceTimer = 0;
         public Player Owner => Main.player[Projectile.owner];

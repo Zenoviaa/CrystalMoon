@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.ID;
 
@@ -9,13 +10,16 @@ namespace CrystalMoon.Content.Bases
         private bool _thrust;
         public float thrustSpeed;
         public float stabRange;
+        public float spinRotationRange;
+        public Func<float, float> spinRotationEasingFunc;
         public override void AI()
         {
             float lerpValue = SwingProjectile.Countertimer / SwingProjectile.GetSwingTime(swingTime);
 
             float swingProgress = lerpValue;
             float targetRotation = Projectile.velocity.ToRotation();
-            swingProgress = easingFunc(swingProgress);
+            SwingProjectile.uneasedLerpValue = lerpValue;
+            swingProgress = easingFunc(swingProgress);      
             SwingProjectile._smoothedLerpValue = swingProgress;
             PlaySwingSound(swingProgress);
 
@@ -32,6 +36,16 @@ namespace CrystalMoon.Content.Bases
             Projectile.Center = Owner.Center +
                 Vector2.Lerp(Vector2.Zero, swingVelocity, swingProgress) + swingDirection * SwingProjectile.holdOffset;
             Projectile.rotation = (Projectile.Center - Owner.Center).ToRotation() + MathHelper.PiOver4;
+            if(spinRotationRange != 0)
+            {
+                float spinRotationProgress;
+                if (spinRotationEasingFunc != null)
+                    spinRotationProgress = spinRotationEasingFunc(swingProgress);
+                else
+                    spinRotationProgress = lerpValue;
+                float spinRotation = MathHelper.Lerp(0, spinRotationRange, spinRotationProgress);
+                Projectile.rotation += spinRotation;
+            }
 
             Vector2[] points = new Vector2[ProjectileID.Sets.TrailCacheLength[Projectile.type]];
             for (int i = 0; i < points.Length; i++)

@@ -37,6 +37,7 @@ namespace CrystalMoon.Content.Bases
             //How wide is the swing, in radians
             float start = targetRotation + startSwingRotOffset;
             float end = targetRotation + endSwingRotOffset;
+            SwingProjectile.uneasedLerpValue = lerpValue;
             swingProgress = easingFunc(swingProgress);
             SwingProjectile._smoothedLerpValue = swingProgress;
             PlaySwingSound(swingProgress);

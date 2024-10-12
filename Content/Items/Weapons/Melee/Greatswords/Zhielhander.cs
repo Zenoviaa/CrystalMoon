@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -73,6 +74,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
 
     public class ZhielhanderSwordSlash : BaseSwingProjectile
     {
+        private NPCSucker _npcSucker;
         public override string Texture => "CrystalMoon/Content/Items/Weapons/Melee/Greatswords/Zhielhander";
         ref float ComboAtt => ref Projectile.ai[0];
         public bool Hit;
@@ -128,10 +130,11 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             swings.Add(new SpearSwingStyle
             {
                 swingTime = 60,
-                stabRange = 100,
+                stabRange = 220,
                 thrustSpeed = 1,
                 easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue),
-                swingSound = swingSound3
+                swingSound = swingSound3,
+                spinRotationRange = MathHelper.ToRadians(2000)
             });
 
             swings.Add(new OvalSwingStyle
@@ -181,10 +184,11 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             swings.Add(new SpearSwingStyle
             {
                 swingTime = 100,
-                stabRange = 120,
+                stabRange = 300,
                 thrustSpeed = 2,
                 easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue),
-                swingSound = swingSound3
+                swingSound = swingSound3,
+                spinRotationRange = MathHelper.ToRadians(2000)
             });
 
          
@@ -200,9 +204,19 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             });
         }
 
+        public override bool? CanDamage()
+        {
+            return true;
+        }
         protected override void InitSwingAI()
         {
             base.InitSwingAI();
+            if(ComboAtt == 1 || ComboAtt == 6)
+            {
+                Projectile.knockBack = 0;
+                Projectile.localNPCHitCooldown = 12 * ExtraUpdateMult;
+            }
+
             if (ComboAtt == 7)
             {
                 //This npc local hit cooldown time makes it hit multiple times
@@ -210,6 +224,15 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             }
         }
 
+        public override void AI()
+        {
+            base.AI();
+            _npcSucker ??= new NPCSucker();
+            if(Countertimer % (ExtraUpdateMult) == 0 && uneasedLerpValue > 0.5f)
+            {
+                _npcSucker.AI(Projectile.Center, strength: 0.8f);
+            } 
+        }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
@@ -221,8 +244,12 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
                 hitstopTimer = 4 * ExtraUpdateMult;
             }
 
-
+            if((ComboAtt == 1 || ComboAtt == 6) && uneasedLerpValue > 0.5f)
+            {
+                _npcSucker.AddNPCSuckerTarget(Projectile.Center, target);
+            }
         }
+
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             base.ModifyHitNPC(target, ref modifiers);
@@ -235,6 +262,11 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
                 modifiers.Knockback *= 4;
             }
           
+            if(ComboAtt == 1 || ComboAtt == 6)
+            {
+                modifiers.Knockback *= 0;
+            }
+
             if (ComboAtt == 4)
             {
                 modifiers.Knockback *= 2;

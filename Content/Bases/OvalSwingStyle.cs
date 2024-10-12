@@ -23,6 +23,8 @@ namespace CrystalMoon.Content.Bases
             float lerpValue = SwingProjectile.Countertimer / SwingProjectile.GetSwingTime(swingTime);
             float swingProgress = lerpValue;
             float targetRotation = Projectile.velocity.ToRotation();
+
+            SwingProjectile.uneasedLerpValue = lerpValue;
             swingProgress = easingFunc(swingProgress);
             SwingProjectile._smoothedLerpValue = swingProgress;
             PlaySwingSound(swingProgress);
