@@ -46,6 +46,8 @@ Mods: {
 			CrystallineSwordStaminaSlash.DisplayName: Crystalline Sword Stamina Slash
 			BasicStaminaExplosion.DisplayName: Basic Stamina Explosion
 			CrystalPointerStaminaStab.DisplayName: Crystal Pointer Stamina Stab
+			ZhielhanderStaminaSlash.DisplayName: Zhielhander Stamina Slash
+			ZhielhanderSwordSlash.DisplayName: Zhielhander Sword Slash
 		}
 
 		Buffs: {

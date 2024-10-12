@@ -331,3 +331,8 @@ StaminaBrew: {
 	DisplayName: Stamina Brew
 	Tooltip: ""
 }
+
+Zhielhander: {
+	DisplayName: Zhielhander
+	Tooltip: ""
+}
