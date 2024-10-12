@@ -257,7 +257,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
         public override Vector2 GetTrailOffset()
         {
             //Moves the trail along the blade, negative goes towards the player, positive goes away the player
-            return Vector2.One * 80;
+            return Vector2.One * 100;
         }
 
         protected override float WidthFunction(float p)
