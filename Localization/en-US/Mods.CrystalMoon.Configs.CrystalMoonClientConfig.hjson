@@ -64,10 +64,10 @@ EnchantMenuY: {
 
 DashMeterX: {
 	Label: Dash Meter X
-	Tooltip: "X Position of the Dash Meter"
+	Tooltip: X Position of the Dash Meter
 }
 
 DashMeterY: {
 	Label: Dash Meter Y
-	Tooltip: "Y Position of the Dash Meter"
+	Tooltip: Y Position of the Dash Meter
 }
