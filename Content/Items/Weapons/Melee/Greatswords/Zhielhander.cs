@@ -28,7 +28,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
         // The Display Name and Tooltip of this item can be edited in the 'Localization/en-US_Mods.CrystalMoon.hjson' file.
         public override void SetDefaults()
         {
-            Item.damage = 8;
+            Item.damage = 13;
             Item.DamageType = DamageClass.Melee;
             Item.width = 40;
             Item.height = 40;
@@ -59,7 +59,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             //set staminacombo
             maxStaminaCombo = 2;
             //Set stamina projectile
-            staminaProjectileShoot = ModContent.ProjectileType<CrystallineSwordStaminaSlash>();
+            staminaProjectileShoot = ModContent.ProjectileType<ZhielhanderStaminaSlash>();
         }
 
 
@@ -72,7 +72,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
 
     public class ZhielhanderSwordSlash : BaseSwingProjectile
     {
-        public override string Texture => "CrystalMoon/Content/Items/Weapons/Melee/Swords/Zhielhander";
+        public override string Texture => "CrystalMoon/Content/Items/Weapons/Melee/Greatswords/Zhielhander";
         ref float ComboAtt => ref Projectile.ai[0];
         public bool Hit;
 
@@ -266,15 +266,15 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
 
         protected override float WidthFunction(float p)
         {
-            float trailWidth = MathHelper.Lerp(0, 384, p);
+            float trailWidth = MathHelper.Lerp(0, 284, p);
             float fadeWidth = MathHelper.Lerp(trailWidth, 0, _smoothedLerpValue) * Easing.OutExpo(_smoothedLerpValue, 4);
             return fadeWidth;
         }
 
         protected override Color ColorFunction(float p)
         {
-            Color trailColor = Color.Lerp(Color.White, Color.LightCyan, p);
-            Color fadeColor = Color.Lerp(trailColor, Color.DeepSkyBlue, _smoothedLerpValue);
+            Color trailColor = Color.Lerp(Color.White, Color.DarkGray, p);
+            Color fadeColor = Color.Lerp(trailColor, Color.DarkGray, _smoothedLerpValue);
             //This will make it fade out near the end
             return fadeColor;
         }
@@ -288,11 +288,11 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             shader.TrailingTexture = TextureRegistry.GlowTrail;
 
             //Blends with the main texture
-            shader.SecondaryTrailingTexture = TextureRegistry.GlowTrail;
+            shader.SecondaryTrailingTexture = TextureRegistry.WhispTrail;
 
             //Used for blending the trail colors
             //Set it to any noise texture
-            shader.TertiaryTrailingTexture = TextureRegistry.CrystalTrail;
+            shader.TertiaryTrailingTexture = TextureRegistry.CausticTrail;
             shader.PrimaryColor = Color.White;
             shader.SecondaryColor = Color.DarkSlateBlue;
             shader.BlendState = BlendState.Additive;
@@ -301,7 +301,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
         }
         #endregion
     }
-    public class CrystallineSwordStaminaSlash : BaseSwingProjectile
+    public class ZhielhanderStaminaSlash : BaseSwingProjectile
     {
         public override string Texture => "CrystalMoon/Content/Items/Weapons/Melee/Swords/CrystallineSlasher";
         ref float ComboAtt => ref Projectile.ai[0];
