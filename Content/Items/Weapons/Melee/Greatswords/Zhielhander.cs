@@ -383,7 +383,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
 
         public override void SetDefaults()
         {
-            holdOffset = 40;
+            holdOffset = -10;
             trailStartOffset = 0.2f;
             Projectile.penetrate = -1;
             Projectile.ignoreWater = true;
@@ -392,7 +392,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             Projectile.height = 38;
             Projectile.width = 38;
             Projectile.friendly = true;
-            Projectile.scale = 1.6f;
+            Projectile.scale = 1.4f;
 
             Projectile.extraUpdates = ExtraUpdateMult - 1;
             Projectile.usesLocalNPCImmunity = true;
