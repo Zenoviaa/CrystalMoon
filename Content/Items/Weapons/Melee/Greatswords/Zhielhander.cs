@@ -400,14 +400,14 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
         }
 
         private bool _thrust;
-        public float thrustSpeed = 5;
+        public float thrustSpeed = 9;
         public float stabRange;
         public override void AI()
         {
             base.AI();
 
             Vector2 swingDirection = Projectile.velocity.SafeNormalize(Vector2.Zero);
-              if (_smoothedLerpValue > 0.5f)
+              if (_smoothedLerpValue > 0.4f)
             {
                 if (!_thrust)
                 {
@@ -432,7 +432,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
                 swingDistance = 90,
                 swingTime = 108,
                 startSwingRotOffset = -MathHelper.ToRadians(275),
-                endSwingRotOffset = MathHelper.ToRadians(275),
+                endSwingRotOffset = MathHelper.ToRadians(105),
                 easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
                 swingSound = swingSound1,
                 swingSoundLerpValue = 0.5f
@@ -521,7 +521,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             var shader = SimpleTrailShader.Instance;
 
             //Main trailing texture
-            shader.TrailingTexture = TextureRegistry.CrystalTrail2;
+            shader.TrailingTexture = TextureRegistry.GlowTrail;
 
             //Blends with the main texture
             shader.SecondaryTrailingTexture = TextureRegistry.GlowTrail;
