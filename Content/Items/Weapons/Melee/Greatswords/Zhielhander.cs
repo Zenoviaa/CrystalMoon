@@ -59,7 +59,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             //Set stamina to use
             staminaToUse = 1;
             //set staminacombo
-            maxStaminaCombo = 2;
+            maxStaminaCombo = 1;
             //Set stamina projectile
             staminaProjectileShoot = ModContent.ProjectileType<ZhielhanderStaminaSlash>();
         }
@@ -371,13 +371,13 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
     }
     public class ZhielhanderStaminaSlash : BaseSwingProjectile
     {
-        public override string Texture => "CrystalMoon/Content/Items/Weapons/Melee/Swords/CrystallineSlasher";
+        public override string Texture => "CrystalMoon/Content/Items/Weapons/Melee/Greatswords/Zhielhander";
         ref float ComboAtt => ref Projectile.ai[0];
         public bool Hit;
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailCacheLength[Type] = 64;
+            ProjectileID.Sets.TrailCacheLength[Type] = 50;
             ProjectileID.Sets.TrailingMode[Type] = 2;
         }
 
@@ -392,7 +392,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             Projectile.height = 38;
             Projectile.width = 38;
             Projectile.friendly = true;
-            Projectile.scale = 1.3f;
+            Projectile.scale = 1.6f;
 
             Projectile.extraUpdates = ExtraUpdateMult - 1;
             Projectile.usesLocalNPCImmunity = true;
@@ -427,30 +427,19 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
 
 
             base.SetComboDefaults(swings);
-            swings.Add(new OvalSwingStyle
+            swings.Add(new CircleSwingStyle
             {
-                swingTime = 68,
-                swingXRadius = 160 / 1.5f,
-                swingYRadius = 80 / 1.5f,
-                swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4 + MathHelper.PiOver4 + MathHelper.Pi,
-                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
-                swingSound = swingSound1,
-                swingSoundLerpValue = 0.5f
-
-            }); 
-
-            swings.Add(new OvalSwingStyle
-            {
-                swingTime = 68,
-                swingXRadius = 160 / 1.5f,
-                swingYRadius = 80 / 1.5f,
-                swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4 + MathHelper.PiOver4 + MathHelper.Pi,
+                swingDistance = 90,
+                swingTime = 108,
+                startSwingRotOffset = -MathHelper.ToRadians(275),
+                endSwingRotOffset = MathHelper.ToRadians(275),
                 easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
                 swingSound = swingSound1,
                 swingSoundLerpValue = 0.5f
             });
 
-            
+
+
         }
 
 
@@ -462,7 +451,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             {
                 CrystalMoonFXUtil.ShakeCamera(target.Center, 1024, 8f);
                 Hit = true;
-                hitstopTimer = 4 * ExtraUpdateMult;
+                hitstopTimer = 8 * ExtraUpdateMult;
             }
 
         
@@ -472,16 +461,12 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
         {
             base.ModifyHitNPC(target, ref modifiers);
           
-            SoundStyle spearHit = SoundRegistry.CrystalHit1;
-            spearHit.PitchVariance = 0.5f;
-            SoundEngine.PlaySound(spearHit, Projectile.position);
-
             SoundStyle spearHit2 = SoundRegistry.NSwordHit1;
-            spearHit2.PitchVariance = 0.2f;
+            spearHit2.PitchVariance = 0.5f;
             SoundEngine.PlaySound(spearHit2, Projectile.position);
 
-            modifiers.FinalDamage *= 3;
-            modifiers.Knockback *= 4;
+            modifiers.FinalDamage *= 3.5f;
+            modifiers.Knockback *= 6;
             
         }
 
@@ -517,15 +502,15 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
 
         protected override float WidthFunction(float p)
         {
-            float trailWidth = MathHelper.Lerp(0, 484, p);
+            float trailWidth = MathHelper.Lerp(0, 584, p);
             float fadeWidth = MathHelper.Lerp(trailWidth, 0, _smoothedLerpValue) * Easing.OutExpo(_smoothedLerpValue, 4);
             return fadeWidth;
         }
 
         protected override Color ColorFunction(float p)
         {
-            Color trailColor = Color.Lerp(Color.White, Color.LightCyan, p);
-            Color fadeColor = Color.Lerp(trailColor, Color.DeepSkyBlue, _smoothedLerpValue);
+            Color trailColor = Color.Lerp(Color.White, Color.Black, p);
+            Color fadeColor = Color.Lerp(trailColor, Color.Gray, _smoothedLerpValue);
             //This will make it fade out near the end
             return fadeColor;
         }
@@ -545,9 +530,9 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             //Set it to any noise texture
             shader.TertiaryTrailingTexture = TextureRegistry.CrystalTrail2;
             shader.PrimaryColor = Color.White;
-            shader.SecondaryColor = Color.DarkSlateBlue;
+            shader.SecondaryColor = Color.DarkGray;
             shader.BlendState = BlendState.Additive;
-            shader.Speed = 25;
+            shader.Speed = 30;
             return shader;
         }
         #endregion
