@@ -48,6 +48,7 @@ Mods: {
 			CrystalPointerStaminaStab.DisplayName: Crystal Pointer Stamina Stab
 			ZhielhanderStaminaSlash.DisplayName: Zhielhander Stamina Slash
 			ZhielhanderSwordSlash.DisplayName: Zhielhander Sword Slash
+			ZhielhanderProj.DisplayName: Zhielhander Proj
 		}
 
 		Buffs: {
