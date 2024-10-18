@@ -6,6 +6,7 @@ using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Systems.Players;
 using CrystalMoon.Systems.Shaders;
 using CrystalMoon.Visual.Explosions;
+using CrystalMoon.Visual.GIFEffects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil;
@@ -311,6 +312,22 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                         offsetVelocity = direction.RotatedBy(offsetRadians / 2f) * 17f;
                         Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center, offsetVelocity,
                            ModContent.ProjectileType<VaelProj>(), Projectile.damage * 2, 0f, Projectile.owner, 0f, 0f);
+                    }
+                }
+
+                Vector2 swingDirection2 = Projectile.velocity.SafeNormalize(Vector2.Zero);
+                if (_smoothedLerpValue > 0.5f)
+                {
+                    if (!_thrust)
+                    {
+                        Owner.velocity += swingDirection2 * thrustSpeed;
+
+                        Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero);
+                        Projectile p = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Owner.Center, swingDirection2 * 17, ModContent.ProjectileType<VaelSpecial>(), Projectile.damage * 2, 0f, Projectile.owner, 0f, 0f);
+                        p.rotation = direction.ToRotation();
+
+                        _thrust = true;
+
                     }
                 }
 
