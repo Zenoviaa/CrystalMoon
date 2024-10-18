@@ -290,9 +290,22 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
         private bool _spawnedExplosion;
         public float thrustSpeed = 5;
         public float stabRange;
+        private LightningTrail _lightningTrail;
+        private float _lightningTrailTimer;
+        private bool _hasSpawnedSecondKnife;
+        
         public override void AI()
         {
             base.AI();
+            _lightningTrailTimer++;
+
+            //How often it recalculates the lightning trail
+            float randomizeRate = 8;
+            if (_lightningTrailTimer % randomizeRate == 0)
+            {
+                _lightningTrail.RandomPositions(_trailPoints);
+            }
+
 
             Vector2 swingDirection = Projectile.velocity.SafeNormalize(Vector2.Zero);
               
@@ -434,12 +447,34 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
 
         protected override Color ColorFunction(float p)
         {
-            Color trailColor = Color.Lerp(Color.White, Color.LightCyan, p);
-            Color fadeColor = Color.Lerp(trailColor, Color.DeepSkyBlue, _smoothedLerpValue);
+            Color trailColor = Color.Lerp(Color.Orange, Color.Purple, p);
+            Color fadeColor = Color.Lerp(trailColor, Color.DarkViolet, _smoothedLerpValue);
+            //   fadeColor.A = 0;
             //This will make it fade out near the end
             return fadeColor;
         }
 
+        protected override void DrawSlashTrail()
+        {
+            //base.DrawSlashTrail();
+            SpriteBatch spriteBatch = Main.spriteBatch;
+            var shader = MagicVaellusShader.Instance;
+            shader.PrimaryTexture = TextureRegistry.LightningTrail2;
+            shader.NoiseTexture = TextureRegistry.LightningTrail3;
+            shader.OutlineTexture = TextureRegistry.LightningTrail2Outline;
+            shader.PrimaryColor = new Color(69, 70, 159);
+            shader.NoiseColor = new Color(224, 107, 10);
+            shader.OutlineColor = Color.Lerp(new Color(31, 27, 59), Color.Black, 0.75f);
+            shader.BlendState = BlendState.AlphaBlend;
+            shader.SamplerState = SamplerState.PointWrap;
+            shader.Speed = 5.2f;
+            shader.Distortion = 0.15f;
+            shader.Power = 0.25f;
+            shader.Alpha = 1f;
+            _lightningTrail.Draw(spriteBatch, _trailPoints, Projectile.oldRot, ColorFunction, WidthFunction, shader, offset: GetFramingSize() / 2f);
+        }
+
+       
         protected override BaseShader ReadyShader()
         {
 
