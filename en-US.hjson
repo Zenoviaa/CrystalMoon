@@ -59,6 +59,8 @@ Mods: {
 			LightKnivesSwordSlash.DisplayName: Light Knives Sword Slash
 			LightKnivesSwordSlash2.DisplayName: Light Knives Sword Slash2
 			LightKnivesStaminaSlash2.DisplayName: Light Knives Stamina Slash2
+			VaelSwordSlash.DisplayName: Vael Sword Slash
+			VaelSwordStaminaSlash.DisplayName: Vael Sword Stamina Slash
 		}
 
 		Buffs: {

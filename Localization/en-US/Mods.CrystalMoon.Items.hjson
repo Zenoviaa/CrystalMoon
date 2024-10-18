@@ -356,3 +356,8 @@ LightKnives: {
 	DisplayName: Light Knives
 	Tooltip: ""
 }
+
+Vael: {
+	DisplayName: Vael
+	Tooltip: ""
+}
