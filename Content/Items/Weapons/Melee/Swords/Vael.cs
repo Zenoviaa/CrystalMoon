@@ -326,30 +326,16 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
 
 
             base.SetComboDefaults(swings);
-            swings.Add(new OvalSwingStyle
+            swings.Add(new SpearSwingStyle
             {
-                swingTime = 68,
-                swingXRadius = 160 / 1.5f,
-                swingYRadius = 80 / 1.5f,
-                swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4 + MathHelper.PiOver4 + MathHelper.Pi,
-                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
-                swingSound = swingSound1,
-                swingSoundLerpValue = 0.5f
-
-            }); 
-
-            swings.Add(new OvalSwingStyle
-            {
-                swingTime = 68,
-                swingXRadius = 160 / 1.5f,
-                swingYRadius = 80 / 1.5f,
-                swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4 + MathHelper.PiOver4 + MathHelper.Pi,
-                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
-                swingSound = swingSound1,
-                swingSoundLerpValue = 0.5f
+                swingTime = 100,
+                stabRange = 100,
+                thrustSpeed = 6,
+                easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue),
+                swingSound = swingSound1
             });
 
-            
+
         }
 
 
