@@ -405,7 +405,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Longswords
         }
 
         private bool _thrust;
-        public float thrustSpeed = 5;
+        public float thrustSpeed = 0;
         public float stabRange;
         public override void AI()
         {
@@ -440,103 +440,107 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Longswords
             SoundStyle swingSound1 = SoundRegistry.NSwordSlash1;
             swingSound1.PitchVariance = 0.5f;
 
-            SoundStyle spearSlash1 = SoundRegistry.SpearSlash1;
+
             SoundStyle spearSlash2 = SoundRegistry.SpearSlash2;
             SoundStyle nSpin = SoundRegistry.NSwordSpin1;
-            spearSlash1.PitchVariance = 0.25f;
-            spearSlash2.PitchVariance = 0.25f;
+         
+            spearSlash2.PitchVariance = 0.5f;
             nSpin.PitchVariance = 0.2f;
 
             swings.Add(new SpearSwingStyle
             {
-                swingTime = 5,
+                swingTime = 9,
                 stabRange = 45,
-                thrustSpeed = 1,
+                thrustSpeed = 0,
                 easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue),
                 swingSound = spearSlash2
             });
 
             swings.Add(new SpearSwingStyle
             {
-                swingTime = 5,
+                swingTime = 9,
                 stabRange = 45,
-                thrustSpeed = 1,
+                thrustSpeed = 0,
                 easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue),
                 swingSound = spearSlash2
             });
+
+
+
             swings.Add(new SpearSwingStyle
             {
-                swingTime = 5,
+                swingTime = 9,
                 stabRange = 45,
-                thrustSpeed = 1,
+                thrustSpeed = 0,
                 easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue),
                 swingSound = spearSlash2
             });
+
             swings.Add(new SpearSwingStyle
             {
-                swingTime = 5,
+                swingTime = 9,
                 stabRange = 45,
-                thrustSpeed = 1,
+                thrustSpeed = 0,
                 easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue),
                 swingSound = spearSlash2
             });
+
+
+
             swings.Add(new SpearSwingStyle
             {
-                swingTime = 5,
+                swingTime = 9,
                 stabRange = 45,
-                thrustSpeed = 1,
+                thrustSpeed = 0,
                 easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue),
                 swingSound = spearSlash2
             });
+
             swings.Add(new SpearSwingStyle
             {
-                swingTime = 5,
+                swingTime = 9,
                 stabRange = 45,
-                thrustSpeed = 1,
+                thrustSpeed = 0,
                 easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue),
                 swingSound = spearSlash2
             });
+
+
             swings.Add(new SpearSwingStyle
             {
-                swingTime = 5,
+                swingTime = 9,
                 stabRange = 45,
-                thrustSpeed = 1,
+                thrustSpeed = 0,
                 easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue),
                 swingSound = spearSlash2
             });
+
             swings.Add(new SpearSwingStyle
             {
-                swingTime = 5,
+                swingTime = 9,
                 stabRange = 45,
-                thrustSpeed = 1,
+                thrustSpeed = 0,
                 easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue),
                 swingSound = spearSlash2
             });
+
             swings.Add(new SpearSwingStyle
             {
-                swingTime = 5,
+                swingTime = 9,
                 stabRange = 45,
-                thrustSpeed = 1,
+                thrustSpeed = 0,
                 easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue),
                 swingSound = spearSlash2
             });
+
             swings.Add(new SpearSwingStyle
             {
-                swingTime = 5,
+                swingTime = 9,
                 stabRange = 45,
-                thrustSpeed = 1,
+                thrustSpeed = 0,
                 easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue),
                 swingSound = spearSlash2
             });
-
-
-
-
-
-
-
-
-
 
 
         }
