@@ -51,6 +51,8 @@ Mods: {
 			ZhielhanderProj.DisplayName: Zhielhander Proj
 			PearlingSwordSlash.DisplayName: Pearling Sword Slash
 			PearlingSwordStaminaSlash.DisplayName: Pearling Sword Stamina Slash
+			WarriorsSwordSlash.DisplayName: Warriors Sword Slash
+			WarriorsSwordStaminaSlash.DisplayName: Warriors Sword Stamina Slash
 		}
 
 		Buffs: {

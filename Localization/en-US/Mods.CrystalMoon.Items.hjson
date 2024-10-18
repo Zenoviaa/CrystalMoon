@@ -341,3 +341,8 @@ Pearling: {
 	DisplayName: Pearling
 	Tooltip: ""
 }
+
+WarriorsGrace: {
+	DisplayName: Warriors Grace
+	Tooltip: ""
+}
