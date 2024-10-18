@@ -1,4 +1,5 @@
-﻿using CrystalMoon.Systems.MiscellaneousMath;
+﻿using CrystalMoon.Registries;
+using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Systems.Particles;
 using CrystalMoon.Systems.ScreenSystems;
 using CrystalMoon.Systems.Shaders;
@@ -15,23 +16,23 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
     {
         public override Color GetElementColor()
         {
-            return new Color(227, 157, 24);
+            return Color.LightGray;
         }
 
         public override bool DrawTextShader(SpriteBatch spriteBatch, Item item, DrawableTooltipLine line, ref int yOffset)
         {
             base.DrawTextShader(spriteBatch, item, line, ref yOffset);
             EnchantmentDrawHelper.DrawTextShader(spriteBatch, item, line, ref yOffset,
-                glowColor: new Color(227, 157, 24),
+                glowColor: new Color(27, 157, 241),
                 primaryColor: Color.White,
-                noiseColor: Color.Lerp(new Color(227, 157, 24), Color.Black, 0.3f));
+                noiseColor: Color.Lerp(new Color(27, 157, 241), Color.Black, 0.3f));
             return true;
         }
 
         public override void SpecialInventoryDraw(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             base.SpecialInventoryDraw(item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
-            DrawHelper.DrawGlowInInventory(item, spriteBatch, position, Color.LightGoldenrodYellow);
+            DrawHelper.DrawGlowInInventory(item, spriteBatch, position, Color.White);
         }
 
         public override void OnKill()
@@ -72,32 +73,39 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
         public override void DrawForm(SpriteBatch spriteBatch, Texture2D formTexture, Vector2 drawPos, Color drawColor, Color lightColor, float drawRotation, float drawScale)
         {
             float p = MathUtil.Osc(0f, 1f, speed: 3);
-            drawColor = Color.LightGoldenrodYellow;
+            drawColor = Color.White;
             base.DrawForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale);
         }
 
         public override void DrawTrail()
         {
             base.DrawTrail();
-            MiscShaderData miscShaderData = GameShaders.Misc["MagicMissile"];
-            miscShaderData.UseSaturation(-2.8f);
-            miscShaderData.UseOpacity(2f);
-            TrailDrawer.DrawWithMiscShader(Main.spriteBatch, 
-                MagicProj.OldPos, Projectile.oldRot, StripColors, StripWidth, miscShaderData, offset: -Main.screenPosition + Projectile.Size / 2);
+            var shader = MagicBloodletShader.Instance;
+            shader.PrimaryTexture = TextureRegistry.BloodletTrail;
+            shader.NoiseTexture = TextureRegistry.NoiseTextureClouds3;
+            shader.PrimaryColor = Color.White;
+            shader.NoiseColor = Color.Lerp(Color.White, Color.LightGray, 0.2f);
+            shader.BlendState = BlendState.Additive;
+            shader.SamplerState = SamplerState.PointWrap;
+            shader.Speed = 10.5f;
+            shader.Distortion = 0.1f;
+            shader.Alpha = 0.25f;
+
+            //This just applis the shader changes
+            TrailDrawer.Draw(Main.spriteBatch, MagicProj.OldPos, Projectile.oldRot, ColorFunction, WidthFunction, shader, offset: Projectile.Size / 2);
         }
 
-        private Color StripColors(float progressOnStrip)
+        private Color ColorFunction(float completionRatio)
         {
-            Color result = Color.Lerp(Color.LightGoldenrodYellow, Color.White, Utils.GetLerpValue(0f, 0.7f, progressOnStrip, clamped: true)) * (1f - Utils.GetLerpValue(0f, 0.98f, progressOnStrip));
-            result.A /= 2;
-            return result;
+            Color c = Color.White;
+            return c;
         }
 
-        private float StripWidth(float progressOnStrip)
+        private float WidthFunction(float completionRatio)
         {
-            return MathHelper.Lerp(26f, 32f, Utils.GetLerpValue(0f, 0.2f, progressOnStrip, clamped: true)) * Utils.GetLerpValue(0f, 0.07f, progressOnStrip, clamped: true) * MagicProj.ScaleMultiplier;
+            float width = 32 * 1.5f * MagicProj.ScaleMultiplier;
+            return MathHelper.Lerp(width, 0, completionRatio);
         }
-
         #endregion
     }
 }
