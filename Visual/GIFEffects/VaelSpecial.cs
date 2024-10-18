@@ -56,7 +56,7 @@ namespace CrystalMoon.Visual.GIFEffects
 
             // The multiplication here wasn't doing anything
             Lighting.AddLight(Projectile.position, RGB.X, RGB.Y, RGB.Z);
-            UpdateFrame(0.8f, 1, 40);
+            UpdateFrame(0.4f, 1, 40);
         }
 
 
