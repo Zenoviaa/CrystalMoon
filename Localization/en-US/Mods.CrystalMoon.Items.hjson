@@ -336,3 +336,8 @@ Zhielhander: {
 	DisplayName: Zhielhander
 	Tooltip: ""
 }
+
+Pearling: {
+	DisplayName: Pearling
+	Tooltip: ""
+}
