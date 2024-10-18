@@ -1,22 +1,16 @@
 ﻿using CrystalMoon.Content.Bases;
 using CrystalMoon.Registries;
+using CrystalMoon.Systems;
 using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Systems.Players;
 using CrystalMoon.Systems.Shaders;
-using CrystalMoon.Systems;
-using CrystalMoon.Visual.Explosions;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using System;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria;
 
 namespace CrystalMoon.Content.Items.Weapons.Melee.Knives
 {
@@ -25,7 +19,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Knives
         // The Display Name and Tooltip of this item can be edited in the 'Localization/en-US_Mods.CrystalMoon.hjson' file.
         public override void SetDefaults()
         {
-            Item.damage = 8;
+            Item.damage = 12;
             Item.DamageType = DamageClass.Melee;
             Item.width = 40;
             Item.height = 40;
@@ -246,11 +240,11 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Knives
                 _hasSpawnedSecondKnife = true;
             }
 
-            if(ComboAtt == 8 && ShouldSpawnKnife)
+            if (ComboAtt == 8 && ShouldSpawnKnife)
             {
 
             }
-        
+
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
@@ -271,7 +265,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Knives
             SoundEngine.PlaySound(spearHit, Projectile.position);
             if (ComboAtt == 8)
             {
-                modifiers.FinalDamage *= 2;
+                modifiers.FinalDamage *= 5;
             }
         }
 
