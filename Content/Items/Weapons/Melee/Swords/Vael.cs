@@ -344,7 +344,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                             ModContent.ProjectileType<VaelExplosion>(), Projectile.damage * 2, 0f, Projectile.owner, 0f, 0f);
 
 
-                        Projectile p = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Owner.Center, swingDirection2 * 17, ModContent.ProjectileType<VaelSpecial>(), Projectile.damage * 2, 0f, Projectile.owner, 0f, 0f);
+                        Projectile p = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Owner.Center, swingDirection2 * 17, 
+                            ModContent.ProjectileType<VaelSpecial>(), Projectile.damage * 2, 0f, Projectile.owner, ai1: Projectile.whoAmI);
                         p.rotation = direction.ToRotation();
 
                         _spawnedExplosion = true;
