@@ -484,7 +484,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Knives
         {
             base.ModifyHitNPC(target, ref modifiers);
 
-            SoundStyle spearHit = SoundRegistry.CrystalHit1;
+            SoundStyle spearHit = SoundRegistry.FireHit1;
             spearHit.PitchVariance = 0.5f;
             SoundEngine.PlaySound(spearHit, Projectile.position);
 
