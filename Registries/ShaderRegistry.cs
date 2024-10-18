@@ -30,6 +30,7 @@ namespace CrystalMoon.Registries
 
         //Pixel Shaders
         public static MiscShaderData DyePixelMagicFire => GameShaders.Misc["CrystalMoon:DyeFirePixel"];
+        public static MiscShaderData PixelMagicVaellus => GameShaders.Misc["CrystalMoon:PixelMagicVaellus"];
         public static MiscShaderData PixelMagicFire => GameShaders.Misc["CrystalMoon:FirePixel"];
         public static MiscShaderData PixelMagicPhantasmal => GameShaders.Misc["CrystalMoon:PixelMagicPhantasmal"];
         public static MiscShaderData PixelMagicNormal => GameShaders.Misc["CrystalMoon:PixelMagicNormal"];
@@ -38,7 +39,6 @@ namespace CrystalMoon.Registries
         public static MiscShaderData PixelMagicNatural => GameShaders.Misc["CrystalMoon:PixelMagicNatural"];
         public static MiscShaderData PixelMagicWater => GameShaders.Misc["CrystalMoon:PixelMagicSparkleWater"];
         public static MiscShaderData PixelMagicGuut => GameShaders.Misc["CrystalMoon:PixelMagicGuut"];
-
         public static MiscShaderData CloudsShader => GameShaders.Misc["CrystalMoon:Clouds"];
         public static MiscShaderData FogShader => GameShaders.Misc["CrystalMoon:Fog"];
         public static MiscShaderData CloudsFrontShader => GameShaders.Misc["CrystalMoon:CloudsFront"];
@@ -83,18 +83,17 @@ namespace CrystalMoon.Registries
             RegisterMiscShader("MagicGuut", "PrimitivesPass");
             RegisterMiscShader("MagicNatural", "PrimitivesPass");
             RegisterMiscShader("MagicNormal", "PrimitivesPass");
-  
             RegisterMiscShader("Fog", "PixelPass");
 
 
-            //Magic Pixel
+            //Pixel Shaders
+            RegisterMiscShader("PixelMagicVaellus", "PixelPass");
             RegisterMiscShader("FirePixel", "PixelPass");
             RegisterMiscShader("DyeFirePixel", "PixelPass");
             RegisterMiscShader("PixelMagicPhantasmal", "PixelPass");
             RegisterMiscShader("PixelMagicNormal", "PixelPass");
             RegisterMiscShader("PixelMagicBloodlet", "PixelPass");
             RegisterMiscShader("PixelMagicSparkleWater", "PixelPass");
-    
             RegisterMiscShader("PixelMagicGuut", "PixelPass");
             RegisterMiscShader("PixelMagicNatural", "PixelPass");
             RegisterMiscShader("PixelMagicHex", "PixelPass");

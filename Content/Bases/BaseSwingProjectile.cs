@@ -81,6 +81,13 @@ namespace CrystalMoon.Content.Bases
         public override bool PreDraw(ref Color lightColor)
         {
             DrawSlashTrail();
+            DrawSwordSprite(ref lightColor);
+            return false;
+        }
+
+
+        protected virtual void DrawSwordSprite(ref Color lightColor)
+        {
             Texture2D texture = (Texture2D)ModContent.Request<Texture2D>(Texture);
 
             int frameHeight = texture.Height / Main.projFrames[Projectile.type];
@@ -90,15 +97,10 @@ namespace CrystalMoon.Content.Bases
             Vector2 origin = sourceRectangle.Size() / 2f;
             Color drawColor = Projectile.GetAlpha(lightColor);
 
-
             Main.spriteBatch.Draw(texture,
                 Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY),
                 sourceRectangle, drawColor, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0); // drawing the sword itself
-
-            return false;
         }
-
-
         public override bool ShouldUpdatePosition() => false;
 
         public override bool? CanDamage()
@@ -171,145 +173,6 @@ namespace CrystalMoon.Content.Bases
 
         }
 
-        /*
-        protected void OvalEasedSwingAI()
-        {
-            float swingXRadius = 32;
-            float swingYRadius = 128;
-            float swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4;
-
-
-            Countertimer++;
-            float lerpValue = Countertimer / SwingTime;
-            float swingProgress = lerpValue;
-            float targetRotation = Projectile.velocity.ToRotation();
-            ModifyOvalSwingAI(targetRotation, lerpValue, ref swingXRadius, ref swingYRadius, ref swingRange, ref swingProgress);
-            _smoothedLerpValue = swingProgress;
-            int dir2 = (int)Projectile.ai[1];
-            float xOffset;
-            float yOffset;
-            if (dir2 == -1)
-            {
-                xOffset = swingXRadius * MathF.Sin(swingProgress * swingRange + swingRange + OvalRotOffset);
-                yOffset = swingYRadius * MathF.Cos(swingProgress * swingRange + swingRange + OvalRotOffset);
-            }
-            else
-            {
-                xOffset = swingXRadius * MathF.Sin((1f - swingProgress) * swingRange + swingRange + OvalRotOffset);
-                yOffset = swingYRadius * MathF.Cos((1f - swingProgress) * swingRange + swingRange + OvalRotOffset);
-            }
-          
-
-            Projectile.Center = Owner.Center + new Vector2(xOffset, yOffset).RotatedBy(targetRotation);
-
-
-            Projectile.rotation = (Projectile.Center - Owner.Center).ToRotation() + MathHelper.PiOver4;
-            OrientHand();
-
-            Vector2[] points = new Vector2[ProjectileID.Sets.TrailCacheLength[Type]];
-            for (int i = 0; i < points.Length; i++)
-            {
-                float l = points.Length;
-                //Lerp between the points
-                float progressOnTrail = i / l;
-
-                //Calculate starting lerp value
-                float startTrailLerpValue = MathHelper.Clamp(lerpValue - trailStartOffset, 0, 1);
-                float startTrailProgress = startTrailLerpValue;
-                ModifyOvalSwingAI(targetRotation, startTrailLerpValue, 
-                    ref swingXRadius, ref swingYRadius, ref swingRange, ref startTrailProgress);
-
-                //Calculate ending lerp value
-                float endTrailLerpValue = lerpValue;
-                float endTrailProgress = endTrailLerpValue;
-                ModifyOvalSwingAI(targetRotation, endTrailLerpValue, 
-                    ref swingXRadius, ref swingYRadius, ref swingRange, ref endTrailProgress);
-
-
-                //Lerp in between points
-                float smoothedTrailProgress = MathHelper.Lerp(startTrailProgress, endTrailProgress, progressOnTrail);
-                float xOffset2;
-                float yOffset2;
-                if (dir2 == -1)
-                {
-                    xOffset2 = swingXRadius * MathF.Sin(smoothedTrailProgress * swingRange + swingRange + OvalRotOffset);
-                    yOffset2 = swingYRadius * MathF.Cos(smoothedTrailProgress * swingRange + swingRange + OvalRotOffset);
-                }
-                else
-                {
-                    xOffset2 = swingXRadius * MathF.Sin((1f - smoothedTrailProgress) * swingRange + swingRange + OvalRotOffset);
-                    yOffset2 = swingYRadius * MathF.Cos((1f - smoothedTrailProgress) * swingRange + swingRange + OvalRotOffset);
-                }
-
-
-                Vector2 pos = Owner.Center + new Vector2(xOffset2, yOffset2).RotatedBy(targetRotation);
-                points[i] = pos - (GetFramingSize() / 2);// + GetTrailOffset().RotatedBy(targetRotation);
-            }
-            _trailPoints = points;
-        }
-
-        protected void StabSwingEasedAI()
-        {
-            Countertimer++;
-
-            float lerpValue = Countertimer / SwingTime;
-
-            float swingProgress = lerpValue;
-            float targetRotation = Projectile.velocity.ToRotation();
-            float stabRange = 1;
-
-            ModifyStabSwingAI(targetRotation, lerpValue, ref stabRange, ref swingProgress);
-            _smoothedLerpValue = swingProgress;
-            float dir2 = (int)Projectile.ai[1];
-
-            Vector2 swingDirection = Projectile.velocity.SafeNormalize(Vector2.Zero);
-            Vector2 swingVelocity = swingDirection * stabRange;
-            if (!thrust)
-            {
-                Owner.velocity += swingDirection * 5;
-                thrust = true;
-            }
-
-            Projectile.Center = Owner.Center +
-                Vector2.Lerp(Vector2.Zero, swingVelocity, swingProgress) + swingDirection * holdOffset;
-
-            Projectile.rotation = (Projectile.Center - Owner.Center).ToRotation() + MathHelper.PiOver4;
-            OrientHand();
-
-            Vector2[] points = new Vector2[ProjectileID.Sets.TrailCacheLength[Type]];
-            for (int i = 0; i < points.Length; i++)
-            {
-                float l = points.Length;
-                //Lerp between the points
-                float progressOnTrail = i / l;
-
-                //Calculate starting lerp value
-                float startTrailLerpValue = MathHelper.Clamp(lerpValue - trailStartOffset, 0, 1);
-                float startTrailProgress = startTrailLerpValue;
-                ModifyStabSwingAI(targetRotation, startTrailLerpValue, ref stabRange, ref startTrailProgress);
-
-                //Calculate ending lerp value
-                float endTrailLerpValue = lerpValue;
-                float endTrailProgress = endTrailLerpValue;
-                ModifyStabSwingAI(targetRotation, endTrailLerpValue, ref stabRange, ref endTrailProgress);
-
-
-                //Lerp in between points
-                float smoothedTrailProgress = MathHelper.Lerp(startTrailProgress, endTrailProgress, progressOnTrail);
-                Vector2 pos = Owner.Center +
-                    Vector2.Lerp(Vector2.Zero, swingVelocity, smoothedTrailProgress) + swingDirection * holdOffset;
-                points[i] = pos - (GetFramingSize() / 2); //+ (pos - Owner.RenderPosition).SafeNormalize(Vector2.Zero) * HoldOffset;// - (GetFramingSize() / 2);// + GetTrailOffset().RotatedBy(targetRotation);
-            };
-            _trailPoints = points;
-        }
-
-
-        protected virtual void ModifyStabSwingAI(float targetRotation, float lerpValue, ref float stabRange, ref float swingProgress)
-        {
-            stabRange = 32;
-            swingProgress = Easing.SpikeOutCirc(lerpValue);
-        }*/
-
         public virtual Vector2 GetFramingSize()
         {
             return new Vector2(68, 72);
@@ -319,86 +182,6 @@ namespace CrystalMoon.Content.Bases
         {
             return Vector2.One * 30;
         }
-
-        /*
-
-        protected void SimpleEasedSwingAI()
-        {
-            Vector3 RGB = new Vector3(1.28f, 0f, 1.28f);
-            float multiplier = 0.2f;
-            RGB *= multiplier;
-
-            Lighting.AddLight(Projectile.position, RGB.X, RGB.Y, RGB.Z);
-
-            int dir = (int)Projectile.ai[1];
-
-            Countertimer++;
-            float lerpValue = Countertimer / SwingTime;
-
-            //Smooth it some more
-            float swingProgress = lerpValue;
-
-            // the actual rotation it should have
-            float targetRotation = Projectile.velocity.ToRotation();
-
-            //How wide is the swing, in radians
-            float start = 0;
-            float end = 0;
-            ModifySimpleSwingAI(targetRotation, lerpValue, ref start, ref end, ref swingProgress);
-            _smoothedLerpValue = swingProgress;
-
-            // current rotation obv
-            // angle lerp causes some weird things here, so just use a normal lerp
-            float rotation = dir == 1 ? MathHelper.Lerp(start, end, swingProgress) : MathHelper.Lerp(end, start, swingProgress);
-           
-            // offsetted cuz sword sprite
-            Vector2 position = Owner.RotatedRelativePoint(Owner.MountedCenter);
-            position += rotation.ToRotationVector2() * holdOffset;
-            Projectile.Center = position;
-            Projectile.rotation = (position - Owner.Center).ToRotation() + MathHelper.PiOver4;
-            if (spinCenter)
-            {
-                Projectile.Center -= rotation.ToRotationVector2() * holdOffset;
-                Projectile.Center -= rotation.ToRotationVector2() * spinCenterOffset;
-            }
-            OrientHand();
-
-            //Calculate Trail Points
-            Vector2[] points = new Vector2[ProjectileID.Sets.TrailCacheLength[Type]];
-            for (int i = 0; i < points.Length; i++)
-            {
-                float l = points.Length;
-                //Lerp between the points
-                float progressOnTrail = i / l;
-
-                //Calculate starting lerp value
-                float startTrailLerpValue = MathHelper.Clamp(lerpValue - trailStartOffset, 0,1);
-                float startTrailProgress = startTrailLerpValue;
-                ModifySimpleSwingAI(targetRotation, startTrailLerpValue, ref start, ref end, ref startTrailProgress);
-
-                //Calculate ending lerp value
-                float endTrailLerpValue = lerpValue;
-                float endTrailProgress = endTrailLerpValue;
-                ModifySimpleSwingAI(targetRotation, endTrailLerpValue, ref start, ref end, ref endTrailProgress);
-
-
-                //Lerp in between points
-                float smoothedTrailProgress = MathHelper.Lerp(startTrailProgress, endTrailProgress, progressOnTrail);
-                float rot = dir == 1 ? MathHelper.Lerp(start, end, smoothedTrailProgress) : MathHelper.Lerp(end, start, smoothedTrailProgress);
-
-                Vector2 pos = Owner.RotatedRelativePoint(Owner.MountedCenter);
-                pos += rot.ToRotationVector2() * GetTrailOffset();
-                if (spinCenter)
-                {
-                    Vector2 d = (Owner.RotatedRelativePoint(Owner.MountedCenter) - pos).SafeNormalize(Vector2.Zero);
-                    pos += d * spinCenterOffset;
-                }
-                points[i] = pos - GetFramingSize() / 2;
-            }
-            _trailPoints = points;
-        }
-
-        */
         protected virtual void ModifyOvalSwingAI(float targetRotation, float lerpValue,
             ref float swingXRadius,
             ref float swingYRadius,

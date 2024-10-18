@@ -1,4 +1,5 @@
 ﻿using CrystalMoon.Content.Bases;
+using CrystalMoon.Content.Items.Weapons.Melee.Greatswords;
 using CrystalMoon.Registries;
 using CrystalMoon.Systems;
 using CrystalMoon.Systems.MiscellaneousMath;
@@ -15,6 +16,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
+using static CrystalMoon.Tiles.DecorativeWall;
 
 namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
 {
@@ -291,18 +293,31 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             base.AI();
 
             Vector2 swingDirection = Projectile.velocity.SafeNormalize(Vector2.Zero);
-              if (_smoothedLerpValue > 0.5f)
+              
+            if (_smoothedLerpValue > 0.5f)
             {
                 if (!_thrust)
                 {
                     Owner.velocity += swingDirection * thrustSpeed;
                     _thrust = true;
+                    if (ComboAtt == 0)
+                    {
+                        Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero);
+                        float offsetRadians = MathHelper.ToRadians(30);
+                        Vector2 offsetVelocity = direction.RotatedBy(-offsetRadians / 2f) * 17f;
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center, offsetVelocity,
+                            ModContent.ProjectileType<VaelProj>(), Projectile.damage * 2, 0f, Projectile.owner, 0f, 0f);
+
+                        offsetVelocity = direction.RotatedBy(offsetRadians / 2f) * 17f;
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center, offsetVelocity,
+                           ModContent.ProjectileType<VaelProj>(), Projectile.damage * 2, 0f, Projectile.owner, 0f, 0f);
+                    }
                 }
+
+
             }
-           
-
-
         }
+
         public override void SetComboDefaults(List<BaseSwingStyle> swings)
         {
 
@@ -435,5 +450,147 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             return shader;
         }
         #endregion
+    }
+
+    public class VaelProj : ModProjectile
+    {
+        private LightningTrail _lightningTrail;
+        private float _timer;
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+            ProjectileID.Sets.TrailCacheLength[Type] = 32;
+            ProjectileID.Sets.TrailingMode[Type] = 2;
+        }
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            _lightningTrail = new();
+            Projectile.width = 78;
+            Projectile.height = 78;
+            Projectile.timeLeft = 180;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 60;
+        }
+
+        public override void AI()
+        {
+            base.AI();
+            _timer++;
+            if (_timer % 8 == 0)
+            {
+                _lightningTrail.RandomPositions(Projectile.oldPos);
+            }
+
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45);
+        }
+
+        private float WidthFunction(float completionRatio)
+        {
+            return MathHelper.Lerp(36, 0, completionRatio);
+        }
+
+        private Color ColorFunction(float p)
+        {
+            Color trailColor = Color.Lerp(Color.Orange, Color.Purple, p);
+            return trailColor;
+        }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            base.ModifyHitNPC(target, ref modifiers);
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            base.OnHitNPC(target, hit, damageDone);
+        }
+
+        private void DrawTrail()
+        {
+            //Trail
+            SpriteBatch spriteBatch = Main.spriteBatch;
+            var shader = MagicVaellusShader.Instance;
+            shader.PrimaryTexture = TextureRegistry.LightningTrail2;
+            shader.NoiseTexture = TextureRegistry.LightningTrail3;
+            shader.OutlineTexture = TextureRegistry.LightningTrail2Outline;
+            shader.PrimaryColor = new Color(69, 70, 159);
+            shader.NoiseColor = new Color(224, 107, 10);
+            shader.OutlineColor = Color.Lerp(new Color(31, 27, 59), Color.Black, 0.75f);
+            shader.BlendState = BlendState.AlphaBlend;
+            shader.SamplerState = SamplerState.PointWrap;
+            shader.Speed = 5.2f;
+            shader.Distortion = 0.15f;
+            shader.Power = 0.25f;
+            shader.Alpha = 1f;
+
+            _lightningTrail ??= new();
+            //Making this number big made like the field wide
+            _lightningTrail.LightningRandomOffsetRange = 1;
+
+            //This number makes it more lightning like, lower this is the straighter it is
+            _lightningTrail.LightningRandomExpand = 2;
+
+            Texture2D texture = ModContent.Request<Texture2D>(Texture).Value;
+            Vector2 drawSize = texture.Size();
+            Vector2 drawOrigin = drawSize / 2;
+
+            _lightningTrail.Draw(spriteBatch, Projectile.oldPos, Projectile.oldRot, ColorFunction, WidthFunction, shader, offset: Projectile.Size / 2);
+        }
+
+        private void DrawSprite(ref Color lightColor)
+        {
+            Texture2D texture = ModContent.Request<Texture2D>(Texture).Value;
+            SpriteBatch spriteBatch = Main.spriteBatch;
+            Vector2 drawPosition = Projectile.Center - Main.screenPosition;
+            Vector2 drawSize = texture.Size();
+            Vector2 drawOrigin = drawSize / 2;
+            float drawRotation = Projectile.rotation;
+            float drawScale = 1f;
+
+
+
+            var shader = PixelMagicVaellusShader.Instance;
+            shader.PrimaryTexture = TextureRegistry.NoiseTextureCloudsSmall;
+            shader.NoiseTexture = TextureRegistry.NoiseTextureClouds3;
+            shader.OutlineTexture = TextureRegistry.LightningTrail2Outline;
+            shader.PrimaryColor = new Color(69, 70, 159);
+            shader.NoiseColor = new Color(224, 107, 10);
+            shader.OutlineColor = Color.Lerp(new Color(31, 27, 59), Color.Black, 0.75f);
+            shader.BlendState = BlendState.AlphaBlend;
+            shader.SamplerState = SamplerState.PointWrap;
+            shader.Speed = 5.2f;
+            shader.Distortion = 0f;
+            shader.Power = 3f;
+            shader.Blend = 0.4f;
+            shader.Apply();
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, default, default, default, shader.Effect, Main.GameViewMatrix.ZoomMatrix);
+
+            spriteBatch.Draw(texture, drawPosition, null, Color.White, drawRotation, drawOrigin, drawScale, SpriteEffects.None, 0f);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, default, default, default, shader.Effect, Main.GameViewMatrix.ZoomMatrix);
+
+            for(float i =0; i < 2f; i++)
+            {
+                spriteBatch.Draw(texture, drawPosition, null, Color.White, drawRotation, drawOrigin, drawScale * 0.85f, SpriteEffects.None, 0f);
+
+            }
+
+            spriteBatch.End();
+            spriteBatch.Begin();
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawTrail();
+            DrawSprite(ref lightColor);
+            return false;
+        }
     }
 }

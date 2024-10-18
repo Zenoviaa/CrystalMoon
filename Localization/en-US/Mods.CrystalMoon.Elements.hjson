@@ -104,3 +104,13 @@ LightningElement: {
 	DisplayName: Lightning Element
 	Tooltip: Transforms your spell with the power of lightning!
 }
+
+AutomationElement: {
+	DisplayName: Automation Element
+	Tooltip: Transforms your spell with the power of automation!
+}
+
+CheckersElement: {
+	DisplayName: Checkers Element
+	Tooltip: Transforms your spell with the power of chess and checkers!
+}

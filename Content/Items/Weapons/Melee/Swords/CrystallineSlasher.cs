@@ -7,6 +7,7 @@ using CrystalMoon.Systems.Shaders;
 using CrystalMoon.Visual.Explosions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Mono.Cecil;
 using System.Collections.Generic;
 using Terraria;
@@ -204,6 +205,16 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
 
         //TRAIL VISUALS
         #region Visuals
+
+
+        protected override void DrawSwordSprite(ref Color lightColor)
+        {
+
+
+            base.DrawSwordSprite(ref lightColor);
+
+
+        }
         public override Vector2 GetFramingSize()
         {
             //Set this to the width and height of the sword sprite

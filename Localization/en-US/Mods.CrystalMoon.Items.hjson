@@ -356,3 +356,13 @@ LightKnives: {
 	DisplayName: Light Knives
 	Tooltip: ""
 }
+
+MagicalDye: {
+	DisplayName: Magical Dye
+	Tooltip: ""
+}
+
+Vael: {
+	DisplayName: Vael
+	Tooltip: ""
+}

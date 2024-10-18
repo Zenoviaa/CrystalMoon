@@ -113,7 +113,28 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
         #region Visuals
         public override void DrawForm(SpriteBatch spriteBatch, Texture2D formTexture, Vector2 drawPos, Color drawColor, Color lightColor, float drawRotation, float drawScale)
         {
+            var shader = PixelMagicVaellusShader.Instance;
+            shader.PrimaryTexture = TextureRegistry.NoiseTextureCloudsSmall;
+            shader.NoiseTexture = TextureRegistry.NoiseTextureClouds3;
+            shader.OutlineTexture = TextureRegistry.LightningTrail2Outline;
+            shader.PrimaryColor = new Color(69, 70, 159);
+            shader.NoiseColor = new Color(224, 107, 10);
+            shader.OutlineColor = Color.Lerp(new Color(31, 27, 59), Color.Black, 0.75f);
+            shader.BlendState = BlendState.AlphaBlend;
+            shader.SamplerState = SamplerState.PointWrap;
+            shader.Speed = 5.2f;
+            shader.Distortion = 0f;
+            shader.Power = 3f;
+            shader.Blend = 0.4f;
+            shader.Apply();
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, default, default, default, shader.Effect, Main.GameViewMatrix.ZoomMatrix);
+
             base.DrawForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale);
+
+            spriteBatch.End();
+            spriteBatch.Begin();
         }
 
         public override void DrawTrail()
@@ -149,7 +170,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             float rounded = Easing.SpikeOutCirc(progress);
             float spikeProgress = Easing.SpikeOutExpo(completionRatio);
             float fireball = MathHelper.Lerp(rounded, spikeProgress, Easing.OutExpo(1.0f - completionRatio));
-            float midWidth = 96 * MagicProj.ScaleMultiplier;
+            float midWidth = 20 * MagicProj.ScaleMultiplier;
             return MathHelper.Lerp(0, midWidth, fireball);
         }
 
