@@ -10,6 +10,8 @@ namespace CrystalMoon.Registries
         // public static SoundStyle StormDragonLightningRain => new SoundStyle($"{RootAssetPath}StormDragon_LightingZap");
 
         public static SoundStyle CrystalHit1 => new SoundStyle($"{RootAssetPath}CrystalHit1");
+
+        public static SoundStyle FlameHit1 => new SoundStyle($"{RootAssetPath}Cinder");
         public static SoundStyle NSwordSlash1 => new SoundStyle($"{RootAssetPath}NormalSwordSlash1");
 
         public static SoundStyle HeavySwordSlash1 => new SoundStyle($"{RootAssetPath}HeavySwordSlash1");
@@ -38,7 +40,29 @@ namespace CrystalMoon.Registries
 
         public static SoundStyle HammerSmash2 => new SoundStyle($"{RootAssetPath}HammerSmash2");
 
+        public static SoundStyle HammerSmash3 => new SoundStyle($"{RootAssetPath}HammerSmash3");
+
         public static SoundStyle HammerSmashLightning1 => new SoundStyle($"{RootAssetPath}HammerSmashLightning1");
+
+        public static SoundStyle MagicShockwaveExplosion => new SoundStyle($"{RootAssetPath}MagicalShockwave");
+
+        public static SoundStyle FireShockwaveExplosion => new SoundStyle($"{RootAssetPath}FireShockwave");
+
+        public static SoundStyle GaseousShockwaveExplosion => new SoundStyle($"{RootAssetPath}GaseousShockwave");
+
+        public static SoundStyle LightShockwaveExplosion => new SoundStyle($"{RootAssetPath}MagicalShockwave2");
+
+        public static SoundStyle GunShootLight1 => new SoundStyle($"{RootAssetPath}Gunshot1");
+
+        public static SoundStyle MusicChord1 => new SoundStyle($"{RootAssetPath}MusicChord1");
+
+        public static SoundStyle HeavyExplosion1 => new SoundStyle($"{RootAssetPath}HeavyExplosion1");
+
+        public static SoundStyle GunShootHeavy1 => new SoundStyle($"{RootAssetPath}GunShot2");
+
+        public static SoundStyle BowHolding => new SoundStyle($"{RootAssetPath}BowHolding");
+
+        public static SoundStyle CastTickSummon1 => new SoundStyle($"{RootAssetPath}Summoner1");
         /*
         public static SoundStyle BowCharge => new SoundStyle($"{RootAssetPath}BowCharge",
             variantSuffixesStart: 1,
