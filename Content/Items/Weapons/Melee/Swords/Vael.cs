@@ -340,7 +340,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                         Owner.velocity += swingDirection2 * thrustSpeed;
 
                         Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero);
-                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center, Vector2.Zero,
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), TrueProjectileCenter, Vector2.Zero,
                             ModContent.ProjectileType<VaelExplosion>(), Projectile.damage * 2, 0f, Projectile.owner, 0f, 0f);
 
 

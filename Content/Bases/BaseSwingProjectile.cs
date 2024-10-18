@@ -44,6 +44,21 @@ namespace CrystalMoon.Content.Bases
         public float OvalRotOffset;
         public bool spinCenter;
         public float spinCenterOffset;
+
+        public Vector2 TrueProjectileCenter
+        {
+            get
+            {
+                Texture2D texture = (Texture2D)ModContent.Request<Texture2D>(Texture);
+                int frameHeight = texture.Height / Main.projFrames[Projectile.type];
+                int startY = frameHeight * Projectile.frame;
+
+                Rectangle sourceRectangle = new Rectangle(0, startY, texture.Width, frameHeight);
+                Vector2 pos = Projectile.Center;
+                Vector2 origin = sourceRectangle.Size() / 2f;
+                return pos - origin + Projectile.rotation.ToRotationVector2() * holdOffset / 2f;
+            }
+        }
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();

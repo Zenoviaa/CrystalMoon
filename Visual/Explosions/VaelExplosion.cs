@@ -3,6 +3,7 @@ using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Systems.Shaders;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
 
 namespace CrystalMoon.Visual.Explosions
@@ -26,6 +27,7 @@ namespace CrystalMoon.Visual.Explosions
             Projectile.timeLeft = 32;
             rStart = Main.rand.Next(4, 8) * 12;
             rEnd = Main.rand.Next(132, 180);
+            Projectile.hide = true;
         }
 
         public override void AI()
@@ -90,6 +92,12 @@ namespace CrystalMoon.Visual.Explosions
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             base.OnHitNPC(target, hit, damageDone);
+        }
+
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            base.DrawBehind(index, behindNPCsAndTiles, behindNPCs, behindProjectiles, overPlayers, overWiresUI);
+            overPlayers.Add(index);
         }
     }
 }
