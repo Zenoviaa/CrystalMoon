@@ -306,6 +306,9 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                         Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero);
                         float offsetRadians = MathHelper.ToRadians(30);
                         Vector2 offsetVelocity = direction.RotatedBy(-offsetRadians / 2f) * 17f;
+
+        
+
                         Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center, offsetVelocity,
                             ModContent.ProjectileType<VaelProj>(), Projectile.damage * 2, 0f, Projectile.owner, 0f, 0f);
 
@@ -323,6 +326,10 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                         Owner.velocity += swingDirection2 * thrustSpeed;
 
                         Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero);
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center, Vector2.Zero,
+                            ModContent.ProjectileType<VaelExplosion>(), Projectile.damage * 2, 0f, Projectile.owner, 0f, 0f);
+
+
                         Projectile p = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Owner.Center, swingDirection2 * 17, ModContent.ProjectileType<VaelSpecial>(), Projectile.damage * 2, 0f, Projectile.owner, 0f, 0f);
                         p.rotation = direction.ToRotation();
 
