@@ -94,3 +94,13 @@ HolinessElement: {
 	DisplayName: Holiness Element
 	Tooltip: Transforms your spell with the power of the holy!
 }
+
+PrimeMagicElement: {
+	DisplayName: Prime Magic Element
+	Tooltip: Transforms your spell with the power of super efficient magic!
+}
+
+LightningElement: {
+	DisplayName: Lightning Element
+	Tooltip: Transforms your spell with the power of lightning!
+}
