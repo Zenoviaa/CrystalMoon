@@ -58,13 +58,6 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Knives
             //Set stamina projectile
             staminaProjectileShoot = ModContent.ProjectileType<LightKnivesStaminaSlash>();
         }
-
-
-        public override void ShootSwingStamina(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-            base.ShootSwingStamina(player, source, position, velocity, type, damage, knockback);
-            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<BasicStaminaExplosion>(), damage, knockback);
-        }
     }
 
     public class LightKnivesSwordSlash2 : LightKnivesSwordSlash

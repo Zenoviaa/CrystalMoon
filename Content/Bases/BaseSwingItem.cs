@@ -8,6 +8,8 @@ using Terraria.DataStructures;
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using CrystalMoon.Visual.Explosions;
+using Mono.Cecil;
 
 namespace CrystalMoon.Content.Bases
 {
@@ -43,7 +45,13 @@ namespace CrystalMoon.Content.Bases
             int dir = comboPlayer.ComboDirection;
             Projectile.NewProjectile(source, position, velocity, type, damage, knockback,
                 player.whoAmI, combo, dir);
+            ShootStaminaEffect(player, source, position, velocity, type, damage, knockback);
             comboPlayer.IncreaseStaminaCombo(maxStaminaCombo: maxStaminaCombo);
+        }
+
+        public virtual void ShootStaminaEffect(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<BasicStaminaExplosion>(), damage, knockback);
         }
 
         public override bool AltFunctionUse(Player player)
