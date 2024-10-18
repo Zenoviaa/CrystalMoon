@@ -390,7 +390,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                 hitstopTimer = 4 * ExtraUpdateMult;
 
                 Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero);
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center, Vector2.Zero,
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center, Vector2.Zero,
                     ModContent.ProjectileType<VaelExplosion>(), Projectile.damage * 2, 0f, Projectile.owner, 0f, 0f);
 
             }
