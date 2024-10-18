@@ -270,6 +270,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
 
         public override void SetDefaults()
         {
+            _lightningTrail = new LightningTrail();
             holdOffset = 40;
             trailStartOffset = 0.2f;
             Projectile.penetrate = -1;
@@ -455,43 +456,23 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             return fadeColor;
         }
 
-        protected override void DrawSlashTrail()
-        {
-            //base.DrawSlashTrail();
-            SpriteBatch spriteBatch = Main.spriteBatch;
-            var shader = MagicVaellusShader.Instance;
-            shader.PrimaryTexture = TextureRegistry.LightningTrail2;
-            shader.NoiseTexture = TextureRegistry.LightningTrail3;
-            shader.OutlineTexture = TextureRegistry.LightningTrail2Outline;
-            shader.PrimaryColor = new Color(69, 70, 159);
-            shader.NoiseColor = new Color(224, 107, 10);
-            shader.OutlineColor = Color.Lerp(new Color(31, 27, 59), Color.Black, 0.75f);
-            shader.BlendState = BlendState.AlphaBlend;
-            shader.SamplerState = SamplerState.PointWrap;
-            shader.Speed = 5.2f;
-            shader.Distortion = 0.15f;
-            shader.Power = 0.25f;
-            shader.Alpha = 1f;
-            _lightningTrail.Draw(spriteBatch, _trailPoints, Projectile.oldRot, ColorFunction, WidthFunction, shader, offset: GetFramingSize() / 2f);
-        }
 
-       
         protected override BaseShader ReadyShader()
         {
 
             var shader = SimpleTrailShader.Instance;
 
             //Main trailing texture
-            shader.TrailingTexture = TextureRegistry.CrystalTrail2;
+            shader.TrailingTexture = TextureRegistry.GlowTrail;
 
             //Blends with the main texture
             shader.SecondaryTrailingTexture = TextureRegistry.GlowTrail;
 
             //Used for blending the trail colors
             //Set it to any noise texture
-            shader.TertiaryTrailingTexture = TextureRegistry.CrystalTrail2;
+            shader.TertiaryTrailingTexture = TextureRegistry.CrystalTrail;
             shader.PrimaryColor = Color.White;
-            shader.SecondaryColor = Color.DarkSlateBlue;
+            shader.SecondaryColor = Color.Orange;
             shader.BlendState = BlendState.Additive;
             shader.Speed = 25;
             return shader;

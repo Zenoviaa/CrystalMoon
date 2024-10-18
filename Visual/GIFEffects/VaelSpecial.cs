@@ -48,6 +48,7 @@ namespace CrystalMoon.Visual.GIFEffects
         public override void AI()
         {
             Projectile.Center = Main.projectile[(int)Parent].Center;
+            Projectile.Center += (Projectile.rotation + MathHelper.ToRadians(90)).ToRotationVector2() * 18; 
           //  Player owner = Main.player[Projectile.owner];
         //    Projectile.Center = owner.Center;
           //  owner.immune = true;
