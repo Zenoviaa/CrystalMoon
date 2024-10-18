@@ -449,13 +449,11 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
 
         protected override Color ColorFunction(float p)
         {
-            Color trailColor = Color.Lerp(Color.Orange, Color.Purple, p);
-            Color fadeColor = Color.Lerp(trailColor, Color.DarkViolet, _smoothedLerpValue);
-            //   fadeColor.A = 0;
+            Color trailColor = Color.Lerp(Color.White, Color.Orange, p);
+            Color fadeColor = Color.Lerp(trailColor, Color.Red, _smoothedLerpValue);
             //This will make it fade out near the end
             return fadeColor;
         }
-
 
         protected override BaseShader ReadyShader()
         {
