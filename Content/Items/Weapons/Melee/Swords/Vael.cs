@@ -258,7 +258,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
     }
     public class VaelSwordStaminaSlash : BaseSwingProjectile
     {
-        public override string Texture => "CrystalMoon/Content/Items/Weapons/Melee/Swords/CrystallineSlasher";
+        public override string Texture => "CrystalMoon/Content/Items/Weapons/Melee/Swords/Vael";
         ref float ComboAtt => ref Projectile.ai[0];
         public bool Hit;
 
