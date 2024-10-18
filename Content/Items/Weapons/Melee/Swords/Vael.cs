@@ -337,6 +337,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                 {
                     if (!_spawnedExplosion)
                     {
+                        Owner.velocity += swingDirection2 * thrustSpeed;
+
                         Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero);
                         Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center, Vector2.Zero,
                             ModContent.ProjectileType<VaelExplosion>(), Projectile.damage * 2, 0f, Projectile.owner, 0f, 0f);
@@ -367,7 +369,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             {
                 swingTime = 80,
                 stabRange = 160,
-                thrustSpeed = 4,
+                thrustSpeed = 0,
                 easingFunc = (float lerpValue) => Easing.QuickInFadeOut(lerpValue),
                 swingSound = swingSound1
             });
