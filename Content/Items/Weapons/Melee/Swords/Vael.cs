@@ -371,7 +371,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                 swingTime = 80,
                 stabRange = 160,
                 thrustSpeed = 4,
-                easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue),
+                easingFunc = (float lerpValue) => Easing.QuickInFadeOut(lerpValue),
                 swingSound = swingSound1
             });
 

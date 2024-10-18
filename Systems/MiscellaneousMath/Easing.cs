@@ -210,13 +210,26 @@ namespace CrystalMoon.Systems.MiscellaneousMath
         ///<Summary>
         /// Useful easing function for making things smooth! <see href="https://easings.net/">Ease Functions</see>           
         ///</Summary>
-        public static float SpikeInExpo(float t)
+        public static float SpikeInExpo(float t, float p = 8)
         {
             if (t <= .5f)
-                return InExpo(t / .5f, 8);
+                return InExpo(t / .5f, p);
             else
             {
-                return InExpo((1 - t) / 0.5f, 8);
+                return InExpo((1 - t) / 0.5f, p);
+            }
+        }
+
+        public static float QuickInFadeOut(float t, float p =8)
+        {
+            if(t <= 0.2f)
+            {
+                return InExpo(t / 0.2f, p);
+            }
+            else
+            {
+                float t2 = t - 0.2f;
+                return 1 - OutCirc(t2 / 0.8f);
             }
         }
 
