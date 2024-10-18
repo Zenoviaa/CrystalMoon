@@ -346,3 +346,8 @@ WarriorsGrace: {
 	DisplayName: Warriors Grace
 	Tooltip: ""
 }
+
+FoxNMagic: {
+	DisplayName: Fox N Magic
+	Tooltip: ""
+}

@@ -53,6 +53,8 @@ Mods: {
 			PearlingSwordStaminaSlash.DisplayName: Pearling Sword Stamina Slash
 			WarriorsSwordSlash.DisplayName: Warriors Sword Slash
 			WarriorsSwordStaminaSlash.DisplayName: Warriors Sword Stamina Slash
+			RuneHammerLightning.DisplayName: Rune Hammer Lightning
+			RuneHammerStaminaSlash.DisplayName: Rune Hammer Stamina Slash
 		}
 
 		Buffs: {
