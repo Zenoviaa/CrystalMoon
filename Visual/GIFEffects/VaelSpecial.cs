@@ -7,6 +7,7 @@ namespace CrystalMoon.Visual.GIFEffects
 {
     internal class VaelSpecial : ModProjectile
     {
+        private ref float Parent => ref Projectile.ai[1];
         public override void SetStaticDefaults()
         {
             Main.projFrames[Projectile.type] = 8;
@@ -46,6 +47,7 @@ namespace CrystalMoon.Visual.GIFEffects
 
         public override void AI()
         {
+            Projectile.Center = Main.projectile[(int)Parent].Center;
           //  Player owner = Main.player[Projectile.owner];
         //    Projectile.Center = owner.Center;
           //  owner.immune = true;
