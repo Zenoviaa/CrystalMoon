@@ -38,6 +38,7 @@ namespace CrystalMoon.Registries
 
         public static SoundStyle HammerSmash2 => new SoundStyle($"{RootAssetPath}HammerSmash2");
 
+        public static SoundStyle HammerSmashLightning1 => new SoundStyle($"{RootAssetPath}HammerSmashLightning1");
         /*
         public static SoundStyle BowCharge => new SoundStyle($"{RootAssetPath}BowCharge",
             variantSuffixesStart: 1,

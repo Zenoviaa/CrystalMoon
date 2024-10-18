@@ -13,6 +13,7 @@
 	  <None Remove="Assets\Effects\Fog.fx" />
 	  <None Remove="Assets\Effects\GlowDust.fx" />
 	  <None Remove="Assets\Effects\Gradient.fx" />
+	  <None Remove="assets\effects\LightningBolt.fx" />
 	  <None Remove="Assets\Effects\MagicBloodlet.fx" />
 	  <None Remove="Assets\Effects\MagicDeeya.fx" />
 	  <None Remove="Assets\Effects\MagicGuut.fx" />

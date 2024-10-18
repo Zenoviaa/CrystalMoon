@@ -12,8 +12,9 @@ namespace CrystalMoon.Registries
         public static AssetRepository Assets => CrystalMoon.Instance.Assets;
         public static MiscShaderData SimpleTrailEffect => GameShaders.Misc["CrystalMoon:SimpleTrail"];
         public static MiscShaderData SimpleGradientTrailEffect => GameShaders.Misc["CrystalMoon:SimpleGradientTrail"];
-      
+
         //Trail Shaders
+        public static MiscShaderData LightningBolt => GameShaders.Misc["CrystalMoon:LightningBolt"];
         public static MiscShaderData MagicTrailHex => GameShaders.Misc["CrystalMoon:MagicHex"];
         public static MiscShaderData MagicTrailRadiance => GameShaders.Misc["CrystalMoon:MagicRadiance"];
         public static MiscShaderData MagicTrailRadianceOutline => GameShaders.Misc["CrystalMoon:MagicRadianceOutline"];
@@ -70,6 +71,7 @@ namespace CrystalMoon.Registries
 
             //Magic Shaders
             RegisterMiscShader("MagicHex", "PrimitivesPass");
+            RegisterMiscShader("LightningBolt", "PrimitivesPass");
             RegisterMiscShader("MagicRadiance", "PrimitivesPass");
             RegisterMiscShader("MagicRadianceOutline", "PrimitivesPass");
             RegisterMiscShader("MagicBloodlet", "PrimitivesPass");
