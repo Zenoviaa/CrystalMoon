@@ -21,6 +21,12 @@ namespace CrystalMoon.Systems.Shaders
             OnApply();
             Data.Apply();
         }
+
+        public virtual void SetDefaults()
+        {
+
+        }
+
         public virtual void ResetDefaults()
         {
             FillShape = false;

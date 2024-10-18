@@ -45,6 +45,24 @@ namespace CrystalMoon.Systems.Shaders
         public float Distortion { get; set; }
         public float Power { get; set; }
         public float Alpha { get; set; }
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            PrimaryTexture = TextureRegistry.LightningTrail2;
+            NoiseTexture = TextureRegistry.LightningTrail3;
+            OutlineTexture = TextureRegistry.LightningTrail2Outline;
+            PrimaryColor = new Color(69, 70, 159);
+            NoiseColor = new Color(224, 107, 10);
+            OutlineColor = Color.Lerp(new Color(31, 27, 59), Color.Black, 0.75f);
+            BlendState = BlendState.AlphaBlend;
+            SamplerState = SamplerState.PointWrap;
+            Speed = 5.2f;
+            Distortion = 0.15f;
+            Power = 0.25f;
+            Alpha = 1f;
+        }
+
         public override void Apply()
         {
             Effect.Parameters["transformMatrix"].SetValue(TrailDrawer.WorldViewPoint2);

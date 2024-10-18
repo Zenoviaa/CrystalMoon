@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.Bases
 {
-    internal abstract class BaseExplosionProjectile : ModProjectile
+    public abstract class BaseExplosionProjectile : ModProjectile
     {
         protected Vector2[] _circlePos = new Vector2[64];
         private ref float Countertimer => ref Projectile.ai[0];
@@ -17,6 +17,7 @@ namespace CrystalMoon.Content.Bases
         private float _beamWidth;
         private Color _beamColor;
         public override string Texture => TextureRegistry.EmptyTexturePath;
+        public float UneasedProgress { get; set; }
         public override void SetDefaults()
         {
             Projectile.width = 16;
@@ -34,11 +35,11 @@ namespace CrystalMoon.Content.Bases
             {
                 _duration = Projectile.timeLeft;
             }
- 
-            float progress = Countertimer / _duration;
-            float r = RadiusFunction(progress);
-            _beamWidth = BeamWidthFunction(progress);
-            _beamColor = ColorFunction(progress);
+
+            UneasedProgress = Countertimer / _duration;
+            float r = RadiusFunction(UneasedProgress);
+            _beamWidth = BeamWidthFunction(UneasedProgress);
+            _beamColor = ColorFunction(UneasedProgress);
 
     
             for (int f = 0; f < _circlePos.Length; f++)

@@ -361,3 +361,8 @@ Vael: {
 	DisplayName: Vael
 	Tooltip: ""
 }
+
+MagicalDye: {
+	Tooltip: ""
+	DisplayName: Magical Dye
+}
