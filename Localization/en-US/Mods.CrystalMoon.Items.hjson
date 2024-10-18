@@ -351,3 +351,8 @@ FoxNMagic: {
 	DisplayName: Fox N Magic
 	Tooltip: ""
 }
+
+LightKnives: {
+	DisplayName: Light Knives
+	Tooltip: ""
+}

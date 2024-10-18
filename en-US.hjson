@@ -55,6 +55,9 @@ Mods: {
 			WarriorsSwordStaminaSlash.DisplayName: Warriors Sword Stamina Slash
 			RuneHammerLightning.DisplayName: Rune Hammer Lightning
 			RuneHammerStaminaSlash.DisplayName: Rune Hammer Stamina Slash
+			LightKnivesStaminaSlash.DisplayName: Light Knives Stamina Slash
+			LightKnivesSwordSlash.DisplayName: Light Knives Sword Slash
+			LightKnivesSwordSlash2.DisplayName: Light Knives Sword Slash2
 		}
 
 		Buffs: {

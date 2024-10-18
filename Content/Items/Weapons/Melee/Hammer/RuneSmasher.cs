@@ -16,6 +16,7 @@ using Terraria.ModLoader;
 using System.Collections.Generic;
 using CrystalMoon.Systems;
 using CrystalMoon.Content.Items.Weapons.Melee.Swords;
+using CrystalMoon.Visual.Explosions;
 
 
 namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
@@ -57,6 +58,12 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
             maxStaminaCombo = 2;
             //Set stamina projectile
             staminaProjectileShoot = ModContent.ProjectileType<RuneHammerStaminaSlash>();
+        }
+
+        public override void ShootSwingStamina(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            base.ShootSwingStamina(player, source, position, velocity, type, damage, knockback);
+            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<BasicStaminaExplosion>(), damage, knockback);
         }
     }
 

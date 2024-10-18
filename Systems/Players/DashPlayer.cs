@@ -100,7 +100,6 @@ namespace CrystalMoon.Systems.Players
             if (DashTimer > 0)
             {
                 DashTimer--;
-                Vector2 newVelocity = Player.velocity;
                 Player.immune = true;
                 _isImmune = true;
 
