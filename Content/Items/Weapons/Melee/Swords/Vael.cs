@@ -368,7 +368,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             base.SetComboDefaults(swings);
             swings.Add(new SpearSwingStyle
             {
-                swingTime = 100,
+                swingTime = 80,
                 stabRange = 160,
                 thrustSpeed = 4,
                 easingFunc = (float lerpValue) => Easing.SpikeOutExpo(lerpValue),
@@ -388,6 +388,11 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                 CrystalMoonFXUtil.ShakeCamera(target.Center, 1024, 8f);
                 Hit = true;
                 hitstopTimer = 4 * ExtraUpdateMult;
+
+                Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero);
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center, Vector2.Zero,
+                    ModContent.ProjectileType<VaelExplosion>(), Projectile.damage * 2, 0f, Projectile.owner, 0f, 0f);
+
             }
 
         
@@ -405,7 +410,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             spearHit2.PitchVariance = 0.2f;
             SoundEngine.PlaySound(spearHit2, Projectile.position);
 
-            modifiers.FinalDamage *= 4;
+            modifiers.FinalDamage *= 3;
             modifiers.Knockback *= 4;
             
         }
