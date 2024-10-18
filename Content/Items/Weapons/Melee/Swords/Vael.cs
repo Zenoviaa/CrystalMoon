@@ -314,7 +314,6 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             {
                 if (!_thrust)
                 {
-                    Owner.velocity += swingDirection * thrustSpeed;
                     _thrust = true;
                     if (ComboAtt == 0)
                     {
