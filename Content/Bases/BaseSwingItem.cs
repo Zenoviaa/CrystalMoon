@@ -37,6 +37,9 @@ namespace CrystalMoon.Content.Bases
             comboPlayer.ConsumeStamina(staminaToUse);
         
             int combo = comboPlayer.StaminaComboCounter;
+            if (combo >= maxStaminaCombo)
+                combo = 0;
+
             int dir = comboPlayer.ComboDirection;
             Projectile.NewProjectile(source, position, velocity, type, damage, knockback,
                 player.whoAmI, combo, dir);

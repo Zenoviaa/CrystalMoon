@@ -86,6 +86,7 @@ namespace CrystalMoon.Systems.Players
                         return; // not moving fast enough, so don't start our dash
                 }
 
+                Player.SetImmuneTimeForAllTypes(DashDuration);
                 DashDelay = DashCooldown;
                 DashTimer = DashDuration;
                 Player.velocity = newVelocity;
