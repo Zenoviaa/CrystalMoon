@@ -32,7 +32,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
         public override void SpecialInventoryDraw(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             base.SpecialInventoryDraw(item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
-            DrawHelper.DrawGlowInInventory(item, spriteBatch, position, Color.LightGoldenrodYellow);
+            DrawHelper.DrawGlowInInventory(item, spriteBatch, position, Color.LightGray);
         }
 
         public override void OnKill()
@@ -73,7 +73,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
         public override void DrawForm(SpriteBatch spriteBatch, Texture2D formTexture, Vector2 drawPos, Color drawColor, Color lightColor, float drawRotation, float drawScale)
         {
             float p = MathUtil.Osc(0f, 1f, speed: 3);
-            drawColor = Color.LightGoldenrodYellow;
+            drawColor = Color.LightGray;
             base.DrawForm(spriteBatch, formTexture, drawPos, drawColor, lightColor, drawRotation, drawScale);
         }
 
@@ -84,8 +84,8 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             shader.PrimaryTexture = TextureRegistry.GlowTrail;
             shader.NoiseTexture = TextureRegistry.NoiseTextureCloudsSmall;
             shader.OutlineTexture = TextureRegistry.DottedTrailOutline;
-            shader.PrimaryColor = Color.Lerp(Color.White, Color.LightGoldenrodYellow, 0.5f);
-            shader.NoiseColor = Color.LightGoldenrodYellow;
+            shader.PrimaryColor = Color.Lerp(Color.White, Color.LightGray, 0.5f);
+            shader.NoiseColor = Color.LightGray;
             shader.OutlineColor = Color.Transparent;
             shader.BlendState = BlendState.Additive;
             shader.SamplerState = SamplerState.PointWrap;
@@ -102,7 +102,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
         private Color StripColors(float progressOnStrip)
         {
             //  return Color.Lerp(Color.LightGoldenrodYellow, Color.White, Utils.GetLerpValue(0f, 0.7f, progressOnStrip, clamped: true)) * (1f - Utils.GetLerpValue(0f, 0.98f, progressOnStrip));
-            Color result = Color.Lerp(Color.LightGoldenrodYellow, Color.White,
+            Color result = Color.Lerp(Color.LightGray, Color.White,
                 Utils.GetLerpValue(0f, 0.7f, progressOnStrip, clamped: true)) * (1f - Utils.GetLerpValue(0f, 0.98f, progressOnStrip));
        //     result.A /= 2;
             return result;

@@ -14,6 +14,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 {
     internal class HolinessElement : BaseElement
     {
+        int trailMode = 0;
         public override Color GetElementColor()
         {
             return Color.LightGray;
@@ -80,11 +81,12 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
         public override void DrawTrail()
         {
             base.DrawTrail();
+            trailMode = 0;
             var shader = MagicBloodletShader.Instance;
             shader.PrimaryTexture = TextureRegistry.BloodletTrail;
             shader.NoiseTexture = TextureRegistry.NoiseTextureClouds3;
-            shader.PrimaryColor = Color.White;
-            shader.NoiseColor = Color.Lerp(Color.White, Color.LightGray, 0.2f);
+            shader.PrimaryColor = Color.Orange;
+            shader.NoiseColor = Color.Orange;
             shader.BlendState = BlendState.Additive;
             shader.SamplerState = SamplerState.PointWrap;
             shader.Speed = 10.5f;
@@ -93,17 +95,29 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 
             //This just applis the shader changes
             TrailDrawer.Draw(Main.spriteBatch, MagicProj.OldPos, Projectile.oldRot, ColorFunction, WidthFunction, shader, offset: Projectile.Size / 2);
+
+            shader.PrimaryColor = Color.Goldenrod;
+            shader.NoiseColor = Color.Goldenrod;
+            TrailDrawer.Draw(Main.spriteBatch, MagicProj.OldPos, Projectile.oldRot, ColorFunction, WidthFunction, shader, offset: Projectile.Size / 2);
+
+
+            trailMode = 1;
+            shader.NoiseColor = Color.White;
+            shader.NoiseColor = Color.LightGoldenrodYellow;
+            TrailDrawer.Draw(Main.spriteBatch, MagicProj.OldPos, Projectile.oldRot, ColorFunction, WidthFunction, shader, offset: Projectile.Size / 2);
+            TrailDrawer.Draw(Main.spriteBatch, MagicProj.OldPos, Projectile.oldRot, ColorFunction, WidthFunction, shader, offset: Projectile.Size / 2);
         }
 
         private Color ColorFunction(float completionRatio)
         {
             Color c = Color.White;
-            return c;
+            return Color.Lerp(Color.LightGoldenrodYellow, Color.Orange, completionRatio);
         }
 
         private float WidthFunction(float completionRatio)
         {
-            float width = 32 * 1.5f * MagicProj.ScaleMultiplier;
+            
+            float width = (trailMode == 0 ? 40 : 32) * 1.5f * MagicProj.ScaleMultiplier;
             return MathHelper.Lerp(width, 0, completionRatio);
         }
         #endregion
