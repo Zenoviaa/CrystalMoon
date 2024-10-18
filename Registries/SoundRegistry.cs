@@ -11,7 +11,7 @@ namespace CrystalMoon.Registries
 
         public static SoundStyle CrystalHit1 => new SoundStyle($"{RootAssetPath}CrystalHit1");
 
-        public static SoundStyle FlameHit1 => new SoundStyle($"{RootAssetPath}Cinder");
+        public static SoundStyle FireHit1 => new SoundStyle($"{RootAssetPath}Cinder");
         public static SoundStyle NSwordSlash1 => new SoundStyle($"{RootAssetPath}NormalSwordSlash1");
 
         public static SoundStyle HeavySwordSlash1 => new SoundStyle($"{RootAssetPath}HeavySwordSlash1");
