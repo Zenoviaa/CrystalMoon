@@ -64,6 +64,7 @@ Mods: {
 			VaelExplosionProj.DisplayName: Vael Explosion Proj
 			VaelExplosion.DisplayName: Vael Explosion
 			VaelProj.DisplayName: Vael Proj
+			VaelSpecial.DisplayName: Vael Special
 		}
 
 		Buffs: {

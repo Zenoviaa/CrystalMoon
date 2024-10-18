@@ -287,6 +287,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
         }
 
         private bool _thrust;
+        private bool _spawnedExplosion;
         public float thrustSpeed = 5;
         public float stabRange;
         public override void AI()
@@ -321,7 +322,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                 Vector2 swingDirection2 = Projectile.velocity.SafeNormalize(Vector2.Zero);
                 if (_smoothedLerpValue > 0.5f)
                 {
-                    if (!_thrust)
+                    if (!_spawnedExplosion)
                     {
                         Owner.velocity += swingDirection2 * thrustSpeed;
 
@@ -333,7 +334,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
                         Projectile p = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Owner.Center, swingDirection2 * 17, ModContent.ProjectileType<VaelSpecial>(), Projectile.damage * 2, 0f, Projectile.owner, 0f, 0f);
                         p.rotation = direction.ToRotation();
 
-                        _thrust = true;
+                        _spawnedExplosion = true;
 
                     }
                 }
