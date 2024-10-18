@@ -47,8 +47,10 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Knives
 
             //Set stamina to use
             staminaToUse = 1;
+            
             //set staminacombo
-            maxStaminaCombo = 2;
+            maxStaminaCombo = 3;
+
             //Set stamina projectile
             staminaProjectileShoot = ModContent.ProjectileType<LightKnivesStaminaSlash>();
         }
@@ -63,7 +65,6 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Knives
             ShouldSpawnKnife = false;
         }
     }
-
     public class LightKnivesSwordSlash : BaseSwingProjectile
     {
         public override string Texture => "CrystalMoon/Content/Items/Weapons/Melee/Knives/LightKnivesHeld";
@@ -114,22 +115,22 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Knives
 
             swings.Add(new OvalSwingStyle
             {
-                swingTime = 6,
+                swingTime = 8,
                 swingXRadius = 84,
                 swingYRadius = 42,
                 swingRange = MathHelper.ToRadians(315),
-                easingFunc = (float lerpValue) => Easing.InOutCirc(lerpValue),
+                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue),
                 swingSound = swingSound1,
                 swingSoundLerpValue = 0.5f
             });
 
             swings.Add(new OvalSwingStyle
             {
-                swingTime = 6,
+                swingTime = 8,
                 swingXRadius = 72,
                 swingYRadius = 36,
                 swingRange = MathHelper.ToRadians(315),
-                easingFunc = (float lerpValue) => Easing.InOutCirc(lerpValue),
+                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue),
                 swingSound = swingSound2,
                 swingSoundLerpValue = 0.5f
             });
@@ -137,11 +138,11 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Knives
 
             swings.Add(new OvalSwingStyle
             {
-                swingTime = 6,
+                swingTime = 8,
                 swingXRadius = 84,
                 swingYRadius = 56,
                 swingRange = MathHelper.ToRadians(315),
-                easingFunc = (float lerpValue) => Easing.InOutCirc(lerpValue),
+                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue),
                 swingSound = swingSound1,
                 swingSoundLerpValue = 0.5f
             });
@@ -149,11 +150,11 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Knives
 
             swings.Add(new OvalSwingStyle
             {
-                swingTime = 6,
+                swingTime = 8,
                 swingXRadius = 96,
                 swingYRadius = 32,
                 swingRange = MathHelper.ToRadians(315),
-                easingFunc = (float lerpValue) => Easing.InOutCirc(lerpValue),
+                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue),
                 swingSound = swingSound2,
                 swingSoundLerpValue = 0.5f
             });
@@ -161,11 +162,11 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Knives
 
             swings.Add(new OvalSwingStyle
             {
-                swingTime = 6,
+                swingTime = 8,
                 swingXRadius = 76,
                 swingYRadius = 24,
                 swingRange = MathHelper.ToRadians(315),
-                easingFunc = (float lerpValue) => Easing.InOutCirc(lerpValue),
+                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue),
                 swingSound = swingSound1,
                 swingSoundLerpValue = 0.5f
             });
@@ -173,33 +174,33 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Knives
 
             swings.Add(new OvalSwingStyle
             {
-                swingTime = 6,
+                swingTime = 8,
                 swingXRadius = 84,
                 swingYRadius = 32,
                 swingRange = MathHelper.ToRadians(315),
-                easingFunc = (float lerpValue) => Easing.InOutCirc(lerpValue),
+                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue),
                 swingSound = swingSound2,
                 swingSoundLerpValue = 0.5f
             });
 
             swings.Add(new OvalSwingStyle
             {
-                swingTime = 6,
+                swingTime = 8,
                 swingXRadius = 80,
                 swingYRadius = 16,
                 swingRange = MathHelper.ToRadians(315),
-                easingFunc = (float lerpValue) => Easing.InOutCirc(lerpValue),
+                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue),
                 swingSound = swingSound1,
                 swingSoundLerpValue = 0.5f
             });
 
             swings.Add(new OvalSwingStyle
             {
-                swingTime = 6,
+                swingTime = 8,
                 swingXRadius = 76,
                 swingYRadius = 24,
                 swingRange = MathHelper.ToRadians(315),
-                easingFunc = (float lerpValue) => Easing.InOutCirc(lerpValue),
+                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue),
                 swingSound = swingSound2,
                 swingSoundLerpValue = 0.5f
             });
@@ -218,19 +219,36 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Knives
                 });
             }
 
+            if (!ShouldSpawnKnife)
+            {
+                swings.Add(new OvalSwingStyle
+                {
+                    swingTime = 6,
+                    swingXRadius = 76,
+                    swingYRadius = 24,
+                    swingRange = MathHelper.ToRadians(315),
+                    easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue),
+                    swingSound = swingSound2,
+                    swingSoundLerpValue = 0.5f
+                });
+            }
         }
 
 
         protected override void InitSwingAI()
         {
             base.InitSwingAI();
+            if(ComboAtt == 8 && ShouldSpawnKnife)
+            {
+                Owner.SetImmuneTimeForAllTypes(60);
+            }
         }
 
 
         public override void AI()
         {
             base.AI();
-            if (!_hasSpawnedSecondKnife && ShouldSpawnKnife && _smoothedLerpValue >= 0.9f)
+            if (!_hasSpawnedSecondKnife && ComboAtt != 8 && ShouldSpawnKnife && _smoothedLerpValue >= 0.9f)
             {
                 ComboPlayer comboPlayer = Owner.GetModPlayer<ComboPlayer>();
                 int combo = (int)(ComboAtt + 1);
@@ -239,13 +257,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Knives
                                Owner.whoAmI, combo, dir);
                 _hasSpawnedSecondKnife = true;
             }
-
-            if (ComboAtt == 8 && ShouldSpawnKnife)
-            {
-
-            }
-
         }
+
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             base.OnHitNPC(target, hit, damageDone);
@@ -320,11 +333,25 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Knives
         }
         #endregion
     }
+
+    public class LightKnivesStaminaSlash2 : LightKnivesStaminaSlash
+    {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            ShouldSpawnKnife = false;
+        }
+    }
     public class LightKnivesStaminaSlash : BaseSwingProjectile
     {
+        private LightningTrail _lightningTrail;
+        private float _lightningTrailTimer;
+        private bool _hasSpawnedSecondKnife;
+        private bool _thrust;
         public override string Texture => "CrystalMoon/Content/Items/Weapons/Melee/Knives/LightKnivesHeld";
         ref float ComboAtt => ref Projectile.ai[0];
         public bool Hit;
+        public bool ShouldSpawnKnife;
 
         public override void SetStaticDefaults()
         {
@@ -334,9 +361,20 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Knives
 
         public override void SetDefaults()
         {
+            //This is the actual trail itself
+            _lightningTrail = new LightningTrail();
+
+            //Making this number big made like the field wide
+            _lightningTrail.LightningRandomOffsetRange = 1;
+
+            //This number makes it more lightning like, lower this is the straighter it is
+            _lightningTrail.LightningRandomExpand = 2;
+
+
             holdOffset = 40;
             trailStartOffset = 0.2f;
             Projectile.penetrate = -1;
+            ShouldSpawnKnife = true;
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.DamageType = DamageClass.Melee;
@@ -350,60 +388,85 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Knives
             Projectile.localNPCHitCooldown = 10000;
         }
 
-        private bool _thrust;
-        public float thrustSpeed = 5;
-        public float stabRange;
         public override void AI()
         {
             base.AI();
-
-            Vector2 swingDirection = Projectile.velocity.SafeNormalize(Vector2.Zero);
-            if (_smoothedLerpValue > 0.5f)
+            //Spawn the other knife
+            if (!_hasSpawnedSecondKnife && ComboAtt < 2 && ShouldSpawnKnife && _smoothedLerpValue >= 0.9f)
             {
-                if (!_thrust)
-                {
-                    Owner.velocity += swingDirection * thrustSpeed;
-                    _thrust = true;
-                }
+                ComboPlayer comboPlayer = Owner.GetModPlayer<ComboPlayer>();
+                int combo = (int)(ComboAtt + 1);
+                int dir = comboPlayer.ComboDirection;
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position, Projectile.velocity, ModContent.ProjectileType<LightKnivesStaminaSlash2>(), Projectile.damage, Projectile.knockBack,
+                               Owner.whoAmI, combo, dir);
+                _hasSpawnedSecondKnife = true;
             }
 
+            Vector2 swingDirection = Projectile.velocity.SafeNormalize(Vector2.Zero);
+            if (!_thrust && _smoothedLerpValue >= 0.5f)
+            {
+                float thrustSpeed = 5;
+                Owner.velocity += swingDirection * thrustSpeed;
+                _thrust = true;
+            }
+            _lightningTrailTimer++;
 
-
+            //How often it recalculates the lightning trail
+            float randomizeRate = 8;
+            if (_lightningTrailTimer % randomizeRate == 0)
+            {
+                _lightningTrail.RandomPositions(_trailPoints);
+            }
         }
+
         public override void SetComboDefaults(List<BaseSwingStyle> swings)
         {
+            base.SetComboDefaults(swings);
 
-            SoundStyle swingSound1 = SoundRegistry.HeavySwordSlash1;
+            SoundStyle swingSound1 = SoundRegistry.NSwordSlash2;
             swingSound1.PitchVariance = 0.5f;
 
+            SoundStyle swingSound2 = SoundRegistry.NSwordSlash2;
+            swingSound2.PitchVariance = 0.5f;
+            swingSound2.Pitch = 0.5f;
 
-            base.SetComboDefaults(swings);
-            swings.Add(new OvalSwingStyle
-            {
-                swingTime = 68,
-                swingXRadius = 160 / 1.5f,
-                swingYRadius = 80 / 1.5f,
-                swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4 + MathHelper.PiOver4 + MathHelper.Pi,
-                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
-                swingSound = swingSound1,
-                swingSoundLerpValue = 0.5f
-
-            });
+            SoundStyle swingSound3 = SoundRegistry.NSwordSpin1;
+            swingSound3.PitchVariance = 0.5f;
 
             swings.Add(new OvalSwingStyle
             {
-                swingTime = 68,
-                swingXRadius = 160 / 1.5f,
-                swingYRadius = 80 / 1.5f,
-                swingRange = MathHelper.Pi + MathHelper.PiOver2 + MathHelper.PiOver4 + MathHelper.PiOver4 + MathHelper.Pi,
-                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue, 10),
-                swingSound = swingSound1,
+                swingTime = 60,
+                swingXRadius = 84,
+                swingYRadius = 42,
+                swingRange = MathHelper.ToRadians(720),
+                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue),
+                swingSound = swingSound3,
+                swingSoundLerpValue = 0.5f
+            });
+
+            swings.Add(new OvalSwingStyle
+            {
+                swingTime = 60,
+                swingXRadius = 72,
+                swingYRadius = 36,
+                swingRange = MathHelper.ToRadians(720),
+                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue),
+                swingSound = swingSound2,
                 swingSoundLerpValue = 0.5f
             });
 
 
+            swings.Add(new OvalSwingStyle
+            {
+                swingTime = 60,
+                swingXRadius = 72,
+                swingYRadius = 36,
+                swingRange = MathHelper.ToRadians(720),
+                easingFunc = (float lerpValue) => Easing.InOutExpo(lerpValue),
+                swingSound = swingSound2,
+                swingSoundLerpValue = 0.5f
+            });
         }
-
 
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -415,8 +478,6 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Knives
                 Hit = true;
                 hitstopTimer = 4 * ExtraUpdateMult;
             }
-
-
         }
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
@@ -433,7 +494,6 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Knives
 
             modifiers.FinalDamage *= 3;
             modifiers.Knockback *= 4;
-
         }
 
         public override void OnKill(int timeLeft)
@@ -442,64 +502,62 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Knives
             ComboPlayer comboPlayer = Owner.GetModPlayer<ComboPlayer>();
             int combo = (int)(ComboAtt + 1);
             int dir = comboPlayer.ComboDirection;
-
-
-            if (ComboAtt < 1)
+            if (ComboAtt < 2)
             {
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position, Projectile.velocity, Projectile.type, Projectile.damage, Projectile.knockBack,
                             Owner.whoAmI, combo, dir);
             }
-
-
         }
+
         //TRAIL VISUALS
         #region Visuals
+
+        protected override void DrawSlashTrail()
+        {
+            //base.DrawSlashTrail();
+            SpriteBatch spriteBatch = Main.spriteBatch;
+            var shader = MagicVaellusShader.Instance;
+            shader.PrimaryTexture = TextureRegistry.LightningTrail2;
+            shader.NoiseTexture = TextureRegistry.LightningTrail3;
+            shader.OutlineTexture = TextureRegistry.LightningTrail2Outline;
+            shader.PrimaryColor = new Color(69, 70, 159); 
+            shader.NoiseColor = new Color(224, 107, 10);
+            shader.OutlineColor = Color.Lerp(new Color(31, 27, 59), Color.Black, 0.75f);
+            shader.BlendState = BlendState.AlphaBlend;
+            shader.SamplerState = SamplerState.PointWrap;
+            shader.Speed = 5.2f;
+            shader.Distortion = 0.15f;
+            shader.Power = 0.25f;
+            shader.Alpha = 1f;
+            _lightningTrail.Draw(spriteBatch, _trailPoints, Projectile.oldRot, ColorFunction, WidthFunction, shader, offset: GetFramingSize() / 2f);
+        }
+
         public override Vector2 GetFramingSize()
         {
             //Set this to the width and height of the sword sprite
-            return new Vector2(68, 72);
+            return new Vector2(42, 42);
         }
 
         public override Vector2 GetTrailOffset()
         {
             //Moves the trail along the blade, negative goes towards the player, positive goes away the player
-            return Vector2.One * 80;
+            return Vector2.One * 40;
         }
 
         protected override float WidthFunction(float p)
         {
-            float trailWidth = MathHelper.Lerp(0, 484, p);
+            float trailWidth = MathHelper.Lerp(0, 106, p);
             float fadeWidth = MathHelper.Lerp(trailWidth, 0, _smoothedLerpValue) * Easing.OutExpo(_smoothedLerpValue, 4);
             return fadeWidth;
         }
 
         protected override Color ColorFunction(float p)
         {
-            Color trailColor = Color.Lerp(Color.White, Color.LightCyan, p);
-            Color fadeColor = Color.Lerp(trailColor, Color.DeepSkyBlue, _smoothedLerpValue);
+            Color trailColor = Color.Lerp(Color.Orange, Color.Purple, p);
+            Color fadeColor = Color.Lerp(trailColor, Color.DarkViolet, _smoothedLerpValue);
+         //   fadeColor.A = 0;
             //This will make it fade out near the end
             return fadeColor;
-        }
-
-        protected override BaseShader ReadyShader()
-        {
-
-            var shader = SimpleTrailShader.Instance;
-
-            //Main trailing texture
-            shader.TrailingTexture = TextureRegistry.CrystalTrail2;
-
-            //Blends with the main texture
-            shader.SecondaryTrailingTexture = TextureRegistry.GlowTrail;
-
-            //Used for blending the trail colors
-            //Set it to any noise texture
-            shader.TertiaryTrailingTexture = TextureRegistry.CrystalTrail2;
-            shader.PrimaryColor = Color.White;
-            shader.SecondaryColor = Color.DarkSlateBlue;
-            shader.BlendState = BlendState.Additive;
-            shader.Speed = 25;
-            return shader;
         }
         #endregion
     }

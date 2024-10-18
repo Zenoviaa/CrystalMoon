@@ -24,6 +24,7 @@
 	  <None Remove="Assets\Effects\MagicRadiance.fx" />
 	  <None Remove="Assets\Effects\MagicRadianceOutline.fx" />
 	  <None Remove="Assets\Effects\MagicSparkleWater.fx" />
+	  <None Remove="Assets\Effects\MagicVaellus.fx" />
 	  <None Remove="Assets\Effects\NightClouds.fx" />
 	  <None Remove="Assets\Effects\PixelMagicBloodlet.fx" />
 	  <None Remove="Assets\Effects\PixelMagicGuut.fx" />

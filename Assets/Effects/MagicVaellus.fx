@@ -71,18 +71,22 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float2 coords = input.TextureCoordinates;
     
     //Calculate Distorting Noise
-    float s = tex2D(noiseTex, coords + float2(time * -0.5, 0.0)).r;
+    float4 s = tex2D(noiseTex, coords + float2(time * -0.5, 0.0)).r;
     float offset = s * distortion;
     float2 oCoords = coords + offset + float2(time * -0.25, 0.0);
     
     
-    //Scroll the noise
-    float scrollingFlamingNoise = tex2D(primaryTex, oCoords).r;
+    //Sample the main noise
+    float4 sample = tex2D(primaryTex, oCoords);
+    float primaryAlpha = sample.a;
+    float scrollingFlamingNoise = sample.r;
     scrollingFlamingNoise = pow(scrollingFlamingNoise, power);
     
     
-    //Scroll the outline noise
-    float osn = tex2D(outlineTex, oCoords).r;
+    //Sample the outline noise
+    float4 outlineSample = tex2D(outlineTex, oCoords);
+    float outlineAlpha = outlineSample.a;
+    float osn = outlineSample.r;
     float3 col = float3(scrollingFlamingNoise, scrollingFlamingNoise, scrollingFlamingNoise);
    
     //Lerp Colors
@@ -92,14 +96,19 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
         noiseFlame, coords.x);
     
     //Add the outline on top
+    //Calculate outline color
     float3 outlineFlameCol = lerp(
         osn * outlineColor,
         noiseFlame, coords.x);
-    float3 finalCol = flameCol + outlineFlameCol;
     
-    // Output to screen
-    float4 finalColor = float4(finalCol, alpha) * input.Color.w;
-    return finalColor;
+    if (outlineAlpha > 0)
+    {
+        return float4(outlineFlameCol, outlineAlpha) * input.Color.w;
+    }
+    else
+    {
+        return float4(flameCol, primaryAlpha) * input.Color.w;
+    }
 }
 
 technique Technique1

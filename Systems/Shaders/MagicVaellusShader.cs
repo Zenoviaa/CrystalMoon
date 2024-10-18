@@ -6,12 +6,12 @@ using Terraria;
 
 namespace CrystalMoon.Systems.Shaders
 {
-    internal class MagicRadianceShader : BaseShader
+    internal class MagicVaellusShader : BaseShader
     {
-        private static MagicRadianceShader _instance;
-        public MagicRadianceShader()
+        private static MagicVaellusShader _instance;
+        public MagicVaellusShader()
         {
-            Data = ShaderRegistry.MagicTrailRadiance;
+            Data = ShaderRegistry.MagicTrailVaellus;
             PrimaryTexture = TextureRegistry.DottedTrail;
             NoiseTexture = TextureRegistry.NoiseTextureClouds3;
             OutlineTexture = TextureRegistry.DottedTrailOutline;
@@ -24,12 +24,12 @@ namespace CrystalMoon.Systems.Shaders
             Alpha = 1.0f;
         }
 
-        public static MagicRadianceShader Instance
+        public static MagicVaellusShader Instance
         {
             get
             {
                 if (_instance == null)
-                    _instance = new MagicRadianceShader();
+                    _instance = new MagicVaellusShader();
                 return _instance;
             }
         }

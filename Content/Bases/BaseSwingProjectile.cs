@@ -469,7 +469,7 @@ namespace CrystalMoon.Content.Bases
             return shader;
         }
 
-        private void DrawSlashTrail()
+        protected virtual void DrawSlashTrail()
         {
             SpriteBatch spriteBatch = Main.spriteBatch;
             TrailDrawer.Draw(spriteBatch,
