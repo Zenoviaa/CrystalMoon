@@ -405,7 +405,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Swords
             spearHit2.PitchVariance = 0.2f;
             SoundEngine.PlaySound(spearHit2, Projectile.position);
 
-            modifiers.FinalDamage *= 3;
+            modifiers.FinalDamage *= 4;
             modifiers.Knockback *= 4;
             
         }
