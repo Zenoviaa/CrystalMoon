@@ -366,3 +366,8 @@ MagicalDye: {
 	Tooltip: ""
 	DisplayName: Magical Dye
 }
+
+NoxianRider: {
+	DisplayName: Noxian Rider
+	Tooltip: ""
+}

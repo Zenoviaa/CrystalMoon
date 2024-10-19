@@ -65,6 +65,8 @@ Mods: {
 			VaelExplosion.DisplayName: Vael Explosion
 			VaelProj.DisplayName: Vael Proj
 			VaelSpecial.DisplayName: Vael Special
+			NRStaminaSlash.DisplayName: N R Stamina Slash
+			NRSwordSlash.DisplayName: N R Sword Slash
 		}
 
 		Buffs: {
