@@ -376,3 +376,8 @@ Vaikus: {
 	DisplayName: Vaikus
 	Tooltip: ""
 }
+
+PrimeRing: {
+	DisplayName: Prime Ring
+	Tooltip: ""
+}
