@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic
@@ -154,6 +155,14 @@ namespace CrystalMoon.Content.MoonlightMagic
             Movement?.AI();
 
             GlobalTimer++;
+            if(GlobalTimer == 1)
+            {
+                if(PrimaryElement != null)
+                {
+                    SoundEngine.PlaySound(PrimaryElement.CastSound, Projectile.position);
+                }
+            }
+
             for (int i = 0; i < Enchantments.Count; i++)
             {
                 var enchantment = Enchantments[i];
@@ -201,6 +210,11 @@ namespace CrystalMoon.Content.MoonlightMagic
             {
                 var enchantment = Enchantments[i];
                 enchantment.OnKill(timeLeft);
+            }
+
+            if (PrimaryElement != null)
+            {
+                SoundEngine.PlaySound(PrimaryElement.HitSound, Projectile.position);
             }
         }
 

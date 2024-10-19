@@ -1,6 +1,7 @@
 ﻿using CrystalMoon.Systems.Players;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 
@@ -37,6 +38,7 @@ namespace CrystalMoon.Content.MoonlightMagic
             moonlightMagicProjectile.TrailLength = item.TrailLength;
             moonlightMagicProjectile.Size = item.Size;
             moonlightMagicProjectile.SetMoonlightDefaults(item);
+
         }
 
 

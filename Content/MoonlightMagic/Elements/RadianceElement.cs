@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
@@ -17,7 +18,19 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
     internal class RadianceElement : BaseElement
     {
         private int trailMode = 0;
-        
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            SoundStyle castStyle = SoundRegistry.RadianceCast1;
+            castStyle.PitchVariance = 0.25f;
+            CastSound = castStyle;
+
+            SoundStyle hitStyle = SoundRegistry.RadianceHit1;
+            hitStyle.PitchVariance = 0.25f;
+            HitSound = hitStyle;
+        }
+
         public override Color GetElementColor()
         {
             return ColorUtil.RadianceYellow;

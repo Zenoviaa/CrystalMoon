@@ -69,6 +69,10 @@ namespace CrystalMoon.Registries
         public static SoundStyle MotorcycleSlash2 => new SoundStyle($"{RootAssetPath}MotoSlash2");
 
         public static SoundStyle MotorcycleDrive => new SoundStyle($"{RootAssetPath}MotoMot");
+
+        public static SoundStyle RadianceCast1 => new SoundStyle($"{RootAssetPath}RadianceCast1");
+
+        public static SoundStyle RadianceHit1 => new SoundStyle($"{RootAssetPath}RadianceHit1");
         /*
         public static SoundStyle BowCharge => new SoundStyle($"{RootAssetPath}BowCharge",
             variantSuffixesStart: 1,

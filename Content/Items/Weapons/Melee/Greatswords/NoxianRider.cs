@@ -376,7 +376,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             Projectile.DamageType = DamageClass.Melee;
             Projectile.height = 38;
             Projectile.width = 38;
-         //   Projectile.friendly = true;
+            Projectile.friendly = true;
             Projectile.scale = 1.4f;
 
             Projectile.extraUpdates = ExtraUpdateMult - 1;
@@ -675,6 +675,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             SoundEngine.PlaySound(explosionStyle, Projectile.position);
             var entitySource = Projectile.GetSource_Death();
             Owner.GetModPlayer<NKRMopedPlayer>().FixRotation = true;
+            Owner.SetImmuneTimeForAllTypes(15);
             Vector2 vel = Projectile.velocity * 0.3f;
 
 
@@ -755,7 +756,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             Timer++;
             if(Timer == 1)
             {
-                Owner.SetImmuneTimeForAllTypes(120);
+                Owner.SetImmuneTimeForAllTypes(240);
                 Projectile.velocity = InitialVelocity;
                 SoundStyle driveStyle = SoundRegistry.MotorcycleDrive;
                 driveStyle.PitchVariance = 0.1f;

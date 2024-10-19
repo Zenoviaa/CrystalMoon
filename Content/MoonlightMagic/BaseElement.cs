@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -14,6 +15,8 @@ namespace CrystalMoon.Content.MoonlightMagic
         ICloneable,
         IAdvancedMagicAddon
     {
+        public SoundStyle? CastSound { get; set; }
+        public SoundStyle? HitSound { get; set; }
         public AdvancedMagicProjectile MagicProj { get; set; }
         public Projectile Projectile => MagicProj.Projectile;
 

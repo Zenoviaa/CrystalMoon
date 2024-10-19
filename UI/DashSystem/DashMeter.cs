@@ -1,4 +1,5 @@
-﻿using CrystalMoon.Systems.Players;
+﻿using CrystalMoon.Systems.MiscellaneousMath;
+using CrystalMoon.Systems.Players;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -70,11 +71,15 @@ namespace CrystalMoon.UI.DashSystem
 
     internal class DashMeterUI : UIState
     {
+        private float _prevDashCount;
+        private float _flashStrength;
+        private int _staminaFlashIndex;
         private string AssetDirectory = $"CrystalMoon/UI/DashSystem/";
         private Texture2D
             _empty,
             _edge,
-            _filled;
+            _filled,
+            _white;
 
         public override void OnActivate()
         {
@@ -82,6 +87,7 @@ namespace CrystalMoon.UI.DashSystem
             _empty = ModContent.Request<Texture2D>($"{AssetDirectory}DashMeterEmpty").Value;
             _edge = ModContent.Request<Texture2D>($"{AssetDirectory}DashMeterEdge").Value;
             _filled = ModContent.Request<Texture2D>($"{AssetDirectory}DashMeterFilled").Value;
+            _white = ModContent.Request<Texture2D>($"{AssetDirectory}DashMeterFilledWhite").Value;
         }
 
         public Color Color = Color.White;
@@ -90,6 +96,7 @@ namespace CrystalMoon.UI.DashSystem
         public float Rotation;
         public bool AllowResizingDimensions = true;
         public Vector2 NormalizedOrigin = Vector2.Zero;
+        public Color FlashColor = Color.White;
         private static Vector2? _drag = null;
         private static bool _isDragging;
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -114,6 +121,12 @@ namespace CrystalMoon.UI.DashSystem
             drawPos.Y = (int)(drawPos.Y * 0.01f * Main.screenHeight);
 
             DashPlayer dashPlayer = Main.LocalPlayer.GetModPlayer<DashPlayer>();
+            if(_prevDashCount != dashPlayer.DashCount)
+            {
+                FlashColor = Color.White;
+                _prevDashCount = dashPlayer.DashCount;
+            }
+
             int filledAmount = dashPlayer.DashCount;
             int maxFillAmount = dashPlayer.MaxDashCount;
 
@@ -160,6 +173,16 @@ namespace CrystalMoon.UI.DashSystem
                 }
             }
 
+            if (dashPlayer.ShouldFlicker)
+            {
+                _staminaFlashIndex = filledAmount;
+                _flashStrength = MathHelper.Lerp(_flashStrength, 1f, 0.05f);
+            }
+            else
+            {
+                _flashStrength = MathHelper.Lerp(_flashStrength, 0f, 0.05f);
+            }
+
             for (int i = -1; i < maxFillAmount + 1; i++)
             {
                 if (i == -1)
@@ -179,11 +202,29 @@ namespace CrystalMoon.UI.DashSystem
                     {
                         texture2D = _filled;
                         spriteBatch.Draw(texture2D, drawPos - o, null, Color, Rotation, vector * NormalizedOrigin, ImageScale, SpriteEffects.None, 0f);
+                    
+                        if(FlashColor.A > 1)
+                        {
+                            FlashColor *= 0.98f;
+                            texture2D = _white;
+                            spriteBatch.Draw(texture2D, drawPos - o, null, FlashColor, Rotation, vector * NormalizedOrigin, ImageScale, SpriteEffects.None, 0f);
+                        }
                     }
                     else
                     {
                         texture2D = _empty;
                         spriteBatch.Draw(texture2D, drawPos - o, null, Color, Rotation, vector * NormalizedOrigin, ImageScale, SpriteEffects.None, 0f);
+              
+
+
+                        if(i == _staminaFlashIndex)
+                        {
+                            texture2D = _white;
+                            float progress = MathUtil.Osc(0f, 1f, speed: 12);
+                            progress *= _flashStrength;
+                            Color drawColor = Color.Lerp(Color.Transparent, Color.White, progress);
+                            spriteBatch.Draw(texture2D, drawPos - o, null, drawColor, Rotation, vector * NormalizedOrigin, ImageScale, SpriteEffects.None, 0f);
+                        }
                     }
                 }
 

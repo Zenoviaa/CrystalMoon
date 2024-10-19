@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.ID;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using CrystalMoon.Systems.MiscellaneousMath;
 
 namespace CrystalMoon.Systems.Players
 {
@@ -36,6 +29,7 @@ namespace CrystalMoon.Systems.Players
         public float MaxDashCountTimer;
         public int DashCount;
         public int MaxDashCount;
+        public bool ShouldFlicker => DashCountTimer > MaxDashCountTimer / 2f;
 
         public override void ResetEffects()
         {
@@ -103,7 +97,7 @@ namespace CrystalMoon.Systems.Players
                 Player.immune = true;
                 _isImmune = true;
 
-                float rollProgress = (float)DashTimer /  (float)DashDuration;
+                float rollProgress = (float)DashTimer / (float)DashDuration;
                 rollProgress = 1f - rollProgress;
                 float easedRollProgress = rollProgress;
                 Player.fullRotation = Player.direction == -1 ? MathHelper.Lerp(MathHelper.TwoPi, 0, easedRollProgress) : MathHelper.Lerp(0, MathHelper.TwoPi, easedRollProgress);
@@ -127,7 +121,7 @@ namespace CrystalMoon.Systems.Players
         {
             return !_isImmune;
         }
-
+      
         public override void PostUpdate()
         {
             base.PostUpdate();
@@ -141,7 +135,7 @@ namespace CrystalMoon.Systems.Players
                     DashCountTimer = 0;
                 }
 
-                if(DashCount >= MaxDashCount)
+                if (DashCount >= MaxDashCount)
                 {
                     DashCount = MaxDashCount;
                 }
