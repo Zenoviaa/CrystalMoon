@@ -734,18 +734,6 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Longswords
                 Color drawColor = Color.Goldenrod;
                 Vector2 drawPosition = Projectile.Center - Main.screenPosition;
 
-                for (int i = 0; i < 8; i++)
-                {
-                    Vector2 drawOffset = (MathHelper.TwoPi * i / 8f).ToRotationVector2() * 4f;
-                    Main.EntitySpriteDraw(texture, DrawOffset - Main.screenPosition + drawOffset, null, Color.Red with { A = 160 } * Projectile.Opacity, Projectile.rotation, texture.Size() * 0.5f, scale, Effects, 0);
-                }
-                for (int i = 0; i < 7; i++)
-                {
-                    float scaleFactor = 1f - i / 6f;
-                    Vector2 drawOffset = Projectile.velocity * i * -0.34f;
-                    Main.EntitySpriteDraw(texture, DrawOffset - Main.screenPosition + drawOffset, null, drawColor with { A = 160 } * Projectile.Opacity, Projectile.rotation, texture.Size() * 0.5f, scale * scaleFactor, Effects, 0);
-                }
-                Main.EntitySpriteDraw(texture, DrawOffset - Main.screenPosition, null, drawColor with { A = 250 }, Projectile.rotation, texture.Size() * 0.5f, scale, Effects, 0);
 
                 if (Main.rand.NextBool(5))
                 {
