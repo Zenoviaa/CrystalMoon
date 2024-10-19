@@ -63,6 +63,12 @@ namespace CrystalMoon.Registries
         public static SoundStyle BowHolding => new SoundStyle($"{RootAssetPath}BowHolding");
 
         public static SoundStyle CastTickSummon1 => new SoundStyle($"{RootAssetPath}Summoner1");
+
+        public static SoundStyle MotorcycleSlash1 => new SoundStyle($"{RootAssetPath}MotoSlash");
+
+        public static SoundStyle MotorcycleSlash2 => new SoundStyle($"{RootAssetPath}MotoSlash2");
+
+        public static SoundStyle MotorcycleDrive => new SoundStyle($"{RootAssetPath}MotoMot");
         /*
         public static SoundStyle BowCharge => new SoundStyle($"{RootAssetPath}BowCharge",
             variantSuffixesStart: 1,
