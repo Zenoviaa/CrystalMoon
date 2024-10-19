@@ -684,7 +684,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
                 Gore.NewGore(entitySource, Projectile.position, vel, ModContent.GoreType<NoxianFront>());
                 Gore.NewGore(entitySource, Projectile.position, vel, ModContent.GoreType<NoxianFuelCan>());
                 Gore.NewGore(entitySource, Projectile.position, vel, ModContent.GoreType<NoxianSeat>());
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < 5; j++)
                 {
                     Gore.NewGore(entitySource, Projectile.position, vel, ModContent.GoreType<NoxianScrew>());
                 }

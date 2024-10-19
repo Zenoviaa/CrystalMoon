@@ -70,6 +70,11 @@ Mods: {
 			NKRMoped.DisplayName: N K R Moped
 			NKRExplode.DisplayName: N K R Explode
 			FlameExplosion.DisplayName: Flame Explosion
+			VaikusProj.DisplayName: Vaikus Proj
+			VaikusSwordSlash.DisplayName: Vaikus Sword Slash
+			VaikusSwordStaminaSlash.DisplayName: Vaikus Sword Stamina Slash
+			SimpleOrangeExplosion.DisplayName: Simple Orange Explosion
+			VaikusExplode.DisplayName: Vaikus Explode
 		}
 
 		Buffs: {

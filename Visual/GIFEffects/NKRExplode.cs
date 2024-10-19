@@ -73,7 +73,7 @@ namespace CrystalMoon.Visual.GIFEffects
             Vector2 origin = new Vector2(rectangle.Width / 2, rectangle.Height / 2);
             SpriteBatch spriteBatch = Main.spriteBatch;
             float drawRotation = Projectile.rotation;
-            float drawScale = 5f;
+            float drawScale = 4f;
 
             spriteBatch.Draw(texture, drawPosition,
                rectangle,

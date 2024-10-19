@@ -31,7 +31,7 @@ namespace CrystalMoon.Visual.Explosions
         protected override float BeamWidthFunction(float p)
         {
             //How wide the trail is going to be
-            float trailWidth = MathHelper.Lerp(128, 32, p);
+            float trailWidth = MathHelper.Lerp(40, 16, p);
             float fadeWidth = MathHelper.Lerp(0, trailWidth, Easing.SpikeOutCirc(p)) * Main.rand.NextFloat(0.75f, 1.0f);
             return fadeWidth;
         }
