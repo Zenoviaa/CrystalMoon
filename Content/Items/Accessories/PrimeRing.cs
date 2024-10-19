@@ -4,7 +4,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Stellamod.Items.Accessories
+namespace CrystalMoon.Content.Items.Accessories
 {
     public class PrimeRing : ModItem
     {
