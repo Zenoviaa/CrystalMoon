@@ -71,6 +71,8 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
 
     public class NRSwordSlash : BaseSwingProjectile
     {
+        private LightningTrail _lightningTrail;
+        private float _lightningTimer;
         private NPCSucker _npcSucker;
         public override string Texture => "CrystalMoon/Content/Items/Weapons/Melee/Greatswords/NoxianRider";
         ref float ComboAtt => ref Projectile.ai[0];
@@ -84,6 +86,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
 
         public override void SetDefaults()
         {
+            _lightningTrail = new LightningTrail();
             holdOffset = 40;
             trailStartOffset = 0.2f;
             Projectile.penetrate = -1;
@@ -110,7 +113,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             SoundStyle swingSound2 = SoundRegistry.MotorcycleSlash2;
             swingSound2.PitchVariance = 0.5f;
 
-            SoundStyle swingSound3 = SoundRegistry.NSwordSpin1;
+            SoundStyle swingSound3 = SoundRegistry.MotorcycleDrive;
             swingSound3.PitchVariance = 0.5f;
 
             swings.Add(new CircleSwingStyle
@@ -227,6 +230,12 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
         {
             base.AI();
             _npcSucker ??= new NPCSucker();
+            _lightningTimer++;
+            if(_lightningTimer % 24 == 0)
+            {
+                _lightningTrail.RandomPositions(_trailPoints);
+            }
+
             if (Countertimer % (ExtraUpdateMult) == 0 && uneasedLerpValue > 0.5f)
             {
                 _npcSucker.AI(Projectile.Center, strength: 0.8f);
@@ -308,66 +317,44 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
         {
             if (ComboAtt == 1 || ComboAtt == 6)
             {
-                float spinTrailWidth = MathHelper.Lerp(0, 128, p);
+                float spinTrailWidth = MathHelper.Lerp(0, 32, p);
                 float spinFadeWidth = MathHelper.Lerp(0, spinTrailWidth, _smoothedLerpValue);
                 return spinFadeWidth;
             }
-            float trailWidth = MathHelper.Lerp(0, 284, p);
+            float trailWidth = MathHelper.Lerp(0, 106, p);
             float fadeWidth = MathHelper.Lerp(trailWidth, 0, _smoothedLerpValue) * Easing.OutExpo(_smoothedLerpValue, 4);
             return fadeWidth;
         }
 
         protected override Color ColorFunction(float p)
         {
-            Color trailColor = Color.Lerp(Color.White, Color.DarkGray, p);
-            Color fadeColor = Color.Lerp(trailColor, Color.DarkGray, _smoothedLerpValue);
-            //This will make it fade out near the end
-            return fadeColor;
+            Color trailColor = Color.Lerp(Color.White, new Color(207, 150, 140), p);
+            return trailColor;
         }
-
-        protected override BaseShader ReadyShader()
+        protected override void DrawSlashTrail()
         {
+            //Trail
+            SpriteBatch spriteBatch = Main.spriteBatch;
+            LightningShader lightningShader = LightningShader.Instance;
+            lightningShader.PrimaryColor = new Color(207, 150, 140);
+            lightningShader.NoiseColor = new Color(60, 107, 128);
+            lightningShader.Speed = 5;
+            lightningShader.BlendState = BlendState.Additive;
 
-            var shader = SimpleTrailShader.Instance;
-            if (ComboAtt == 1 || ComboAtt == 6)
-            {
-                //Main trailing texture
-                shader.TrailingTexture = TextureRegistry.GlowTrail;
+            //Making this number big made like the field wide
+            _lightningTrail.LightningRandomOffsetRange = 2;
 
-                //Blends with the main texture
-                shader.SecondaryTrailingTexture = TextureRegistry.WhispTrail;
+            //This number makes it more lightning like, lower this is the straighter it is
+            _lightningTrail.LightningRandomExpand = 4;
 
-                //Used for blending the trail colors
-                //Set it to any noise texture
-                shader.TertiaryTrailingTexture = TextureRegistry.CausticTrail;
-                shader.PrimaryColor = Color.White;
-                shader.SecondaryColor = Color.DarkSlateBlue;
-                shader.BlendState = BlendState.Additive;
-                shader.Speed = 25;
-            }
-            else
-            {
-                //Main trailing texture
-                shader.TrailingTexture = TextureRegistry.GlowTrail;
-
-                //Blends with the main texture
-                shader.SecondaryTrailingTexture = TextureRegistry.WhispTrail;
-
-                //Used for blending the trail colors
-                //Set it to any noise texture
-                shader.TertiaryTrailingTexture = TextureRegistry.CausticTrail;
-                shader.PrimaryColor = Color.White;
-                shader.SecondaryColor = Color.DarkSlateBlue;
-                shader.BlendState = BlendState.Additive;
-                shader.Speed = 25;
-            }
-
-            return shader;
+            _lightningTrail.Draw(spriteBatch, _trailPoints, Projectile.oldRot, ColorFunction, WidthFunction, lightningShader, offset: GetFramingSize() / 2f);
         }
         #endregion
     }
     public class NRStaminaSlash : BaseSwingProjectile
     {
+        private LightningTrail _lightningTrail;
+        private float _lightningTimer;
         public override string Texture => "CrystalMoon/Content/Items/Weapons/Melee/Greatswords/NoxianRider";
         ref float ComboAtt => ref Projectile.ai[0];
         public bool Hit;
@@ -380,6 +367,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
 
         public override void SetDefaults()
         {
+            _lightningTrail = new LightningTrail();
             holdOffset = -10;
             trailStartOffset = 0.2f;
             Projectile.penetrate = -1;
@@ -402,6 +390,11 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
         public override void AI()
         {
             base.AI();
+            _lightningTimer++;
+            if(_lightningTimer % 6 == 0)
+            {
+                _lightningTrail.RandomPositions(_trailPoints);
+            }
 
             Vector2 swingDirection = Projectile.velocity.SafeNormalize(Vector2.Zero);
             if (_smoothedLerpValue > 0.5f)
@@ -497,39 +490,36 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
 
         protected override float WidthFunction(float p)
         {
-            float trailWidth = MathHelper.Lerp(0, 584, p);
+            float trailWidth = MathHelper.Lerp(0, 105, p);
             float fadeWidth = MathHelper.Lerp(trailWidth, 0, _smoothedLerpValue) * Easing.OutExpo(_smoothedLerpValue, 4);
             return fadeWidth;
         }
 
         protected override Color ColorFunction(float p)
         {
-            Color trailColor = Color.Lerp(Color.White, Color.Black, p);
-            Color fadeColor = Color.Lerp(trailColor, Color.Gray, _smoothedLerpValue);
-            //This will make it fade out near the end
-            return fadeColor;
+            Color trailColor = Color.Lerp(Color.White, new Color(207, 150, 140), p);
+            return trailColor;
         }
-
-        protected override BaseShader ReadyShader()
+        protected override void DrawSlashTrail()
         {
+            //Trail
+            SpriteBatch spriteBatch = Main.spriteBatch;
+            LightningShader lightningShader = LightningShader.Instance;
+            lightningShader.PrimaryColor = new Color(207, 150, 140);
+            lightningShader.NoiseColor = new Color(60, 107, 128);
+            lightningShader.Speed = 5;
+            lightningShader.BlendState = BlendState.Additive;
 
-            var shader = SimpleTrailShader.Instance;
+            //Making this number big made like the field wide
+            _lightningTrail.LightningRandomOffsetRange = 2;
 
-            //Main trailing texture
-            shader.TrailingTexture = TextureRegistry.GlowTrail;
+            //This number makes it more lightning like, lower this is the straighter it is
+            _lightningTrail.LightningRandomExpand = 4;
 
-            //Blends with the main texture
-            shader.SecondaryTrailingTexture = TextureRegistry.GlowTrail;
-
-            //Used for blending the trail colors
-            //Set it to any noise texture
-            shader.TertiaryTrailingTexture = TextureRegistry.CrystalTrail2;
-            shader.PrimaryColor = Color.White;
-            shader.SecondaryColor = Color.DarkGray;
-            shader.BlendState = BlendState.Additive;
-            shader.Speed = 30;
-            return shader;
+            _lightningTrail.Draw(spriteBatch, _trailPoints, Projectile.oldRot, ColorFunction, WidthFunction, lightningShader, offset: GetFramingSize() / 2f);
         }
+
+
         #endregion
     }
 
