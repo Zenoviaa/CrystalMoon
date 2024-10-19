@@ -15,7 +15,9 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
     internal class AdvancedMagicItemSlot : UIElement
     {
         private Item _prevItem;
+        private static Item _prevTrashItem;
         internal Item Item;
+        private static int _lastTrashedIndex;
         private readonly int _context;
         private readonly float _scale;
 
@@ -23,7 +25,7 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
 
         private int timer = 0;
 
-        internal AdvancedMagicItemSlot(int context = ItemSlot.Context.BankItem, float scale = 1f)
+        internal AdvancedMagicItemSlot(int context = ItemSlot.Context.InventoryItem, float scale = 1f)
         {
             _context = context;
 
@@ -51,8 +53,17 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
             if (Valid(Main.mouseItem))
             {
                 _prevItem = Item;
+            
                 //Handles all the click and hover actions based on the context
                 ItemSlot.Handle(ref Item, _context);
+
+                if(_prevTrashItem != Main.LocalPlayer.trashItem && Main.LocalPlayer.trashItem.type == Item.type)
+                {
+                    _prevTrashItem = Main.LocalPlayer.trashItem;
+                    Item = new Item();
+                    Item.SetDefaults(0);
+                }
+
                 if(Item != _prevItem)
                 {
                     SaveToBackpack();

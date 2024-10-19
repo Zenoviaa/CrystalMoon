@@ -1,7 +1,9 @@
 ﻿using CrystalMoon.Systems.MiscellaneousMath;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic
@@ -16,6 +18,8 @@ namespace CrystalMoon.Content.MoonlightMagic
         public override void UpdateInventory(Player player)
         {
             base.UpdateInventory(player);
+
+            Console.WriteLine($"Pickup {Item.Name}");
             player.GetModPlayer<AdvancedMagicPlayer>().Pickup(Item);
             for(int i = 0; i < player.inventory.Length; i++)
             {
