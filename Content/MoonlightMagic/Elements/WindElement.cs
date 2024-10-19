@@ -7,13 +7,26 @@ using CrystalMoon.Visual.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.Graphics.Shaders;
+using Terraria.Audio;
 using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic.Elements
 {
+
     internal class WindElement : BaseElement
     {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            SoundStyle windCastStyle = SoundRegistry.WindCast;
+            windCastStyle.PitchVariance = 0.15f;
+            CastSound = windCastStyle;
+
+            SoundStyle windHitStyle = SoundRegistry.WindHit;
+            windHitStyle.PitchVariance = 0.15f;
+            HitSound = windHitStyle;
+        }
+
         public override Color GetElementColor()
         {
             return new Color(227, 157, 24);
@@ -104,7 +117,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             //  return Color.Lerp(Color.LightGoldenrodYellow, Color.White, Utils.GetLerpValue(0f, 0.7f, progressOnStrip, clamped: true)) * (1f - Utils.GetLerpValue(0f, 0.98f, progressOnStrip));
             Color result = Color.Lerp(Color.LightGray, Color.White,
                 Utils.GetLerpValue(0f, 0.7f, progressOnStrip, clamped: true)) * (1f - Utils.GetLerpValue(0f, 0.98f, progressOnStrip));
-       //     result.A /= 2;
+            //     result.A /= 2;
             return result;
         }
 

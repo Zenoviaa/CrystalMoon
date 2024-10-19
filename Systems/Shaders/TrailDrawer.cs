@@ -75,7 +75,6 @@ namespace CrystalMoon.Systems.Shaders
                     var d = arr[i - 1] - arr[i];
                     if (d.X < -1000f || d.X > 1000f || d.Y < -1000f || d.Y > 1000f)
                     {
-                        //Main.NewText(d + " = " + arr[i - 1] + " - " + arr[i]);
                         continue;
                     }
                 }

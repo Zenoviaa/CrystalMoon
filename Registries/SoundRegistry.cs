@@ -73,6 +73,16 @@ namespace CrystalMoon.Registries
         public static SoundStyle RadianceCast1 => new SoundStyle($"{RootAssetPath}RadianceCast1");
 
         public static SoundStyle RadianceHit1 => new SoundStyle($"{RootAssetPath}RadianceHit1");
+
+        public static SoundStyle WindCast => new SoundStyle($"{RootAssetPath}WindCast",
+            variantSuffixesStart: 1,
+            numVariants: 2);
+
+        public static SoundStyle WindHit => new SoundStyle($"{RootAssetPath}WindHit",
+            variantSuffixesStart: 1,
+            numVariants: 2);
+
+
         /*
         public static SoundStyle BowCharge => new SoundStyle($"{RootAssetPath}BowCharge",
             variantSuffixesStart: 1,
