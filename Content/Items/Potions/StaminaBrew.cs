@@ -2,6 +2,7 @@
 using CrystalMoon.Systems.ScreenSystems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Creative;
@@ -32,16 +33,21 @@ namespace CrystalMoon.Content.Items.Potions
 
         public override void SetDefaults()
         {
-
-            Item.useTime = 17;
-            Item.useAnimation = 17;
-            Item.maxStack = 9999;
-            Item.useStyle = ItemUseStyleID.DrinkLong;
-            Item.value = Item.buyPrice(0, 3, 3, 40);
-            Item.rare = ItemRarityID.Green;
-            Item.consumable = true;
+            Item.width = 20;
+            Item.height = 26;
+            Item.useStyle = ItemUseStyleID.DrinkLiquid;
+            Item.useAnimation = 15;
+            Item.useTime = 15;
+            Item.useTurn = true;
             Item.UseSound = SoundID.Item3;
-            
+            Item.maxStack = Item.CommonMaxStack;
+            Item.consumable = true;
+            Item.rare = ItemRarityID.Green;
+            Item.value = Item.buyPrice(silver: 8);
+            /*
+            Item.buffType = ModContent.BuffType<Buffs.ExampleCrateBuff>(); // Specify an existing buff to be applied when used.
+            Item.buffTime = 3 * 60 * 60;*/
+
 
         }
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
@@ -65,34 +71,20 @@ namespace CrystalMoon.Content.Items.Potions
                 Main.DrawItemIcon(spriteBatch, Item, position, Color.Gray * 0.8f, sizeLimit);
                 return false;
             }
-
-
             return true;
         }
 
         public override bool CanUseItem(Player player)
         {
             ComboPlayer PotionPlayer = player.GetModPlayer<ComboPlayer>();
-            if (!player.HasBuff<CannotUseStaminaPotion>())
-            {
-                if (PotionPlayer.Stamina < PotionPlayer.MaxStamina)
-                {
-                    PotionPlayer.Stamina += 1;                 
-                }
-                
-                return true;
-            }
-
-
-            if (player.HasBuff<CannotUseStaminaPotion>())
-            {
-
-                return false;
-            }
-
-            return true;
+            return !player.HasBuff<CannotUseStaminaPotion>();
         }
 
-
+        public override bool? UseItem(Player player)
+        {
+            ComboPlayer potionPlayer = player.GetModPlayer<ComboPlayer>();
+            potionPlayer.Stamina += 1;
+            return true;
+        }
     }
 }

@@ -27,6 +27,7 @@ namespace CrystalMoon.Systems.Shaders
             {
                 if (_instance == null)
                     _instance = new LightningShader();
+                _instance.SetDefaults();
                 return _instance;
             }
         }
@@ -38,6 +39,20 @@ namespace CrystalMoon.Systems.Shaders
         public float Speed { get; set; }
         public float Distortion { get; set; }
         public float Power { get; set; }
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            PrimaryTexture = TextureRegistry.LightningTrail2;
+            NoiseTexture = TextureRegistry.LightningTrail3;
+            PrimaryColor = Color.White;
+            NoiseColor = Color.White;
+            Speed = 10;
+            Distortion = 0.2f;
+            Power = 1.5f;
+            BlendState = BlendState.Additive;
+        }
+
         public override void Apply()
         {
             Effect.Parameters["transformMatrix"].SetValue(TrailDrawer.WorldViewPoint2);
