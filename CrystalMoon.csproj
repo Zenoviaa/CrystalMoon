@@ -15,6 +15,7 @@
 	  <None Remove="Assets\Effects\Gradient.fx" />
 	  <None Remove="assets\effects\LightningBolt.fx" />
 	  <None Remove="Assets\Effects\MagicBloodlet.fx" />
+	  <None Remove="assets\effects\MagicCheckers.fx" />
 	  <None Remove="Assets\Effects\MagicDeeya.fx" />
 	  <None Remove="Assets\Effects\MagicGuut.fx" />
 	  <None Remove="Assets\Effects\MagicHex.fx" />

@@ -170,7 +170,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             float rounded = Easing.SpikeOutCirc(progress);
             float spikeProgress = Easing.SpikeOutExpo(completionRatio);
             float fireball = MathHelper.Lerp(rounded, spikeProgress, Easing.OutExpo(1.0f - completionRatio));
-            float midWidth = 20 * MagicProj.ScaleMultiplier;
+            float midWidth = 32 * MagicProj.ScaleMultiplier;
             return MathHelper.Lerp(0, midWidth, fireball);
         }
 
