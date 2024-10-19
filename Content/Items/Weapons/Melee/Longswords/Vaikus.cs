@@ -403,6 +403,11 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Longswords
         private bool _thrust;
         public float thrustSpeed = 0;
         public float stabRange;
+        public bool A;
+        public bool B;
+        public bool C;
+        public bool D;
+        public bool E;
         public override void AI()
         {
             base.AI();
@@ -418,41 +423,68 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Longswords
             }
 
 
-            if (_smoothedLerpValue == 0.5f)
+            if (_smoothedLerpValue >= 0.5f)
             {
                
 
-                Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero);
-                Projectile p = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Owner.Center, swingDirection * 15, ModContent.ProjectileType<VaikusProj>(), Projectile.damage * 2, 0f, Projectile.owner, 0f, 0f);
+
+                if (!A)
+                {
+                    Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero);
+                    Projectile p = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Owner.Center, swingDirection * 24, ModContent.ProjectileType<VaikusProj>(), Projectile.damage /= 2, 0f, Projectile.owner, 0f, 0f);
+
+                    A = true;
+                }
               
-            }
-
-            if (_smoothedLerpValue == 0.45f)
-            {
-                Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero);
-                Projectile p = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Owner.Center, swingDirection * 12, ModContent.ProjectileType<VaikusProj>(), Projectile.damage * 2, 0f, Projectile.owner, 0f, 0f);
 
             }
 
-            if (_smoothedLerpValue == 0.4f)
+            if (_smoothedLerpValue >= 0.45f)
             {
-                Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero);
-                Projectile p = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Owner.Center, swingDirection * 9, ModContent.ProjectileType<VaikusProj>(), Projectile.damage * 2, 0f, Projectile.owner, 0f, 0f);
+                if (!B)
+                {
+                    Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero);
+                    Projectile p = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Owner.Center, swingDirection * 20, ModContent.ProjectileType<VaikusProj>(), Projectile.damage /= 2, 0f, Projectile.owner, 0f, 0f);
 
+                    B = true;
+                }
+                
             }
 
-            if (_smoothedLerpValue == 0.35f)
+            if (_smoothedLerpValue >= 0.4f)
             {
-                Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero);
-                Projectile p = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Owner.Center, swingDirection * 6, ModContent.ProjectileType<VaikusProj>(), Projectile.damage * 2, 0f, Projectile.owner, 0f, 0f);
+                if (!C)
+                {
+                    Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero);
+                    Projectile p = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Owner.Center, swingDirection * 16, ModContent.ProjectileType<VaikusProj>(), Projectile.damage /= 2, 0f, Projectile.owner, 0f, 0f);
 
+                    C = true;
+                }
+               
             }
 
-            if (_smoothedLerpValue == 0.3f)
+            if (_smoothedLerpValue >= 0.35f)
             {
-                Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero);
-                Projectile p = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Owner.Center, swingDirection * 3, ModContent.ProjectileType<VaikusProj>(), Projectile.damage * 2, 0f, Projectile.owner, 0f, 0f);
+                if (!D)
+                {
+                    Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero);
+                    Projectile p = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Owner.Center, swingDirection * 12, ModContent.ProjectileType<VaikusProj>(), Projectile.damage /= 2, 0f, Projectile.owner, 0f, 0f);
 
+                    D = true;
+                }
+               
+            }
+
+            if (_smoothedLerpValue >= 0.3f)
+            {
+                if (!E)
+                {
+                    Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero);
+                    Projectile p = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Owner.Center, swingDirection * 8, ModContent.ProjectileType<VaikusProj>(), Projectile.damage /= 2, 0f, Projectile.owner, 0f, 0f);
+
+                    E = true;
+                }
+                
             }
 
 
@@ -618,6 +650,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Longswords
                 Projectile.hostile = false;
                 Projectile.ignoreWater = true;
                 Projectile.tileCollide = false;
+                Projectile.scale = 0.6f;
             }
 
             public override void AI()
@@ -659,7 +692,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Longswords
                     {
                         alphaCounter += 0.15f;
                     }
-                    Projectile.rotation -= 0.3f;
+                    
                 }
 
                 Projectile.spriteDirection = Projectile.direction;
@@ -736,7 +769,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Longswords
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
-                return true;
+                return false;
             }
 
             public override void PostDraw(Color lightColor)

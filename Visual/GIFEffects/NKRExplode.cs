@@ -65,7 +65,7 @@ namespace CrystalMoon.Visual.GIFEffects
         {
             Texture2D texture = ModContent.Request<Texture2D>(Texture).Value;
             Vector2 drawPosition = Projectile.Center - Main.screenPosition;
-
+            
             Rectangle rectangle = new Rectangle(0, 0, 129, 129);
             rectangle.X = ((int)trueFrame % 5) * rectangle.Width;
             rectangle.Y = (((int)trueFrame - ((int)trueFrame % 5)) / 5) * rectangle.Height;
@@ -73,7 +73,7 @@ namespace CrystalMoon.Visual.GIFEffects
             Vector2 origin = new Vector2(rectangle.Width / 2, rectangle.Height / 2);
             SpriteBatch spriteBatch = Main.spriteBatch;
             float drawRotation = Projectile.rotation;
-            float drawScale = 4f;
+            float drawScale = 3f;
 
             spriteBatch.Draw(texture, drawPosition,
                rectangle,
