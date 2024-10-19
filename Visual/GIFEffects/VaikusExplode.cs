@@ -44,9 +44,14 @@ namespace CrystalMoon.Visual.GIFEffects
                 trueFrame = minFrame;
             }
         }
-
+        public bool Rot;
         public override void AI()
         {
+            if (!Rot)
+            {
+                Projectile.rotation += Main.rand.NextFloat(-1, 1);
+                Rot = true;
+            }
             //Lighting
             Vector3 RGB = new(0.89f, 2.53f, 2.55f);
 
@@ -73,7 +78,7 @@ namespace CrystalMoon.Visual.GIFEffects
             Vector2 origin = new Vector2(rectangle.Width / 2, rectangle.Height / 2);
             SpriteBatch spriteBatch = Main.spriteBatch;
             float drawRotation = Projectile.rotation;
-            float drawScale = 5f;
+            float drawScale = 2f;
 
             spriteBatch.Draw(texture, drawPosition,
                rectangle,
