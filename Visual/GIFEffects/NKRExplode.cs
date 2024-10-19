@@ -20,7 +20,7 @@ namespace CrystalMoon.Visual.GIFEffects
             Projectile.tileCollide = false;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
-            Projectile.timeLeft = 60;
+            Projectile.timeLeft = 52;
             Projectile.localNPCHitCooldown = 6;
             Projectile.usesLocalNPCImmunity = true;
         }
