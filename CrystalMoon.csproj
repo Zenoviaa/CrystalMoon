@@ -12,6 +12,7 @@
 	  <None Remove="Assets\Effects\FirePixel.fx" />
 	  <None Remove="Assets\Effects\Fog.fx" />
 	  <None Remove="Assets\Effects\GlowDust.fx" />
+	  <None Remove="Assets\Effects\GlowingEffect.fx" />
 	  <None Remove="Assets\Effects\Gradient.fx" />
 	  <None Remove="assets\effects\LightningBolt.fx" />
 	  <None Remove="Assets\Effects\MagicBloodlet.fx" />
@@ -65,6 +66,8 @@
 	  <None Remove="Content\MoonlightMagic\Elements\BasicElement.png" />
 	  <None Remove="Localization\en-US\Mods.CrystalMoon.Elements.hjson" />
 	  <None Remove="Localization\en-US\Mods.CrystalMoon.Enchantments.hjson" />
+	  <None Remove="Visual\Dusts\GlowDust.png" />
+	  <None Remove="Visual\Dusts\SmokeDust.png" />
 	  <None Remove="Visual\GlowDust.png" />
 	</ItemGroup>
 

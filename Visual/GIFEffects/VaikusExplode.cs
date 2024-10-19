@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace CrystalMoon.Visual.GIFEffects
 {
-    internal class NKRExplode : ModProjectile
+    internal class VaikusExplode : ModProjectile
     {
         private ref float Parent => ref Projectile.ai[1];
         public override void SetStaticDefaults()
