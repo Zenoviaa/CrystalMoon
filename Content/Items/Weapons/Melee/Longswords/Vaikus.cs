@@ -769,7 +769,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Longswords
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
-                return false;
+                return true;
             }
 
             public override void PostDraw(Color lightColor)
