@@ -47,19 +47,12 @@ namespace CrystalMoon.Visual.GIFEffects
 
         public override void AI()
         {
-            Projectile.Center = Main.projectile[(int)Parent].Center;
-            Projectile.Center += (Projectile.rotation + MathHelper.ToRadians(90)).ToRotationVector2() * 18; 
-          //  Player owner = Main.player[Projectile.owner];
-        //    Projectile.Center = owner.Center;
-          //  owner.immune = true;
-           // owner.SetImmuneTimeForAllTypes(3);
-
             //Lighting
             Vector3 RGB = new(0.89f, 2.53f, 2.55f);
 
             // The multiplication here wasn't doing anything
             Lighting.AddLight(Projectile.position, RGB.X, RGB.Y, RGB.Z);
-            UpdateFrame(0.3f, 1, 30);
+            UpdateFrame(1f, 1, 30);
         }
 
 
@@ -80,7 +73,7 @@ namespace CrystalMoon.Visual.GIFEffects
             Vector2 origin = new Vector2(rectangle.Width / 2, rectangle.Height / 2);
             SpriteBatch spriteBatch = Main.spriteBatch;
             float drawRotation = Projectile.rotation;
-            float drawScale = 3f;
+            float drawScale = 5f;
 
             spriteBatch.Draw(texture, drawPosition,
                rectangle,

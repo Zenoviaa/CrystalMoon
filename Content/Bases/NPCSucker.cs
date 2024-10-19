@@ -35,6 +35,7 @@ namespace CrystalMoon.Content.Bases
             _targets = new();
         }
 
+      //  public bool IgnoreKBResist;
         public bool HasSuckerTarget(NPC npc)
         {
             return _targets.Find(x => x.npcToPull == npc.whoAmI) != null;

@@ -67,6 +67,9 @@ Mods: {
 			VaelSpecial.DisplayName: Vael Special
 			NRStaminaSlash.DisplayName: N R Stamina Slash
 			NRSwordSlash.DisplayName: N R Sword Slash
+			NKRMoped.DisplayName: N K R Moped
+			NKRExplode.DisplayName: N K R Explode
+			FlameExplosion.DisplayName: Flame Explosion
 		}
 
 		Buffs: {
