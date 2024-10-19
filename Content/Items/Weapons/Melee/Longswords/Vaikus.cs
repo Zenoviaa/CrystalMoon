@@ -650,7 +650,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Longswords
                 Projectile.hostile = false;
                 Projectile.ignoreWater = true;
                 Projectile.tileCollide = false;
-                Projectile.scale = 0.6f;
+                Projectile.scale = 0.7f;
             }
 
             public override void AI()
