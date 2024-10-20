@@ -110,7 +110,7 @@ namespace CrystalMoon.Registries
             variantSuffixesStart: 1,
             numVariants: 2);
 
-        public static SoundStyle NatureHit => new SoundStyle($"{RootAssetPath}NatureHit",
+        public static SoundStyle NatureHit => new SoundStyle($"{RootAssetPath}NaturalHit",
           variantSuffixesStart: 1,
           numVariants: 2);
         /*
