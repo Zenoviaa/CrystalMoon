@@ -465,7 +465,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             SoundEngine.PlaySound(spearHit2, Projectile.position);
 
             modifiers.FinalDamage *= 3.5f;
-            modifiers.Knockback *= 6;
+            modifiers.Knockback *= 2;
 
         }
 
