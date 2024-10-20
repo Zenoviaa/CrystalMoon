@@ -24,8 +24,8 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             CastSound = castStyle;
 
             SoundStyle hitStyle = SoundRegistry.NatureHit;
-            castStyle.PitchVariance = 0.15f;
-            HitSound = castStyle;
+            hitStyle.PitchVariance = 0.15f;
+            HitSound = hitStyle;
         }
 
         public override Color GetElementColor()
