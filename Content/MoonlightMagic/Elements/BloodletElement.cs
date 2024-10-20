@@ -7,12 +7,25 @@ using CrystalMoon.Visual.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic.Elements
 {
     internal class BloodletElement : BaseElement
     {
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            SoundStyle castStyle = SoundRegistry.BloodletCast;
+            castStyle.PitchVariance = 0.15f;
+            CastSound = castStyle;
+
+            SoundStyle hitStyle = SoundRegistry.BloodletHit;
+            hitStyle.PitchVariance = 0.15f;
+            HitSound = hitStyle;
+        }
 
         public override void AI()
         {

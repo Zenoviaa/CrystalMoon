@@ -1,4 +1,5 @@
-﻿using CrystalMoon.Systems.MiscellaneousMath;
+﻿using CrystalMoon.Registries;
+using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Systems.Particles;
 using CrystalMoon.Systems.ScreenSystems;
 using CrystalMoon.Systems.Shaders;
@@ -6,6 +7,8 @@ using CrystalMoon.Visual.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic.Elements
@@ -14,6 +17,18 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
     {
         private int trailMode = 0;
         private LightningTrail _lightningTrail;
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            SoundStyle castStyle = SoundID.DD2_LightningAuraZap;
+            castStyle.PitchVariance = 0.15f;
+            CastSound = castStyle;
+
+            SoundStyle hitStyle = SoundID.DD2_LightningBugZap;
+            hitStyle.PitchVariance = 0.15f;
+            HitSound = hitStyle;
+        }
+
         public override Color GetElementColor()
         {
             return new Color(120, 215, 255);

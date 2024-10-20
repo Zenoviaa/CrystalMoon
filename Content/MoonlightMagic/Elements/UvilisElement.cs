@@ -7,6 +7,7 @@ using CrystalMoon.Visual.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic.Elements
@@ -14,6 +15,19 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
     internal class UvilisElement : BaseElement
     {
         int trailingMode = 0;
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            SoundStyle uvilisCastStyle = SoundRegistry.UvilisCast;
+            uvilisCastStyle.PitchVariance = 0.15f;
+            CastSound = uvilisCastStyle;
+
+            SoundStyle uvilisHitStyle = SoundRegistry.UvilisHit;
+            uvilisHitStyle.PitchVariance = 0.15f;
+            HitSound = uvilisHitStyle;
+        }
+
         public override bool DrawTextShader(SpriteBatch spriteBatch, Item item, DrawableTooltipLine line, ref int yOffset)
         {
             base.DrawTextShader(spriteBatch, item, line, ref yOffset);

@@ -4,22 +4,30 @@ using CrystalMoon.Systems.Particles;
 using CrystalMoon.Systems.ScreenSystems;
 using CrystalMoon.Systems.Shaders;
 using CrystalMoon.Visual.Particles;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.ModLoader;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
 using Terraria.Graphics.Shaders;
-using Terraria.Graphics;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic.Elements
 {
     internal class PrismaticElement : BaseElement
     {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            SoundStyle castStyle = SoundID.Item28;
+            castStyle.PitchVariance = 0.15f;
+            CastSound = castStyle;
+
+            SoundStyle hitStyle = SoundRegistry.PrismaticHit;
+            castStyle.PitchVariance = 0.15f;
+            HitSound = castStyle;
+        }
+
         public override Color GetElementColor()
         {
             return Main.DiscoColor;
@@ -89,7 +97,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             MiscShaderData miscShaderData = GameShaders.Misc["RainbowRod"];
             miscShaderData.UseSaturation(-2.8f);
             miscShaderData.UseOpacity(4f);
-            TrailDrawer.DrawWithMiscShader(Main.spriteBatch, 
+            TrailDrawer.DrawWithMiscShader(Main.spriteBatch,
                 MagicProj.OldPos, Projectile.oldRot, StripColors, StripWidth, miscShaderData, offset: -Main.screenPosition + Projectile.Size / 2);
         }
 

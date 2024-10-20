@@ -82,7 +82,37 @@ namespace CrystalMoon.Registries
             variantSuffixesStart: 1,
             numVariants: 2);
 
+        public static SoundStyle UvilisCast => new SoundStyle($"{RootAssetPath}UvilisCast",
+            variantSuffixesStart: 1,
+            numVariants: 2);
 
+        public static SoundStyle UvilisHit => new SoundStyle($"{RootAssetPath}UvilisHit",
+            variantSuffixesStart: 1,
+            numVariants: 2);
+
+        public static SoundStyle PrismaticHit => new SoundStyle($"{RootAssetPath}PrismaticHit",
+            variantSuffixesStart: 1,
+            numVariants: 1);
+
+        public static SoundStyle BloodletCast => new SoundStyle($"{RootAssetPath}BloodletCast",
+            variantSuffixesStart: 1,
+            numVariants: 1);
+
+        public static SoundStyle BloodletHit => new SoundStyle($"{RootAssetPath}BloodletHit",
+            variantSuffixesStart: 1,
+            numVariants: 2);
+
+        public static SoundStyle AutomationCast => new SoundStyle($"{RootAssetPath}BloodletCast",
+            variantSuffixesStart: 1,
+            numVariants: 1);
+
+        public static SoundStyle AutomationHit => new SoundStyle($"{RootAssetPath}BloodletHit",
+            variantSuffixesStart: 1,
+            numVariants: 2);
+
+        public static SoundStyle NatureHit => new SoundStyle($"{RootAssetPath}NatureHit",
+          variantSuffixesStart: 1,
+          numVariants: 2);
         /*
         public static SoundStyle BowCharge => new SoundStyle($"{RootAssetPath}BowCharge",
             variantSuffixesStart: 1,

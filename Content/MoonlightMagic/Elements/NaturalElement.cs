@@ -8,12 +8,26 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic.Elements
 {
     internal class NaturalElement : BaseElement
     {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            SoundStyle castStyle = SoundID.Item101;
+            castStyle.PitchVariance = 0.15f;
+            CastSound = castStyle;
+
+            SoundStyle hitStyle = SoundRegistry.NatureHit;
+            castStyle.PitchVariance = 0.15f;
+            HitSound = castStyle;
+        }
+
         public override Color GetElementColor()
         {
             return ColorUtil.NaturalGreen;

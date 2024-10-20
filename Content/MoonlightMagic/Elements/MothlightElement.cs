@@ -1,4 +1,5 @@
-﻿using CrystalMoon.Systems.MiscellaneousMath;
+﻿using CrystalMoon.Registries;
+using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Systems.Particles;
 using CrystalMoon.Systems.ScreenSystems;
 using CrystalMoon.Systems.Shaders;
@@ -6,13 +7,27 @@ using CrystalMoon.Visual.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
 using Terraria.Graphics.Shaders;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic.Elements
 {
     internal class MothlightElement : BaseElement
     {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            SoundStyle castStyle = SoundID.Item28;
+            castStyle.PitchVariance = 0.15f;
+            CastSound = castStyle;
+
+            SoundStyle hitStyle = SoundRegistry.PrismaticHit;
+            castStyle.PitchVariance = 0.15f;
+            HitSound = castStyle;
+        }
+
         public override Color GetElementColor()
         {
             return new Color(27, 157, 241);
