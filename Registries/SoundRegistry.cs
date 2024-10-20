@@ -90,9 +90,7 @@ namespace CrystalMoon.Registries
             variantSuffixesStart: 1,
             numVariants: 2);
 
-        public static SoundStyle PrismaticHit => new SoundStyle($"{RootAssetPath}PrismaticHit",
-            variantSuffixesStart: 1,
-            numVariants: 1);
+        public static SoundStyle PrismaticHit => new SoundStyle($"{RootAssetPath}PrismaticHit1");
 
         public static SoundStyle BloodletCast => new SoundStyle($"{RootAssetPath}BloodletCast1");
 
