@@ -134,7 +134,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
             lightningShader.PrimaryColor = new Color(207, 150, 140);
             lightningShader.NoiseColor = new Color(60, 107, 128);
             lightningShader.Speed = 5;
-            lightningShader.BlendState = BlendState.AlphaBlend;
+            lightningShader.BlendState = BlendState.Additive;
 
             _lightningTrail ??= new();
             //Making this number big made like the field wide
