@@ -121,6 +121,14 @@ namespace CrystalMoon.Registries
             variantSuffixesStart: 1,
             numVariants: 2);
 
+        public static SoundStyle GuutCast => new SoundStyle($"{RootAssetPath}GuutCast",
+            variantSuffixesStart: 1,
+            numVariants: 2);
+
+        public static SoundStyle GuutHit => new SoundStyle($"{RootAssetPath}GuutHit",
+            variantSuffixesStart: 1,
+            numVariants: 2);
+
 
         public static SoundStyle DeeyaCast => new SoundStyle($"{RootAssetPath}DeeyaCast",
             variantSuffixesStart: 1,

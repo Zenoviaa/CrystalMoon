@@ -23,11 +23,11 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
         public override void SetDefaults()
         {
             base.SetDefaults();
-            SoundStyle castStyle = SoundID.Item43;
+            SoundStyle castStyle = SoundRegistry.GuutCast;
             castStyle.PitchVariance = 0.15f;
             CastSound = castStyle;
 
-            SoundStyle hitStyle = SoundRegistry.BasicMagicHit;
+            SoundStyle hitStyle = SoundRegistry.GuutHit;
             hitStyle.PitchVariance = 0.15f;
             HitSound = hitStyle;
         }
