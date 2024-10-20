@@ -4,6 +4,7 @@ using CrystalMoon.Systems;
 using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Systems.Players;
 using CrystalMoon.Systems.Shaders;
+using CrystalMoon.Systems.Shaders.MagicTrails;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;

@@ -28,6 +28,7 @@ namespace CrystalMoon.Systems.Particles
 
         protected sealed override void Register()
         {
+      
             ModTypeLookup<Particle>.Register(this);
             ParticleLoader.Particles ??= new List<Particle>();
             ParticleLoader.Particles.Add(this);

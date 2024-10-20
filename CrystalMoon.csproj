@@ -9,6 +9,8 @@
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Remove="Assets\Effects\DyeFirePixel.fx" />
+	  <None Remove="Assets\Effects\DyeInvisible.fx" />
+	  <None Remove="Assets\Effects\DyeMothlight.fx" />
 	  <None Remove="Assets\Effects\FirePixel.fx" />
 	  <None Remove="Assets\Effects\Fog.fx" />
 	  <None Remove="Assets\Effects\GlowDust.fx" />
@@ -30,7 +32,6 @@
 	  <None Remove="Assets\Effects\NightClouds.fx" />
 	  <None Remove="Assets\Effects\PixelMagicBloodlet.fx" />
 	  <None Remove="Assets\Effects\PixelMagicGuut.fx" />
-	  <None Remove="Assets\Effects\PixelMagicHex.fx" />
 	  <None Remove="Assets\Effects\PixelMagicNatural.fx" />
 	  <None Remove="Assets\Effects\PixelMagicNormal.fx" />
 	  <None Remove="Assets\Effects\PixelMagicPhantasmal.fx" />

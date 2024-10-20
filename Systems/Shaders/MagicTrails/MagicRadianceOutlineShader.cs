@@ -4,34 +4,20 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 
-namespace CrystalMoon.Systems.Shaders
+namespace CrystalMoon.Systems.Shaders.MagicTrails
 {
-    internal class LightningShader : BaseShader
+    internal class MagicRadianceOutlineShader : BaseShader
     {
-        private static LightningShader _instance;
-        public LightningShader()
-        {
-            Data = ShaderRegistry.LightningBolt;
-            PrimaryTexture = TextureRegistry.LightningTrail2;
-            NoiseTexture = TextureRegistry.LightningTrail3;
-            PrimaryColor = Color.White;
-            NoiseColor = Color.White;
-            Speed = 10;
-            Distortion = 0.2f;
-            Power = 1.5f;
-        }
-
-        public static LightningShader Instance
+        private static MagicRadianceOutlineShader _instance;
+        public static MagicRadianceOutlineShader Instance
         {
             get
             {
-                if (_instance == null)
-                    _instance = new LightningShader();
+                _instance ??= new();
                 _instance.SetDefaults();
                 return _instance;
             }
         }
-
         public Asset<Texture2D> PrimaryTexture { get; set; }
         public Asset<Texture2D> NoiseTexture { get; set; }
         public Color PrimaryColor { get; set; }
@@ -39,18 +25,16 @@ namespace CrystalMoon.Systems.Shaders
         public float Speed { get; set; }
         public float Distortion { get; set; }
         public float Power { get; set; }
-
         public override void SetDefaults()
         {
             base.SetDefaults();
-            PrimaryTexture = TextureRegistry.LightningTrail2;
-            NoiseTexture = TextureRegistry.LightningTrail3;
+            PrimaryTexture = TextureRegistry.DottedTrail;
+            NoiseTexture = TextureRegistry.NoiseTextureClouds3;
             PrimaryColor = Color.White;
             NoiseColor = Color.White;
-            Speed = 10;
+            Speed = 5;
             Distortion = 0.2f;
             Power = 1.5f;
-            BlendState = BlendState.Additive;
         }
 
         public override void Apply()

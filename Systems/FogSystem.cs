@@ -78,13 +78,12 @@ namespace CrystalMoon.Systems
 
             //Apply Fog Shader
             var fogShader = FogShader.Instance;
-            fogShader.FogTexture = TextureRegistry.NoiseTextureClouds3;
             fogShader.ProgressPower = 0.75f;
             fogShader.EdgePower = 1f;
             fogShader.Speed = 0.05f;
-          
             fogShader.Apply();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, fogShader.Effect, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, Main.Rasterizer,
+                fogShader.Effect, Main.GameViewMatrix.TransformationMatrix);
 
             foreach(var kvp in _fogIndex)
             {

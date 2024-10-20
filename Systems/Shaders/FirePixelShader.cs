@@ -1,4 +1,5 @@
 ﻿using CrystalMoon.Registries;
+using CrystalMoon.Systems.Shaders.MagicTrails;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -9,26 +10,12 @@ namespace CrystalMoon.Systems.Shaders
     internal class FirePixelShader : BaseShader
     {
         private static FirePixelShader _instance;
-        public FirePixelShader()
-        {
-            Data = ShaderRegistry.PixelMagicFire;
-            PrimaryTexture = TextureRegistry.DottedTrail;
-            NoiseTexture = TextureRegistry.NoiseTextureClouds3;
-   
-            PrimaryColor = Color.White;
-            NoiseColor = Color.White;
-
-            Speed = 5;
-            Distortion = 0.2f;
-            Power = 1.5f;
-        }
-
         public static FirePixelShader Instance
         {
             get
             {
-                if (_instance == null)
-                    _instance = new FirePixelShader();
+                _instance ??= new();
+                _instance.SetDefaults();
                 return _instance;
             }
         }
@@ -44,6 +31,19 @@ namespace CrystalMoon.Systems.Shaders
         public float Speed { get; set; }
         public float Distortion { get; set; }
         public float Power { get; set; }
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            PrimaryTexture = TextureRegistry.DottedTrail;
+            NoiseTexture = TextureRegistry.NoiseTextureClouds3;
+            PrimaryColor = Color.White;
+            NoiseColor = Color.White;
+            Speed = 5;
+            Distortion = 0.2f;
+            Power = 1.5f;
+        }
+
         public override void Apply()
         {
             Data.UseColor(PrimaryColor);

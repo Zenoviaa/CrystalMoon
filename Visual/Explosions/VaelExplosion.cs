@@ -1,6 +1,6 @@
 ﻿using CrystalMoon.Content.Bases;
 using CrystalMoon.Systems.MiscellaneousMath;
-using CrystalMoon.Systems.Shaders;
+using CrystalMoon.Systems.Shaders.MagicTrails;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;

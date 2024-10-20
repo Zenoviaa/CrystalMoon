@@ -5,28 +5,17 @@ using ReLogic.Content;
 using System;
 using Terraria;
 
-namespace CrystalMoon.Systems.Shaders
+namespace CrystalMoon.Systems.Shaders.MagicTrails
 {
     internal class SimpleTrailShader : BaseShader
     {
         private static SimpleTrailShader _instance;
-        public SimpleTrailShader()
-        {
-            Data = ShaderRegistry.SimpleTrailEffect;
-            TrailingTexture = TextureRegistry.StarTrail;
-            SecondaryTrailingTexture = TextureRegistry.StarTrail;
-            TertiaryTrailingTexture = TextureRegistry.StarTrail;
-            PrimaryColor = Color.White;
-            SecondaryColor = Color.White;
-            Speed = 5;
-        }
-
         public static SimpleTrailShader Instance
         {
             get
             {
-                if (_instance == null)
-                    _instance = new SimpleTrailShader();
+                _instance ??= new();
+                _instance.SetDefaults();
                 return _instance;
             }
         }
@@ -37,6 +26,16 @@ namespace CrystalMoon.Systems.Shaders
         public Color PrimaryColor { get; set; }
         public Color SecondaryColor { get; set; }
         public float Speed { get; set; }
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            TrailingTexture = TextureRegistry.StarTrail;
+            SecondaryTrailingTexture = TextureRegistry.StarTrail;
+            TertiaryTrailingTexture = TextureRegistry.StarTrail;
+            PrimaryColor = Color.White;
+            SecondaryColor = Color.White;
+            Speed = 5;
+        }
 
         public override void Apply()
         {

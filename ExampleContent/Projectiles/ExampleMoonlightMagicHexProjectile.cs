@@ -1,6 +1,7 @@
 ﻿using CrystalMoon.Registries;
 using CrystalMoon.Systems.Particles;
 using CrystalMoon.Systems.Shaders;
+using CrystalMoon.Systems.Shaders.MagicTrails;
 using CrystalMoon.Visual.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

@@ -4,33 +4,20 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 
-namespace CrystalMoon.Systems.Shaders
+namespace CrystalMoon.Systems.Shaders.MagicTrails
 {
     internal class MagicCheckersShader : BaseShader
     {
         private static MagicCheckersShader _instance;
-        public MagicCheckersShader()
-        {
-            Data = ShaderRegistry.MagicTrailCheckers;
-            InnerTexture = TextureRegistry.CheckerTrail;
-            TrailTexture = TextureRegistry.GlowTrailNoBlack;
-            NoiseTexture = TextureRegistry.NoiseTextureClouds3;
-            TrailOutlineTexture = TextureRegistry.GlowTrailNoBlackOutline;
-            Speed = 5;
-            Distortion = 0.2f;
-            Power = 1.5f;
-        }
-
         public static MagicCheckersShader Instance
         {
             get
             {
-                if (_instance == null)
-                    _instance = new MagicCheckersShader();
+                _instance ??= new();
+                _instance.SetDefaults();
                 return _instance;
             }
         }
-
         public Asset<Texture2D> InnerTexture { get; set; }
         public Asset<Texture2D> TrailTexture { get; set; }
         public Asset<Texture2D> NoiseTexture { get; set; }

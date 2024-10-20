@@ -2,6 +2,8 @@
 using CrystalMoon.Systems.Particles;
 using CrystalMoon.Systems.ScreenSystems;
 using CrystalMoon.Systems.Shaders;
+using CrystalMoon.Systems.Shaders.Dyes;
+using CrystalMoon.Systems.Shaders.MagicTrails;
 using CrystalMoon.Visual.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -112,7 +114,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
         #region Visuals
         public override void DrawForm(SpriteBatch spriteBatch, Texture2D formTexture, Vector2 drawPos, Color drawColor, Color lightColor, float drawRotation, float drawScale)
         {
-            var shader = PixelMagicHexShader.Instance;
+            var shader = DyeMothlightShader.Instance;
             shader.NoiseTexture = TextureRegistry.NoiseTextureCloudsSmall;
             shader.PrimaryColor = new Color(195, 158, 255);
             shader.NoiseColor = new Color(78, 76, 180);//new Color(78, 76, 180);

@@ -4,6 +4,7 @@ using CrystalMoon.Systems;
 using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Systems.Players;
 using CrystalMoon.Systems.Shaders;
+using CrystalMoon.Systems.Shaders.MagicTrails;
 using CrystalMoon.Visual.Explosions;
 using CrystalMoon.Visual.GIFEffects;
 using CrystalMoon.Visual.Gores.NKR;
@@ -335,7 +336,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
         {
             //Trail
             SpriteBatch spriteBatch = Main.spriteBatch;
-            LightningShader lightningShader = LightningShader.Instance;
+            LightningBoltShader lightningShader = LightningBoltShader.Instance;
             lightningShader.PrimaryColor = new Color(207, 150, 140);
             lightningShader.NoiseColor = new Color(60, 107, 128);
             lightningShader.Speed = 5;
@@ -504,7 +505,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
         {
             //Trail
             SpriteBatch spriteBatch = Main.spriteBatch;
-            LightningShader lightningShader = LightningShader.Instance;
+            LightningBoltShader lightningShader = LightningBoltShader.Instance;
             lightningShader.PrimaryColor = new Color(207, 150, 140);
             lightningShader.NoiseColor = new Color(60, 107, 128);
             lightningShader.Speed = 5;
@@ -819,7 +820,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
         {
             //Trail
             SpriteBatch spriteBatch = Main.spriteBatch;
-            LightningShader lightningShader = LightningShader.Instance;
+            LightningBoltShader lightningShader = LightningBoltShader.Instance;
             lightningShader.PrimaryColor = new Color(207, 150, 140);
             lightningShader.NoiseColor = new Color(60, 107, 128);
             lightningShader.Speed = 5;

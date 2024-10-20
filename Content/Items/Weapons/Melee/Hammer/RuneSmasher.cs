@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using CrystalMoon.Systems;
 using CrystalMoon.Content.Items.Weapons.Melee.Swords;
 using CrystalMoon.Visual.Explosions;
+using CrystalMoon.Systems.Shaders.MagicTrails;
 
 
 namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
@@ -451,7 +452,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Hammer
         public override bool PreDraw(ref Color lightColor)
         {
             SpriteBatch spriteBatch = Main.spriteBatch;
-            LightningShader lightningShader = LightningShader.Instance;
+            LightningBoltShader lightningShader = LightningBoltShader.Instance;
             lightningShader.PrimaryColor = Color.White;
             lightningShader.NoiseColor = Color.DarkGoldenrod;
             lightningShader.Speed = 5;

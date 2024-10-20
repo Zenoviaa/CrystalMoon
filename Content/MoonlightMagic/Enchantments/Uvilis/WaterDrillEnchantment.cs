@@ -17,6 +17,7 @@ using CrystalMoon.Content.MoonlightMagic.Enchantments.Radiance;
 using CrystalMoon.Systems.Shaders;
 using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Content.Bases;
+using CrystalMoon.Systems.Shaders.MagicTrails;
 
 namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Uvilis
 {

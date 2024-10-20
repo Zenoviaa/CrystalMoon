@@ -2,39 +2,22 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using System;
 using Terraria;
 
-namespace CrystalMoon.Systems.Shaders
+namespace CrystalMoon.Systems.Shaders.MagicTrails
 {
     internal class MagicVaellusShader : BaseShader
     {
         private static MagicVaellusShader _instance;
-        public MagicVaellusShader()
-        {
-            Data = ShaderRegistry.MagicTrailVaellus;
-            PrimaryTexture = TextureRegistry.DottedTrail;
-            NoiseTexture = TextureRegistry.NoiseTextureClouds3;
-            OutlineTexture = TextureRegistry.DottedTrailOutline;
-            PrimaryColor = Color.White;
-            NoiseColor = Color.White;
-            OutlineColor = Color.White;
-            Speed = 5;
-            Distortion = 0.2f;
-            Power = 1.5f;
-            Alpha = 1.0f;
-        }
-
         public static MagicVaellusShader Instance
         {
             get
             {
-                if (_instance == null)
-                    _instance = new MagicVaellusShader();
+                _instance ??= new();
+                _instance.SetDefaults();
                 return _instance;
             }
         }
-
         public Asset<Texture2D> PrimaryTexture { get; set; }
         public Asset<Texture2D> NoiseTexture { get; set; }
         public Asset<Texture2D> OutlineTexture { get; set; }
@@ -82,9 +65,28 @@ namespace CrystalMoon.Systems.Shaders
     internal class PixelMagicVaellusShader : BaseShader
     {
         private static PixelMagicVaellusShader _instance;
-        public PixelMagicVaellusShader()
+        public static PixelMagicVaellusShader Instance
         {
-            Data = ShaderRegistry.PixelMagicVaellus;
+            get
+            {
+                _instance ??= new();
+                _instance.SetDefaults();
+                return _instance;
+            }
+        }
+        public Asset<Texture2D> PrimaryTexture { get; set; }
+        public Asset<Texture2D> NoiseTexture { get; set; }
+        public Asset<Texture2D> OutlineTexture { get; set; }
+        public Color PrimaryColor { get; set; }
+        public Color NoiseColor { get; set; }
+        public Color OutlineColor { get; set; }
+        public float Speed { get; set; }
+        public float Distortion { get; set; }
+        public float Power { get; set; }
+        public float Blend { get; set; }
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
             PrimaryTexture = TextureRegistry.LightningTrail2;
             NoiseTexture = TextureRegistry.LightningTrail3;
             OutlineTexture = TextureRegistry.LightningTrail2Outline;
@@ -99,26 +101,6 @@ namespace CrystalMoon.Systems.Shaders
             Blend = 0.4f;
         }
 
-        public static PixelMagicVaellusShader Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new PixelMagicVaellusShader();
-                return _instance;
-            }
-        }
-
-        public Asset<Texture2D> PrimaryTexture { get; set; }
-        public Asset<Texture2D> NoiseTexture { get; set; }
-        public Asset<Texture2D> OutlineTexture { get; set; }
-        public Color PrimaryColor { get; set; }
-        public Color NoiseColor { get; set; }
-        public Color OutlineColor { get; set; }
-        public float Speed { get; set; }
-        public float Distortion { get; set; }
-        public float Power { get; set; }
-        public float Blend { get; set; }
         public override void Apply()
         {
             Effect.Parameters["transformMatrix"].SetValue(TrailDrawer.WorldViewPoint2);

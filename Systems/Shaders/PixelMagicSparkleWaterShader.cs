@@ -1,4 +1,5 @@
 ﻿using CrystalMoon.Registries;
+using CrystalMoon.Systems.Shaders.MagicTrails;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -9,25 +10,12 @@ namespace CrystalMoon.Systems.Shaders
     internal class PixelMagicSparkleWaterShader : BaseShader
     {
         private static PixelMagicSparkleWaterShader _instance;
-        public PixelMagicSparkleWaterShader()
-        {
-            Data = ShaderRegistry.PixelMagicWater;
-            NoiseTexture = TextureRegistry.NoiseTextureClouds3;
-            OutlineTexture = TextureRegistry.DottedTrailOutline;
-            PrimaryColor = Color.White;
-            NoiseColor = Color.White;
-            OutlineColor = Color.White;
-            Speed = 5;
-            Distortion = 0.2f;
-            Power = 1.5f;
-        }
-
         public static PixelMagicSparkleWaterShader Instance
         {
             get
             {
-                if (_instance == null)
-                    _instance = new PixelMagicSparkleWaterShader();
+                _instance ??= new();
+                _instance.SetDefaults();
                 return _instance;
             }
         }
@@ -41,6 +29,18 @@ namespace CrystalMoon.Systems.Shaders
         public float Distortion { get; set; }
         public float Power { get; set; }
         public float Threshold { get; set; }
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            NoiseTexture = TextureRegistry.NoiseTextureClouds3;
+            OutlineTexture = TextureRegistry.DottedTrailOutline;
+            PrimaryColor = Color.White;
+            NoiseColor = Color.White;
+            OutlineColor = Color.White;
+            Speed = 5;
+            Distortion = 0.2f;
+            Power = 1.5f;
+        }
         public override void Apply()
         {
             Data.UseImage1(NoiseTexture);

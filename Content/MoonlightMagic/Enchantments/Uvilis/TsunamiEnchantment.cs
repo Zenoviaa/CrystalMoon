@@ -18,6 +18,7 @@ using CrystalMoon.Systems.Shaders;
 using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Content.Bases;
 using Terraria.ID;
+using CrystalMoon.Systems.Shaders.MagicTrails;
 
 namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Uvilis
 {

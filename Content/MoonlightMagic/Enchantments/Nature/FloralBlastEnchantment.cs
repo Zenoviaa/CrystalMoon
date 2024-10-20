@@ -5,6 +5,7 @@ using CrystalMoon.Registries;
 using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Systems.ScreenSystems;
 using CrystalMoon.Systems.Shaders;
+using CrystalMoon.Systems.Shaders.MagicTrails;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;

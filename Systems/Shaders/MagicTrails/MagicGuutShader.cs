@@ -4,14 +4,32 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 
-namespace CrystalMoon.Systems.Shaders
+namespace CrystalMoon.Systems.Shaders.MagicTrails
 {
     internal class MagicGuutShader : BaseShader
     {
         private static MagicGuutShader _instance;
-        public MagicGuutShader()
+        public static MagicGuutShader Instance
         {
-            Data = ShaderRegistry.MagicTrailGuut;
+            get
+            {
+                _instance ??= new();
+                _instance.SetDefaults();
+                return _instance;
+            }
+        }
+        public Asset<Texture2D> PrimaryTexture { get; set; }
+        public Asset<Texture2D> NoiseTexture { get; set; }
+        public Asset<Texture2D> OutlineTexture { get; set; }
+        public Color PrimaryColor { get; set; }
+        public Color NoiseColor { get; set; }
+        public Color OutlineColor { get; set; }
+        public float Speed { get; set; }
+        public float Distortion { get; set; }
+        public float Power { get; set; }
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
             PrimaryTexture = TextureRegistry.DottedTrail;
             NoiseTexture = TextureRegistry.NoiseTextureClouds3;
             OutlineTexture = TextureRegistry.DottedTrailOutline;
@@ -23,25 +41,6 @@ namespace CrystalMoon.Systems.Shaders
             Power = 1.5f;
         }
 
-        public static MagicGuutShader Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new MagicGuutShader();
-                return _instance;
-            }
-        }
-
-        public Asset<Texture2D> PrimaryTexture { get; set; }
-        public Asset<Texture2D> NoiseTexture { get; set; }
-        public Asset<Texture2D> OutlineTexture { get; set; }
-        public Color PrimaryColor { get; set; }
-        public Color NoiseColor { get; set; }
-        public Color OutlineColor { get; set; }
-        public float Speed { get; set; }
-        public float Distortion { get; set; }
-        public float Power { get; set; }
         public override void Apply()
         {
             Effect.Parameters["transformMatrix"].SetValue(TrailDrawer.WorldViewPoint2);

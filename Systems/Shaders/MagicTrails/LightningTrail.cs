@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 
-namespace CrystalMoon.Systems.Shaders
+namespace CrystalMoon.Systems.Shaders.MagicTrails
 {
     internal class LightningTrail
     {
@@ -32,7 +32,7 @@ namespace CrystalMoon.Systems.Shaders
 
                 Vector2 normalDir = (prevPosition - nextPosition).SafeNormalize(Vector2.One).RotatedBy(MathHelper.PiOver2);
                 float length = Main.rand.NextFromList(-1, 1) * Main.rand.NextFloat(LightningRandomOffsetRange, LightningRandomOffsetRange);
-                offsets[i] = (normalDir * length) + Main.rand.NextVector2Circular(LightningRandomExpand, LightningRandomExpand);
+                offsets[i] = normalDir * length + Main.rand.NextVector2Circular(LightningRandomExpand, LightningRandomExpand);
             }
             offsets[offsets.Length - 1] = Vector2.Zero;
             _offsets = offsets;
@@ -43,7 +43,7 @@ namespace CrystalMoon.Systems.Shaders
             if (_offsets == null)
                 return;
             Vector2[] lightningTrailPos = new Vector2[oldPos.Length];
-            for(int i = 0; i < lightningTrailPos.Length && i < _offsets.Length; i++)
+            for (int i = 0; i < lightningTrailPos.Length && i < _offsets.Length; i++)
             {
                 lightningTrailPos[i] = oldPos[i] + _offsets[i];
             }

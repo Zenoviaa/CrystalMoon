@@ -5,6 +5,7 @@ using CrystalMoon.Systems;
 using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Systems.Players;
 using CrystalMoon.Systems.Shaders;
+using CrystalMoon.Systems.Shaders.MagicTrails;
 using CrystalMoon.Visual.Explosions;
 using CrystalMoon.Visual.GIFEffects;
 using Microsoft.Xna.Framework;

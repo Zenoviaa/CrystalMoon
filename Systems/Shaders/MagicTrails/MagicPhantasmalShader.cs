@@ -3,34 +3,33 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 
-namespace CrystalMoon.Systems.Shaders
+namespace CrystalMoon.Systems.Shaders.MagicTrails
 {
-    internal class MagicNormalShader : BaseShader
+    internal class MagicPhantasmalShader : BaseShader
     {
-        private static MagicNormalShader _instance;
-        public MagicNormalShader()
+        private static MagicPhantasmalShader _instance;
+        public static MagicPhantasmalShader Instance
         {
-            Data = ShaderRegistry.MagicTrailNormal;
+            get
+            {
+                _instance ??= new();
+                _instance.SetDefaults();
+                return _instance;
+            }
+        }
+        public Asset<Texture2D> PrimaryTexture { get; set; }
+        public Asset<Texture2D> NoiseTexture { get; set; }
+        public float Speed { get; set; }
+        public float Repeats { get; set; }
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
             PrimaryTexture = TextureRegistry.StarTrail;
             NoiseTexture = TextureRegistry.StarTrail;
             Speed = 5;
             Repeats = 1;
         }
 
-        public static MagicNormalShader Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new MagicNormalShader();
-                return _instance;
-            }
-        }
-
-        public Asset<Texture2D> PrimaryTexture { get; set; }
-        public Asset<Texture2D> NoiseTexture { get; set; }
-        public float Speed { get; set; }
-        public float Repeats { get; set; }
         public override void Apply()
         {
             Effect.Parameters["transformMatrix"].SetValue(TrailDrawer.WorldViewPoint2);

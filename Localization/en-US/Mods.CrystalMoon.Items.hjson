@@ -381,3 +381,13 @@ PrimeRing: {
 	DisplayName: Prime Ring
 	Tooltip: ""
 }
+
+MothlightDye: {
+	DisplayName: Mothlight Dye
+	Tooltip: ""
+}
+
+InvisibleDye: {
+	DisplayName: Invisible Dye
+	Tooltip: ""
+}

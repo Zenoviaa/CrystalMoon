@@ -4,41 +4,44 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 
-namespace CrystalMoon.Systems.Shaders
+namespace CrystalMoon.Systems.Shaders.MagicTrails
 {
-    internal class MagicBloodletShader : BaseShader
+    internal class MagicSparkleWaterShader : BaseShader
     {
-        private static MagicBloodletShader _instance;
-        public MagicBloodletShader()
-        {
-            Data = ShaderRegistry.MagicTrailBloodlet;
-            PrimaryTexture = TextureRegistry.StarTrail;
-            NoiseTexture = TextureRegistry.StarTrail;
-            PrimaryColor = Color.White;
-            NoiseColor = Color.White;
-            OutlineColor = Color.White;
-            Speed = 5;
-            Distortion = 0.2f;
-        }
-
-        public static MagicBloodletShader Instance
+        private static MagicSparkleWaterShader _instance;
+        public static MagicSparkleWaterShader Instance
         {
             get
             {
-                if (_instance == null)
-                    _instance = new MagicBloodletShader();
+                _instance ??= new();
+                _instance.SetDefaults();
                 return _instance;
             }
         }
-
         public Asset<Texture2D> PrimaryTexture { get; set; }
         public Asset<Texture2D> NoiseTexture { get; set; }
+        public Asset<Texture2D> OutlineTexture { get; set; }
         public Color PrimaryColor { get; set; }
         public Color NoiseColor { get; set; }
         public Color OutlineColor { get; set; }
         public float Speed { get; set; }
         public float Distortion { get; set; }
-        public float Alpha { get; set; }
+        public float Power { get; set; }
+        public float Threshold { get; set; }
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            PrimaryTexture = TextureRegistry.DottedTrail;
+            NoiseTexture = TextureRegistry.NoiseTextureClouds3;
+            OutlineTexture = TextureRegistry.DottedTrailOutline;
+            PrimaryColor = Color.White;
+            NoiseColor = Color.White;
+            OutlineColor = Color.White;
+            Speed = 5;
+            Distortion = 0.2f;
+            Power = 1.5f;
+        }
+
         public override void Apply()
         {
             Effect.Parameters["transformMatrix"].SetValue(TrailDrawer.WorldViewPoint2);
@@ -47,9 +50,11 @@ namespace CrystalMoon.Systems.Shaders
             Effect.Parameters["outlineColor"].SetValue(OutlineColor.ToVector3());
             Effect.Parameters["primaryTexture"].SetValue(PrimaryTexture.Value);
             Effect.Parameters["noiseTexture"].SetValue(NoiseTexture.Value);
+            Effect.Parameters["outlineTexture"].SetValue(OutlineTexture.Value);
             Effect.Parameters["time"].SetValue(Main.GlobalTimeWrappedHourly * Speed);
             Effect.Parameters["distortion"].SetValue(Distortion);
-            Effect.Parameters["alpha"].SetValue(Alpha);
+            Effect.Parameters["power"].SetValue(Power);
+            Effect.Parameters["threshold"].SetValue(Threshold);
         }
     }
 }

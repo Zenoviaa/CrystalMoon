@@ -2,6 +2,7 @@
 using CrystalMoon.Registries;
 using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Systems.Shaders;
+using CrystalMoon.Systems.Shaders.MagicTrails;
 using CrystalMoon.Visual.Dusts;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

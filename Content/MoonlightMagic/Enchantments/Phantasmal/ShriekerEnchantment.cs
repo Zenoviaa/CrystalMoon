@@ -14,6 +14,7 @@ using CrystalMoon.Content.Bases;
 using CrystalMoon.Registries;
 using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Systems.Shaders;
+using CrystalMoon.Systems.Shaders.MagicTrails;
 
 namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Phantasmal
 {

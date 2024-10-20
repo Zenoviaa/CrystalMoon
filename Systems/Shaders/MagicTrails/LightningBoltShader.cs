@@ -1,36 +1,24 @@
 ﻿using CrystalMoon.Registries;
+using CrystalMoon.Systems.Shaders.Dyes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 
-namespace CrystalMoon.Systems.Shaders
+namespace CrystalMoon.Systems.Shaders.MagicTrails
 {
-    internal class MagicRadianceOutlineShader : BaseShader
+    internal class LightningBoltShader : BaseShader
     {
-        private static MagicRadianceOutlineShader _instance;
-        public MagicRadianceOutlineShader()
-        {
-            Data = ShaderRegistry.MagicTrailRadianceOutline;
-            PrimaryTexture = TextureRegistry.DottedTrail;
-            NoiseTexture = TextureRegistry.NoiseTextureClouds3;
-            PrimaryColor = Color.White;
-            NoiseColor = Color.White;
-            Speed = 5;
-            Distortion = 0.2f;
-            Power = 1.5f;
-        }
-
-        public static MagicRadianceOutlineShader Instance
+        private static LightningBoltShader _instance;
+        public static LightningBoltShader Instance
         {
             get
             {
-                if (_instance == null)
-                    _instance = new MagicRadianceOutlineShader();
+                _instance ??= new();
+                _instance.SetDefaults();
                 return _instance;
             }
         }
-
         public Asset<Texture2D> PrimaryTexture { get; set; }
         public Asset<Texture2D> NoiseTexture { get; set; }
         public Color PrimaryColor { get; set; }
@@ -38,6 +26,20 @@ namespace CrystalMoon.Systems.Shaders
         public float Speed { get; set; }
         public float Distortion { get; set; }
         public float Power { get; set; }
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            PrimaryTexture = TextureRegistry.LightningTrail2;
+            NoiseTexture = TextureRegistry.LightningTrail3;
+            PrimaryColor = Color.White;
+            NoiseColor = Color.White;
+            Speed = 10;
+            Distortion = 0.2f;
+            Power = 1.5f;
+            BlendState = BlendState.Additive;
+        }
+
         public override void Apply()
         {
             Effect.Parameters["transformMatrix"].SetValue(TrailDrawer.WorldViewPoint2);

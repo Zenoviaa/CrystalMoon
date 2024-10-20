@@ -7,6 +7,7 @@ using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Systems.Particles;
 using CrystalMoon.Systems.ScreenSystems;
 using CrystalMoon.Systems.Shaders;
+using CrystalMoon.Systems.Shaders.MagicTrails;
 using CrystalMoon.Visual.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
