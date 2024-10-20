@@ -391,3 +391,8 @@ InvisibleDye: {
 	DisplayName: Invisible Dye
 	Tooltip: ""
 }
+
+StaticDye: {
+	DisplayName: Static Dye
+	Tooltip: ""
+}
