@@ -94,19 +94,14 @@ namespace CrystalMoon.Registries
             variantSuffixesStart: 1,
             numVariants: 1);
 
-        public static SoundStyle BloodletCast => new SoundStyle($"{RootAssetPath}BloodletCast",
-            variantSuffixesStart: 1,
-            numVariants: 1);
+        public static SoundStyle BloodletCast => new SoundStyle($"{RootAssetPath}BloodletCast1");
 
         public static SoundStyle BloodletHit => new SoundStyle($"{RootAssetPath}BloodletHit",
             variantSuffixesStart: 1,
             numVariants: 2);
 
-        public static SoundStyle AutomationCast => new SoundStyle($"{RootAssetPath}BloodletCast",
-            variantSuffixesStart: 1,
-            numVariants: 1);
-
-        public static SoundStyle AutomationHit => new SoundStyle($"{RootAssetPath}BloodletHit",
+        public static SoundStyle AutomationCast => new SoundStyle($"{RootAssetPath}AutomationCast1");
+        public static SoundStyle AutomationHit => new SoundStyle($"{RootAssetPath}AutomationHit",
             variantSuffixesStart: 1,
             numVariants: 2);
 
