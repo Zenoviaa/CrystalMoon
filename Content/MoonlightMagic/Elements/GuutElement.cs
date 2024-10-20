@@ -7,12 +7,25 @@ using CrystalMoon.Visual.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic.Elements
 {
     internal class GuutElement : BaseElement
     {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            SoundStyle castStyle = SoundID.Item43;
+            castStyle.PitchVariance = 0.15f;
+            CastSound = castStyle;
+
+            SoundStyle hitStyle = SoundRegistry.BasicMagicHit;
+            hitStyle.PitchVariance = 0.15f;
+            HitSound = hitStyle;
+        }
         public override Color GetElementColor()
         {
             return ColorUtil.GuutGray;

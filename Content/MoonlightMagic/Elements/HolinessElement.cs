@@ -7,7 +7,7 @@ using CrystalMoon.Visual.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.Graphics.Shaders;
+using Terraria.Audio;
 using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic.Elements
@@ -15,6 +15,18 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
     internal class HolinessElement : BaseElement
     {
         int trailMode = 0;
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            SoundStyle castStyle = SoundRegistry.HolyCast;
+            castStyle.PitchVariance = 0.15f;
+            CastSound = castStyle;
+
+            SoundStyle hitStyle = SoundRegistry.HolyHit;
+            hitStyle.PitchVariance = 0.15f;
+            HitSound = hitStyle;
+        }
+
         public override Color GetElementColor()
         {
             return Color.LightGray;
@@ -116,7 +128,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 
         private float WidthFunction(float completionRatio)
         {
-            
+
             float width = (trailMode == 0 ? 40 : 32) * 1.5f * MagicProj.ScaleMultiplier;
             return MathHelper.Lerp(width, 0, completionRatio);
         }

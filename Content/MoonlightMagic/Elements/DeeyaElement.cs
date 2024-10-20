@@ -7,13 +7,26 @@ using CrystalMoon.Visual.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic.Elements
 {
     internal class DeeyaElement : BaseElement
     {
-        int trailingMode = 0;
+        int trailingMode = 0; 
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            SoundStyle castStyle = SoundRegistry.DeeyaCast;
+            castStyle.PitchVariance = 0.15f;
+            CastSound = castStyle;
+
+            SoundStyle hitStyle = SoundRegistry.DeeyaHit;
+            hitStyle.PitchVariance = 0.15f;
+            HitSound = hitStyle;
+        }
+
         public override Color GetElementColor()
         {
             return ColorUtil.DeeyaPink;

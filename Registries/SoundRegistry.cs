@@ -98,14 +98,49 @@ namespace CrystalMoon.Registries
             variantSuffixesStart: 1,
             numVariants: 2);
 
-        public static SoundStyle AutomationCast => new SoundStyle($"{RootAssetPath}AutomationCast1");
+        public static SoundStyle AutomationCast => new SoundStyle($"{RootAssetPath}AutomationCast",
+            variantSuffixesStart: 1,
+            numVariants: 2);
+
         public static SoundStyle AutomationHit => new SoundStyle($"{RootAssetPath}AutomationHit",
+            variantSuffixesStart: 1,
+            numVariants: 2);
+        public static SoundStyle NatureCast => new SoundStyle($"{RootAssetPath}NaturalCast",
             variantSuffixesStart: 1,
             numVariants: 2);
 
         public static SoundStyle NatureHit => new SoundStyle($"{RootAssetPath}NaturalHit",
-          variantSuffixesStart: 1,
-          numVariants: 2);
+            variantSuffixesStart: 1,
+            numVariants: 2);
+
+        public static SoundStyle PrimeMagicCast => new SoundStyle($"{RootAssetPath}PrimeMagicCast",
+            variantSuffixesStart: 1,
+            numVariants: 2);
+
+        public static SoundStyle PrimeMagicHit => new SoundStyle($"{RootAssetPath}PrimeMagicHit",
+            variantSuffixesStart: 1,
+            numVariants: 2);
+
+
+        public static SoundStyle DeeyaCast => new SoundStyle($"{RootAssetPath}DeeyaCast",
+            variantSuffixesStart: 1,
+            numVariants: 2);
+
+        public static SoundStyle DeeyaHit => new SoundStyle($"{RootAssetPath}DeeyaHit",
+            variantSuffixesStart: 1,
+            numVariants: 2);
+
+        public static SoundStyle HolyCast => new SoundStyle($"{RootAssetPath}HolyCast",
+            variantSuffixesStart: 1,
+            numVariants: 2);
+
+        public static SoundStyle HolyHit => new SoundStyle($"{RootAssetPath}HolyHit",
+            variantSuffixesStart: 1,
+            numVariants: 2);
+
+        public static SoundStyle BasicMagicHit => new SoundStyle($"{RootAssetPath}BasicMagicHit",
+            variantSuffixesStart: 1,
+            numVariants: 2);
         /*
         public static SoundStyle BowCharge => new SoundStyle($"{RootAssetPath}BowCharge",
             variantSuffixesStart: 1,
