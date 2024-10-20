@@ -385,7 +385,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
         }
 
         private bool _thrust;
-        public float thrustSpeed = 9;
+        public float thrustSpeed = 4;
         public float stabRange;
         public override void AI()
         {
@@ -465,7 +465,7 @@ namespace CrystalMoon.Content.Items.Weapons.Melee.Greatswords
             SoundEngine.PlaySound(spearHit2, Projectile.position);
 
             modifiers.FinalDamage *= 3.5f;
-            modifiers.Knockback *= 2;
+            modifiers.Knockback *= 3;
 
         }
 
