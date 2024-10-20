@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CrystalMoon.Systems.MiscellaneousMath;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -47,44 +48,6 @@ namespace CrystalMoon.Systems.Shaders
             }
         }
 
-        private static Vector2 GetRotation(Vector2[] oldPos, int index)
-        {
-            if (oldPos.Length == 1)
-                return oldPos[0];
-
-            if (index == 0)
-                return Vector2.Normalize(oldPos[1] - oldPos[0]).RotatedBy(MathHelper.Pi / 2);
-
-            return (index == oldPos.Length - 1
-                ? Vector2.Normalize(oldPos[index] - oldPos[index - 1])
-                : Vector2.Normalize(oldPos[index + 1] - oldPos[index - 1])).RotatedBy(MathHelper.Pi / 2);
-        }
-
-
-        private static Vector2[] RemoveZeros(Vector2[] arr, Vector2 offset)
-        {
-            var valid = new List<Vector2>();
-            for (int i = 0; i < arr.Length; i++)
-            {
-                if (arr[i] == Vector2.Zero || arr[i].HasNaNs())
-                    break;
-                if (i != 0)
-                {
-                    if (arr[i - 1] == arr[i])
-                        continue;
-
-                    var d = arr[i - 1] - arr[i];
-                    if (d.X < -1000f || d.X > 1000f || d.Y < -1000f || d.Y > 1000f)
-                    {
-                        continue;
-                    }
-                }
-                valid.Add(arr[i] + offset);
-            }
-            return valid.ToArray();
-        }
-
-
         private static void CalculateVerticesPairs(Vector2[] trailingPoints, Func<float, Color> colorFunc,
             Func<float, float> widthFunc, List<VertexPositionColorTexture> vertices)
         {
@@ -97,8 +60,8 @@ namespace CrystalMoon.Systems.Shaders
                 Color color = colorFunc(uv);
                 Vector2 pos = trailingPoints[i];
 
-                Vector2 top = pos + GetRotation(trailingPoints, i) * width;
-                Vector2 bottom = pos - GetRotation(trailingPoints, i) * width;
+                Vector2 top = pos + MathUtil.GetRotation(trailingPoints, i) * width;
+                Vector2 bottom = pos - MathUtil.GetRotation(trailingPoints, i) * width;
                 Vector3 finalTop = top.ToVector3();
                 Vector3 finalBottom = bottom.ToVector3();
 
@@ -121,8 +84,8 @@ namespace CrystalMoon.Systems.Shaders
                 Vector2 pos1 = trailingPoints[i];
                 Vector2 pos2 = trailingPoints[i + 1];
 
-                Vector2 off1 = GetRotation(trailingPoints, i) * width;
-                Vector2 off2 = GetRotation(trailingPoints, i + 1) * width2;
+                Vector2 off1 = MathUtil.GetRotation(trailingPoints, i) * width;
+                Vector2 off2 = MathUtil.GetRotation(trailingPoints, i + 1) * width2;
 
                 Color col1 = colorFunc(uv);
                 Color col2 = colorFunc(uv2);
@@ -139,50 +102,14 @@ namespace CrystalMoon.Systems.Shaders
             }
         }
 
-        private static void LerpTrailPoints(Vector2[] oldPos, out Vector2[] trailingPoints)
-        {
-            float smoothFactor = 2;
-            List<Vector2> points = new List<Vector2>();
-            for (int i = 0; i < oldPos.Length - 1; i++)
-            {
-                Vector2 current = oldPos[i];
-                Vector2 next = oldPos[i + 1];
-                for (float j = 0; j < smoothFactor; j++)
-                {
-                    float p = j / smoothFactor;
-                    Vector2 smoothedPoint = Vector2.Lerp(current, next, p);
-                    points.Add(smoothedPoint);
-                }
-            }
-            trailingPoints = points.ToArray();
-        }
-
-
-        private static void LerpRotationPoints(float[] oldRot, out float[] rotationPoints)
-        {
-            float smoothFactor = 2;
-            List<float> points = new List<float>();
-            for (int i = 0; i < oldRot.Length - 1; i++)
-            {
-                float current = oldRot[i];
-                float next = oldRot[i + 1];
-                for (float j = 0; j < smoothFactor; j++)
-                {
-                    float p = j / smoothFactor;
-                    float smoothedPoint = float.Lerp(current, next, p);
-                    points.Add(smoothedPoint);
-                }
-            }
-            rotationPoints = points.ToArray();
-        }
-
+ 
         private static List<VertexPositionColorTexture> CalculateVertices(PrimitiveDraw draw)
         {
             Vector2 o = draw.Offset == null ? Vector2.Zero : (Vector2)draw.Offset;
             var vertices = new List<VertexPositionColorTexture>();
-            draw.OldPos = RemoveZeros(draw.OldPos, o);
-            LerpTrailPoints(draw.OldPos, out Vector2[] trailingPoints);
-            LerpRotationPoints(draw.OldRot, out float[] rotationPoints);
+            draw.OldPos = MathUtil.RemoveZeros(draw.OldPos, o);
+            MathUtil.LerpTrailPoints(draw.OldPos, out Vector2[] trailingPoints);
+            MathUtil.LerpRotationPoints(draw.OldRot, out float[] rotationPoints);
             CalculateVerticesTris(trailingPoints, draw.ColorFunction, draw.WidthFunction, vertices);
             return vertices;
         }
@@ -192,14 +119,13 @@ namespace CrystalMoon.Systems.Shaders
             float[] oldRot,
             Func<float, Color> colorFunc,
             Func<float, float> widthFunc,
-       
             Vector2? offset = null)
         {
             Vector2 o = offset == null ? Vector2.Zero : (Vector2)offset;
             var vertices = new List<VertexPositionColorTexture>();
-            oldPos = RemoveZeros(oldPos, o);
-            LerpTrailPoints(oldPos, out Vector2[] trailingPoints);
-            LerpRotationPoints(oldRot, out float[] rotationPoints);
+            oldPos = MathUtil.RemoveZeros(oldPos, o);
+            MathUtil.LerpTrailPoints(oldPos, out Vector2[] trailingPoints);
+            MathUtil.LerpRotationPoints(oldRot, out float[] rotationPoints);
             CalculateVerticesTris(trailingPoints, colorFunc, widthFunc, vertices);
             return vertices;
         }
