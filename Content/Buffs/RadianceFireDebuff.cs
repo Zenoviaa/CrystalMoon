@@ -15,10 +15,9 @@ namespace CrystalMoon.Content.Buffs
 {
     internal struct RadianceFireDebuffDraw : IDrawPrims
     {
-        public RadianceFireDebuffDraw(Vector2 startingPoint, Vector2 drawVelocity)
+        public RadianceFireDebuffDraw()
         {
-            StartingPoint = startingPoint;
-            DrawVelocity = drawVelocity;
+
         }
 
         public Vector2 StartingPoint { get; set; }
@@ -99,9 +98,9 @@ namespace CrystalMoon.Content.Buffs
                         //We're finally getting better at coding guys!!!
 
                         //First Fire
-                        RadianceFireDebuffDraw radianceFireDebuffDraw = new RadianceFireDebuffDraw(
-                            startingPoint: npc.Center + new Vector2(-widthExtent/8f, -heightExtent / 4f) + _random.NextVector2Circular(4, 4),
-                            drawVelocity: -Vector2.UnitY * velocity * scaleMult * _random.NextFloat(0.55f, 0.85f));
+                        RadianceFireDebuffDraw radianceFireDebuffDraw = new RadianceFireDebuffDraw();
+                        radianceFireDebuffDraw.StartingPoint = npc.Center + new Vector2(-widthExtent / 8f, -heightExtent / 4f) + _random.NextVector2Circular(4, 4);
+                        radianceFireDebuffDraw.DrawVelocity = -Vector2.UnitY * velocity * scaleMult * _random.NextFloat(0.55f, 0.85f);
 
                         //This will make it so that not every fire is looking the same lol
                         radianceFireDebuffDraw.Offset = npc.whoAmI;
@@ -109,19 +108,17 @@ namespace CrystalMoon.Content.Buffs
                         _prims.Add(radianceFireDebuffDraw);
 
                         //Second Fire
-                        radianceFireDebuffDraw = new RadianceFireDebuffDraw(
-                           startingPoint: npc.Center + new Vector2(-widthExtent, -heightExtent / 4f) + _random.NextVector2Circular(4, 4),
-                           drawVelocity: -Vector2.UnitY * velocity * 0.5f * scaleMult * _random.NextFloat(0.25f, 1.25f));
-
+                        radianceFireDebuffDraw = new RadianceFireDebuffDraw();
+                        radianceFireDebuffDraw.StartingPoint = npc.Center + new Vector2(-widthExtent, -heightExtent / 4f) + _random.NextVector2Circular(4, 4);
+                        radianceFireDebuffDraw.DrawVelocity = -Vector2.UnitY * velocity * 0.5f * scaleMult * _random.NextFloat(0.25f, 1.25f);
                         radianceFireDebuffDraw.Offset = npc.whoAmI + 5;
                         radianceFireDebuffDraw.Size = 8 * scaleMult * _random.NextFloat(0.75f, 1.25f);
                         _prims.Add(radianceFireDebuffDraw);
 
                         //Third Fire
-                        radianceFireDebuffDraw = new RadianceFireDebuffDraw(
-                           startingPoint: npc.Center + new Vector2(widthExtent, heightExtent / 2f) + _random.NextVector2Circular(4, 4),
-                           drawVelocity: -Vector2.UnitY * velocity * 0.75f * scaleMult * _random.NextFloat(0.25f, 1.25f));
-
+                        radianceFireDebuffDraw = new RadianceFireDebuffDraw();
+                        radianceFireDebuffDraw.StartingPoint = npc.Center + new Vector2(widthExtent, heightExtent / 2f) + _random.NextVector2Circular(4, 4);
+                        radianceFireDebuffDraw.DrawVelocity = - Vector2.UnitY * velocity * 0.75f * scaleMult * _random.NextFloat(0.25f, 1.25f);
                         radianceFireDebuffDraw.Offset = npc.whoAmI + 15;
                         radianceFireDebuffDraw.Size = 16 * scaleMult * _random.NextFloat(0.75f, 1.25f);
                         _prims.Add(radianceFireDebuffDraw);
