@@ -9,6 +9,7 @@ namespace CrystalMoon.Systems.Shaders
 {
     internal class TrailDrawer
     {
+        private static PrimitiveDraw _primitiveDraw;
         public static Matrix WorldViewPoint
         {
             get
@@ -175,6 +176,18 @@ namespace CrystalMoon.Systems.Shaders
             rotationPoints = points.ToArray();
         }
 
+        private static List<VertexPositionColorTexture> CalculateVertices(PrimitiveDraw draw)
+        {
+            Vector2 o = draw.Offset == null ? Vector2.Zero : (Vector2)draw.Offset;
+            var vertices = new List<VertexPositionColorTexture>();
+            draw.OldPos = RemoveZeros(draw.OldPos, o);
+            LerpTrailPoints(draw.OldPos, out Vector2[] trailingPoints);
+            LerpRotationPoints(draw.OldRot, out float[] rotationPoints);
+            CalculateVerticesTris(trailingPoints, draw.ColorFunction, draw.WidthFunction, vertices);
+            return vertices;
+        }
+
+
         private static List<VertexPositionColorTexture> CalculateVertices(Vector2[] oldPos,
             float[] oldRot,
             Func<float, Color> colorFunc,
@@ -210,6 +223,52 @@ namespace CrystalMoon.Systems.Shaders
             spriteBatch.Begin();
         }
 
+        public static void DrawPrimitivesBatch(IPrimitivesBatch primitivesBatch)
+        {
+            SpriteBatch spriteBatch = Main.spriteBatch;
+
+            //Step 1. Apply Shader from the Primitives Batch
+            _primitiveDraw ??= new PrimitiveDraw();
+            primitivesBatch.Shader.Apply();
+            primitivesBatch.Shader.Effect.CurrentTechnique.Passes[0].Apply();
+
+            //Get the current states of graphics device so we can restore it later
+            GraphicsDevice graphicsDevice = Main.instance.GraphicsDevice;
+            BlendState originalBlendState = graphicsDevice.BlendState;
+            CullMode oldCullMode = graphicsDevice.RasterizerState.CullMode;
+            SamplerState originalSamplerState = graphicsDevice.SamplerStates[0];
+
+            //Setup graphics device parameters
+            graphicsDevice.RasterizerState.CullMode = CullMode.None;
+            graphicsDevice.BlendState = primitivesBatch.BlendState;
+            graphicsDevice.SamplerStates[0] = primitivesBatch.SamplerState;
+
+            //Step 2. Loop over IDrawPrims in the batch, calculate their vertices and draw them.
+            //For loops are slightly faster than foreach loops and we want this to be as optimized as possible so
+            for (int i = 0; i < primitivesBatch.Prims.Count; i++)
+            {
+                IDrawPrims drawPrims = primitivesBatch.Prims[i];
+                //Calculate thing we're drawing
+                drawPrims.DrawPrims(ref _primitiveDraw);
+
+                //Vertices of this thing
+                List<VertexPositionColorTexture> vertices = CalculateVertices(_primitiveDraw);
+
+                //Stop weird errors
+                if (vertices.Count % 6 != 0 || vertices.Count <= 3)
+                    continue;
+
+                //Draw Prims
+                graphicsDevice.DrawUserPrimitives(
+                  PrimitiveType.TriangleList, vertices.ToArray(), 0, vertices.Count / 3);
+            }
+
+            //Restore original state
+            graphicsDevice.RasterizerState.CullMode = oldCullMode;
+            graphicsDevice.BlendState = originalBlendState;
+            graphicsDevice.SamplerStates[0] = originalSamplerState;
+        }
+
         public static void Draw(SpriteBatch spriteBatch,
             Vector2[] oldPos,
             float[] oldRot,
@@ -235,7 +294,7 @@ namespace CrystalMoon.Systems.Shaders
                 }
             }
      
-
+            //
             var vertices = CalculateVertices(oldPos, oldRot, colorFunc, widthFunc, offset);
             DrawPrimsTriangles(vertices, shader);
            

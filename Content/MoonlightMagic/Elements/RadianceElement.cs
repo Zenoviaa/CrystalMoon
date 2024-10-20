@@ -1,4 +1,5 @@
-﻿using CrystalMoon.Registries;
+﻿using CrystalMoon.Content.Buffs;
+using CrystalMoon.Registries;
 using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Systems.Particles;
 using CrystalMoon.Systems.ScreenSystems;
@@ -157,6 +158,17 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
                 }
             }
         }
+
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            base.OnHitNPC(target, hit, damageDone);
+            if (Main.rand.NextBool(3))
+            {
+                target.AddBuff(ModContent.BuffType<RadianceFireDebuff>(), time: 360);
+            }
+        }
+
 
         public override void OnKill()
         {

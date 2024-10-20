@@ -38,6 +38,7 @@ namespace CrystalMoon.Content.MoonlightMagic
                drawRotation, drawOrigin, drawScale, SpriteEffects.None, 0);
         }
 
+        public virtual void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) { }
         public virtual void OnKill() { }
 
         public virtual Color GetElementColor() { return Color.White; }

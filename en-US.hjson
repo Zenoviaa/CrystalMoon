@@ -82,6 +82,11 @@ Mods: {
 				DisplayName: Cannot Use Stamina Potion
 				Description: Mods.CrystalMoon.Buffs.CannotUseStaminaPotion.Description
 			}
+
+			RadianceFireDebuff: {
+				DisplayName: Radiance Fire Debuff
+				Description: Mods.CrystalMoon.Buffs.RadianceFireDebuff.Description
+			}
 		}
 
 		Keybinds.Dash.DisplayName: Dash

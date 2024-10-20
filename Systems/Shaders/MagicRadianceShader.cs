@@ -44,6 +44,22 @@ namespace CrystalMoon.Systems.Shaders
         public float Distortion { get; set; }
         public float Power { get; set; }
         public float Alpha { get; set; }
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            PrimaryTexture = TextureRegistry.DottedTrail;
+            NoiseTexture = TextureRegistry.NoiseTextureClouds3;
+            OutlineTexture = TextureRegistry.DottedTrailOutline;
+            PrimaryColor = Color.White;
+            NoiseColor = Color.White;
+            OutlineColor = Color.White;
+            Speed = 5;
+            Distortion = 0.2f;
+            Power = 1.5f;
+            Alpha = 1.0f;
+        }
+
         public override void Apply()
         {
             Effect.Parameters["transformMatrix"].SetValue(TrailDrawer.WorldViewPoint2);

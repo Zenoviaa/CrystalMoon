@@ -195,6 +195,7 @@ namespace CrystalMoon.Content.MoonlightMagic
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             base.OnHitNPC(target, hit, damageDone);
+            PrimaryElement?.OnHitNPC(target, hit, damageDone);
             for (int i = 0; i < Enchantments.Count; i++)
             {
                 var enchantment = Enchantments[i];

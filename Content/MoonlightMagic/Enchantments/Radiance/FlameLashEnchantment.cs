@@ -1,4 +1,5 @@
 ﻿using CrystalMoon.Content.Bases;
+using CrystalMoon.Content.Buffs;
 using CrystalMoon.Content.MoonlightMagic.Elements;
 using CrystalMoon.Registries;
 using CrystalMoon.Systems.MiscellaneousMath;
@@ -197,7 +198,7 @@ namespace CrystalMoon.Content.MoonlightMagic.Enchantments.Radiance
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             base.OnHitNPC(target, hit, damageDone);
-            target.AddBuff(BuffID.OnFire, 90);
+            target.AddBuff(ModContent.BuffType<RadianceFireDebuff>(), 180);
         }
     }
 }

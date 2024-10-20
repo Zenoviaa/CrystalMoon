@@ -1,4 +1,5 @@
-﻿using Terraria.ModLoader;
+﻿using Terraria;
+using Terraria.ModLoader;
 
 namespace CrystalMoon.Systems.Players
 {
@@ -66,6 +67,12 @@ namespace CrystalMoon.Systems.Players
                 StaminaComboCounter = 0;
             }
             ComboDirection = -ComboDirection;
+        }
+
+        public override void ModifyWeaponDamage(Item item, ref StatModifier damage)
+        {
+            base.ModifyWeaponDamage(item, ref damage);
+
         }
     }
 }
