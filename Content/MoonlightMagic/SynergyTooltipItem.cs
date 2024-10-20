@@ -18,15 +18,23 @@ namespace CrystalMoon.Content.MoonlightMagic
             TooltipLine tooltipLine;
             if (Enchantment != null && PrimaryElement != null)
             {
-                if(Enchantment.GetElementType() == PrimaryElement.Type)
+                ElementMatch match = ElementMatch.Neutral;
+                match = PrimaryElement.GetMatch(Enchantment);
+                switch (match)
                 {
-                    tooltipLine = new TooltipLine(Mod, "SynergyHelp",
-                                   Language.GetTextValue("Mods.CrystalMoon.Enchantments.EnchantmentCommonSynergy", 4));
-                    tooltips.Add(tooltipLine);
-                }
-                else
-                {
-                    AddNoSynergyText(tooltips);
+                    case ElementMatch.Neutral:
+                        AddNoSynergyText(tooltips);
+                        break;
+                    case ElementMatch.Match:
+                        tooltipLine = new TooltipLine(Mod, "SynergyHelp",
+                                Language.GetTextValue("Mods.CrystalMoon.Enchantments.EnchantmentCommonSynergy", 4));
+                        tooltips.Add(tooltipLine);
+                        break;
+                    case ElementMatch.Mismatch:
+                        tooltipLine = new TooltipLine(Mod, "SynergyFail",
+                                Language.GetTextValue("Mods.CrystalMoon.Enchantments.EnchantmentCommonFailSynergy", 4));
+                        tooltips.Add(tooltipLine);
+                        break;
                 }
             }
             else

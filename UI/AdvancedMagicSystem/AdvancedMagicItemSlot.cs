@@ -57,7 +57,15 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
                 //Handles all the click and hover actions based on the context
                 ItemSlot.Handle(ref Item, _context);
 
-                if(_prevTrashItem != Main.LocalPlayer.trashItem && Main.LocalPlayer.trashItem.type == Item.type)
+                if(_prevTrashItem == null)
+                {
+                    _prevTrashItem = Main.LocalPlayer.trashItem;
+                }
+
+                bool isBothAir = _prevTrashItem.IsAir && Main.LocalPlayer.trashItem.IsAir;
+                bool notTheSame = _prevTrashItem != Main.LocalPlayer.trashItem;
+                bool sameItemType = Main.LocalPlayer.trashItem.type == Item.type;
+                if (notTheSame && sameItemType && !isBothAir)
                 {
                     _prevTrashItem = Main.LocalPlayer.trashItem;
                     Item = new Item();

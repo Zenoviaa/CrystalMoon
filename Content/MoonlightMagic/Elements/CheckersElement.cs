@@ -6,18 +6,28 @@ using CrystalMoon.Systems.Shaders;
 using CrystalMoon.Visual.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
-using Terraria.GameContent;
+using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.UI.Chat;
 
 namespace CrystalMoon.Content.MoonlightMagic.Elements
 {
     internal class CheckersElement : BaseElement
     {
         private int trailMode = 0;
-        
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            SoundStyle castStyle = SoundID.Item43;
+            castStyle.PitchVariance = 0.15f;
+            CastSound = castStyle;
+
+            SoundStyle hitStyle = SoundRegistry.BasicMagicHit;
+            hitStyle.PitchVariance = 0.15f;
+            HitSound = hitStyle;
+        }
+
         public override Color GetElementColor()
         {
             return Color.White;

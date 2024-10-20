@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
@@ -18,6 +19,18 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
     {
         private int trailMode = 0;
         private LightningTrail _lightningTrail;
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            SoundStyle castStyle = SoundRegistry.PrimeMagicCast;
+            castStyle.PitchVariance = 0.25f;
+            CastSound = castStyle;
+
+            SoundStyle hitStyle = SoundRegistry.PrimeMagicHit;
+            hitStyle.PitchVariance = 0.25f;
+            HitSound = hitStyle;
+        }
+
         public override Color GetElementColor()
         {
             return Color.Orange;

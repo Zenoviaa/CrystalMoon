@@ -1,4 +1,5 @@
-﻿using CrystalMoon.Systems.MiscellaneousMath;
+﻿using CrystalMoon.Content.MoonlightMagic.Elements;
+using CrystalMoon.Systems.MiscellaneousMath;
 using CrystalMoon.Systems.ScreenSystems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -11,6 +12,13 @@ using Terraria.ModLoader;
 
 namespace CrystalMoon.Content.MoonlightMagic
 {
+    internal enum ElementMatch
+    {
+        Neutral,
+        Match,
+        Mismatch
+    }
+
     internal abstract class BaseElement : BaseMagicItem,
         ICloneable,
         IAdvancedMagicAddon
@@ -42,6 +50,20 @@ namespace CrystalMoon.Content.MoonlightMagic
         public virtual void OnKill() { }
 
         public virtual Color GetElementColor() { return Color.White; }
+        public virtual int GetOppositeElementType()
+        {
+            return -1;
+        }
+
+        public ElementMatch GetMatch(BaseEnchantment enchantment)
+        {
+            ElementMatch match = ElementMatch.Neutral;
+            if (enchantment.GetElementType() == Type)
+                match = ElementMatch.Match;
+            if (enchantment.GetElementType() == GetOppositeElementType())
+                match = ElementMatch.Mismatch;
+            return match;
+        }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {

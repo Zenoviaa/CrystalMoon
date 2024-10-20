@@ -1,23 +1,17 @@
 ﻿using CrystalMoon.Content.MoonlightMagic.Elements;
-using CrystalMoon.Registries;
-using CrystalMoon.Systems.LoadingSystems;
 using CrystalMoon.Systems.ScreenSystems;
-using CrystalMoon.Systems.Shaders;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Core;
-using Terraria.UI.Chat;
 
 namespace CrystalMoon.Content.MoonlightMagic
 {
-        internal abstract class BaseEnchantment : BaseMagicItem, 
+    internal abstract class BaseEnchantment : BaseMagicItem,
         IAdvancedMagicAddon,
         ICloneable
     {
@@ -26,7 +20,7 @@ namespace CrystalMoon.Content.MoonlightMagic
         {
             get
             {
-                if(_enchantments == null)
+                if (_enchantments == null)
                     _enchantments = CrystalMoon.Instance.GetContent<BaseEnchantment>().ToArray();
                 return _enchantments;
             }
@@ -49,13 +43,15 @@ namespace CrystalMoon.Content.MoonlightMagic
 
         public BaseEnchantment Instantiate()
         {
-            return (BaseEnchantment)Clone(); 
+            return (BaseEnchantment)Clone();
         }
 
         public virtual int GetElementType()
         {
             return ModContent.ItemType<BasicElement>();
         }
+
+
 
         public override void SetDefaults()
         {
@@ -81,7 +77,7 @@ namespace CrystalMoon.Content.MoonlightMagic
             tooltips.Add(tooltipLine);
 
             tooltipLine = new TooltipLine(Mod, "EnchantmentManaHelp",
-                Language.GetTextValue("Mods.CrystalMoon.Enchantments.EnchantmentCommonMana", 
+                Language.GetTextValue("Mods.CrystalMoon.Enchantments.EnchantmentCommonMana",
                 GetStaffManaModifier() * 100));
             tooltipLine.OverrideColor = Color.IndianRed;
             tooltips.Add(tooltipLine);
@@ -93,7 +89,8 @@ namespace CrystalMoon.Content.MoonlightMagic
             tooltips.Add(tooltipLine);*/
         }
 
-        public virtual void DrawTextShader(SpriteBatch spriteBatch, Item item, DrawableTooltipLine line, ref int yOffset) { }   public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        public virtual void DrawTextShader(SpriteBatch spriteBatch, Item item, DrawableTooltipLine line, ref int yOffset) { }
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
             DrawHelper.DrawGlow2InWorld(Item, spriteBatch, ref rotation, ref scale, whoAmI);
             return base.PreDrawInWorld(spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
@@ -106,5 +103,5 @@ namespace CrystalMoon.Content.MoonlightMagic
         public virtual bool OnTileCollide(Vector2 oldVelocity) { return true; }
 
     }
-    
+
 }
