@@ -68,19 +68,29 @@ namespace CrystalMoon.Content.MoonlightMagic
         public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
         {
             base.ModifyWeaponDamage(player, ref damage);
+            float damageModifier = 1f;
             for(int i = 0; i < equippedEnchantments.Length; i++)
             {
                 Item item = equippedEnchantments[i];
                 if(item.ModItem is BaseEnchantment enchantment)
                 {
-                    if(enchantment.GetElementType() == primaryElement.type)
+                    if(primaryElement.ModItem is BaseElement element)
                     {
-            
-                        damage *= 1.1f;
-                        //damage *= 1.14f;
+                        ElementMatch match = element.GetMatch(enchantment);
+                        switch (match)
+                        {
+                            case ElementMatch.Match:
+                                damageModifier += 0.04f;
+                                break;
+                            case ElementMatch.Mismatch:
+                                damageModifier -= 0.04f;
+                                break;
+                        }
                     }
                 }
             }
+
+            damage *= damageModifier;
         }
 
 

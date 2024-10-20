@@ -19,6 +19,10 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
     internal class RadianceElement : BaseElement
     {
         private int trailMode = 0;
+        public override int GetOppositeElementType()
+        {
+            return ModContent.ItemType<PhantasmalElement>();
+        }
 
         public override void SetDefaults()
         {

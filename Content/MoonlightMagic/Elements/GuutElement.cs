@@ -15,6 +15,11 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 {
     internal class GuutElement : BaseElement
     {
+        public override int GetOppositeElementType()
+        {
+            return ModContent.ItemType<NaturalElement>();
+        }
+
         public override void SetDefaults()
         {
             base.SetDefaults();

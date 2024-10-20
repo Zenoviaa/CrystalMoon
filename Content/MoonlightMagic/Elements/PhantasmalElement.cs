@@ -15,6 +15,11 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 {
     internal class PhantasmalElement : BaseElement
     {
+        public override int GetOppositeElementType()
+        {
+            return ModContent.ItemType<RadianceElement>();
+        }
+
         public override void SetDefaults()
         {
             base.SetDefaults();

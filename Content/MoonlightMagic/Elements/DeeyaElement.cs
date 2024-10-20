@@ -14,7 +14,13 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 {
     internal class DeeyaElement : BaseElement
     {
-        int trailingMode = 0; 
+        int trailingMode = 0;
+
+        public override int GetOppositeElementType()
+        {
+            return ModContent.ItemType<BloodletElement>();
+        }
+
         public override void SetDefaults()
         {
             base.SetDefaults();

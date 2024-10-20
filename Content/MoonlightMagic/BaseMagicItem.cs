@@ -18,8 +18,6 @@ namespace CrystalMoon.Content.MoonlightMagic
         public override void UpdateInventory(Player player)
         {
             base.UpdateInventory(player);
-
-            Console.WriteLine($"Pickup {Item.Name}");
             player.GetModPlayer<AdvancedMagicPlayer>().Pickup(Item);
             for(int i = 0; i < player.inventory.Length; i++)
             {

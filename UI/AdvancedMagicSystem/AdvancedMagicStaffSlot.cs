@@ -3,6 +3,7 @@ using CrystalMoon.Systems.Shaders;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Xml.Linq;
 using Terraria;
 using Terraria.GameInput;
 using Terraria.ModLoader;
@@ -112,20 +113,24 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
 
 
             //Draw Backing
-            bool isMatch = false;
             Color color2 = Main.inventoryBack;
             Vector2 pos = rectangle.TopLeft();
 
             //Enchantment Card
             var uiSystem = ModContent.GetInstance<AdvancedMagicUISystem>();
             var elementItem = uiSystem.staffUIState.elementUI.ElementSlot.Item;
-            if (Item.ModItem is BaseEnchantment enchantment &&
-               elementItem.type == enchantment.GetElementType())
+            ElementMatch match = ElementMatch.Neutral;
+            if(Item.ModItem is BaseEnchantment enchantment && elementItem.ModItem is BaseElement element)
             {
-                if (elementItem.ModItem is BaseElement element)
+                match = element.GetMatch(enchantment);
+                switch (match)
                 {
-                    isMatch = true;
-                    color2 = element.GetElementColor();
+                    case ElementMatch.Match:
+                        color2 = element.GetElementColor();
+                        break;
+                    case ElementMatch.Mismatch:
+                        color2 = Color.Lerp(Color.White, Color.Black, 0.65f);
+                        break;
                 }
             }
             else
@@ -170,7 +175,7 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
                 ? ModContent.Request<Texture2D>("CrystalMoon/UI/AdvancedMagicSystem/TimedEnchantmentSlot").Value
                 : ModContent.Request<Texture2D>("CrystalMoon/UI/AdvancedMagicSystem/EnchantmentSlot").Value;
             spriteBatch.Draw(cardTexture, rectangle.TopLeft() + new Vector2(0, 38), null, color2, 0f, default(Vector2), _scale, SpriteEffects.None, 0f);
-            if (isMatch)
+            if (match == ElementMatch.Match)
             {
                 float sizeLimit = 34;
                 int numberOfCloneImages = 6;
@@ -205,9 +210,9 @@ namespace CrystalMoon.UI.AdvancedMagicSystem
                 SynergyTooltipItem t = ModContent.GetModItem(ModContent.ItemType<SynergyTooltipItem>()) as SynergyTooltipItem;
                 t.PrimaryElement = null;
                 t.Enchantment = null;
-                if(elementItem.ModItem is BaseElement element)
+                if(elementItem.ModItem is BaseElement e2)
                 {
-                    t.PrimaryElement = element;
+                    t.PrimaryElement = e2;
                 }
                 if(Item.ModItem is BaseEnchantment e)
                 {

@@ -14,6 +14,11 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
 {
     internal class HexElement : BaseElement
     {
+        public override int GetOppositeElementType()
+        {
+            return ModContent.ItemType<UvilisElement>();
+        }
+
         public override void SetDefaults()
         {
             base.SetDefaults();

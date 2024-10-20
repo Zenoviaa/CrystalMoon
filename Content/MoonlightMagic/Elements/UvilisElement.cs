@@ -15,6 +15,10 @@ namespace CrystalMoon.Content.MoonlightMagic.Elements
     internal class UvilisElement : BaseElement
     {
         int trailingMode = 0;
+        public override int GetOppositeElementType()
+        {
+            return ModContent.ItemType<HexElement>();
+        }
 
         public override void SetDefaults()
         {
