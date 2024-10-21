@@ -396,3 +396,8 @@ StaticDye: {
 	DisplayName: Static Dye
 	Tooltip: ""
 }
+
+StormWelder: {
+	DisplayName: Storm Welder
+	Tooltip: ""
+}

@@ -75,6 +75,8 @@ Mods: {
 			VaikusSwordStaminaSlash.DisplayName: Vaikus Sword Stamina Slash
 			SimpleOrangeExplosion.DisplayName: Simple Orange Explosion
 			VaikusExplode.DisplayName: Vaikus Explode
+			StormWelderLightning.DisplayName: Storm Welder Lightning
+			StormWelderTome.DisplayName: Storm Welder Tome
 		}
 
 		Buffs: {
