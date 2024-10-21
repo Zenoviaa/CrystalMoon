@@ -30,6 +30,22 @@ namespace CrystalMoon.Content.Items.Weapons.Magic.Tomes
     {
         private float _dustTimer;
         public override string Texture => "CrystalMoon/Content/Items/Weapons/Magic/Tomes/StormWelder";
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            //How often it shoots
+            AttackRate = 12;
+
+            //How fast it drains mana, better to change the mana use in the item instead of this tho
+            ManaConsumptionRate = 4;
+
+            //How far the tome is held from the player
+            HoldDistance = 36;
+
+            //The glow effect around it
+            GlowDistanceOffset = 4;
+            GlowRotationSpeed = 0.05f;
+        }
 
         public override void AI()
         {
