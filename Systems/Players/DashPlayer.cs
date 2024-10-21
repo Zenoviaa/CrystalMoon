@@ -49,7 +49,7 @@ namespace CrystalMoon.Systems.Players
             }
             else
             {
-                DashDir = -1;
+                DashDir = Player.direction == 1 ? DashRight : DashLeft;
             }
         }
 
