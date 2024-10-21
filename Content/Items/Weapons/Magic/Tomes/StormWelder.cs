@@ -223,7 +223,7 @@ namespace CrystalMoon.Content.Items.Weapons.Magic.Tomes
                 while (nextTarget != null)
                 {
                     Vector2 startPos = ImpactPos;
-                    Vector2 endPos = nextTarget.Center;
+                    Vector2 endPos = nextTarget.Center + (nextTarget.Center - startPos).SafeNormalize(Vector2.Zero) * 8;
                     List<Vector2> lightningPositions = new List<Vector2>();
                     float dist = Vector2.Distance(startPos, endPos);
                     float basePointCount = dist / 16f;
