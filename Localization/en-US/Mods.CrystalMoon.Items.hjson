@@ -401,3 +401,8 @@ StormWelder: {
 	DisplayName: Storm Welder
 	Tooltip: ""
 }
+
+IronBall: {
+	DisplayName: Iron Ball
+	Tooltip: ""
+}

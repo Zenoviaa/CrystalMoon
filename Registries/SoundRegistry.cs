@@ -149,6 +149,8 @@ namespace CrystalMoon.Registries
         public static SoundStyle BasicMagicHit => new SoundStyle($"{RootAssetPath}BasicMagicHit",
             variantSuffixesStart: 1,
             numVariants: 2);
+
+        public static SoundStyle BallSwing => new SoundStyle($"{RootAssetPath}BallSwing");
         /*
         public static SoundStyle BowCharge => new SoundStyle($"{RootAssetPath}BowCharge",
             variantSuffixesStart: 1,
