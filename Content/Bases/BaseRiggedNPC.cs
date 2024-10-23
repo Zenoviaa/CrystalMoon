@@ -21,6 +21,7 @@ namespace CrystalMoon.Content.Bases
         public override void AI()
         {
             base.AI();
+            AI_SolveLimbs();
         }
 
         private void AI_SolveLimbs()
