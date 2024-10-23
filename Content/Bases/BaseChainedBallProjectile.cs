@@ -102,7 +102,7 @@ namespace CrystalMoon.Content.Bases
             UnEasedLerpValue = 0f;
             SmoothedLerpValue = 0f;
             BaseSwingTime = 48;
-            GlowDistanceOffset = 4;
+            GlowDistanceOffset = 0;
             GlowRotationSpeed = 0.005f;
             TipDamageMultiplier = 2;
             
@@ -416,7 +416,7 @@ namespace CrystalMoon.Content.Bases
             SpriteEffects drawEffects = Projectile.Center.X < Owner.Center.X ? SpriteEffects.None : SpriteEffects.None;
             float layerDepth = 0;
 
-
+            /*
             //Draw Glow Effects
             //Let's do some additive glow
             spriteBatch.End();
@@ -432,6 +432,7 @@ namespace CrystalMoon.Content.Bases
             }
             spriteBatch.End();
             spriteBatch.Begin();
+            */
 
 
             //Actually draw it
