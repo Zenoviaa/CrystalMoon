@@ -47,7 +47,7 @@ namespace CrystalMoon.Systems.Rigging
         {
             if (DrawBackwards)
             {
-                for (int i = Joints.Count - 1; i > 0; i--)
+                for (int i = Joints.Count - 1; i > -1; i--)
                 {
                     Joint joint = Joints[i];
                     Vector2 jointDrawPos = basePosition;
