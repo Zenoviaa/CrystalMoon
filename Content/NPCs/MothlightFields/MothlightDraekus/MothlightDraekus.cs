@@ -48,6 +48,7 @@ namespace CrystalMoon.Content.NPCs.MothlightFields.MothlightDraekus
                 .AddNewJoint(direction: new Vector2(0, 1), length: 30, texture: $"{Texture}_BackFoot");
             BackLeg.Joints[0].DrawOrigin = Vector2.Zero;
             BackLeg.Joints[1].DrawOrigin = new Vector2(26, 2);
+            BackLeg.DrawBackwards = true;
 
             Torso = MakeLimb()
                .AddNewJoint(direction: new Vector2(0, -1), length: 18, texture: $"{Texture}_TorsoBottom")
@@ -63,6 +64,7 @@ namespace CrystalMoon.Content.NPCs.MothlightFields.MothlightDraekus
                 .AddNewJoint(direction: new Vector2(1, 1), length: 30, texture: $"{Texture}_FrontLeg")
                 .AddNewJoint(direction: new Vector2(0, 1), length: 30, texture: $"{Texture}_FrontFoot");
 
+            FrontLeg.DrawBackwards = true;
             FrontLeg.Joints[0].DrawOrigin = Vector2.Zero;
             FrontLeg.Joints[1].DrawOrigin = new Vector2(26, 2);
 
