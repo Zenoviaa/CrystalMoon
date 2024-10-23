@@ -18,6 +18,7 @@ namespace CrystalMoon.Systems.Rigging
 
         public Joint ParentJoint { get; set; }
         public Vector2 LocalOffset { get; set; }
+        public bool DrawBackwards { get; set; }
         public void AddJoint(Joint joint)
         {
             Joints.Add(joint);
@@ -44,15 +45,33 @@ namespace CrystalMoon.Systems.Rigging
         }
         public void Draw(SpriteBatch spriteBatch, Vector2 basePosition, Vector2 screenPos, Color drawColor)
         {
-            foreach(Joint joint in Joints)
+            if (DrawBackwards)
             {
-                Vector2 jointDrawPos = basePosition;
-                if(ParentJoint != null)
+                for (int i = Joints.Count - 1; i > 0; i--)
                 {
-                    jointDrawPos += ParentJoint.LocalPosition;
+                    Joint joint = Joints[i];
+                    Vector2 jointDrawPos = basePosition;
+                    if (ParentJoint != null)
+                    {
+                        jointDrawPos += ParentJoint.LocalPosition;
+                    }
+                    jointDrawPos += LocalOffset;
+                    joint.Draw(spriteBatch, jointDrawPos, ref drawColor);
                 }
-                jointDrawPos += LocalOffset;
-                joint.Draw(spriteBatch, jointDrawPos, ref drawColor);
+            }
+            else
+            {
+                for (int i = 0; i < Joints.Count; i++)
+                {
+                    Joint joint = Joints[i];
+                    Vector2 jointDrawPos = basePosition;
+                    if (ParentJoint != null)
+                    {
+                        jointDrawPos += ParentJoint.LocalPosition;
+                    }
+                    jointDrawPos += LocalOffset;
+                    joint.Draw(spriteBatch, jointDrawPos, ref drawColor);
+                }
             }
         }
         /*
