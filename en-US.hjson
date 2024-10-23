@@ -93,5 +93,6 @@ Mods: {
 		}
 
 		Keybinds.Dash.DisplayName: Dash
+		NPCs.MothlightDraekus.DisplayName: Mothlight Draekus
 	}
 }
