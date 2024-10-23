@@ -70,7 +70,7 @@ namespace CrystalMoon.Content.NPCs.MothlightFields.MothlightDraekus
                 .AddNewJoint(direction: new Vector2(1, 1), length: 40, texture: $"{Texture}_FrontArm")
                 .AddNewJoint(direction: new Vector2(0, 1), length: 30, texture: $"{Texture}_Lamp");
 
-   
+            FrontArm.DrawBackwards = true;
             FrontArm.Joints[0].DrawOrigin = new Vector2(10, 5);
             FrontArm.Joints[1].DrawOrigin = new Vector2(16, 0);
 
