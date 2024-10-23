@@ -33,7 +33,7 @@ namespace CrystalMoon.Content.Bases
                     Joint prevJoint = limb.Joints[i - 1];
                     joint.Position = (
                         prevJoint.Position +
-                        prevJoint.StartDirection.RotatedBy(prevJoint.StartRotation) * prevJoint.Length);
+                        prevJoint.StartDirection.RotatedBy(prevJoint.Rotation) * prevJoint.Length);
                 }
             }
         }
