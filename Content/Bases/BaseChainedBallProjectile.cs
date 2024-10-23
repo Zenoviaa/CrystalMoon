@@ -308,6 +308,11 @@ namespace CrystalMoon.Content.Bases
                 //Double damage modifier
                 modifiers.FinalDamage *= TipDamageMultiplier;
             }
+            else
+            {
+                //Weak ahh hit
+                modifiers.FinalDamage *= 0.5f;
+            }
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
