@@ -89,12 +89,7 @@ namespace CrystalMoon.Content.NPCs.MothlightFields.MothlightDraekus
         public override void AI()
         {
             base.AI();
-
-            foreach(Joint joint in FrontArm.Joints)
-            {
-
-            }
-            FrontArm.Joints[0].StartRotation += 0.025f;
+            FrontArm.Joints[0].Rotation += 0.025f;
         }
     }
 }
