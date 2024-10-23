@@ -14,6 +14,7 @@ namespace CrystalMoon.Content.Items.Weapons.Ranged.Balls
         public override void SetDefaults()
         {
             base.SetDefaults();
+            Item.damage = 6;
             Item.shoot = ModContent.ProjectileType<IronBallProj>();
         }
     }
