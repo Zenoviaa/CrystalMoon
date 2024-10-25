@@ -12,6 +12,7 @@ using Terraria.ModLoader;
 using Terraria;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using CrystalMoon.Systems.Shaders.Dyes;
+using CrystalMoon.Systems.Shaders;
 
 namespace CrystalMoon.Content.Items.Dyes
 {
@@ -43,7 +44,7 @@ namespace CrystalMoon.Content.Items.Dyes
 
     public class MothlightDye : ModItem
     {
-        private static MothlightDyeArmorShaderData _armorShader;
+        private static MagicMothlightMaskingArmorShaderData _armorShader;
         public override void SetStaticDefaults()
         {
             // Avoid loading assets on dedicated servers. They don't use graphics cards.
@@ -52,7 +53,7 @@ namespace CrystalMoon.Content.Items.Dyes
                 // The following code creates an effect (shader) reference and associates it with this item's type Id.
                 _armorShader = GameShaders.Armor.BindShader(
                     Item.type,
-                    new MothlightDyeArmorShaderData(Mod.Assets.Request<Effect>("Assets/Effects/PixelMagicHex"), "PixelPass") // Be sure to update the effect path and pass name here.
+                    new MagicMothlightMaskingArmorShaderData(Mod.Assets.Request<Effect>("Assets/Effects/DyeMothlightMasking"), "PixelPass") // Be sure to update the effect path and pass name here.
                 );
 
             }

@@ -1,11 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 
 namespace CrystalMoon.Systems.Players
 {
@@ -13,8 +8,26 @@ namespace CrystalMoon.Systems.Players
 
     public class MoonPlayer : ModPlayer
     {
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            //Disbale damage variation on everything
+            base.ModifyHitNPC(target, ref modifiers);
+            modifiers.DamageVariationScale *= 0;
+            if (ModContent.GetInstance<CrystalMoonClientConfig>().RedDamageNumbersToggle)
+            {
+                modifiers.HideCombatText();
+            }     
+        }
 
-        
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            base.OnHitNPC(target, hit, damageDone);
+            if (ModContent.GetInstance<CrystalMoonClientConfig>().RedDamageNumbersToggle)
+            {
+                CombatText.NewText(target.getRect(), Color.Lerp(Color.Red, Color.White, 0.25f), hit.Damage, dramatic: hit.Crit);
+            }
+        }
+
         public override void PostUpdate()
         {
 

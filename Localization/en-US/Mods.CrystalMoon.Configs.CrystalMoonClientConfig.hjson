@@ -42,6 +42,11 @@ CameraSmoothness: {
 	Tooltip: Adjusts how smoothly the camera follows the player, set to 0 for the default terraria movement, 100 for intended movement!
 }
 
+RedDamageNumbersToggle: {
+	Label: Red Damage Numbers
+	Tooltip: Changes the colors of damage numbers to be a lot more red
+}
+
 StaminaMeterX: {
 	Label: Stamina Meter X
 	Tooltip: X Position of the Stamina Meter.

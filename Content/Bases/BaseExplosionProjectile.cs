@@ -28,6 +28,7 @@ namespace CrystalMoon.Content.Bases
             Projectile.timeLeft = 30;
         }
 
+
         public override void AI()
         {
             base.AI();

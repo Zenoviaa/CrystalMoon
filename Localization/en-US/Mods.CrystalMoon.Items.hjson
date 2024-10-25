@@ -406,3 +406,8 @@ IronBall: {
 	DisplayName: Iron Ball
 	Tooltip: ""
 }
+
+MothlightStar: {
+	DisplayName: Mothlight Star
+	Tooltip: ""
+}

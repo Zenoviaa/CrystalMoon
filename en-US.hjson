@@ -78,6 +78,8 @@ Mods: {
 			StormWelderLightning.DisplayName: Storm Welder Lightning
 			StormWelderTome.DisplayName: Storm Welder Tome
 			IronBallProj.DisplayName: Iron Ball Proj
+			MothlightStarBall.DisplayName: Mothlight Star Ball
+			MothlightStarTome.DisplayName: Mothlight Star Tome
 		}
 
 		Buffs: {

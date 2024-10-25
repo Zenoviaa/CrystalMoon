@@ -21,6 +21,8 @@ namespace CrystalMoon.Registries
         public static Asset<Texture2D> NoiseTextureLeaves => 
             ModContent.Request<Texture2D>("CrystalMoon/Assets/NoiseTextures/Leaves");
 
+        public static Asset<Texture2D> NoiseTextureSpaceStars =>
+            ModContent.Request<Texture2D>("CrystalMoon/Assets/NoiseTextures/SpaceStars");
 
         public static string AssetDirectory => "CrystalMoon/Assets/NoiseTextures/";
         public static Asset<Texture2D> BeamTrail =>

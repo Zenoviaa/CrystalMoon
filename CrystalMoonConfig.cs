@@ -33,6 +33,9 @@ namespace CrystalMoon
         public float CameraSmoothness = 100;
 
         [Header("UI")]
+        [DefaultValue(true)]
+        public bool RedDamageNumbersToggle;
+
         [Range(0f, 100f)]
         public float StaminaMeterX = 50;
         [Range(0f, 100f)]
@@ -47,5 +50,7 @@ namespace CrystalMoon
         public float DashMeterX = 50;
         [Range(0f, 100f)]
         public float DashMeterY = 50;
+
+
     }
 }

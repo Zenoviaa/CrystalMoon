@@ -23,6 +23,7 @@
 	  <None Remove="Assets\Effects\MagicDeeya.fx" />
 	  <None Remove="Assets\Effects\MagicGuut.fx" />
 	  <None Remove="Assets\Effects\MagicHex.fx" />
+	  <None Remove="Assets\Effects\MagicMothlightMasking.fx" />
 	  <None Remove="Assets\Effects\MagicNatural.fx" />
 	  <None Remove="Assets\Effects\MagicNormal.fx" />
 	  <None Remove="Assets\Effects\MagicPhantasmal.fx" />
@@ -70,6 +71,7 @@
 	  <None Remove="Localization\en-US\Mods.CrystalMoon.Elements.hjson" />
 	  <None Remove="Localization\en-US\Mods.CrystalMoon.Enchantments.hjson" />
 	  <None Remove="Visual\Dusts\GlowDust.png" />
+	  <None Remove="Visual\Dusts\MothlightDust.png" />
 	  <None Remove="Visual\Dusts\SmokeDust.png" />
 	  <None Remove="Visual\GlowDust.png" />
 	</ItemGroup>
